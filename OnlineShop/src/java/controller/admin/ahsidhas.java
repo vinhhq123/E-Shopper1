@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Dal;
+package controller.admin;
 
 /**
  *
  * @author HL2020
  */
-public class test {
+public class ahsidhas {
     
 }
