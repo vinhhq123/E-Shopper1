@@ -17,7 +17,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import model.Setting;
 import model.SettingType;
 
@@ -25,7 +24,7 @@ import model.SettingType;
  *
  * @author VINH
  */
-public class SettingListController extends HttpServlet {
+public class SearchSettingController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,7 +37,7 @@ public class SettingListController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -53,46 +52,24 @@ public class SettingListController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String error = "";
-        String fullname = "";
-        int currentPage = 1;
-        int recordsPerPage = 5;
-
-        if (request.getParameter("currentPage") != null) {
-            currentPage = Integer.parseInt(request.getParameter("currentPage"));
-        }
-//
-//        AccountDAO accountDAO = new AccountDAO();
-//        ContactDAO contactDAO = new ContactDAO();
+        
+        String error = null;
+        String searchField = request.getParameter("table_search");
+        String type = request.getParameter("type");
+        String status = request.getParameter("status");
+        
+        if(status == null) status= "";
         SettingDAO settingDAO = new SettingDAO();
         SettingTypeDAO settingTypeDAO = new SettingTypeDAO();
-        List<Setting> settingList = new ArrayList<>();
-        List<SettingType> settingType = new ArrayList<>();
-
+        List<Setting> settingSearch = new ArrayList<>();
+        List<SettingType> settingTypes = new ArrayList<>();
+        
         try {
-//            Account account = accountDAO.getAccountByEmail("vinhhqse05532@fpt.edu.vn");
-//            int aid = account.getAid();
-//            Contact contact = contactDAO.getContactByAccountID(aid);
-            HttpSession session = request.getSession(true);
-            fullname = "Temp";
-
-            settingList = settingDAO.findSettings(currentPage, recordsPerPage);
-            settingType = settingTypeDAO.getAllSettingType();
-
-            int rows = settingDAO.getNumberOfRows();
-            int numOfPage = rows / recordsPerPage;
-            if (numOfPage % recordsPerPage > 0) {
-                numOfPage++;
-            }
-
-            request.setAttribute("SettingList", settingList);
-            session.setAttribute("fullname", fullname);
-//            request.setAttribute("fullname", fullname);
-            request.setAttribute("types", settingType);
-            request.setAttribute("numOfPage", numOfPage);
-            request.setAttribute("recordsPerPage", recordsPerPage);
-            request.setAttribute("currentPage", currentPage);
+            settingSearch = settingDAO.searchSeting(searchField, type, status);
+            settingTypes = settingTypeDAO.getAllSettingType();
+            request.setAttribute("SettingList", settingSearch);
+            request.setAttribute("types", settingTypes);
+            request.setAttribute("searchValue", searchField);
             request.getRequestDispatcher("./admin/SettingList.jsp").forward(request, response);
 
         } catch (Exception ex) {

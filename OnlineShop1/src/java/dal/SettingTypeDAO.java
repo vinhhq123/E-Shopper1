@@ -23,7 +23,7 @@ public class SettingTypeDAO extends DBContext{
     private PreparedStatement preparedStatement = null;
     private ResultSet results = null;
 
-    public List<SettingType> getAllSettingTye() throws Exception {
+    public List<SettingType> getAllSettingType() throws Exception {
 
         List<SettingType> settingTypes = new ArrayList<>();
         String sql = "select * from settingtype";

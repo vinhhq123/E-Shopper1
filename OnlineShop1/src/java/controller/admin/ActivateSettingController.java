@@ -6,26 +6,20 @@
 package controller.admin;
 
 import dal.SettingDAO;
-import dal.SettingTypeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Setting;
-import model.SettingType;
 
 /**
  *
  * @author VINH
  */
-public class SettingListController extends HttpServlet {
+public class ActivateSettingController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -54,53 +48,30 @@ public class SettingListController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String error = "";
-        String fullname = "";
-        int currentPage = 1;
-        int recordsPerPage = 5;
+        boolean check = false;
+        int state = 0;
+        int sid = Integer.parseInt(request.getParameter("sid"));
+        boolean status = Boolean.parseBoolean(request.getParameter("status"));
 
-        if (request.getParameter("currentPage") != null) {
-            currentPage = Integer.parseInt(request.getParameter("currentPage"));
+        // If status is TRUE(Active) -- > status changes to FALSE (InActive) (state == 0)
+        if (!status) {
+            state = 1;
+        } else {
+            // If status is FALSE (InActive) -- > status changes to TRUE(Active) (state == 1)
+            state = 0;
         }
-//
-//        AccountDAO accountDAO = new AccountDAO();
-//        ContactDAO contactDAO = new ContactDAO();
+
         SettingDAO settingDAO = new SettingDAO();
-        SettingTypeDAO settingTypeDAO = new SettingTypeDAO();
-        List<Setting> settingList = new ArrayList<>();
-        List<SettingType> settingType = new ArrayList<>();
 
         try {
-//            Account account = accountDAO.getAccountByEmail("vinhhqse05532@fpt.edu.vn");
-//            int aid = account.getAid();
-//            Contact contact = contactDAO.getContactByAccountID(aid);
-            HttpSession session = request.getSession(true);
-            fullname = "Temp";
-
-            settingList = settingDAO.findSettings(currentPage, recordsPerPage);
-            settingType = settingTypeDAO.getAllSettingType();
-
-            int rows = settingDAO.getNumberOfRows();
-            int numOfPage = rows / recordsPerPage;
-            if (numOfPage % recordsPerPage > 0) {
-                numOfPage++;
+            check = settingDAO.changeSettingStatus(sid, state);
+            if (check) {
+                response.sendRedirect("settingList");
+            } else {
+                request.getRequestDispatcher("Error.jsp").forward(request, response);
             }
-
-            request.setAttribute("SettingList", settingList);
-            session.setAttribute("fullname", fullname);
-//            request.setAttribute("fullname", fullname);
-            request.setAttribute("types", settingType);
-            request.setAttribute("numOfPage", numOfPage);
-            request.setAttribute("recordsPerPage", recordsPerPage);
-            request.setAttribute("currentPage", currentPage);
-            request.getRequestDispatcher("./admin/SettingList.jsp").forward(request, response);
-
         } catch (Exception ex) {
             Logger.getLogger(SettingListController.class.getName()).log(Level.SEVERE, null, ex);
-            error = "Đã xảy ra lỗi khi tải CSDL";
-            request.setAttribute("message", error);
-            request.getRequestDispatcher("Error.jsp").forward(request, response);
-
         }
     }
 

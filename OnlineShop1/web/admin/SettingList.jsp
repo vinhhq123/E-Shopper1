@@ -205,7 +205,7 @@
 
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-user"></i>
-                                <span>${requestScope.fullname} <i class="caret"></i></span>
+                                <span>${fullname} <i class="caret"></i></span>
                             </a>
                             <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
                                 <li class="dropdown-header text-center">Account</li>
@@ -259,7 +259,7 @@
                             <img src="${pageContext.request.contextPath}/admin/img/avatar3.png" class="img-circle" alt="User Image" />
                         </div>
                         <div class="pull-left info">
-                            <p>Hello, ${requestScope.fullname}</p>
+                            <p>Hello, ${fullname}</p>
 
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
@@ -286,19 +286,19 @@
                                 <i class="fa fa-user"></i> <span>Customer List</span>
                             </a>
                         </li>
-                        
+
                         <li>
                             <a href="basic_form.html">
                                 <i class="fa fa-check"></i> <span>Feedback List</span>
                             </a>
                         </li>
-                        
+
                         <li>
                             <a href="basic_form.html">
                                 <i class="fa fa-square"></i> <span>Slider List</span>
                             </a>
                         </li>
-                        
+
                         <li>
                             <a href="basic_form.html">
                                 <i class="fa fa-paperclip"></i> <span>Post List</span>
@@ -325,7 +325,7 @@
                         <div class="col-xs-12">
                             <div class="panel">
                                 <header class="panel-heading">
-                                    Setting List
+                                    <b>Setting List</b>
 
                                 </header>
                                 <!-- <div class="box-header"> -->
@@ -334,30 +334,12 @@
                                 <!-- </div> -->
                                 <div class="panel-body table-responsive">
                                     <div class="box-tools m-b-15">
-                                        <!--<div class="input-group">
-                                        <input type="text" name="table_search" class="form-control input-sm" style="width: 150px;" placeholder="Search"/>
-                                        <div class="input-group-btn">
-                                            <select class="select" aria-label="Default select example">
-                                                <option selected>All types</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select>
-                                            <select class="select" aria-label="Default select example">
-                                                <option selected>All statuses</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select>
-                                            <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
-                                        </div>
-                                    </div>-->
                                         <div class="row">
                                             <div class="col-sm-8">
-                                                <form class="form-inline" role="form" action="<%=request.getContextPath()%>/searchSettingController" method="get">
+                                                <form class="form-inline" role="form" action="<%=request.getContextPath()%>/searchSetting" method="get">
                                                     <div class="form-group">
                                                         <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                                                        <input type="text" name="table_search" class="form-control" id="exampleInputEmail2" placeholder=" Enter value to search ">
+                                                        <input type="text" name="table_search" class="form-control" id="exampleInputEmail2" placeholder=" Enter value to search " value="${requestScope.searchValue}">
                                                     </div>
                                                     <div class="form-group">
                                                         <select class="select" aria-label="Default select example" name="status">
@@ -370,7 +352,7 @@
                                                         <select class="select" aria-label="Default select example" name="type">
                                                             <option selected value="">All types</option>
                                                             <c:forEach items="${requestScope.types}" var="ty">
-                                                            <option value="${ty.getSettingTypeId()}">${ty.getTypeName()}</option>
+                                                                <option value="${ty.getSettingTypeId()}">${ty.getTypeName()}</option>
                                                             </c:forEach>
                                                         </select>
                                                     </div>
@@ -384,7 +366,7 @@
                                         </div>
 
                                     </div>
-                                                    <table class="table table-striped" id="SettingListTable">
+                                    <table class="table table-striped" id="SettingListTable">
                                         <tr>
                                             <th onclick="sortTable(0)">ID</th>
                                             <th onclick="sortTable(1)">Type</th>
@@ -395,39 +377,43 @@
                                         </tr>
                                         <c:forEach items="${SettingList}" var="con">
                                             <tr>
-                                            <td>${con.getSettingId()}</td>
-                                            <td>
-                                                <c:forEach items="${requestScope.types}" var="type">
-                                                    <c:if test="${type.getSettingTypeId() == con.getSettingType()}">
-                                                ${type.getTypeName()}
-                                                    </c:if>    
-                                                </c:forEach>
-                                            </td>
-                                            <td>${con.getSettingValue()}</td>
-                                            <td>${con.getSettingOrder()}</td>
-                                            <td><c:if test="${con.isSettingStatus()}">
-                                                <span class="label label-success">Active</span></td>
-                                                </c:if>
-                                                <c:if test="${! con.isSettingStatus()}">
+                                                <td>${con.getSettingId()}</td>
+                                                <td>
+                                                    <c:forEach items="${requestScope.types}" var="type">
+                                                        <c:if test="${type.getSettingTypeId() == con.getSettingType()}">
+                                                            ${type.getTypeName()}
+                                                        </c:if>    
+                                                    </c:forEach>
+                                                </td>
+                                                <td>${con.getSettingValue()}</td>
+                                                <td>${con.getSettingOrder()}</td>
+                                                <td><c:if test="${con.isSettingStatus()}">
+                                                        <span class="label label-success">Active</span></td>
+                                                    </c:if>
+                                                    <c:if test="${! con.isSettingStatus()}">
                                                 <span class="label label-danger">Inactive</span></td>
-                                                </c:if>
+                                            </c:if>
                                             <td><a href="#">Edit</a>            
                                                 <c:if test="${con.isSettingStatus()}">
-                                                <a href="<%=request.getContextPath()%>/activateSetting?sid=${con.getSettingId()}&status=${con.isSettingStatus()}">Deactivate</a>
+                                                    <a href="<%=request.getContextPath()%>/activateSetting?sid=${con.getSettingId()}&status=${con.isSettingStatus()}">Deactivate</a>
                                                 </c:if>
                                                 <c:if test="${! con.isSettingStatus()}">
-                                                <a href="<%=request.getContextPath()%>/activateSetting?sid=${con.getSettingId()}&status=${con.isSettingStatus()}">Activate</a>
+                                                    <a href="<%=request.getContextPath()%>/activateSetting?sid=${con.getSettingId()}&status=${con.isSettingStatus()}">Activate</a>
                                                 </c:if>
                                             </td>
                                             </tr>
                                         </c:forEach>
                                     </table>
                                     <br>
+                                    <c:if test="${requestScope.SettingList.isEmpty()}">
+                                        <p style="text-align: center">No matching Setting found </p>
+                                    </c:if>                
+                                    <br>
                                     <div class="table-foot">
                                         <ul class="pagination pagination-sm no-margin pull-right">
                                             <c:if test="${requestScope.currentPage != 1}">
                                                 <li class="disabled"><a
-                                                href="<%=request.getContextPath()%>/settingListController?currentPage=${requestScope.currentPage-1}">Previous</a>
+                                                        href="<%=request.getContextPath()%>/settingList?currentPage=${requestScope.currentPage-1}">Previous</a>
                                                 </li>
                                             </c:if>
 
@@ -440,7 +426,7 @@
                                                     </c:when>
                                                     <c:otherwise>
                                                         <li class="disabled"><a
-                                                        href="<%=request.getContextPath()%>/settingListController?currentPage=${i}">${i}</a>
+                                                                href="<%=request.getContextPath()%>/settingList?currentPage=${i}">${i}</a>
                                                         </li>
                                                     </c:otherwise>
                                                 </c:choose>
@@ -448,7 +434,7 @@
 
                                             <c:if test="${requestScope.currentPage lt requestScope.numOfPage}">
                                                 <li class="disabled"><a
-                                                href="<%=request.getContextPath()%>/settingListController?currentPage=${requestScope.currentPage+1}">Next</a>
+                                                        href="<%=request.getContextPath()%>/settingList?currentPage=${requestScope.currentPage+1}">Next</a>
                                                 </li>
                                             </c:if>
                                         </ul>
@@ -459,7 +445,7 @@
                     </div>
                 </section><!-- /.content -->
                 <div class="footer-main">
-                    Copyright &copy Director, 2014
+                    Copyright &copy Online Shop , 2022
                 </div>
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
