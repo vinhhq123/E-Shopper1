@@ -1,3 +1,10 @@
+<%-- 
+    Document   : form_edit
+    Created on : Jan 15, 2022, 3:51:11 PM
+    Author     : HL2020
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,30 +41,18 @@
                     <h2 class="title">Setting Details</h2>
                     <form method="POST">
                         <div class="row row-space">
-                             <div class="input-group">
-                            <label class="label">Setting type</label>
-                            <div class="rs-select2 js-select-simple select--no-search">
-                                <select name="subject">
-                                    <option disabled="disabled" selected="selected">Choose option</option>
-                                    <option>Subject 1</option>
-                                    <option>Subject 2</option>
-                                    <option>Subject 3</option>
-                                </select>
-                                <div class="select-dropdown"></div>
+                             <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Setting Type</label>
+                                    <input class="input--style-4" type="email" name="email">
+                                </div>
                             </div>
-                        </div>
-                             <div class="input-group">
-                            <label class="label">Setting Value</label>
-                            <div class="rs-select2 js-select-simple select--no-search">
-                                <select name="subject">
-                                    <option disabled="disabled" selected="selected">Choose option</option>
-                                    <option>Subject 1</option>
-                                    <option>Subject 2</option>
-                                    <option>Subject 3</option>
-                                </select>
-                                <div class="select-dropdown"></div>
+                             <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Setting Value</label>
+                                    <input class="input--style-4" type="email" name="email">
+                                </div>
                             </div>
-                        </div>
                         </div>
                         <div class="row row-space">
                             <div class="col-2">
