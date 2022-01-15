@@ -83,7 +83,7 @@ public class SettingListController extends HttpServlet {
             fullname = "Temp";
 
             // Get all the setting in the selected page
-            settingList = settingDAO.findSettings(currentPage, recordsPerPage);
+            settingList = settingDAO.getSettingByPage(currentPage, recordsPerPage);
             // Get all the setting types from the database
             settingType = settingTypeDAO.getAllSettingType();
 

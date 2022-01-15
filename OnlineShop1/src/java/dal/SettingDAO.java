@@ -145,7 +145,7 @@ public class SettingDAO extends DBContext {
         return check;
     }
 
-    public List<Setting> findSettings(int currentPage, int recordsPerPage) {
+    public List<Setting> getSettingByPage(int currentPage, int recordsPerPage) {
 
         List<Setting> settings = new ArrayList<>();
         int start = currentPage * recordsPerPage - recordsPerPage;
