@@ -1,19 +1,15 @@
 <%-- 
-    Document   : SettingList
-    Created on : 08-Jan-2022, 17:33:06
+    Document   : Error
+    Created on : 15-Jan-2022, 17:30:21
     Author     : VINH
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Setting List</title>
+        <title>Error</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -333,112 +329,9 @@
 
                                 <!-- </div> -->
                                 <div class="panel-body table-responsive">
-                                    <div class="box-tools m-b-15">
-                                        <div class="row">
-                                            <div class="col-sm-8">
-                                                <form class="form-inline" role="form" action="<%=request.getContextPath()%>/searchSetting" method="get">
-                                                    <div class="form-group">
-                                                        <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                                                        <input type="text" name="table_search" class="form-control" id="exampleInputEmail2" placeholder=" Enter value to search " value="${requestScope.searchValue}" onblur="this.value = removeSpaces(this.value);">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <select class="select" aria-label="Default select example" name="status">
-                                                            <option selected value="">All Statuses</option>
-                                                            <option value="1">Active</option>
-                                                            <option value="0">Inactive</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <select class="select" aria-label="Default select example" name="type">
-                                                            <option selected value="">All types</option>
-                                                            <c:forEach items="${requestScope.types}" var="ty">
-                                                                <option value="${ty.getSettingTypeId()}">${ty.getTypeName()}</option>
-                                                            </c:forEach>
-                                                        </select>
-                                                    </div>
-                                                    <button type="submit" class="btn btn-success">Search</button>
-                                                </form>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <a href="#" style="float: right"> Add new</a>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    <table class="table table-striped" id="SettingListTable">
-                                        <tr>
-                                            <th onclick="sortTable(0)">ID</th>
-                                            <th onclick="sortTable(1)">Type</th>
-                                            <th onclick="sortTable(2)">Value</th>
-                                            <th onclick="sortTable(3)">Order</th>
-                                            <th onclick="sortTable(4)">Status</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                        <c:forEach items="${SettingList}" var="con">
-                                            <tr>
-                                                <td>${con.getSettingId()}</td>
-                                                <td>
-                                                    <c:forEach items="${requestScope.types}" var="type">
-                                                        <c:if test="${type.getSettingTypeId() == con.getSettingType()}">
-                                                            ${type.getTypeName()}
-                                                        </c:if>    
-                                                    </c:forEach>
-                                                </td>
-                                                <td>${con.getSettingValue()}</td>
-                                                <td>${con.getSettingOrder()}</td>
-                                                <td><c:if test="${con.isSettingStatus()}">
-                                                        <span class="label label-success">Active</span></td>
-                                                    </c:if>
-                                                    <c:if test="${! con.isSettingStatus()}">
-                                                <span class="label label-danger">Inactive</span></td>
-                                            </c:if>
-                                            <td><a href="#">Edit</a>            
-                                                <c:if test="${con.isSettingStatus()}">
-                                                    <a href="<%=request.getContextPath()%>/activateSetting?sid=${con.getSettingId()}&status=${con.isSettingStatus()}">Deactivate</a>
-                                                </c:if>
-                                                <c:if test="${! con.isSettingStatus()}">
-                                                    <a href="<%=request.getContextPath()%>/activateSetting?sid=${con.getSettingId()}&status=${con.isSettingStatus()}">Activate</a>
-                                                </c:if>
-                                            </td>
-                                            </tr>
-                                        </c:forEach>
-                                    </table>
                                     <br>
-                                    <c:if test="${requestScope.SettingList.isEmpty()}">
-                                        <p style="text-align: center">No matching Setting found </p>
-                                    </c:if>                
+                                        <h3 style="text-align: center">Oops.Something went wrong</h3>
                                     <br>
-                                    <div class="table-foot">
-                                        <ul class="pagination pagination-sm no-margin pull-right">
-                                            <c:if test="${requestScope.currentPage != 1}">
-                                                <li class="disabled"><a
-                                                        href="<%=request.getContextPath()%>/settingList?currentPage=${requestScope.currentPage-1}">Previous</a>
-                                                </li>
-                                            </c:if>
-
-                                            <c:forEach begin="1" end="${requestScope.numOfPage}" var="i">
-                                                <c:choose>
-                                                    <c:when test="${requestScope.currentPage eq i}">
-                                                        <li class="active"><a>
-                                                                ${i} <span class="sr-only">(current)</span></a>
-                                                        </li>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <li class="disabled"><a
-                                                                href="<%=request.getContextPath()%>/settingList?currentPage=${i}">${i}</a>
-                                                        </li>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </c:forEach>
-
-                                            <c:if test="${requestScope.currentPage lt requestScope.numOfPage}">
-                                                <li class="disabled"><a
-                                                        href="<%=request.getContextPath()%>/settingList?currentPage=${requestScope.currentPage+1}">Next</a>
-                                                </li>
-                                            </c:if>
-                                        </ul>
-                                    </div>
                                 </div><!-- /.box-body -->
                             </div><!-- /.box -->
                         </div>

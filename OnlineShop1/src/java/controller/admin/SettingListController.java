@@ -54,11 +54,13 @@ public class SettingListController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String error = "";
         String fullname = "";
+        // Set current page when user access Setting List page is the first page
         int currentPage = 1;
+        // Set total records per page is 5
         int recordsPerPage = 5;
 
+        // Get the current page from request
         if (request.getParameter("currentPage") != null) {
             currentPage = Integer.parseInt(request.getParameter("currentPage"));
         }
@@ -74,13 +76,20 @@ public class SettingListController extends HttpServlet {
 //            Account account = accountDAO.getAccountByEmail("vinhhqse05532@fpt.edu.vn");
 //            int aid = account.getAid();
 //            Contact contact = contactDAO.getContactByAccountID(aid);
+
+            // Initialize a new session
             HttpSession session = request.getSession(true);
+            // Temporary loged in user full name
             fullname = "Temp";
 
+            // Get all the setting in the selected page
             settingList = settingDAO.findSettings(currentPage, recordsPerPage);
+            // Get all the setting types from the database
             settingType = settingTypeDAO.getAllSettingType();
 
+            // Count total number of Setting in the Setting table
             int rows = settingDAO.getNumberOfRows();
+            // Count total number of page
             int numOfPage = rows / recordsPerPage;
             if (numOfPage % recordsPerPage > 0) {
                 numOfPage++;
@@ -97,9 +106,7 @@ public class SettingListController extends HttpServlet {
 
         } catch (Exception ex) {
             Logger.getLogger(SettingListController.class.getName()).log(Level.SEVERE, null, ex);
-            error = "Đã xảy ra lỗi khi tải CSDL";
-            request.setAttribute("message", error);
-            request.getRequestDispatcher("Error.jsp").forward(request, response);
+            request.getRequestDispatcher("./admin/Error.jsp").forward(request, response);
 
         }
     }

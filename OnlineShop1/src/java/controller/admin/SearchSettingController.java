@@ -53,20 +53,25 @@ public class SearchSettingController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String error = null;
-        String searchField = request.getParameter("table_search");
+        // Get parameter from request
+        String searchField = request.getParameter("table_search").trim();
         String type = request.getParameter("type");
         String status = request.getParameter("status");
         
+        // If user does not filter search by SettingStatus
         if(status == null) status= "";
+        
         SettingDAO settingDAO = new SettingDAO();
         SettingTypeDAO settingTypeDAO = new SettingTypeDAO();
         List<Setting> settingSearch = new ArrayList<>();
         List<SettingType> settingTypes = new ArrayList<>();
         
         try {
+            // Search Setting by selected filter and return an arrayListtt result
             settingSearch = settingDAO.searchSeting(searchField, type, status);
+            // Get all the setting types from the database
             settingTypes = settingTypeDAO.getAllSettingType();
+            
             request.setAttribute("SettingList", settingSearch);
             request.setAttribute("types", settingTypes);
             request.setAttribute("searchValue", searchField);
@@ -74,9 +79,7 @@ public class SearchSettingController extends HttpServlet {
 
         } catch (Exception ex) {
             Logger.getLogger(SettingListController.class.getName()).log(Level.SEVERE, null, ex);
-            error = "Đã xảy ra lỗi khi tải CSDL";
-            request.setAttribute("message", error);
-            request.getRequestDispatcher("Error.jsp").forward(request, response);
+            request.getRequestDispatcher("./admin/Error.jsp").forward(request, response);
 
         }
     }

@@ -49,7 +49,9 @@ public class ActivateSettingController extends HttpServlet {
             throws ServletException, IOException {
 
         boolean check = false;
+        // Setting status to save in the database
         int state = 0;
+        // Get parameter from request
         int sid = Integer.parseInt(request.getParameter("sid"));
         boolean status = Boolean.parseBoolean(request.getParameter("status"));
 
@@ -65,10 +67,12 @@ public class ActivateSettingController extends HttpServlet {
 
         try {
             check = settingDAO.changeSettingStatus(sid, state);
+            // If change setting status successfully
             if (check) {
                 response.sendRedirect("settingList");
             } else {
-                request.getRequestDispatcher("Error.jsp").forward(request, response);
+                // Redirect user to error page
+                request.getRequestDispatcher("./admin/Error.jsp").forward(request, response);
             }
         } catch (Exception ex) {
             Logger.getLogger(SettingListController.class.getName()).log(Level.SEVERE, null, ex);
