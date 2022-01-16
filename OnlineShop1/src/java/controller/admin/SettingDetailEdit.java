@@ -105,10 +105,10 @@ public class SettingDetailEdit extends HttpServlet {
             s.setSettingType(Integer.parseInt(request.getParameter("settingType")));
             s.setSettingValue(request.getParameter("settingValue"));
             s.setSettingOrder(request.getParameter("settingOrder"));
-            s.setSettingStatus(request.getParameter("settingStatus").equals("1"));
+            s.setSettingStatus(request.getParameter("settingStatus").equals("0"));
             SettingDAO db= new SettingDAO();
             db.editsetting(s);
-            response.sendRedirect("settingList");
+            response.sendRedirect("addnewSetting");
         } catch (Exception ex) {
             Logger.getLogger(SettingDetailEdit.class.getName()).log(Level.SEVERE, null, ex);
         }
