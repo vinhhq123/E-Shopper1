@@ -25,12 +25,8 @@
         <url-pattern>/Temporary</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ActivateSettingController</servlet-name>
-        <url-pattern>/activateSetting</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SearchSettingController</servlet-name>
-        <url-pattern>/searchSetting</url-pattern>
+        <servlet-name>SettingDetailAdd</servlet-name>
+        <url-pattern>/addnewSetting</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
