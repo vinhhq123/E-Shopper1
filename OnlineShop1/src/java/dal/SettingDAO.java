@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Setting;
+import model.SettingType;
 
 /**
  *
@@ -83,7 +84,50 @@ public class SettingDAO extends DBContext{
             } catch (Exception ex) {
                 System.out.println("Exception ==== " + ex);
             }
+        }}
+         public Setting getAllSettingTypeName(int id) throws Exception {
+
+        //List<Setting> settings = new ArrayList<>();
+        String sql = "select s.settingId,s.settingType,s.settingValue,s.settingOrder,s.settingStatus,p.typeName  \n" +
+                        "from setting as s  join settingtype as p where s.settingType=p.settingTypeId";
+        Setting setting = null;
+        SettingType typename = null;
+
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+            preparedStatement.setInt(1, id);
+            //Setting setting =null;
+            while (results.next()) {
+                if(setting==null){
+                setting = new Setting();
+                setting.setSettingId(results.getInt("settingId"));
+                setting.setSettingType(results.getInt("settingType"));
+                setting.setSettingValue(results.getString("settingValue"));
+                setting.setSettingOrder(results.getString("settingOrder"));
+                setting.setSettingStatus(results.getBoolean("settingStatus"));
+                typename = new SettingType();
+                typename.setTypeName(results.getString("typeName"));
+                setting.setTypename(typename);
+                //setting.add(setting);
+            }
+                 
+            }
+            return setting;
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
         }
-    }
+
+        return null;}}
         
-    }
+    

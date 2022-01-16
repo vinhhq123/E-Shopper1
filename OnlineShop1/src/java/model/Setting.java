@@ -16,16 +16,18 @@ public class Setting {
     private String settingValue;
     private String settingOrder;
     private boolean settingStatus;
+    private SettingType typename;
 
     public Setting() {
     }
 
-    public Setting(int settingId, int settingType, String settingValue, String settingOrder, boolean settingStatus) {
+    public Setting(int settingId, int settingType, String settingValue, String settingOrder, boolean settingStatus, SettingType typename) {
         this.settingId = settingId;
         this.settingType = settingType;
         this.settingValue = settingValue;
         this.settingOrder = settingOrder;
         this.settingStatus = settingStatus;
+        this.typename = typename;
     }
 
     public int getSettingId() {
@@ -67,6 +69,16 @@ public class Setting {
     public void setSettingStatus(boolean settingStatus) {
         this.settingStatus = settingStatus;
     }
+
+    public SettingType getTypename() {
+        return typename;
+    }
+
+    public void setTypename(SettingType typename) {
+        this.typename = typename;
+    }
+
+   
     
     
 }

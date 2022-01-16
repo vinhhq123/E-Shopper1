@@ -12,6 +12,10 @@
         <servlet-name>SettingDetailAdd</servlet-name>
         <servlet-class>controller.admin.SettingDetailAdd</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SettingDetailEdit</servlet-name>
+        <servlet-class>controller.admin.SettingDetailEdit</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>
         <url-pattern>/settingList</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>SettingDetailAdd</servlet-name>
         <url-pattern>/addnewSetting</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SettingDetailEdit</servlet-name>
+        <url-pattern>/settingEdit</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
