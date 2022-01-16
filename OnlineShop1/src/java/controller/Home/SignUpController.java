@@ -78,22 +78,22 @@ public class SignUpController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         AccountDAO accDB = new AccountDAO();
-        UserDAO useDB = new UserDAO();
         Account a = new Account();
+        UserDAO useDB = new UserDAO();
         User u = new User();
-        u.setFullname(request.getParameter("name"));
         a.setEmail(request.getParameter("email"));
         a.setPassword(request.getParameter("password"));
+        u.setFullname(request.getParameter("name"));
         try {
             accDB.addAccount(a);
         } catch (SQLException ex) {
             Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }    
         try {
             useDB.addUser(u);
         } catch (SQLException ex) {
             Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }    
         response.sendRedirect("SignUp");
     }
 

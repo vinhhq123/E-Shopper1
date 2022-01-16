@@ -173,7 +173,7 @@
 				<div class="col-sm-4">
 					<div class="signup-form"><!--sign up form-->
 						<h2>New User Signup!</h2>
-						<form action="SignUp" method ="POST">
+						<form action="<%=request.getContextPath()%>/SignUp" method ="POST">
 							<input type="text" name="name" placeholder="Name"/>
 							<input type="email" name="email" placeholder="Email Address"/>
 							<input type="password" name="password" placeholder="Password"/>
