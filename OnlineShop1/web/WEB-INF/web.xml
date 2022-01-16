@@ -8,6 +8,10 @@
         <servlet-name>Temporary</servlet-name>
         <servlet-class>controller.manager.Temporary</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SignUpController</servlet-name>
+        <servlet-class>controller.Home.SignUpController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>
         <url-pattern>/settingList</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>Temporary</servlet-name>
         <url-pattern>/Temporary</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SignUpController</servlet-name>
+        <url-pattern>/SignUp</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
