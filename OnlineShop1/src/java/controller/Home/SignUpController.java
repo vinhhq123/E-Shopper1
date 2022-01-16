@@ -6,6 +6,7 @@
 package controller.home;
 
 import dal.AccountDAO;
+import dal.LoginDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -63,7 +64,7 @@ public class SignUpController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("./eShopper/Login.jsp").forward(request, response);
+        request.getRequestDispatcher("Login.jsp").forward(request, response);
     }
 
     /**
@@ -77,15 +78,23 @@ public class SignUpController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String name = request.getParameter("name");
          AccountDAO accDB = new AccountDAO();
         Account a = new Account();
         UserDAO useDB = new UserDAO();
         User u = new User();
-        a.setEmail(request.getParameter("email"));
-        a.setPassword(request.getParameter("password"));
-        u.setFullname(request.getParameter("name"));
+        a.setEmail(email);
+        a.setPassword(password);
+        u.setFullname(name);
+        
         try {
             accDB.addAccount(a);
+             LoginDAO db = new LoginDAO();
+        Account account = db.getAccount(email, password);
+        request.getSession().setAttribute("account", account);
+        response.sendRedirect("home");
         } catch (SQLException ex) {
             Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -93,8 +102,8 @@ public class SignUpController extends HttpServlet {
             useDB.addUser(u);
         } catch (SQLException ex) {
             Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
-        }    
-        response.sendRedirect("SignUp");
+        }  
+        
 
     }
 

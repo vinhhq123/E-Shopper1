@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Account;
 
 /**
@@ -46,7 +47,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("./eShopper/Login.jsp").forward(request, response);
+        request.getRequestDispatcher("Login.jsp").forward(request, response);
     }
 
     /**
@@ -67,11 +68,12 @@ public class LoginController extends HttpServlet {
         if(account == null){
             String fail = "Login faild, please re-login!";
             request.setAttribute("fail", fail);
-            request.getRequestDispatcher("./eShopper/Login.jsp").forward(request, response);
+            request.getRequestDispatcher("Login.jsp").forward(request, response);
         } else {
-            response.getWriter().println("login sucessful!");
+            request.getSession().setAttribute("account", account);
+            request.getRequestDispatcher("home").forward(request, response);
         }
-        request.getSession().setAttribute("account", account);
+        
     }
 
     /**
