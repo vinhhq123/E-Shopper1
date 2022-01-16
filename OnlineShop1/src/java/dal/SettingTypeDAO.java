@@ -52,8 +52,8 @@ public class SettingTypeDAO extends DBContext{
                 System.out.println("Exception ==== " + ex);
             }
         }
-
+        System.out.println("===============================================");
         return settingTypes;
     }
-    
+   
 }

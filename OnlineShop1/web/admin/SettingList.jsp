@@ -360,7 +360,7 @@
                                                 </form>
                                             </div>
                                             <div class="col-sm-4">
-                                                <a href="#" style="float: right"> Add new</a>
+                                                <a href="<%=request.getContextPath()%>/addnewSetting" style="float: right"> Add new</a>
                                             </div>
 
                                         </div>
@@ -393,7 +393,7 @@
                                                     <c:if test="${! con.isSettingStatus()}">
                                                 <span class="label label-danger">Inactive</span></td>
                                             </c:if>
-                                            <td><a href="#">Edit</a>            
+                                            <td><a href="<%=request.getContextPath()%>/settingEdit?settingId=${con.getSettingId()}">Edit</a>            
                                                 <c:if test="${con.isSettingStatus()}">
                                                     <a href="<%=request.getContextPath()%>/activateSetting?sid=${con.getSettingId()}&status=${con.isSettingStatus()}">Deactivate</a>
                                                 </c:if>
