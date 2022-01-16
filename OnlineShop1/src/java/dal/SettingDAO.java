@@ -126,18 +126,18 @@ public class SettingDAO extends DBContext{
         }
              System.out.println(setting.toString());
         return null;}
-   public List<String> getValuebyType() throws Exception{
+   public List<String> getValuebyType(int id) throws Exception{
         List<String> settingValuebyType = new ArrayList<>();
         String typename="";
         String sql = "select settingValue \n" +
                     "from setting\n" +
-                   "where settingType = ?";
+                   "where settingType ="+id;
         
          try {
             connection = getConnection();
             preparedStatement = connection.prepareStatement(sql);
             results = preparedStatement.executeQuery();
-
+            
             while (results.next()) {
                 typename=results.getString(1);
                settingValuebyType.add(typename);
@@ -157,7 +157,37 @@ public class SettingDAO extends DBContext{
         System.out.println("===============================================");
         return settingValuebyType ;
     }
-    }      
+   public int getValuebySetting (int sid) throws Exception{
+       String sql = "select settingType  \n" +
+                "from setting\n" +
+                   "where settingId ="+sid;
+       int value=0;
+       try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+            
+            while (results.next()) {
+                value=results.getInt(1);
+            
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        System.out.println("===============================================");
+        return value ;
+    }
+   }
+          
 
         
     

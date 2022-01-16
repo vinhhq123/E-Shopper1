@@ -67,13 +67,16 @@ public class SettingDetailEdit extends HttpServlet {
         try {           
             int id = Integer.parseInt(request.getParameter("settingId"));
             //int id = 1;
+            int value=0;
             SettingDAO db = new SettingDAO();
             Setting setting =db.getAllSettingTypeName(id);
             SettingTypeDAO settingTypeDAO = new SettingTypeDAO();
             List<SettingType> settingType = new ArrayList<>();
             settingType = settingTypeDAO.getAllSettingTye();
             List<String> getValuebyTye =  new ArrayList<>();
-             getValuebyTye= db.getValuebyType();
+            value = db.getValuebySetting(id);
+      
+            getValuebyTye= db.getValuebyType(value);
             
             request.setAttribute("valuebytye", getValuebyTye);
             request.setAttribute("setting", setting);
