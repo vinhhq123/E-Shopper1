@@ -155,16 +155,19 @@
 			<div class="row">
 				<div class="col-sm-4 col-sm-offset-1">
 					<div class="login-form"><!--login form-->
-						<h2>Login to your account</h2>
-						<form action="#">
-							<input type="text" placeholder="Name" />
-							<input type="email" placeholder="Email Address" />
+						
+                                                <h2>Login to your account</h2>
+                                                <form action="login" method="POST">
+                                                    <input type="text" placeholder="Email" name="email" /> </br>
+                                                        <input type="password" placeholder="password" name="password" /> </br>
 							<span>
 								<input type="checkbox" class="checkbox"> 
 								Keep me signed in
 							</span>
-							<button type="submit" class="btn btn-default">Login</button>
+                                                        <p style="color: red">${requestScope.fail}</p>
+                                                        <button type="submit" class="btn btn-default">Login</button>
 						</form>
+                                                
 					</div><!--/login form-->
 				</div>
 				<div class="col-sm-1">
