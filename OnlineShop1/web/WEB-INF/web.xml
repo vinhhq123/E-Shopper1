@@ -21,13 +21,12 @@
         <servlet-class>controller.admin.SettingDetailAdd</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SignUpController</servlet-name>
-        <servlet-class>controller.home.SignUpController</servlet-class>
-    </servlet>
-
-    <servlet>
         <servlet-name>SettingDetailEdit</servlet-name>
         <servlet-class>controller.admin.SettingDetailEdit</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SignUpController</servlet-name>
+        <servlet-class>controller.home.SignUpController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>
@@ -53,7 +52,6 @@
         <servlet-name>SignUpController</servlet-name>
         <url-pattern>/SignUp</url-pattern>
     </servlet-mapping>
-
     <session-config>
         <session-timeout>
             30
