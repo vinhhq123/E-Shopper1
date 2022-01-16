@@ -41,7 +41,7 @@
             <div class="card card-4">
                 <div class="card-body">
                     <h2 class="title">Setting Details</h2>
-                    <form action="settingEdit" method="POST">
+                    <form action="<%=request.getContextPath()%>/settingEdit" method="POST">
                         <div class="row row-space">
                              <div class="input-group">
                             <label class="label">Setting type</label>
