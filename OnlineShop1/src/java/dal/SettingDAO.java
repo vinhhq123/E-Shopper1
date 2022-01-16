@@ -10,6 +10,7 @@ import dbcontext.DBContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Setting;
@@ -59,4 +60,30 @@ public class SettingDAO extends DBContext{
 
         return settings;
     }
-}
+    public void insertSetting(Setting s )throws SQLException{
+        String sql = "INSERT INTO setting (settingType, settingValue, settingOrder, settingStatus) VALUES (?, ?, ?, ?);";
+        
+
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1,s.getSettingType());
+            preparedStatement.setString(2,s.getSettingValue());
+            preparedStatement.setString(3,s.getSettingOrder());
+            preparedStatement.setBoolean(4,s.isSettingStatus());
+            preparedStatement.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+    }
+        
+    }

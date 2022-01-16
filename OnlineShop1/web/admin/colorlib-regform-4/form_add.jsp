@@ -41,7 +41,19 @@
                     <h2 class="title">Setting Details</h2>
                     <form method="POST">
                         <div class="row row-space">
-                             <div class="col-2">
+<!--                             <div class="input-group">
+                            <label class="label">Setting Type</label>
+                            <div class="rs-select2 js-select-simple select--no-search">
+                                <select name="subject">
+                                    <option disabled="disabled" selected="selected">Choose option</option>
+                                    <option>Subject 1</option>
+                                    <option>Subject 2</option>
+                                    <option>Subject 3</option>
+                                </select>
+                                <div class="select-dropdown"></div>
+                            </div>
+                        </div>-->
+                        <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Setting Type</label>
                                     <input class="input--style-4" type="email" name="email">
