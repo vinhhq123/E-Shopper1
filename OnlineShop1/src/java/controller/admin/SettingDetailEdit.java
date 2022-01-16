@@ -99,7 +99,19 @@ public class SettingDetailEdit extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            Setting s = new Setting();
+            s.setSettingId(Integer.parseInt(request.getParameter("settingId")));
+            s.setSettingType(Integer.parseInt(request.getParameter("settingType")));
+            s.setSettingValue(request.getParameter("settingValue"));
+            s.setSettingOrder(request.getParameter("settingOrder"));
+            s.setSettingStatus(request.getParameter("settingStatus").equals("1"));
+            SettingDAO db= new SettingDAO();
+            db.editsetting(s);
+            response.sendRedirect("settingList");
+        } catch (Exception ex) {
+            Logger.getLogger(SettingDetailEdit.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

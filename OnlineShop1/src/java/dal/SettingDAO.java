@@ -186,6 +186,34 @@ public class SettingDAO extends DBContext{
         System.out.println("===============================================");
         return value ;
     }
+   public void editsetting(Setting s) throws Exception{
+   String sql ="UPDATE setting SET settingType = ?, settingValue= ?, \n" +
+        "settingOrder = ?, settingStatus = ? \n" +
+            "WHERE settingId = ?";
+    try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+            preparedStatement.setInt(1, s.getSettingType());
+            preparedStatement.setString(2, s.getSettingValue());
+            preparedStatement.setString(3, s.getSettingOrder());
+            preparedStatement.setBoolean(4,s.isSettingStatus());
+            preparedStatement.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        System.out.println("===============================================");
+        
+  }
    }
           
 
