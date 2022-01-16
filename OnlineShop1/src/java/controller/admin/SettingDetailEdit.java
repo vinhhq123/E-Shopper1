@@ -61,7 +61,7 @@ public class SettingDetailEdit extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            int id = Integer.parseInt(request.getParameter("id"));
+            int id = Integer.parseInt(request.getParameter("settingId"));
             SettingDAO db = new SettingDAO();
             Setting setting =db.getAllSettingTypeName(id);
             request.setAttribute("setting", setting);

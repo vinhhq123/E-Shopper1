@@ -32,7 +32,7 @@
     <link href="${pageContext.request.contextPath}/admin/colorlib-regform-4/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
 
     <!-- Main CSS-->
-    <link href="css/main.css" rel="stylesheet" media="all">
+    <link href="${pageContext.request.contextPath}/admin/colorlib-regform-4/css/main.css" rel="stylesheet" media="all">
 </head>
 
 <body>
@@ -64,9 +64,8 @@
                                 <select name="settingValue">
                                     <c:forEach items="${requestScope.setting}" var="d">
                                  <option 
-                                <c:if test="${requestScope.setting.settingValue}"> selected="selected"
-                                        </c:if>
-                                  value="${d.name}" >${d.name}</option>
+                                
+                                  value="${d.settingValue}" >${d.settingValue}</option>
                                    </c:forEach>
                                 </select>
                                 <div class="select-dropdown"></div>
@@ -77,7 +76,7 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Setting Order</label>
-                                    <input class="input--style-4" type="email" name="email">
+                                    <input class="input--style-4" type="text" value="${requestScope.setting.settingOrder}" name="settingOrder">
                                 </div>
                             </div>
                             
