@@ -81,10 +81,10 @@ public class SettingDetailAdd extends HttpServlet {
             s.setSettingValue(request.getParameter("value"));
             s.setSettingOrder(request.getParameter("order"));
 //        s.setSettingStatus(request.getParameter("value"));
-             s.setSettingStatus(request.getParameter("status").equals("0"));
-              SettingDAO db =new SettingDAO();
+            s.setSettingStatus(request.getParameter("status").equals("0"));
+            SettingDAO db =new SettingDAO();
             db.insertSetting(s);
-            response.sendRedirect("list");
+            response.sendRedirect("settingList");
 
 //s.setId(Integer.parseInt(request.getParameter("id")));
         } catch (SQLException ex) {
