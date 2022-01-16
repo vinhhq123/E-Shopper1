@@ -7,7 +7,7 @@
     <servlet>
         <servlet-name>Temporary</servlet-name>
         <servlet-class>controller.manager.Temporary</servlet-class>
-    </servlet>
+    </servlet> 
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>
         <url-pattern>/settingList</url-pattern>
