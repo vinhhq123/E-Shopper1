@@ -6,8 +6,11 @@
 package controller.admin;
 
 import dal.SettingDAO;
+import dal.SettingTypeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -15,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Setting;
+import model.SettingType;
 
 /**
  *
@@ -60,11 +64,20 @@ public class SettingDetailEdit extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
+        try {           
             int id = Integer.parseInt(request.getParameter("settingId"));
+            //int id = 1;
             SettingDAO db = new SettingDAO();
             Setting setting =db.getAllSettingTypeName(id);
+            SettingTypeDAO settingTypeDAO = new SettingTypeDAO();
+            List<SettingType> settingType = new ArrayList<>();
+            settingType = settingTypeDAO.getAllSettingTye();
+            List<String> getValuebyTye =  new ArrayList<>();
+             getValuebyTye= db.getValuebyType();
+            
+            request.setAttribute("valuebytye", getValuebyTye);
             request.setAttribute("setting", setting);
+            request.setAttribute("typename", settingType);
             request.getRequestDispatcher("./admin/colorlib-regform-4/form_edit.jsp").forward(request, response);
         } catch (Exception ex) {
             Logger.getLogger(SettingDetailEdit.class.getName()).log(Level.SEVERE, null, ex);

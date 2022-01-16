@@ -16,7 +16,7 @@ public class Setting {
     private String settingValue;
     private String settingOrder;
     private boolean settingStatus;
-    private SettingType typename;
+    
 
     public Setting() {
     }
@@ -27,7 +27,7 @@ public class Setting {
         this.settingValue = settingValue;
         this.settingOrder = settingOrder;
         this.settingStatus = settingStatus;
-        this.typename = typename;
+        
     }
 
     public int getSettingId() {
@@ -70,14 +70,9 @@ public class Setting {
         this.settingStatus = settingStatus;
     }
 
-    public SettingType getTypename() {
-        return typename;
-    }
+   
 
-    public void setTypename(SettingType typename) {
-        this.typename = typename;
-    }
-
+   
    
     
     

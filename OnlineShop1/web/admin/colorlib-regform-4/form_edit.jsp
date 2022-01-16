@@ -6,13 +6,13 @@
 <%@page import="model.Setting"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <!-- Required meta tags-->
-    <meta charset="UTF-8">
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Colorlib Templates">
     <meta name="author" content="Colorlib">
@@ -47,13 +47,9 @@
                             <label class="label">Setting type</label>
                             <div class="rs-select2 js-select-simple select--no-search">
                                 <select name="settingType">
-                                 <c:forEach items="${requestScope.setting}" var="d">
-                                 <option 
-                                <c:if test="${requestScope.setting.clas.id}">
-                            selected="selected"
-                                        </c:if>
-                                        value="${d.id}" >${d.name}</option>
-                                </c:forEach>   
+                                   <c:forEach items="${requestScope.typename}" var="ty">
+                                       <option value=" ${ty.getSettingTypeId()}">${ty.getTypeName()} </option>
+                                   </c:forEach>
                                 </select>
                                 <div class="select-dropdown"></div>
                             </div>
@@ -62,10 +58,8 @@
                             <label class="label">Setting Value</label>
                             <div class="rs-select2 js-select-simple select--no-search">
                                 <select name="settingValue">
-                                    <c:forEach items="${requestScope.setting}" var="d">
-                                 <option 
-                                
-                                  value="${d.settingValue}" >${d.settingValue}</option>
+                                    <c:forEach items="${requestScope.valuebytye}" var="tyy">
+                                       <option value=" ${tyy}">${tyy} </option>
                                    </c:forEach>
                                 </select>
                                 <div class="select-dropdown"></div>
@@ -76,7 +70,7 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Setting Order</label>
-                                    <input class="input--style-4" type="text" value="${requestScope.setting.settingOrder}" name="settingOrder">
+                                    <input class="input--style-4" type="text" value="${requestScope.setting.getSettingOrder()}" name="settingOrder">
                                 </div>
                             </div>
                             

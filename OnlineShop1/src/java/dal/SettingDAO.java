@@ -87,18 +87,20 @@ public class SettingDAO extends DBContext{
         }}
          public Setting getAllSettingTypeName(int id) throws Exception {
 
-        //List<Setting> settings = new ArrayList<>();
-        String sql = "select s.settingId,s.settingType,s.settingValue,s.settingOrder,s.settingStatus,p.typeName  \n" +
-                        "from setting as s  join settingtype as p where s.settingType=p.settingTypeId";
+        
+        String sql = "select settingId,settingType,settingValue,settingOrder,settingStatus \n" +
+                            "from setting\n" +
+                            "where settingId="+id;
+                           
         Setting setting = null;
-        SettingType typename = null;
+        
 
         try {
             connection = getConnection();
             preparedStatement = connection.prepareStatement(sql);
             results = preparedStatement.executeQuery();
-            preparedStatement.setInt(1, id);
-            //Setting setting =null;
+            //preparedStatement.setInt(1, id);
+            
             while (results.next()) {
                 if(setting==null){
                 setting = new Setting();
@@ -107,13 +109,8 @@ public class SettingDAO extends DBContext{
                 setting.setSettingValue(results.getString("settingValue"));
                 setting.setSettingOrder(results.getString("settingOrder"));
                 setting.setSettingStatus(results.getBoolean("settingStatus"));
-                typename = new SettingType();
-                typename.setTypeName(results.getString("typeName"));
-                setting.setTypename(typename);
-                //setting.add(setting);
-            }
-                 
-            }
+            }   
+            }       
             return setting;
         } catch (Exception ex) {
             System.out.println("Exception ==== " + ex);
@@ -127,7 +124,40 @@ public class SettingDAO extends DBContext{
                 System.out.println("Exception ==== " + ex);
             }
         }
+             System.out.println(setting.toString());
+        return null;}
+   public List<String> getValuebyType() throws Exception{
+        List<String> settingValuebyType = new ArrayList<>();
+        String typename="";
+        String sql = "select settingValue \n" +
+                    "from setting\n" +
+                   "where settingType = ?";
+        
+         try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
 
-        return null;}}
+            while (results.next()) {
+                typename=results.getString(1);
+               settingValuebyType.add(typename);
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        System.out.println("===============================================");
+        return settingValuebyType ;
+    }
+    }      
+
         
     
