@@ -22,7 +22,7 @@
     </servlet>
     <servlet>
         <servlet-name>SignUpController</servlet-name>
-        <servlet-class>controller.home.SignUpController</servlet-class>
+        <servlet-class>controller.login.SignUpController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LoginController</servlet-name>
@@ -30,7 +30,7 @@
     </servlet>
     <servlet>
         <servlet-name>HomeController</servlet-name>
-        <servlet-class>controller.home.HomeController</servlet-class>
+        <servlet-class>controller.homepage.HomeController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>

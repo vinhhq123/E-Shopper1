@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.home;
+package controller.login;
 
 import dal.AccountDAO;
 import dal.LoginDAO;
@@ -78,28 +78,29 @@ public class SignUpController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String name = request.getParameter("name");
-        AccountDAO accDB = new AccountDAO();
-        Account a = new Account();
-        UserDAO useDB = new UserDAO();
-        User u = new User();
-        a.setEmail(email);
-        a.setPassword(password);
-        u.setFullname(name);
-
         try {
-            accDB.addAccount(a);
-            LoginDAO db = new LoginDAO();
-            Account account = db.getAccount(email, password);
-            request.getSession().setAttribute("account", account);
-            response.sendRedirect("home");
-        } catch (SQLException ex) {
-            Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            useDB.addUser(u);
+            AccountDAO accDB = new AccountDAO();
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            String rePassword = request.getParameter("rePassword");
+            if(accDB.checkAccountExist(email) != null)
+            {
+                String fail1 = "Email already exists!";
+                request.setAttribute("fail1", fail1);
+                request.getRequestDispatcher("Login.jsp").forward(request, response);
+            }
+            else if (!password.equals(rePassword)){
+                String fail2 = "Password is not correct!";
+                request.setAttribute("fail2", fail2);
+                request.getRequestDispatcher("Login.jsp").forward(request, response);
+            }
+            else {
+                accDB.addAccount(email,password);
+                LoginDAO db = new LoginDAO();
+                Account account = db.getAccount(email, password);
+                request.getSession().setAttribute("account", account);
+                response.sendRedirect("home");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
         }

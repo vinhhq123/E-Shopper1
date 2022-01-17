@@ -131,8 +131,12 @@
                             <h2>New User Signup!</h2>
                             <form action="<%=request.getContextPath()%>/SignUp" method ="POST">
                                 <input type="text" name="name" placeholder="Name"/>
-                                <input type="email" name="email" placeholder="Email Address"/>
-                                <input type="password" name="password" placeholder="Password"/>
+                                <input type="email" name="email" placeholder="Email Address" required/>
+                                                        <p style="color: red">${requestScope.fail1}</p>
+							<input type="password" name="password" placeholder="Password"required/>
+                                                        <input type="password" name="rePassword" placeholder="Confirm Password"required/>
+                                                        <p style="color: red">${requestScope.fail2}</p>
+                                
                                 <button type="submit" class="btn btn-default">Signup</button>
                             </form>
                         </div><!--/sign up form-->
