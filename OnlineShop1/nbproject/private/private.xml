@@ -3,11 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/dal/dao.java</file>
-            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/dbcontext/DBContext.java</file>
-            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/dal/SettingDAO.java</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/admin/SettingList.jsp</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/model/User.java</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/WEB-INF/web.xml</file>
             <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/index.jsp</file>
-            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/dal/SettingTypeDAO.java</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/controller/login/LoginController.java</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/controller/home/SignUpController.java</file>
             <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/controller/home/HomeController.java</file>
             <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/controller/admin/SettingListController.java</file>
         </group>
