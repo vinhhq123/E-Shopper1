@@ -101,7 +101,7 @@ public class SettingDetailEdit extends HttpServlet {
             throws ServletException, IOException {
         try {
             Setting s = new Setting();
-            s.setSettingId(Integer.parseInt(request.getParameter("settingId")));
+           // s.setSettingId(Integer.parseInt(request.getParameter("settingId")));
             s.setSettingType(Integer.parseInt(request.getParameter("settingType")));
             s.setSettingValue(request.getParameter("settingValue"));
             s.setSettingOrder(request.getParameter("settingOrder"));
