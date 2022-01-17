@@ -178,7 +178,7 @@
 							<input type="email" name="email" placeholder="Email Address" required/>
                                                         <p style="color: red">${requestScope.fail1}</p>
 							<input type="password" name="password" placeholder="Password"required/>
-                                                        <input type="rePassword" name="password" placeholder="Confirm Password"required/>
+                                                        <input type="password" name="rePassword" placeholder="Confirm Password"required/>
                                                         <p style="color: red">${requestScope.fail2}</p>
 							<button type="submit" class="btn btn-default">Signup</button>
 						</form>
