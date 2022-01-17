@@ -77,24 +77,29 @@ public class SignUpController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        AccountDAO accDB = new AccountDAO();
-        Account a = new Account();
-        UserDAO useDB = new UserDAO();
-        User u = new User();
-        a.setEmail(request.getParameter("email"));
-        a.setPassword(request.getParameter("password"));
-        u.setFullname(request.getParameter("name"));
         try {
-            accDB.addAccount(a);
+            AccountDAO accDB = new AccountDAO();
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            String rePassword = request.getParameter("rePassword");
+            if(accDB.checkAccountExist(email) != null)
+            {
+                String fail1 = "Email already exists!";
+                request.setAttribute("fail1", fail1);
+                request.getRequestDispatcher("./eShopper/Login.jsp").forward(request, response);
+            }
+            else if (!password.equals(rePassword)){
+                String fail2 = "Password is not correct!";
+                request.setAttribute("fail2", fail2);
+                request.getRequestDispatcher("./eShopper/Login.jsp").forward(request, response);
+            }
+            else {
+                accDB.addAccount(email,password);
+                response.sendRedirect("SignUp");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
-        }    
-        try {
-            useDB.addUser(u);
-        } catch (SQLException ex) {
-            Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
-        }    
-        response.sendRedirect("SignUp");
+        }
     }
 
     /**
