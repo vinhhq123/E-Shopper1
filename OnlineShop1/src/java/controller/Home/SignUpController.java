@@ -43,7 +43,7 @@ public class SignUpController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SignUpController</title>");            
+            out.println("<title>Servlet SignUpController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet SignUpController at " + request.getContextPath() + "</h1>");
@@ -81,20 +81,20 @@ public class SignUpController extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String name = request.getParameter("name");
-         AccountDAO accDB = new AccountDAO();
+        AccountDAO accDB = new AccountDAO();
         Account a = new Account();
         UserDAO useDB = new UserDAO();
         User u = new User();
         a.setEmail(email);
         a.setPassword(password);
         u.setFullname(name);
-        
+
         try {
             accDB.addAccount(a);
-             LoginDAO db = new LoginDAO();
-        Account account = db.getAccount(email, password);
-        request.getSession().setAttribute("account", account);
-        response.sendRedirect("home");
+            LoginDAO db = new LoginDAO();
+            Account account = db.getAccount(email, password);
+            request.getSession().setAttribute("account", account);
+            response.sendRedirect("home");
         } catch (SQLException ex) {
             Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -102,8 +102,7 @@ public class SignUpController extends HttpServlet {
             useDB.addUser(u);
         } catch (SQLException ex) {
             Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
-        }  
-        
+        }
 
     }
 
