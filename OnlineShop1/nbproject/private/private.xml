@@ -5,12 +5,16 @@
         <group>
             <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/admin/SettingList.jsp</file>
             <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/model/User.java</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/dal/SettingDAO.java</file>
             <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/Login.jsp</file>
             <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/WEB-INF/web.xml</file>
             <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/dal/AccountDAO.java</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/admin/colorlib-regform-4/form_add.jsp</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/admin/colorlib-regform-4/css/main.css</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/admin/colorlib-regform-4/form_edit.jsp</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/controller/admin/SettingDetailEdit.java</file>
             <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/controller/login/SignUpController.java</file>
             <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/controller/admin/SettingDetailAdd.java</file>
-            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/admin/colorlib-regform-4/form_add.jsp</file>
             <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/controller/admin/SettingListController.java</file>
             <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/controller/homepage/HomeController.java</file>
         </group>
