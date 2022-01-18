@@ -22,11 +22,15 @@
     </servlet>
     <servlet>
         <servlet-name>SignUpController</servlet-name>
-        <servlet-class>controller.home.SignUpController</servlet-class>
+        <servlet-class>controller.login.SignUpController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LoginController</servlet-name>
         <servlet-class>controller.login.LoginController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HomeController</servlet-name>
+        <servlet-class>controller.homepage.HomeController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>
@@ -41,6 +45,11 @@
         <url-pattern>/settingEdit</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>SearchSettingController</servlet-name>
+        <url-pattern>/searchSetting</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
         <servlet-name>ActivateSettingController</servlet-name>
         <url-pattern>/activateSetting</url-pattern>
     </servlet-mapping>
@@ -51,6 +60,10 @@
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeController</servlet-name>
+        <url-pattern>/home</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

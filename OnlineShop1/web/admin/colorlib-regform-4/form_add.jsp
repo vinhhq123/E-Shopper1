@@ -82,11 +82,11 @@
                                     <label class="label">Status</label>
                                     <div class="p-t-10">
                                         <label class="radio-container m-r-45">Active
-                                            <input type="radio" checked="checked" name="status" value="1">
+                                            <input type="radio" checked="checked" name="status" value="0">
                                             <span class="checkmark"></span>
                                         </label>
                                         <label class="radio-container">Deactive
-                                            <input type="radio" name="status" value="0">
+                                            <input type="radio" name="status" value="1">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>

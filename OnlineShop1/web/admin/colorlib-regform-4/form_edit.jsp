@@ -42,13 +42,14 @@
                 <div class="card-body">
                     <h2 class="title">Setting Details</h2>
                     <form action="settingEdit" method="POST">
-                        <div class="row row-space">
+                        <input type="hidden" name="settingId" value="${requestScope.setting.getSettingId()}"/>
+                        <div class="row row-space"> 
                              <div class="input-group">
                             <label class="label">Setting type</label>
                             <div class="rs-select2 js-select-simple select--no-search">
                                 <select name="settingType">
                                    <c:forEach items="${requestScope.typename}" var="ty">
-                                       <option value=" ${ty.getSettingTypeId()}">${ty.getTypeName()} </option>
+                                       <option value="${ty.getSettingTypeId()}">${ty.getTypeName()} </option>
                                    </c:forEach>
                                 </select>
                                 <div class="select-dropdown"></div>
@@ -59,7 +60,7 @@
                             <div class="rs-select2 js-select-simple select--no-search">
                                 <select name="settingValue">
                                     <c:forEach items="${requestScope.valuebytye}" var="tyy">
-                                       <option value=" ${tyy}">${tyy} </option>
+                                       <option value="${tyy}">${tyy} </option>
                                    </c:forEach>
                                 </select>
                                 <div class="select-dropdown"></div>
@@ -84,13 +85,13 @@
                                         <label class="radio-container m-r-45">Active
                                             <input type="radio" 
                                       ${(requestScope.setting.isSettingStatus()) ? "checked=\"checked\"" : ""} name="settingStatus"              
-                                      value="1" >
+                                      value="0" >
                                             <span class="checkmark"></span>
                                         </label>
                                         <label class="radio-container">Deactive
                                             <input type="radio" 
                                                     ${(!requestScope.setting.isSettingStatus()) ? "checked=\"checked\"" : ""} 
-                                            name="settingStatus" value="0">
+                                            name="settingStatus" value="1">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
@@ -119,6 +120,5 @@
     <script src="js/global.js"></script>-->
 
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
-
 </html>
 <!-- end document-->

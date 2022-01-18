@@ -345,13 +345,16 @@ public class SettingDAO extends DBContext {
                 + "WHERE settingId = ?";
         try {
             connection = getConnection();
+            //connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(sql);
-            results = preparedStatement.executeQuery();
+            //results = preparedStatement.executeQuery();
             preparedStatement.setInt(1, s.getSettingType());
             preparedStatement.setString(2, s.getSettingValue());
             preparedStatement.setString(3, s.getSettingOrder());
             preparedStatement.setBoolean(4, s.isSettingStatus());
+            preparedStatement.setInt(5, s.getSettingId());
             preparedStatement.executeUpdate();
+            //connection.commit();
         } catch (Exception ex) {
             System.out.println("Exception ==== " + ex);
         } finally {
@@ -367,5 +370,4 @@ public class SettingDAO extends DBContext {
         System.out.println("===============================================");
 
     }
-
 }

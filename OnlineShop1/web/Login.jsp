@@ -111,8 +111,8 @@
 
                             <h2>Login to your account</h2>
                             <form action="login" method="POST">
-                                <input type="text" placeholder="Email" name="email" /> </br>
-                                <input type="password" placeholder="password" name="password" /> </br>
+                                <input type="text" placeholder="Email" name="email" required/> </br>
+                                <input type="password" placeholder="password" name="password" required/> </br>
                                 <span>
                                     <input type="checkbox" class="checkbox"> 
                                     Keep me signed in
@@ -131,8 +131,12 @@
                             <h2>New User Signup!</h2>
                             <form action="<%=request.getContextPath()%>/SignUp" method ="POST">
                                 <input type="text" name="name" placeholder="Name"/>
-                                <input type="email" name="email" placeholder="Email Address"/>
-                                <input type="password" name="password" placeholder="Password"/>
+                                <input type="email" name="email" placeholder="Email Address" required/>
+                                                        <p style="color: red">${requestScope.fail1}</p>
+							<input type="password" name="password" placeholder="Password"required/>
+                                                        <input type="password" name="rePassword" placeholder="Confirm Password"required/>
+                                                        <p style="color: red">${requestScope.fail2}</p>
+                                
                                 <button type="submit" class="btn btn-default">Signup</button>
                             </form>
                         </div><!--/sign up form-->
