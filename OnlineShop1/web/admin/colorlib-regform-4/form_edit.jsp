@@ -41,14 +41,15 @@
             <div class="card card-4">
                 <div class="card-body">
                     <h2 class="title">Setting Details</h2>
-                    <form action="<%=request.getContextPath()%>/settingEdit" method="POST">
-                        <div class="row row-space">
+                    <form action="settingEdit" method="POST">
+                        <input type="hidden" name="settingId" value="${requestScope.setting.getSettingId()}"/>
+                        <div class="row row-space"> 
                              <div class="input-group">
                             <label class="label">Setting type</label>
                             <div class="rs-select2 js-select-simple select--no-search">
                                 <select name="settingType">
                                    <c:forEach items="${requestScope.typename}" var="ty">
-                                       <option value=" ${ty.getSettingTypeId()}">${ty.getTypeName()} </option>
+                                       <option value="${ty.getSettingTypeId()}">${ty.getTypeName()} </option>
                                    </c:forEach>
                                 </select>
                                 <div class="select-dropdown"></div>
@@ -59,7 +60,7 @@
                             <div class="rs-select2 js-select-simple select--no-search">
                                 <select name="settingValue">
                                     <c:forEach items="${requestScope.valuebytye}" var="tyy">
-                                       <option value=" ${tyy}">${tyy} </option>
+                                       <option value="${tyy}">${tyy} </option>
                                    </c:forEach>
                                 </select>
                                 <div class="select-dropdown"></div>

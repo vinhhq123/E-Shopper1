@@ -30,6 +30,8 @@ public class Setting {
         
     }
 
+    
+
     public int getSettingId() {
         return settingId;
     }
