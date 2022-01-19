@@ -3,9 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SWP/New%20folder%20(2)/g6/OnlineShop1/web/WEB-INF/web.xml</file>
+            <file>file:/D:/SWP/New%20folder%20(2)/g6/OnlineShop1/src/java/dal/UserDAO.java</file>
             <file>file:/D:/SWP/New%20folder%20(2)/g6/OnlineShop1/src/java/dbcontext/DBContext.java</file>
-            <file>file:/D:/SWP/New%20folder%20(2)/g6/OnlineShop1/web/Login.jsp</file>
+            <file>file:/D:/SWP/New%20folder%20(2)/g6/OnlineShop1/src/java/controller/admin/SettingListController.java</file>
+            <file>file:/D:/SWP/New%20folder%20(2)/g6/OnlineShop1/src/java/dal/AccountDAO.java</file>
+            <file>file:/D:/SWP/New%20folder%20(2)/g6/OnlineShop1/web/admin/SettingList.jsp</file>
+            <file>file:/D:/SWP/New%20folder%20(2)/g6/OnlineShop1/src/java/dal/LoginDAO.java</file>
         </group>
     </open-files>
 </project-private>
