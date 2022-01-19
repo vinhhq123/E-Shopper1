@@ -395,10 +395,10 @@
                                             </c:if>
                                             <td><a href="<%=request.getContextPath()%>/settingEdit?settingId=${con.getSettingId()}">Edit</a>            
                                                 <c:if test="${con.isSettingStatus()}">
-                                                    <a href="<%=request.getContextPath()%>/activateSetting?sid=${con.getSettingId()}&status=${con.isSettingStatus()}">Deactivate</a>
+                                                    <a href="<%=request.getContextPath()%>/activateSetting?sid=${con.getSettingId()}&status=${con.isSettingStatus()}" onclick="return confirm('Do you want to deacivate this seting?')">Deactivate</a>
                                                 </c:if>
                                                 <c:if test="${! con.isSettingStatus()}">
-                                                    <a href="<%=request.getContextPath()%>/activateSetting?sid=${con.getSettingId()}&status=${con.isSettingStatus()}">Activate</a>
+                                                    <a href="<%=request.getContextPath()%>/activateSetting?sid=${con.getSettingId()}&status=${con.isSettingStatus()}" onclick="return confirm('Do you want to acivate this setting?')">Activate</a>
                                                 </c:if>
                                             </td>
                                             </tr>

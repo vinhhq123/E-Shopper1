@@ -7,6 +7,7 @@ package controller.admin;
 
 import dal.SettingDAO;
 import dal.SettingTypeDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -18,8 +19,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Account;
 import model.Setting;
 import model.SettingType;
+import model.User;
 
 /**
  *
@@ -54,6 +57,7 @@ public class SettingListController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        int aid =0;
         String fullname = "";
         // Set current page when user access Setting List page is the first page
         int currentPage = 1;
@@ -71,16 +75,25 @@ public class SettingListController extends HttpServlet {
         SettingTypeDAO settingTypeDAO = new SettingTypeDAO();
         List<Setting> settingList = new ArrayList<>();
         List<SettingType> settingType = new ArrayList<>();
+        User user = new User();
+        UserDAO userDAO = new UserDAO();
+        Account account = new Account();
 
         try {
 //            Account account = accountDAO.getAccountByEmail("vinhhqse05532@fpt.edu.vn");
 //            int aid = account.getAid();
 //            Contact contact = contactDAO.getContactByAccountID(aid);
 
-            // Initialize a new session
-            HttpSession session = request.getSession(true);
+            // Get session
+            HttpSession session = request.getSession();
             // Temporary loged in user full name
-            fullname = "Temp";
+//            fullname = (String)session.getAttribute("accountEmail");
+            // get account saved in session 
+            account = (Account)session.getAttribute("account");
+            // get user fullname by account ID
+            aid = account.getAid();
+            user = userDAO.getUserByAccountId(aid);
+            fullname = user.getFullname();
 
             // Get all the setting in the selected page
             settingList = settingDAO.getSettingByPage(currentPage, recordsPerPage);

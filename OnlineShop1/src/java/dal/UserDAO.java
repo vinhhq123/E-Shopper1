@@ -45,4 +45,42 @@ public class UserDAO extends DBContext{
                 System.out.println("Exception ==== " + ex);
             }
         }}
+    
+        public User getUserByAccountId(int aid) throws Exception {
+
+        String sql = "select * from user where aid = " + aid;
+            System.out.println(sql);
+        User user = null;
+
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                user = new User();
+                user.setUid(results.getInt("uid"));
+                user.setFullname(results.getString("fullname"));
+                user.setTitle(results.getString("title"));
+                user.setGender(results.getBoolean("gender"));
+                user.setPhone(results.getString("phone"));
+                user.setAddress(results.getString("address"));
+                user.setAvatar(results.getString("avatar"));
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+
+        return user;
+    }
+
 }

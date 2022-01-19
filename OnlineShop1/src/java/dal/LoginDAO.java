@@ -22,7 +22,7 @@ public class LoginDAO extends DBContext {
     private ResultSet results = null;
     public Account getAccount(String email, String password) {
         try {
-            String sql = "SELECT a.email, a.password FROM onlineshop1.account as a\n" +
+            String sql = "SELECT a.email, a.password , a.aid FROM onlineshop1.account as a\n" +
                             "WHERE a.email = ? and a.password = ?";
             connection = getConnection();
             preparedStatement = connection.prepareStatement(sql);
@@ -34,6 +34,7 @@ public class LoginDAO extends DBContext {
                 Account account = new Account();
                 account.setEmail(email);
                 account.setPassword(password);
+                account.setAid(results.getInt("a.aid"));
                 return account;
             }
             
