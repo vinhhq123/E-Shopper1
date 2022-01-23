@@ -14,7 +14,6 @@ settingOrder varchar(200),
 settingStatus bit --   ACTIVE (1) / INACTIVE (0)
 );
 alter table Setting ADD CONSTRAINT fk_idCA1 FOREIGN KEY(settingType) references SettingType(settingTypeId) ;
-alter table Setting ADD CONSTRAINT fk_idCA1 FOREIGN KEY(settingType) references SettingType(settingTypeId) ;
 
 -- INSERT INTO SETTING TYPE
 INSERT INTO `onlineshop1`.`settingtype`(`typeName`) VALUES('User Role');
