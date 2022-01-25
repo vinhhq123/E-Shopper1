@@ -349,10 +349,12 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <select class="select" aria-label="Default select example" name="role">
-                                                            <option selected value="" class="form-control m-b-10">All roles</option>
-                                                            <c:forEach items="${requestScope.types}" var="ty">
-                                                                <option value="${ty.getSettingTypeId()}">${ty.getTypeName()}</option>
-                                                            </c:forEach>
+                                                            <option selected value="" class="form-control m-b-10">All Roles</option>
+                                                                <option value="1">Admin</option>
+                                                                <option value="2">Manager</option>
+                                                                <option value="3">Sales</option>
+                                                                <option value="4">Marketing</option>
+                                                                <option value="5">Customer</option>
                                                         </select>
                                                     </div>
                                                     <button type="submit" class="btn btn-success">Search</button>
@@ -371,77 +373,49 @@
                                             <th onclick="sortTable(0)">ID</th>
                                             <th onclick="sortTable(1)">Fullname</th>
                                             <th onclick="sortTable(2)">Title</th>
-                                            <th onclick="sortTable(3)">Email</th>
                                             <th onclick="sortTable(4)">Mobile</th>
+                                            <th onclick="sortTable(3)">Email</th>
                                             <th onclick="sortTable(5)">Role</th>
                                             <th onclick="sortTable(6)">Status</th>
                                             <th>Actions</th>
                                         </tr>
-                                        <tr>
-                                            <td>183</td>
-                                            <td>Admn asd ds</td>
-                                            <td>Mr</td>
-                                            <td>Jass@sad.cxv</td>
-                                            <td>0123456678</td>
-                                            <td>Admin.</td>
-                                            <td><span class="label label-success">Active</span></td>
-                                            <td><button type="button" class="btn-xs btn-primary">Edit</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>183</td>
-                                            <td>Admn asd ds</td>
-                                            <td>Mr</td>
-                                            <td>Jass@sad.cxv</td>
-                                            <td>0123456678</td>
-                                            <td>Admin.</td>
-                                            <td><span class="label label-danger">Inactive</span></td>
-                                            <td><button type="button" class="btn-xs btn-primary">Edit</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>183</td>
-                                            <td>Admn asd ds</td>
-                                            <td>Mr</td>
-                                            <td>Jass@sad.cxv</td>
-                                            <td>0123456678</td>
-                                            <td>Admin.</td>
-                                            <td><span class="label label-danger">Inactive</span></td>
-                                            <td><button type="button" class="btn-xs btn-primary">Edit</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>183</td>
-                                            <td>Admn asd ds</td>
-                                            <td>Mr</td>
-                                            <td>Jass@sad.cxv</td>
-                                            <td>0123456678</td>
-                                            <td>Admin.</td>
-                                            <td><span class="label label-danger">Inactive</span></td>
-                                            <td><button type="button" class="btn-xs btn-primary">Edit</button></td>
-                                        </tr>
-                                        <c:forEach items="${SettingList}" var="con">
+                                        <c:forEach items="${UserList}" var="con">
                                             <tr>
-                                                <td>${con.getSettingId()}</td>
-                                                <td>
-                                                    <c:forEach items="${requestScope.types}" var="type">
-                                                        <c:if test="${type.getSettingTypeId() == con.getSettingType()}">
-                                                            ${type.getTypeName()}
-                                                        </c:if>    
-                                                    </c:forEach>
-                                                </td>
-                                                <td>${con.getSettingValue()}</td>
-                                                <td>${con.getSettingOrder()}</td>
-                                                <td><c:if test="${con.isSettingStatus()}">
-                                                        <span class="label label-success">Active</span></td>
+                                                <td>${con.getUid()}</td>
+                                                <td>${con.getFullname()}</td>
+                                                <td>${con.getTitle()}</td>
+                                                <td>${con.getPhone()}</td>  
+                                                
+                                                <c:forEach items="${AccountList}" var="acc">
+                                                    <c:choose>
+                                                        <c:when test="${con.getAid() eq acc.getAid()}">
+                                                            <td>${acc.getEmail()}</td>
+                                                            <c:set var="currentAcoountRole" value="${acc.getRole()}"/>
+                                                            <c:set var="currentAccountStatus" value="${acc.getAccountStatus()}"/>
+                                                        </c:when>
+                                                    </c:choose>
+                                                </c:forEach>
+                                                            
+                                                <c:forEach items="${SettingList}" var="set">
+                                                    <c:if test="${set.getSettingId() eq currentAcoountRole}">
+                                                        <td>${set.getSettingValue()}</td>
                                                     </c:if>
-                                                    <c:if test="${! con.isSettingStatus()}">
-                                                <span class="label label-danger">Inactive</span></td>
-                                            </c:if>
-                                            <td><a href="<%=request.getContextPath()%>/userEdit?uId=${con.getSettingId()}">Edit</a>
-                                            </td>
+                                                    <c:if test="${set.getSettingId() eq currentAccountStatus}">
+                                                        <td><c:if test="${set.isSettingStatus()}">
+                                                                <span class="label label-success">Active</span></td>
+                                                            </c:if>
+                                                            <c:if test="${! set.isSettingStatus()}">
+                                                        <span class="label label-danger">Inactive</span></td>
+                                                    </c:if>
+                                                </c:if>
+                                            </c:forEach>
+                                            <td><button type="button" class="btn-xs btn-primary">Edit</button></td>
                                             </tr>
                                         </c:forEach>
                                     </table>
+                                            
                                     <br>
-                                    <c:if test="${requestScope.SettingList.isEmpty()}">
+                                    <c:if test="${requestScope.UserList.isEmpty()}">
                                         <p style="text-align: center">No matching User found </p>
                                     </c:if>                
                                     <br>

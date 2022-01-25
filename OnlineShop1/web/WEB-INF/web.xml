@@ -32,6 +32,14 @@
         <servlet-name>HomeController</servlet-name>
         <servlet-class>controller.homepage.HomeController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserListController</servlet-name>
+        <servlet-class>controller.admin.UserListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchUserController</servlet-name>
+        <servlet-class>controller.admin.SearchUserController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>
         <url-pattern>/settingList</url-pattern>
@@ -48,7 +56,6 @@
         <servlet-name>SearchSettingController</servlet-name>
         <url-pattern>/searchSetting</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>ActivateSettingController</servlet-name>
         <url-pattern>/activateSetting</url-pattern>
@@ -64,6 +71,14 @@
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserListController</servlet-name>
+        <url-pattern>/userList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchUserController</servlet-name>
+        <url-pattern>/searchUser</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
