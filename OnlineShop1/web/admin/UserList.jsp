@@ -332,43 +332,58 @@
 
                                 <!-- </div> -->
                                 <div class="panel-body table-responsive">
-                                    <div class="box-tools m-b-15">
-                                        <div class="row">
-                                            <div class="col-sm-8">
-                                                <form class="form-inline" role="form" action="<%=request.getContextPath()%>/searchUser" method="get">
-                                                    <div class="form-group">
-                                                        <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                                                        <input type="text" name="table_search" class="form-control" id="exampleInputEmail2" placeholder=" Enter value to search " value="${requestScope.searchValue}" onblur="this.value = removeSpaces(this.value);">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <select class="select" aria-label="Default select example" name="status">
-                                                            <option selected value="" class="form-control m-b-10">All Statuses</option>
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <form class="form-inline" role="form" action="<%=request.getContextPath()%>/searchUser" method="get">
+                                                <div class="form-group">
+                                                    <label class="sr-only" for="exampleInputEmail2">Email address</label>
+                                                    <input type="text" name="table_search" class="form-control" id="exampleInputEmail2" placeholder="Fullname, email or phone" value="${requestScope.searchValue}" onblur="this.value = removeSpaces(this.value);">
+                                                </div>
+                                                <div class="form-group">
+                                                    <select class="select" aria-label="Default select example" name="status">
+                                                        <c:if test="${empty valueStatus}">
+                                                            <option value="" selected="">All Statuses</option>
                                                             <option value="1">Active</option>
                                                             <option value="0">Inactive</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <select class="select" aria-label="Default select example" name="role">
-                                                            <option selected value="" class="form-control m-b-10">All Roles</option>
-                                                                <option value="1">Admin</option>
-                                                                <option value="2">Manager</option>
-                                                                <option value="3">Sales</option>
-                                                                <option value="4">Marketing</option>
-                                                                <option value="5">Customer</option>
-                                                        </select>
-                                                    </div>
-                                                    <button type="submit" class="btn btn-success">Search</button>
-                                                </form>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <button type="button" class="btn btn-success" style="float: right">Add New User</button>
+                                                        </c:if>
+                                                        <c:if test="${not empty valueStatus}">                         
+                                                            <option value="">All Statuses</option>
+                                                            <option value="1" <%=request.getAttribute("valueStatus").equals("1") ? "selected" : ""%>>Active</option>
+                                                            <option value="0" <%=request.getAttribute("valueStatus").equals("0") ? "selected" : ""%>>Inactive</option>
+                                                        </c:if>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <select class="select" aria-label="Default select example" name="role">
+                                                        <c:if test="${empty valueRole}">
+                                                            <option selected value="">All Roles</option>
+                                                            <option value="1">Admin</option>
+                                                            <option value="2">Manager</option>
+                                                            <option value="3">Sales</option>
+                                                            <option value="4">Marketing</option>
+                                                            <option value="5">Customer</option>
+                                                        </c:if>
+                                                        <c:if test="${not empty valueStatus}">
+                                                            <option value="">All Roles</option>
+                                                            <option value="1" <%=request.getAttribute("valueRole").equals("1") ? "selected" : ""%>>Admin</option>
+                                                            <option value="2" <%=request.getAttribute("valueRole").equals("2") ? "selected" : ""%>>Manager</option>
+                                                            <option value="3" <%=request.getAttribute("valueRole").equals("3") ? "selected" : ""%>>Sales</option>
+                                                            <option value="4" <%=request.getAttribute("valueRole").equals("4") ? "selected" : ""%>>Marketing</option>
+                                                            <option value="5" <%=request.getAttribute("valueRole").equals("5") ? "selected" : ""%>>Customer</option>
+                                                        </c:if>
+                                                    </select>
+                                                </div>
+                                                <button type="submit" class="btn btn-success">Search</button>
+                                            </form>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <button type="button" class="btn btn-success" style="float: right">Add New User</button>
 <!--                                                <a href="<%=request.getContextPath()%>/addNewUser" style="float: right"> Add new</a>-->
-                                            </div>
-
                                         </div>
 
                                     </div>
-                                    <table class="table table-striped" id="SettingListTable">
+                                    <br>
+                                    <table class="table table-striped" id="UserListTable">
                                         <tr>
                                             <th onclick="sortTable(0)">ID</th>
                                             <th onclick="sortTable(1)">Fullname</th>
@@ -385,7 +400,7 @@
                                                 <td>${con.getFullname()}</td>
                                                 <td>${con.getTitle()}</td>
                                                 <td>${con.getPhone()}</td>  
-                                                
+
                                                 <c:forEach items="${AccountList}" var="acc">
                                                     <c:choose>
                                                         <c:when test="${con.getAid() eq acc.getAid()}">
@@ -395,7 +410,7 @@
                                                         </c:when>
                                                     </c:choose>
                                                 </c:forEach>
-                                                            
+
                                                 <c:forEach items="${SettingList}" var="set">
                                                     <c:if test="${set.getSettingId() eq currentAcoountRole}">
                                                         <td>${set.getSettingValue()}</td>
@@ -413,7 +428,7 @@
                                             </tr>
                                         </c:forEach>
                                     </table>
-                                            
+
                                     <br>
                                     <c:if test="${requestScope.UserList.isEmpty()}">
                                         <p style="text-align: center">No matching User found </p>
@@ -423,7 +438,7 @@
                                         <ul class="pagination pagination-sm no-margin pull-right">
                                             <c:if test="${requestScope.currentPage != 1}">
                                                 <li class="disabled"><a
-                                                        href="<%=request.getContextPath()%>/settingList?currentPage=${requestScope.currentPage-1}">Previous</a>
+                                                        href="<%=request.getContextPath()%>/userList?currentPage=${requestScope.currentPage-1}">Previous</a>
                                                 </li>
                                             </c:if>
 
@@ -436,7 +451,7 @@
                                                     </c:when>
                                                     <c:otherwise>
                                                         <li class="disabled"><a
-                                                                href="<%=request.getContextPath()%>/settingList?currentPage=${i}">${i}</a>
+                                                                href="<%=request.getContextPath()%>/userList?currentPage=${i}">${i}</a>
                                                         </li>
                                                     </c:otherwise>
                                                 </c:choose>
@@ -444,7 +459,7 @@
 
                                             <c:if test="${requestScope.currentPage lt requestScope.numOfPage}">
                                                 <li class="disabled"><a
-                                                        href="<%=request.getContextPath()%>/settingList?currentPage=${requestScope.currentPage+1}">Next</a>
+                                                        href="<%=request.getContextPath()%>/userList?currentPage=${requestScope.currentPage+1}">Next</a>
                                                 </li>
                                             </c:if>
                                         </ul>

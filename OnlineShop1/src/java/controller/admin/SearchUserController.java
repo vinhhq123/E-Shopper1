@@ -78,6 +78,9 @@ public class SearchUserController extends HttpServlet {
             settingList = settingDAO.getAllSetting();
             accountList = accountDAO.getAllAccount();
 
+            request.setAttribute("searchValue", searchField);
+            request.setAttribute("valueRole", role);
+            request.setAttribute("valueStatus", status);
             request.setAttribute("SettingList", settingList);
             request.setAttribute("AccountList", accountList);
             request.setAttribute("UserList", userList);

@@ -58,6 +58,16 @@ public class UserListController extends HttpServlet {
 
 //        String fullname = "";
 //        int aid = 0;
+        // Set current page when user access User List page is the first page
+        int currentPage = 1;
+        // Set total records per page is 5
+        int recordsPerPage = 5;
+
+        // Get the current page from request if there any
+        if (request.getParameter("currentPage") != null) {
+            currentPage = Integer.parseInt(request.getParameter("currentPage"));
+        }
+
         SettingDAO settingDAO = new SettingDAO();
         UserDAO userDAO = new UserDAO();
         AccountDAO accountDAO = new AccountDAO();
@@ -70,7 +80,7 @@ public class UserListController extends HttpServlet {
         try {
 
             settingList = settingDAO.getAllSetting();
-            userList = userDAO.getAllUser();
+            userList = userDAO.getUserByPage(currentPage, recordsPerPage);
             accountList = accountDAO.getAllAccount();
 
 //            HttpSession session = request.getSession();
@@ -78,10 +88,21 @@ public class UserListController extends HttpServlet {
 //            aid = account.getAid();
 //            user = userDAO.getUserByAccountId(aid);
 //            fullname = user.getFullname();
+
+            int rows = userDAO.getNumberOfRows();
+            // Count total number of page
+            int numOfPage = rows / recordsPerPage;
+            if (numOfPage % recordsPerPage > 0) {
+                numOfPage++;
+            }
+
             request.setAttribute("SettingList", settingList);
             request.setAttribute("AccountList", accountList);
             request.setAttribute("UserList", userList);
 //            session.setAttribute("fullname", fullname);
+            request.setAttribute("numOfPage", numOfPage);
+            request.setAttribute("recordsPerPage", recordsPerPage);
+            request.setAttribute("currentPage", currentPage);
             request.getRequestDispatcher("./admin/UserList.jsp").forward(request, response);
 
         } catch (Exception ex) {
