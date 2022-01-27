@@ -5,20 +5,35 @@
  */
 
 // https://stackoverflow.com/questions/940577/javascript-regular-expression-email-validation
-var emailPattern =  /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+var emailPattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+var phonePattern = /\d/g;
 //var errorEmail = $('#errorEmailMessage').html();
 function validation() {
-   // Validate empty   
+    // Validate empty   
 //    var x = document.forms["addNewUser"]["email"].value;
 //    if (x == null || x == "") {
 //        alert("Email cannot be empty..!!");
 //        return false;
 //    }
-    
+
     var email = document.forms["addNewUser"]["email"];
-    if(!emailPattern.test(email.value)){
+    var phone = document.forms["addNewUser"]["phone"];
+    if (!emailPattern.test(email.value)) {
 //        errorEmail = "Email is not in the right format !!!";
         alert("Email is not in the right format !!!");
         return false;
     }
+    if (!phonePattern.test(phone.value)) {
+        alert("Phone is not in correct format !!!");
+        return false;
+    }
+    if (phone.value.length !== 10) {
+        alert("Phone must be 10 numbers !!!");
+        return false;
+    }
+}
+
+function removeSpaces(string) {
+    return string.replace(/\s+/g, ' ').trim();
+
 }

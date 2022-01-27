@@ -343,7 +343,7 @@
                                                     <div class="col-lg-10">
                                                         <div class="profile-pic">
                                                             <label class="-label" for="file">
-                                                            <img src="${pageContext.request.contextPath}/admin/img/avatar5.png" id="output" width="200" />
+                                                                <img src="${pageContext.request.contextPath}/admin/img/avatar5.png" id="output" width="200" />
                                                             </label>
                                                             <input id="file" type="file" onchange="loadFile(event)" name="image"/>
                                                         </div>
@@ -361,13 +361,13 @@
                                                 <div class="form-group">
                                                     <label for="fullname" class="col-lg-2 col-sm-2 control-label">Fullname</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="fullname" placeholder="Fullname" name="fullname">
+                                                        <input type="text" class="form-control" id="fullname" placeholder="Fullname" name="fullname" value="${nameValue}" onblur="this.value = removeSpaces(this.value);" required  >
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="title" class="col-lg-2 col-sm-2 control-label">Title</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="title" placeholder="Title" name="title">
+                                                        <input type="text" class="form-control" id="title" placeholder="Title" name="title" value="${titleValue}" onblur="this.value = removeSpaces(this.value);" required>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -390,24 +390,33 @@
                                                 <div class="form-group">
                                                     <label for="phone" class="col-lg-2 col-sm-2 control-label">Phone</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="phone" placeholder="Phone" name="mobile">
+                                                        <input type="text" class="form-control" id="phone" placeholder="Phone" name="phone" required value="${phoneValue}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="address" class="col-lg-2 col-sm-2 control-label">Address</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="address" placeholder="Address" name="address">
+                                                        <input type="text" class="form-control" id="address" placeholder="Address" name="address" value="${addressValue}" onblur="this.value = removeSpaces(this.value);" required>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="role" class="col-lg-2 col-sm-2 control-label">Role</label>
                                                     <div class="col-lg-10">
                                                         <select class="form-control m-b-10" name="role">
-                                                            <option value="1" selected="">Admin</option>
-                                                            <option value="2">Manager</option>
-                                                            <option value="3">Sales</option>
-                                                            <option value="4">Marketing</option>
-                                                            <option value="5">Customer</option>
+                                                            <c:if test="${empty roleValue}">
+                                                                <option value="1" selected>Admin</option>
+                                                                <option value="2">Manager</option>
+                                                                <option value="3">Sales</option>
+                                                                <option value="4">Marketing</option>
+                                                                <option value="5">Customer</option>
+                                                            </c:if>
+                                                            <c:if test="${not empty roleValue}">
+                                                                <option value="1" <%=request.getAttribute("roleValue").equals("1") ? "selected" : ""%>>Admin</option>
+                                                                <option value="2" <%=request.getAttribute("roleValue").equals("2") ? "selected" : ""%>>Manager</option>
+                                                                <option value="3" <%=request.getAttribute("roleValue").equals("3") ? "selected" : ""%>>Sales</option>
+                                                                <option value="4" <%=request.getAttribute("roleValue").equals("4") ? "selected" : ""%>>Marketing</option>
+                                                                <option value="5" <%=request.getAttribute("roleValue").equals("5") ? "selected" : ""%>>Customer</option>
+                                                            </c:if>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -431,7 +440,7 @@
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-2 col-lg-10">
                                                         <button type="submit" class="btn btn-success">Save</button>
-                                                        <button type="button" class="btn btn-primary" onclick="window.location='<%=request.getContextPath()%>/userList'">Back</button>
+                                                        <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/userList'">Back</button>
                                                     </div>
                                                 </div>
                                             </form>

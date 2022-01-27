@@ -80,8 +80,18 @@ public class AddNewUserController extends HttpServlet {
 
         String email = "";
         String error = "";
+        String phone = "";
+        String name = "";
+        String title = "";
+        String address = "";
+        String role = "";
 
         email = request.getParameter("email").trim();
+        phone = request.getParameter("phone");
+        name = request.getParameter("fullname").trim();
+        title = request.getParameter("title").trim();
+        address = request.getParameter("address").trim();
+        role = request.getParameter("role");
 
         UserDAO userDAO = new UserDAO();
         AccountDAO accountDAO = new AccountDAO();
@@ -93,6 +103,11 @@ public class AddNewUserController extends HttpServlet {
             if (checkAccountEmail != null) {
                 error = "This email has already been registered !!!";
                 request.setAttribute("emailValue", email);
+                request.setAttribute("phoneValue", phone);
+                request.setAttribute("nameValue", name);
+                request.setAttribute("titleValue", title);
+                request.setAttribute("addressValue", address);
+                request.setAttribute("roleValue", role);
                 request.setAttribute("error", error);
                 request.getRequestDispatcher("./admin/AddNewUser.jsp").forward(request, response);
             }
