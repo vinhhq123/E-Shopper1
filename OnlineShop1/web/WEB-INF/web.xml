@@ -40,6 +40,10 @@
         <servlet-name>SearchUserController</servlet-name>
         <servlet-class>controller.admin.SearchUserController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddNewUserController</servlet-name>
+        <servlet-class>controller.admin.AddNewUserController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>
         <url-pattern>/settingList</url-pattern>
@@ -79,6 +83,10 @@
     <servlet-mapping>
         <servlet-name>SearchUserController</servlet-name>
         <url-pattern>/searchUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddNewUserController</servlet-name>
+        <url-pattern>/addNewUser</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

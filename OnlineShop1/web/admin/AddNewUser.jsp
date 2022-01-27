@@ -1,18 +1,18 @@
 <%-- 
-    Document   : UserList
-    Created on : 19-Jan-2022, 18:26:51
+    Document   : AddNewUser
+    Created on : 27-Jan-2022, 14:00:28
     Author     : VINH
 --%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>User List</title>
+        <title>Add New User</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -27,6 +27,8 @@
         <!-- Theme style -->
         <link href="${pageContext.request.contextPath}/admin/css/style.css" rel="stylesheet" type="text/css" />
         <link href="${pageContext.request.contextPath}/view/css/font-awesome.min.css" rel="stylesheet">
+        <!-- Import css for image -->
+        <link href="${pageContext.request.contextPath}/admin/css/UserDetail.css" rel="stylesheet">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -269,7 +271,7 @@
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                             </a>
                         </li>
-                        <li class="active">
+                        <li>
                             <a href="<%=request.getContextPath()%>/userList">
                                 <i class="fa fa-users"></i> <span>User List</span>
                             </a>
@@ -324,147 +326,119 @@
                         <div class="col-xs-12">
                             <div class="panel">
                                 <header class="panel-heading">
-                                    <b>User List</b>
+                                    <b>Add New User</b>
 
                                 </header>
                                 <!-- <div class="box-header"> -->
                                 <!-- <h3 class="box-title">Responsive Hover Table</h3> -->
 
                                 <!-- </div> -->
-                                <div class="panel-body table-responsive">
-                                    <div class="row">
-                                        <div class="col-sm-8">
-                                            <form class="form-inline" role="form" action="<%=request.getContextPath()%>/searchUser" method="get">
+                                <div class="row">
+                                    <div class="col-lg-1"></div>
+                                    <div class="col-lg-7">
+                                        <div class="panel-body table-responsive">
+                                            <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/addNewUser" method="POST" name="addNewUser" onsubmit="return validation()">
                                                 <div class="form-group">
-                                                    <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                                                    <input type="text" name="table_search" class="form-control" id="exampleInputEmail2" placeholder="Fullname, email or phone" value="${requestScope.searchValue}" onblur="this.value = removeSpaces(this.value);">
+                                                    <label for="avatar" class="col-lg-2 col-sm-2 control-label">Avatar</label>
+                                                    <div class="col-lg-10">
+                                                        <div class="profile-pic">
+                                                            <label class="-label" for="file">
+                                                            <img src="${pageContext.request.contextPath}/admin/img/avatar5.png" id="output" width="200" />
+                                                            </label>
+                                                            <input id="file" type="file" onchange="loadFile(event)" name="image"/>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <select class="select" aria-label="Default select example" name="status">
-                                                        <c:if test="${empty valueStatus}">
-                                                            <option value="" selected="">All Statuses</option>
-                                                            <option value="1">Active</option>
-                                                            <option value="0">Inactive</option>
+                                                    <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Email</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="email" class="form-control" id="inputEmail1" placeholder="Email" name="email" value="${emailValue}" required>
+                                                        <c:if test="${not empty error}">
+                                                            <p class="help-block" style="color: red" id="errorEmailMessage">${error}</p>
                                                         </c:if>
-                                                        <c:if test="${not empty valueStatus}">                         
-                                                            <option value="">All Statuses</option>
-                                                            <option value="1" <%=request.getAttribute("valueStatus").equals("1") ? "selected" : ""%>>Active</option>
-                                                            <option value="0" <%=request.getAttribute("valueStatus").equals("0") ? "selected" : ""%>>Inactive</option>
-                                                        </c:if>
-                                                    </select>
+                                                    </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <select class="select" aria-label="Default select example" name="role">
-                                                        <c:if test="${empty valueRole}">
-                                                            <option selected value="">All Roles</option>
-                                                            <option value="1">Admin</option>
+                                                    <label for="fullname" class="col-lg-2 col-sm-2 control-label">Fullname</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" id="fullname" placeholder="Fullname" name="fullname">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="title" class="col-lg-2 col-sm-2 control-label">Title</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" id="title" placeholder="Title" name="title">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Gender</label>
+                                                    <div class="col-lg-10">
+                                                        <div class="radio-inline">
+                                                            <label>
+                                                                <input type="radio" name="gender" id="optionsRadios1" value="1" checked="">
+                                                                Male
+                                                            </label>
+                                                        </div>
+                                                        <div class="radio-inline">
+                                                            <label>
+                                                                <input type="radio" name="gender" id="optionsRadios2" value="0">
+                                                                Female
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="phone" class="col-lg-2 col-sm-2 control-label">Phone</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" id="phone" placeholder="Phone" name="mobile">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="address" class="col-lg-2 col-sm-2 control-label">Address</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" id="address" placeholder="Address" name="address">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="role" class="col-lg-2 col-sm-2 control-label">Role</label>
+                                                    <div class="col-lg-10">
+                                                        <select class="form-control m-b-10" name="role">
+                                                            <option value="1" selected="">Admin</option>
                                                             <option value="2">Manager</option>
                                                             <option value="3">Sales</option>
                                                             <option value="4">Marketing</option>
                                                             <option value="5">Customer</option>
-                                                        </c:if>
-                                                        <c:if test="${not empty valueStatus}">
-                                                            <option value="">All Roles</option>
-                                                            <option value="1" <%=request.getAttribute("valueRole").equals("1") ? "selected" : ""%>>Admin</option>
-                                                            <option value="2" <%=request.getAttribute("valueRole").equals("2") ? "selected" : ""%>>Manager</option>
-                                                            <option value="3" <%=request.getAttribute("valueRole").equals("3") ? "selected" : ""%>>Sales</option>
-                                                            <option value="4" <%=request.getAttribute("valueRole").equals("4") ? "selected" : ""%>>Marketing</option>
-                                                            <option value="5" <%=request.getAttribute("valueRole").equals("5") ? "selected" : ""%>>Customer</option>
-                                                        </c:if>
-                                                    </select>
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                                <button type="submit" class="btn btn-success">Search</button>
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">User Status</label>
+                                                    <div class="col-lg-10">
+                                                        <div class="radio-inline">
+                                                            <label>
+                                                                <input type="radio" name="status" id="optionsRadios3" value="1" checked="">
+                                                                Active
+                                                            </label>
+                                                        </div>
+                                                        <div class="radio-inline">
+                                                            <label>
+                                                                <input type="radio" name="status" id="optionsRadios4" value="0">
+                                                                Inactive
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-lg-offset-2 col-lg-10">
+                                                        <button type="submit" class="btn btn-success">Save</button>
+                                                        <button type="button" class="btn btn-primary" onclick="window.location='<%=request.getContextPath()%>/userList'">Back</button>
+                                                    </div>
+                                                </div>
                                             </form>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <button type="button" class="btn btn-success" style="float: right" onclick="window.location='./admin/AddNewUser.jsp'">Add New User</button>
-<!--                                                <a href="<%=request.getContextPath()%>/addNewUser" style="float: right"> Add new</a>-->
-                                        </div>
-
+                                        </div><!-- /.box-body -->
                                     </div>
-                                    <br>
-                                    <table class="table table-striped" id="UserListTable">
-                                        <tr>
-                                            <th onclick="sortTable(0)">ID</th>
-                                            <th onclick="sortTable(1)">Fullname</th>
-                                            <th onclick="sortTable(2)">Title</th>
-                                            <th onclick="sortTable(4)">Mobile</th>
-                                            <th onclick="sortTable(3)">Email</th>
-                                            <th onclick="sortTable(5)">Role</th>
-                                            <th onclick="sortTable(6)">Status</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                        <c:forEach items="${UserList}" var="con">
-                                            <tr>
-                                                <td>${con.getUid()}</td>
-                                                <td>${con.getFullname()}</td>
-                                                <td>${con.getTitle()}</td>
-                                                <td>${con.getPhone()}</td>  
-
-                                                <c:forEach items="${AccountList}" var="acc">
-                                                    <c:choose>
-                                                        <c:when test="${con.getAid() eq acc.getAid()}">
-                                                            <td>${acc.getEmail()}</td>
-                                                            <c:set var="currentAcoountRole" value="${acc.getRole()}"/>
-                                                            <c:set var="currentAccountStatus" value="${acc.getAccountStatus()}"/>
-                                                        </c:when>
-                                                    </c:choose>
-                                                </c:forEach>
-
-                                                <c:forEach items="${SettingList}" var="set">
-                                                    <c:if test="${set.getSettingId() eq currentAcoountRole}">
-                                                        <td>${set.getSettingValue()}</td>
-                                                    </c:if>
-                                                    <c:if test="${set.getSettingId() eq currentAccountStatus}">
-                                                        <td><c:if test="${set.isSettingStatus()}">
-                                                                <span class="label label-success">Active</span></td>
-                                                            </c:if>
-                                                            <c:if test="${! set.isSettingStatus()}">
-                                                        <span class="label label-danger">Inactive</span></td>
-                                                    </c:if>
-                                                </c:if>
-                                            </c:forEach>
-                                            <td><button type="button" class="btn-xs btn-primary">Edit</button></td>
-                                            </tr>
-                                        </c:forEach>
-                                    </table>
-
-                                    <br>
-                                    <c:if test="${requestScope.UserList.isEmpty()}">
-                                        <p style="text-align: center">No matching User found </p>
-                                    </c:if>                
-                                    <br>
-                                    <div class="table-foot">
-                                        <ul class="pagination pagination-sm no-margin pull-right">
-                                            <c:if test="${requestScope.currentPage != 1}">
-                                                <li class="disabled"><a
-                                                        href="<%=request.getContextPath()%>/userList?currentPage=${requestScope.currentPage-1}">Previous</a>
-                                                </li>
-                                            </c:if>
-
-                                            <c:forEach begin="1" end="${requestScope.numOfPage}" var="i">
-                                                <c:choose>
-                                                    <c:when test="${requestScope.currentPage eq i}">
-                                                        <li class="active"><a>
-                                                                ${i} <span class="sr-only">(current)</span></a>
-                                                        </li>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <li class="disabled"><a
-                                                                href="<%=request.getContextPath()%>/userList?currentPage=${i}">${i}</a>
-                                                        </li>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </c:forEach>
-
-                                            <c:if test="${requestScope.currentPage lt requestScope.numOfPage}">
-                                                <li class="disabled"><a
-                                                        href="<%=request.getContextPath()%>/userList?currentPage=${requestScope.currentPage+1}">Next</a>
-                                                </li>
-                                            </c:if>
-                                        </ul>
-                                    </div>
-                                </div><!-- /.box-body -->
+                                    <div class="col-lg-4"></div>
+                                </div>
                             </div><!-- /.box -->
                         </div>
                     </div>
@@ -484,8 +458,9 @@
         <script src="${pageContext.request.contextPath}/admin/js/bootstrap.min.js" type="text/javascript"></script>
         <!-- Director App -->
         <script src="${pageContext.request.contextPath}/admin/js/Director/app.js" type="text/javascript"></script>
-        <!-- Setting List -->
-        <script src="${pageContext.request.contextPath}/admin/js/UserList.js" type="text/javascript"></script>
+        <!-- User Detail -->
+        <script src="${pageContext.request.contextPath}/admin/js/UserDetail.js" type="text/javascript"></script>
+        <!-- Add New User -->
+        <script src="${pageContext.request.contextPath}/admin/js/AddNewUser.js" type="text/javascript"></script>
     </body>
 </html>
-
