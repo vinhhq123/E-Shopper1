@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Account;
 
 /**
@@ -101,5 +103,71 @@ public class AccountDAO extends DBContext {
         }
 
         return accounts;
+    }
+
+    public boolean addAccountWithoutPassword(String email,int accountStatus, int role) throws SQLException {
+        boolean check = false;
+        int results[] = null;
+        // accountStatus = 6 : registered but not verified
+        String sql = "INSERT INTO account (email, password, accountStatus, role) VALUES (?, '123', ?, ?);";
+        try {
+            connection = getConnection();
+            connection.setAutoCommit(false);
+            try {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, email);
+                preparedStatement.setInt(2, accountStatus);
+                preparedStatement.setInt(3, role);
+                preparedStatement.addBatch();
+            } catch (SQLException e) {
+                Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, e);
+            }
+
+            results = preparedStatement.executeBatch();
+            connection.commit();
+
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        if (results.length > 0) {
+            check = true;
+        }
+        return check;
+    }
+
+    public int getLastInsertedAccountId() throws Exception {
+        String sql = "SELECT aid FROM account ORDER BY aid DESC LIMIT 1;";
+        int value = 0;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                value = results.getInt(1);
+
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return value;
     }
 }

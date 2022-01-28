@@ -487,5 +487,13 @@
         <!-- Setting List -->
         <script src="${pageContext.request.contextPath}/admin/js/UserList.js" type="text/javascript"></script>
     </body>
+    <c:if test="${not empty sessionScope.messageAddSuccess}">
+        <%
+            out.write("<script>");
+            out.write("alert(\" " + session.getAttribute("messageAddSuccess") + "\")");
+            out.write("</script>");
+        %>
+        <c:remove var="messageAddSuccess"/>
+    </c:if>
 </html>
 

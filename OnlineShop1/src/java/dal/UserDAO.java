@@ -6,6 +6,7 @@
 package dal;
 
 import dbcontext.DBContext;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -242,6 +243,38 @@ public class UserDAO extends DBContext {
         }
 
         return rows;
+    }
+
+    public int addNewUserWithImage(String fullname, String title, boolean gender,
+            String phone, String address, InputStream avatar, int aid) throws SQLException {
+        String sql = "INSERT INTO user (fullname, title, gender, phone, address, avatar, aid) VALUES (?,?,?,?,?,?,?);";
+        int row = 0;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, fullname);
+            preparedStatement.setString(2, title);
+            preparedStatement.setBoolean(3, gender);
+            preparedStatement.setString(4, phone);
+            preparedStatement.setString(5, address);
+            if (avatar != null) {
+                preparedStatement.setBlob(6, avatar);
+            }
+            preparedStatement.setInt(7, aid);
+            row = preparedStatement.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return row;
     }
 
 }

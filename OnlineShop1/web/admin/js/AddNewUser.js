@@ -18,6 +18,7 @@ function validation() {
 
     var email = document.forms["addNewUser"]["email"];
     var phone = document.forms["addNewUser"]["phone"];
+    var avatar = document.forms["addNewUser"]["image"];
     if (!emailPattern.test(email.value)) {
 //        errorEmail = "Email is not in the right format !!!";
         alert("Email is not in the right format !!!");
@@ -29,6 +30,11 @@ function validation() {
     }
     if (phone.value.length !== 10) {
         alert("Phone must be 10 numbers !!!");
+        return false;
+    }
+    // CHUA CHECK DC
+    if (document.getElementById("file").files.length === 0) {
+        alert("Please choose an image !!!");
         return false;
     }
 }

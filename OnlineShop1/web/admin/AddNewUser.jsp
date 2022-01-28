@@ -337,7 +337,7 @@
                                     <div class="col-lg-1"></div>
                                     <div class="col-lg-7">
                                         <div class="panel-body table-responsive">
-                                            <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/addNewUser" method="POST" name="addNewUser" onsubmit="return validation()">
+                                            <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/addNewUser" method="POST" name="addNewUser" onsubmit="return validation()" enctype="multipart/form-data">
                                                 <div class="form-group">
                                                     <label for="avatar" class="col-lg-2 col-sm-2 control-label">Avatar</label>
                                                     <div class="col-lg-10">
@@ -346,6 +346,9 @@
                                                                 <img src="${pageContext.request.contextPath}/admin/img/avatar5.png" id="output" width="200" />
                                                             </label>
                                                             <input id="file" type="file" onchange="loadFile(event)" name="image"/>
+                                                            <c:if test="${not empty errorImage}">
+                                                                <p class="help-block" style="color: red" id="errorEmailMessage">${errorImage}</p>
+                                                            </c:if>
                                                         </div>
                                                     </div>
                                                 </div>
