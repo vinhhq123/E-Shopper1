@@ -424,7 +424,7 @@
                                                     </c:if>
                                                 </c:if>
                                             </c:forEach>
-                                            <td><button type="button" class="btn-xs btn-primary">Edit</button></td>
+                                            <td><button type="button" class="btn-xs btn-primary" onclick="window.location='<%=request.getContextPath()%>/editUser?uid=${con.getUid()}'">Edit</button></td>
                                             </tr>
                                         </c:forEach>
                                     </table>

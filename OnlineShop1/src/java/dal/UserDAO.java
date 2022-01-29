@@ -6,12 +6,16 @@
 package dal;
 
 import dbcontext.DBContext;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import model.User;
 
@@ -275,6 +279,66 @@ public class UserDAO extends DBContext {
             }
         }
         return row;
+    }
+
+    public User getUserByUserId(int uid) throws Exception {
+
+        String sql = "select * from user where uid = " + uid;
+        System.out.println(sql);
+        User user = null;
+        String noImage = "";
+
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                user = new User();
+                user.setUid(results.getInt("uid"));
+                user.setFullname(results.getString("fullname"));
+                user.setTitle(results.getString("title"));
+                user.setGender(results.getBoolean("gender"));
+                user.setPhone(results.getString("phone"));
+                user.setAddress(results.getString("address"));
+
+                Blob blob = results.getBlob("avatar");
+                if (blob != null) {
+
+                    InputStream inputStream = blob.getBinaryStream();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                    inputStream.close();
+                    outputStream.close();
+                    user.setAvatar(base64Image);
+                } else {
+                    user.setAvatar(noImage);
+                }
+
+                user.setAid(results.getInt("aid"));
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (SQLException | IOException ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return user;
     }
 
 }

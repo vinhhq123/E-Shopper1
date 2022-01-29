@@ -344,7 +344,12 @@
                                                     <div class="col-lg-10">
                                                         <div class="profile-pic">
                                                             <label class="-label" for="file">
-                                                            <img src="https://cdn.pixabay.com/photo/2017/08/06/21/01/louvre-2596278_960_720.jpg" id="output" width="200" />
+                                                                <c:if test="${ not empty currentUser.avatar}">
+                                                                    <img src="data:image/jpg;base64,${currentUser.avatar}" id="output" width="200" />
+                                                                </c:if>
+                                                                <c:if test="${empty currentUser.avatar}">
+                                                                    <img src="${pageContext.request.contextPath}/admin/img/avatar3.png" id="output" width="200" alt="default image"/>
+                                                                </c:if>
                                                             </label>
                                                             <input id="file" type="file" onchange="loadFile(event)"/>
                                                         </div>
@@ -353,20 +358,20 @@
                                                 <div class="form-group">
                                                     <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Email</label>
                                                     <div class="col-lg-10">
-                                                        <input type="email" class="form-control" id="inputEmail1" placeholder="Email" readonly> 
-<!--                                                        <p class="help-block">Example block-level help text here.</p>-->
+                                                        <input type="email" class="form-control" id="inputEmail1" placeholder="Email" readonly value="${currentUserEmail}"> 
+                                                        <!--                                                        <p class="help-block">Example block-level help text here.</p>-->
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="fullname" class="col-lg-2 col-sm-2 control-label">Fullname</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="fullname" placeholder="Fullname">
+                                                        <input type="text" class="form-control" id="fullname" placeholder="Fullname" value="${currentUser.fullname}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="title" class="col-lg-2 col-sm-2 control-label">Title</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="title" placeholder="Title">
+                                                        <input type="text" class="form-control" id="title" placeholder="Title" value="${currentUser.title}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -374,13 +379,13 @@
                                                     <div class="col-lg-10">
                                                         <div class="radio-inline">
                                                             <label>
-                                                                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+                                                                <input type="radio" name="gender" id="optionsRadios1" value="1" <%=request.getAttribute("userGender").equals("1") ? "checked" : ""%>>
                                                                 Male
                                                             </label>
                                                         </div>
                                                         <div class="radio-inline">
                                                             <label>
-                                                                <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                                                <input type="radio" name="gender" id="optionsRadios2" value="0" <%=request.getAttribute("userGender").equals("0") ? "checked" : ""%>>
                                                                 Female
                                                             </label>
                                                         </div>
@@ -389,22 +394,24 @@
                                                 <div class="form-group">
                                                     <label for="phone" class="col-lg-2 col-sm-2 control-label">Phone</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="phone" placeholder="Phone">
+                                                        <input type="text" class="form-control" id="phone" placeholder="Phone" value="${currentUser.phone}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="address" class="col-lg-2 col-sm-2 control-label">Address</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="address" placeholder="Address">
+                                                        <input type="text" class="form-control" id="address" placeholder="Address" value="${currentUser.address}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="role" class="col-lg-2 col-sm-2 control-label">Role</label>
                                                     <div class="col-lg-10">
                                                         <select class="form-control m-b-10">
-                                                            <option>Option 1</option>
-                                                            <option>Option 2</option>
-                                                            <option>Option 3</option>
+                                                            <option value="1" <%=request.getAttribute("currentUserRole").equals("1") ? "selected" : ""%>>Admin</option>
+                                                            <option value="2" <%=request.getAttribute("currentUserRole").equals("2") ? "selected" : ""%>>Manager</option>
+                                                            <option value="3" <%=request.getAttribute("currentUserRole").equals("3") ? "selected" : ""%>>Sales</option>
+                                                            <option value="4" <%=request.getAttribute("currentUserRole").equals("4") ? "selected" : ""%>>Marketing</option>
+                                                            <option value="5" <%=request.getAttribute("currentUserRole").equals("5") ? "selected" : ""%>>Customer</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -413,13 +420,13 @@
                                                     <div class="col-lg-10">
                                                         <div class="radio-inline">
                                                             <label>
-                                                                <input type="radio" name="optionsRadios1" id="optionsRadios3" value="option1" checked="">
+                                                                <input type="radio" name="status" id="optionsRadios3" value="1" <%=request.getAttribute("currentUserStatus").equals("1") ? "checked" : ""%>>
                                                                 Active
                                                             </label>
                                                         </div>
                                                         <div class="radio-inline">
                                                             <label>
-                                                                <input type="radio" name="optionsRadios1" id="optionsRadios4" value="option2">
+                                                                <input type="radio" name="status" id="optionsRadios4" value="0" <%=request.getAttribute("currentUserStatus").equals("0") ? "checked" : ""%>>
                                                                 Inactive
                                                             </label>
                                                         </div>

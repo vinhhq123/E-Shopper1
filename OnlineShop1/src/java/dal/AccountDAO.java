@@ -105,7 +105,7 @@ public class AccountDAO extends DBContext {
         return accounts;
     }
 
-    public boolean addAccountWithoutPassword(String email,int accountStatus, int role) throws SQLException {
+    public boolean addAccountWithoutPassword(String email, int accountStatus, int role) throws SQLException {
         boolean check = false;
         int results[] = null;
         // accountStatus = 6 : registered but not verified
@@ -170,4 +170,70 @@ public class AccountDAO extends DBContext {
         }
         return value;
     }
+
+    public Account getAccountByAccountId(int aid) throws Exception {
+
+        String sql = "select * from account where aid = ?";
+        Account account = null;
+
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, aid);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                account = new Account();
+                account.setAid(results.getInt("aid"));
+                account.setEmail(results.getString("email"));
+//                account.setPassword(results.getString("password"));
+                account.setAccountStatus(results.getInt("accountStatus"));
+                account.setRole(results.getInt("role"));
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+
+        return account;
+    }
+
+    public boolean getAccountStatusByAccountId(int aid) throws Exception {
+        String sql = "select a.aid,a.email,s.settingStatus \n"
+                + "from account as a join setting as s \n"
+                + "on a.accountStatus = s.settingId\n"
+                + "where a.aid = ?;";
+        boolean value = false;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, aid);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                value = results.getBoolean("s.settingStatus");
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return value;
+    }
+
 }
