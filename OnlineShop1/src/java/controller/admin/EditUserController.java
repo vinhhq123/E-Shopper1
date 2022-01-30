@@ -9,13 +9,18 @@ package controller.admin;
 import dal.AccountDAO;
 import dal.UserDAO;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import model.Account;
 import model.User;
 
@@ -23,6 +28,7 @@ import model.User;
  *
  * @author VINH
  */
+@MultipartConfig(maxFileSize = 16177215)
 public class EditUserController extends HttpServlet {
 
     /**
@@ -83,7 +89,7 @@ public class EditUserController extends HttpServlet {
             int currentAccountId = currentUser.getAid();
             currentAccount = accountDAO.getAccountByAccountId(currentAccountId);
             String userEmail = currentAccount.getEmail();
-            String userRole = currentAccount.getRole() +"";
+            String userRole = currentAccount.getRole() + "";
             boolean accountStatus = accountDAO.getAccountStatusByAccountId(currentAccountId);
             if (!accountStatus) {
                 userStatus = "0";
@@ -112,7 +118,91 @@ public class EditUserController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        String error = "";
+        String phone = "";
+        String name = "";
+        String title = "";
+        String address = "";
+        String role = "";
+        String successMessage = "";
+        int uid = 0;
+        boolean genderbit = true;
+        int accountStaus = 0;
+        int accountId = 0;
+
+        phone = request.getParameter("phone");
+        name = request.getParameter("name").trim();
+        title = request.getParameter("title").trim();
+        address = request.getParameter("address").trim();
+        role = request.getParameter("role");
+        uid = Integer.parseInt(request.getParameter("uid"));
+        accountId = Integer.parseInt(request.getParameter("accountId"));
+
+        // If female radio button is selected
+        if (request.getParameter("gender").equals("0")) {
+            genderbit = false;
+        }
+
+        // If active radio button is selected
+        if (request.getParameter("status").equals("1")) {
+            // In Setting table in the database 
+            // user has accountStatus is Active and registered 
+            // but not verified has settingId = 26
+            accountStaus = 26;
+        } else {
+            // In Setting table in the database 
+            // user has accountStatus is Inactive and registered 
+            // but not verified has settingId = 6
+            accountStaus = 6;
+        }
+
+        // Input stream of the upload file
+        InputStream inputStream = null;
+        // Obtains the upload file
+        // part in this multipart request
+        Part filePart = request.getPart("image");
+
+        if (filePart.getSize() != 0 ) {
+            System.out.println(filePart.getName());
+            System.out.println(filePart.getSize());
+            System.out.println(filePart.getContentType());
+            // Obtains input stream of the upload file
+            inputStream = filePart.getInputStream();
+        } else {
+            inputStream = null;
+        }
+
+        UserDAO userDAO = new UserDAO();
+        AccountDAO accountDAO = new AccountDAO();
+
+        // Get session
+        HttpSession session = request.getSession();
+
+        try {
+            int checkUpdateUser = userDAO.updateUser(name, title, genderbit, phone, address, inputStream, uid);
+            if (checkUpdateUser > 0) {
+                int accountRole = Integer.parseInt(role);
+                int checkUpdateAccount = accountDAO.updateAccount(accountStaus, accountRole, accountId);
+                if (checkUpdateAccount > 0) {
+                    successMessage = "Update user succesfully ";
+                    session.setAttribute("successEditMessage", successMessage);
+                    response.sendRedirect("editUser?uid=" + uid);
+
+                } else {
+                    error = "Unexcepted error occured. Please try again later !!!";
+                    session.setAttribute("errorEditMessage", error);
+                    response.sendRedirect("editUser?uid=" + uid);
+                }
+            } else {
+                error = "Unexcepted error occured. Please try again later !!!";
+                session.setAttribute("errorEditMessage", error);
+                response.sendRedirect("editUser?uid=" + uid);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EditUserController.class.getName()).log(Level.SEVERE, null, ex);
+            request.getRequestDispatcher("./admin/Error.jsp").forward(request, response);
+        }
     }
 
     /**

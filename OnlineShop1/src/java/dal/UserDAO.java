@@ -341,4 +341,43 @@ public class UserDAO extends DBContext {
         return user;
     }
 
+    public int updateUser(String fullname, String title, boolean gender,
+            String phone, String address, InputStream avatar, int uid) throws SQLException {
+        String sql = "UPDATE onlineshop1.user\n"
+                + "SET fullname = ?,title = ?,gender = ?,phone = ?,address = ? ";
+        int row = 0;
+        if (avatar != null) {
+            sql += " ,avatar = ? WHERE uid = ?;";
+        } else {
+            sql += " WHERE uid = ?;";
+        }
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, fullname);
+            preparedStatement.setString(2, title);
+            preparedStatement.setBoolean(3, gender);
+            preparedStatement.setString(4, phone);
+            preparedStatement.setString(5, address);
+            if (avatar != null) {
+                preparedStatement.setBlob(6, avatar);
+                preparedStatement.setInt(7, uid);
+            } else {
+                preparedStatement.setInt(6, uid);
+            }
+            row = preparedStatement.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return row;
+    }
 }

@@ -338,7 +338,17 @@
                                     <div class="col-lg-1"></div>
                                     <div class="col-lg-7">
                                         <div class="panel-body table-responsive">
-                                            <form class="form-horizontal" role="form">
+                                            <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/editUser?uid=<c:out value="${currentUser.uid}"/>" method="POST" name="editUser" onsubmit="return validationEdit()" enctype="multipart/form-data">
+                                                <c:if test="${not empty successEditMessage}">
+                                                    <h4 class="help-block" style="color: green" id="successEditMessage">${successEditMessage}</h4>
+                                                    <c:remove var="successEditMessage"/>
+                                                    <br>
+                                                </c:if>
+                                                <c:if test="${not empty errorEditMessage}">
+                                                    <h4 class="help-block" style="color: red" id="errorEditMessage">${errorEditMessage}</h4>
+                                                    <c:remove var="errorEditMessage"/>
+                                                    <br>
+                                                </c:if>
                                                 <div class="form-group">
                                                     <label for="avatar" class="col-lg-2 col-sm-2 control-label">Avatar</label>
                                                     <div class="col-lg-10">
@@ -351,27 +361,27 @@
                                                                     <img src="${pageContext.request.contextPath}/admin/img/avatar3.png" id="output" width="200" alt="default image"/>
                                                                 </c:if>
                                                             </label>
-                                                            <input id="file" type="file" onchange="loadFile(event)"/>
+                                                            <input id="file" type="file" onchange="loadFile(event)" name="image"/>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Email</label>
                                                     <div class="col-lg-10">
-                                                        <input type="email" class="form-control" id="inputEmail1" placeholder="Email" readonly value="${currentUserEmail}"> 
-                                                        <!--                                                        <p class="help-block">Example block-level help text here.</p>-->
+                                                        <input type="email" class="form-control" id="inputEmail1" placeholder="Email" readonly value="${currentUserEmail}" name="email"> 
+                                                        <!--<p class="help-block">Example block-level help text here.</p>-->
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="fullname" class="col-lg-2 col-sm-2 control-label">Fullname</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="fullname" placeholder="Fullname" value="${currentUser.fullname}">
+                                                        <input type="text" class="form-control" id="fullname" placeholder="Fullname" value="${currentUser.fullname}" name="name" required>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="title" class="col-lg-2 col-sm-2 control-label">Title</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="title" placeholder="Title" value="${currentUser.title}">
+                                                        <input type="text" class="form-control" id="title" placeholder="Title" value="${currentUser.title}" name="title">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -394,19 +404,19 @@
                                                 <div class="form-group">
                                                     <label for="phone" class="col-lg-2 col-sm-2 control-label">Phone</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="phone" placeholder="Phone" value="${currentUser.phone}">
+                                                        <input type="text" class="form-control" id="phone" placeholder="Phone" value="${currentUser.phone}" name="phone">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="address" class="col-lg-2 col-sm-2 control-label">Address</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="address" placeholder="Address" value="${currentUser.address}">
+                                                        <input type="text" class="form-control" id="address" placeholder="Address" value="${currentUser.address}" name="address">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="role" class="col-lg-2 col-sm-2 control-label">Role</label>
                                                     <div class="col-lg-10">
-                                                        <select class="form-control m-b-10">
+                                                        <select class="form-control m-b-10" name="role">
                                                             <option value="1" <%=request.getAttribute("currentUserRole").equals("1") ? "selected" : ""%>>Admin</option>
                                                             <option value="2" <%=request.getAttribute("currentUserRole").equals("2") ? "selected" : ""%>>Manager</option>
                                                             <option value="3" <%=request.getAttribute("currentUserRole").equals("3") ? "selected" : ""%>>Sales</option>
@@ -435,9 +445,10 @@
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-2 col-lg-10">
                                                         <button type="submit" class="btn btn-success">Save</button>
-                                                        <button type="button" class="btn btn-primary">Back</button>
+                                                        <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/userList'">Back</button>
                                                     </div>
                                                 </div>
+                                                <input type="hidden" value="${currentUser.aid}" name="accountId"> 
                                             </form>
                                         </div><!-- /.box-body -->
                                     </div>

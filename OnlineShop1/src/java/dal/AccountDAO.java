@@ -236,4 +236,30 @@ public class AccountDAO extends DBContext {
         return value;
     }
 
+    public int updateAccount(int accountStatus, int role, int aid) throws SQLException {
+        String sql = "UPDATE onlineshop1.account\n"
+                + "SET accountStatus = ?,role = ? WHERE aid = ?; ";
+        int row = 0;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, accountStatus);
+            preparedStatement.setInt(2, role);
+            preparedStatement.setInt(3, aid);
+            row = preparedStatement.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return row;
+    }
+
 }
