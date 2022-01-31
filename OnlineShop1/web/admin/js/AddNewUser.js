@@ -5,7 +5,7 @@
  */
 
 // https://stackoverflow.com/questions/940577/javascript-regular-expression-email-validation
-var emailPattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+var emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 var phonePattern = /\d/g;
 //var errorEmail = $('#errorEmailMessage').html();
 function validation() {

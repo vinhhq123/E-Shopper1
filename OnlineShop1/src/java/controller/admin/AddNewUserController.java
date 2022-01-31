@@ -160,7 +160,7 @@ public class AddNewUserController extends HttpServlet {
             } else {
                 // Insert into Account table with user entered email and default password is 123
                 int convertedRole = Integer.parseInt(role);
-                boolean checkAddAccount = accountDAO.addAccountWithoutPassword(email, accountStaus,convertedRole);
+                boolean checkAddAccount = accountDAO.addAccountWithoutPassword(email, accountStaus, convertedRole);
                 // if add new account succesfully
                 if (checkAddAccount) {
                     try {
@@ -174,12 +174,17 @@ public class AddNewUserController extends HttpServlet {
                                 phone, address, inputStream, justInsertedAid);
                         // If add new user successfully
                         if (checkAddUser > 0) {
-                            successMessage = "Add new User successfuly .";
-                            // Get session
-                            HttpSession session = request.getSession();
-                            session.setAttribute("messageAddSuccess", successMessage);
-                            //request.getRequestDispatcher("userList").forward(request, response);
-                            response.sendRedirect("userList");
+                            boolean checkEmail = accountDAO.sendEmailActivation(email, name);
+                            if (checkEmail) {
+                                successMessage = "Add new User successfuly .";
+                                // Get session
+                                HttpSession session = request.getSession();
+                                session.setAttribute("messageAddSuccess", successMessage);
+                                //request.getRequestDispatcher("userList").forward(request, response);
+                                response.sendRedirect("userList");
+
+                            }
+                            // CHUA CHECK SEND EMAIL FAIL
                         }
 
                     } catch (Exception ex) {

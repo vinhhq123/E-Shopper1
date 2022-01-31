@@ -436,30 +436,30 @@
                                     <br>
                                     <div class="table-foot">
                                         <ul class="pagination pagination-sm no-margin pull-right">
-                                            <c:if test="${requestScope.currentPage != 1}">
-                                                <li class="disabled"><a
-                                                        href="<%=request.getContextPath()%>/userList?currentPage=${requestScope.currentPage-1}">Previous</a>
+                                            <c:if test="${currentPage != 1}">
+                                                <li><a
+                                                        href="<%=request.getContextPath()%>/userList?currentPage=${currentPage-1}">Previous</a>
                                                 </li>
                                             </c:if>
 
-                                            <c:forEach begin="1" end="${requestScope.numOfPage}" var="i">
+                                            <c:forEach begin="1" end="${numOfPage}" var="i">
                                                 <c:choose>
-                                                    <c:when test="${requestScope.currentPage eq i}">
+                                                    <c:when test="${currentPage eq i}">
                                                         <li class="active"><a>
                                                                 ${i} <span class="sr-only">(current)</span></a>
                                                         </li>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <li class="disabled"><a
+                                                        <li><a
                                                                 href="<%=request.getContextPath()%>/userList?currentPage=${i}">${i}</a>
                                                         </li>
                                                     </c:otherwise>
                                                 </c:choose>
                                             </c:forEach>
 
-                                            <c:if test="${requestScope.currentPage lt requestScope.numOfPage}">
-                                                <li class="disabled"><a
-                                                        href="<%=request.getContextPath()%>/userList?currentPage=${requestScope.currentPage+1}">Next</a>
+                                            <c:if test="${currentPage lt numOfPage}">
+                                                <li><a
+                                                        href="<%=request.getContextPath()%>/userList?currentPage=${currentPage+1}">Next</a>
                                                 </li>
                                             </c:if>
                                         </ul>

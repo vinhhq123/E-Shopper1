@@ -92,7 +92,7 @@ public class UserListController extends HttpServlet {
             int rows = userDAO.getNumberOfRows();
             // Count total number of page
             int numOfPage = rows / recordsPerPage;
-            if (numOfPage % recordsPerPage > 0) {
+            if (rows % recordsPerPage > 0) {
                 numOfPage++;
             }
 
