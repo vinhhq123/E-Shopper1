@@ -62,16 +62,19 @@ public class CustomerListController extends HttpServlet {
 //        processRequest(request, response);
         int aid =0;
         User user = new User();
+            SettingDAO settingDAO = new SettingDAO();
         CustomerDAO cusDAO = new CustomerDAO();
         AccountDAO accountDAO = new AccountDAO();
         Account account = new Account();
+        List<Setting> settingList = new ArrayList<>();
         List<User> userList = new ArrayList<>();
         List<Account> accountList = new ArrayList<>();
                  try {
 
 //            settingList = settingDAO.getAllSetting();
 //            userList = userDAO.getUserByPage(currentPage, recordsPerPage);
-            accountList = accountDAO.getAllAccount();
+              settingList = settingDAO.getAllSetting();           
+             accountList = accountDAO.getAllAccount();
              userList = cusDAO.getAllCustomer();
 //            HttpSession session = request.getSession();
 //            account = (Account) session.getAttribute("account");
@@ -86,7 +89,7 @@ public class CustomerListController extends HttpServlet {
 //                numOfPage++;
 //            }
 
-//            request.setAttribute("SettingList", settingList);
+            request.setAttribute("SettingList", settingList);
             request.setAttribute("AccountList", accountList);
             request.setAttribute("UserList", userList);
 //            session.setAttribute("fullname", fullname);

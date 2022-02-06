@@ -353,7 +353,7 @@
 
                                     </div>
                                     <br>
-                                    <table class="table table-striped" id="UserListTable">
+                                    <table class="table table-striped" id="CusListTable">
                                         <tr>
                                             <th onclick="sortTable(0)">ID</th>
                                             <th onclick="sortTable(1)">Fullname</th>
@@ -374,16 +374,14 @@
                                                     <c:choose>
                                                         <c:when test="${con.getAid() eq acc.getAid()}">
                                                             <td>${acc.getEmail()}</td>
-                                                            <c:set var="currentAcoountRole" value="${acc.getRole()}"/>
+                                                         
                                                             <c:set var="currentAccountStatus" value="${acc.getAccountStatus()}"/>
                                                         </c:when>
                                                     </c:choose>
                                                 </c:forEach>
 
                                                 <c:forEach items="${SettingList}" var="set">
-                                                    <c:if test="${set.getSettingId() eq currentAcoountRole}">
-                                                        <td>${set.getSettingValue()}</td>
-                                                    </c:if>
+                                                   
                                                     <c:if test="${set.getSettingId() eq currentAccountStatus}">
                                                         <td><c:if test="${set.isSettingStatus()}">
                                                                 <span class="label label-success">Active</span></td>
