@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import model.Account;
 
 /**
@@ -63,5 +65,40 @@ public class AccountDAO extends DBContext{
             }
         }
         return null;
+    }
+    public List<Account> getAllAccount() throws Exception {
+
+        List<Account> accounts = new ArrayList<>();
+        String sql = "select * from account";
+        Account account = null;
+
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                account = new Account();
+                account.setAid(results.getInt("aid"));
+                account.setEmail(results.getString("email"));
+//                account.setPassword(results.getString("password"));
+                account.setAccountStatus(results.getInt("accountStatus"));
+                account.setRole(results.getInt("role"));
+                accounts.add(account);
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+
+        return accounts;
     }
 }
