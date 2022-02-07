@@ -55,11 +55,11 @@ public class ActivateSettingController extends HttpServlet {
         int sid = Integer.parseInt(request.getParameter("sid"));
         boolean status = Boolean.parseBoolean(request.getParameter("status"));
 
-        // If status is TRUE(Active) -- > status changes to FALSE (InActive) (state == 0)
+        // If status is FALSE (InActive) -- > status changes to TRUE(Active) (state == 1)
         if (!status) {
             state = 1;
         } else {
-            // If status is FALSE (InActive) -- > status changes to TRUE(Active) (state == 1)
+        // If status is TRUE(Active) -- > status changes to FALSE (InActive) (state == 0)
             state = 0;
         }
 

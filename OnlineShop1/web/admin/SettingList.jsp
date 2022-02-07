@@ -339,7 +339,7 @@
                                                 <form class="form-inline" role="form" action="<%=request.getContextPath()%>/searchSetting" method="get">
                                                     <div class="form-group">
                                                         <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                                                        <input type="text" name="table_search" class="form-control" id="exampleInputEmail2" placeholder=" Enter value to search " value="${requestScope.searchValue}" onblur="this.value = removeSpaces(this.value);">
+                                                        <input type="text" name="table_search" class="form-control" id="exampleInputEmail2" placeholder="Search by value" value="${requestScope.searchValue}" onblur="this.value = removeSpaces(this.value);">
                                                     </div>
                                                     <div class="form-group">
                                                         <select class="select" aria-label="Default select example" name="status">
@@ -412,7 +412,7 @@
                                     <div class="table-foot">
                                         <ul class="pagination pagination-sm no-margin pull-right">
                                             <c:if test="${requestScope.currentPage != 1}">
-                                                <li class="disabled"><a
+                                                <li><a
                                                         href="<%=request.getContextPath()%>/settingList?currentPage=${requestScope.currentPage-1}">Previous</a>
                                                 </li>
                                             </c:if>
@@ -425,7 +425,7 @@
                                                         </li>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <li class="disabled"><a
+                                                        <li><a
                                                                 href="<%=request.getContextPath()%>/settingList?currentPage=${i}">${i}</a>
                                                         </li>
                                                     </c:otherwise>
@@ -433,7 +433,7 @@
                                             </c:forEach>
 
                                             <c:if test="${requestScope.currentPage lt requestScope.numOfPage}">
-                                                <li class="disabled"><a
+                                                <li><a
                                                         href="<%=request.getContextPath()%>/settingList?currentPage=${requestScope.currentPage+1}">Next</a>
                                                 </li>
                                             </c:if>

@@ -104,7 +104,7 @@ public class SettingListController extends HttpServlet {
             int rows = settingDAO.getNumberOfRows();
             // Count total number of page
             int numOfPage = rows / recordsPerPage;
-            if (numOfPage % recordsPerPage > 0) {
+            if (rows % recordsPerPage > 0) {
                 numOfPage++;
             }
 
