@@ -71,15 +71,15 @@ public class CustomerListController extends HttpServlet {
         List<Account> accountList = new ArrayList<>();
                  try {
 
-//            settingList = settingDAO.getAllSetting();
+            settingList = settingDAO.getAllSetting();
 //            userList = userDAO.getUserByPage(currentPage, recordsPerPage);
               settingList = settingDAO.getAllSetting();           
              accountList = accountDAO.getAllAccount();
              userList = cusDAO.getAllCustomer();
-//            HttpSession session = request.getSession();
+//           HttpSession session = request.getSession();
 //            account = (Account) session.getAttribute("account");
-//            aid = account.getAid();
-//            user = userDAO.getUserByAccountId(aid);
+//           aid = account.getAid();
+//            user = cusDAO.getUserByAccountId(aid);
 //            fullname = user.getFullname();
 
 //            int rows = userDAO.getNumberOfRows();
@@ -92,7 +92,7 @@ public class CustomerListController extends HttpServlet {
             request.setAttribute("SettingList", settingList);
             request.setAttribute("AccountList", accountList);
             request.setAttribute("UserList", userList);
-//            session.setAttribute("fullname", fullname);
+           // session.setAttribute("fullname", fullname);
 //            request.setAttribute("numOfPage", numOfPage);
 //            request.setAttribute("recordsPerPage", recordsPerPage);
 //            request.setAttribute("currentPage", currentPage);
@@ -100,7 +100,7 @@ public class CustomerListController extends HttpServlet {
 
         } catch (Exception ex) {
             Logger.getLogger(CustomerListController.class.getName()).log(Level.SEVERE, null, ex);
-            request.getRequestDispatcher("./admin/Error.jsp").forward(request, response);
+            request.getRequestDispatcher("./manager/Error.jsp").forward(request, response);
         }       
       
         }
