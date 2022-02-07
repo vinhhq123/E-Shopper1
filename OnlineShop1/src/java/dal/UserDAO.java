@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import model.User;
 
 /**
@@ -45,5 +47,54 @@ public class UserDAO extends DBContext{
                 System.out.println("Exception ==== " + ex);
             }
         }}
+     public List<User> searchUser(String key, String role, String status) throws Exception {
+
+        List<User> users = new ArrayList<>();
+        String sql = "select u.uid,u.fullname,u.title,u.gender,u.phone,a.email,u.address,"
+                + "u.aid,s.settingValue,a.role,s.settingStatus as accountStatus\n"
+                + "from user as u join account as a on u.aid = a.aid\n"
+                + "				join setting as s on a.accountStatus = s.settingId\n"
+                + "where (u.fullname like '%" + key + "%' "
+                + "or a.email like '%" + key + "%' "
+                + "or u.phone like '%" + key + "%' )";
+        User user = null;
+
+        if (role != "") {
+            sql += " and a.role = " + role;
+        }
+        if (status != "") {
+            sql += " and s.settingStatus = " + status;
+        }
+
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                user = new User();
+                user.setUid(results.getInt("uid"));
+                user.setFullname(results.getString("fullname"));
+                user.setTitle(results.getString("title"));
+                user.setGender(results.getBoolean("gender"));
+                user.setPhone(results.getString("phone"));
+                user.setAddress(results.getString("address"));
+                user.setAid(results.getInt("aid"));
+                users.add(user);
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return users;
+    }
     
 }

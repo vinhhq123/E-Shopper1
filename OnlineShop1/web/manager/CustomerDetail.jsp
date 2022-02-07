@@ -1,8 +1,9 @@
 <%-- 
-    Document   : UserList
-    Created on : 19-Jan-2022, 18:26:51
-    Author     : 
+    Document   : CustomerDetail
+    Created on : Feb 6, 2022, 10:10:20 PM
+    Author     : HL2020
 --%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -12,7 +13,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Customer List</title>
+        <title>User Detail</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -27,6 +28,8 @@
         <!-- Theme style -->
         <link href="${pageContext.request.contextPath}/manager/css/style.css" rel="stylesheet" type="text/css" />
         <link href="${pageContext.request.contextPath}/view/css/font-awesome.min.css" rel="stylesheet">
+        <!-- Import css for image -->
+        <link href="${pageContext.request.contextPath}/manager/css/UserDetail.css" rel="stylesheet">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -47,7 +50,8 @@
                 <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                    <span c
+                          lass="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </a>
                 <div class="navbar-right">
@@ -255,7 +259,7 @@
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <img src="${pageContext.request.contextPath}/manager/img/avatar3.png" class="img-circle" alt="User Image" />
+                            <img src="${pageContext.request.contextPath}/admin/img/avatar3.png" class="img-circle" alt="User Image" />
                         </div>
                         <div class="pull-left info">
                             <p>Hello, ${fullname}</p>
@@ -269,7 +273,7 @@
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                             </a>
                         </li>
-                        <li class="active">
+                        <li>
                             <a href="<%=request.getContextPath()%>/listCustomer">
                                 <i class="fa fa-users"></i> <span>Customer List</span>
                             </a>
@@ -279,6 +283,8 @@
                                 <i class="fa fa-book"></i> <span>Product List</span>
                             </a>
                         </li>
+
+                       
 
                         <li>
                             <a href="basic_form.html">
@@ -297,7 +303,6 @@
                                 <i class="fa fa-paperclip"></i> <span>Post List</span>
                             </a>
                         </li>
-                     
 
                     </ul>
                 </section>
@@ -313,131 +318,88 @@
                         <div class="col-xs-12">
                             <div class="panel">
                                 <header class="panel-heading">
-                                    <b>Customer List</b>
+                                    <b>Customer Details</b>
 
                                 </header>
                                 <!-- <div class="box-header"> -->
                                 <!-- <h3 class="box-title">Responsive Hover Table</h3> -->
 
                                 <!-- </div> -->
-                                <div class="panel-body table-responsive">
-                                    <div class="row">
-                                        <div class="col-sm-8">
-                                            <form class="form-inline" role="form" action="<%=request.getContextPath()%>/searchCus" method="get">
+                                <div class="row">
+                                    <div class="col-lg-1"></div>
+                                    <div class="col-lg-7">
+                                        <div class="panel-body table-responsive">
+                                            <form action="<%=request.getContextPath()%>/editCustomer" method="POST">
+                                              <input type="hidden" value="${currentUser.aid}" name="accountId"> 
+                                               <input type="hidden" value="${currentUser.uid}" name="uid"> 
                                                 <div class="form-group">
-                                                    <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                                                    <input type="text" name="table_search" class="form-control" id="exampleInputEmail2" placeholder="Fullname, email or phone" value="${requestScope.searchValue}" onblur="this.value = removeSpaces(this.value);">
+                                                    <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Email</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="email" class="form-control" id="inputEmail1" placeholder="Email" readonly value="${currentUserEmail}" name="email"> 
+                                                        <!--<p class="help-block">Example block-level help text here.</p>-->
+                                                    </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <select class="select" aria-label="Default select example" name="status">
-                                                        <c:if test="${empty valueStatus}">
-                                                            <option value="" selected="">All Statuses</option>
-                                                            <option value="1">Active</option>
-                                                            <option value="0">Inactive</option>
-                                                        </c:if>
-                                                        <c:if test="${not empty valueStatus}">                         
-                                                            <option value="">All Statuses</option>
-                                                            <option value="1" <%=request.getAttribute("valueStatus").equals("1") ? "selected" : ""%>>Active</option>
-                                                            <option value="0" <%=request.getAttribute("valueStatus").equals("0") ? "selected" : ""%>>Inactive</option>
-                                                        </c:if>
-                                                    </select>
+                                                    <label for="fullname" class="col-lg-2 col-sm-2 control-label">Fullname</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" id="fullname" placeholder="Fullname" value="${currentUser.fullname}" name="name" required>
+                                                    </div>
                                                 </div>
-                                 
-                                                <button type="submit" class="btn btn-success">Search</button>
+                                                <div class="form-group">
+                                                    <label for="title" class="col-lg-2 col-sm-2 control-label">Title</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" id="title" placeholder="Title" value="${currentUser.title}" name="title">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Gender</label>
+                                                    <div class="col-lg-10">
+                                                        <div class="radio-inline">
+                                                            <label>Male
+                                                                <input type="radio" ${(requestScope.currentUser.isGender()) ? "checked=\"checked\"" : ""} name="gender" value="0">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="radio-inline">
+                                                            <label>Female
+                                                                <input type="radio" ${(!requestScope.currentUser.isGender()) ? "checked=\"checked\"" : ""} name="gender" value="1">
+                                                                
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="phone" class="col-lg-2 col-sm-2 control-label">Phone</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" id="phone" placeholder="Phone" value="${currentUser.phone}" name="phone">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="address" class="col-lg-2 col-sm-2 control-label">Address</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" id="address" placeholder="Address" value="${currentUser.address}" name="address">
+                                                    </div>
+                                                </div>
+                                  
+                                                <div class="form-group">
+                                                    <div class="col-lg-offset-2 col-lg-10">
+                                                        <button type="submit" class="btn btn-success">Save</button>
+                                                        <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/listCustomer'">Back</button>
+                                                    </div>
+                                                </div>
+                                            
                                             </form>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <button type="button" class="btn btn-success" style="float: right" onclick="window.location='./admin/AddNewUser.jsp'">Add New User</button>
-<!--                                                <a href="<%=request.getContextPath()%>/addNewUser" style="float: right"> Add new</a>-->
-                                        </div>
-
+                                        </div><!-- /.box-body -->
                                     </div>
-                                    <br>
-                                    <table class="table table-striped" id="CusListTable">
-                                        <tr>
-                                            <th onclick="sortTable(0)">ID</th>
-                                            <th onclick="sortTable(1)">Fullname</th>
-                                            <th onclick="sortTable(2)">Title</th>
-                                            <th onclick="sortTable(4)">Mobile</th>
-                                            <th onclick="sortTable(3)">Email</th>                                            
-                                            <th onclick="sortTable(6)">Status</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                        <c:forEach items="${UserList}" var="con">
-                                            <tr>
-                                                <td>${con.getUid()}</td>
-                                                <td>${con.getFullname()}</td>
-                                                <td>${con.getTitle()}</td>
-                                                <td>${con.getPhone()}</td>  
-
-                                                <c:forEach items="${AccountList}" var="acc">
-                                                    <c:choose>
-                                                        <c:when test="${con.getAid() eq acc.getAid()}">
-                                                            <td>${acc.getEmail()}</td>
-                                                         
-                                                            <c:set var="currentAccountStatus" value="${acc.getAccountStatus()}"/>
-                                                        </c:when>
-                                                    </c:choose>
-                                                </c:forEach>
-
-                                                <c:forEach items="${SettingList}" var="set">
-                                                   
-                                                    <c:if test="${set.getSettingId() eq currentAccountStatus}">
-                                                        <td><c:if test="${set.isSettingStatus()}">
-                                                                <span class="label label-success">Active</span></td>
-                                                            </c:if>
-                                                            <c:if test="${! set.isSettingStatus()}">
-                                                        <span class="label label-danger">Inactive</span></td>
-                                                    </c:if>
-                                                </c:if>
-                                            </c:forEach>
-                                            <td><button type="button" class="btn-xs btn-primary" onclick="window.location='<%=request.getContextPath()%>/editCustomer?uid=${con.getUid()}'">Edit</button></td>
-                                            </tr>
-                                        </c:forEach>
-                                    </table>
-
-                                    <br>
-                                    <c:if test="${requestScope.UserList.isEmpty()}">
-                                        <p style="text-align: center">No matching User found </p>
-                                    </c:if>                
-                                    <br>
-                                    <div class="table-foot">
-                                        <ul class="pagination pagination-sm no-margin pull-right">
-                                            <c:if test="${currentPage != 1}">
-                                                <li><a
-                                                        href="<%=request.getContextPath()%>/userList?currentPage=${currentPage-1}">Previous</a>
-                                                </li>
-                                            </c:if>
-
-                                            <c:forEach begin="1" end="${numOfPage}" var="i">
-                                                <c:choose>
-                                                    <c:when test="${currentPage eq i}">
-                                                        <li class="active"><a>
-                                                                ${i} <span class="sr-only">(current)</span></a>
-                                                        </li>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <li><a
-                                                                href="<%=request.getContextPath()%>/userList?currentPage=${i}">${i}</a>
-                                                        </li>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </c:forEach>
-
-                                            <c:if test="${currentPage lt numOfPage}">
-                                                <li><a
-                                                        href="<%=request.getContextPath()%>/userList?currentPage=${currentPage+1}">Next</a>
-                                                </li>
-                                            </c:if>
-                                        </ul>
-                                    </div>
-                                </div><!-- /.box-body -->
+                                    <div class="col-lg-4"></div>
+                                </div>
                             </div><!-- /.box -->
                         </div>
                     </div>
                 </section><!-- /.content -->
                 <div class="footer-main">
-                    Copyright &copy Online Shop , 2022
+                   
                 </div>
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
@@ -451,16 +413,7 @@
         <script src="${pageContext.request.contextPath}/manager/js/bootstrap.min.js" type="text/javascript"></script>
         <!-- Director App -->
         <script src="${pageContext.request.contextPath}/manager/js/Director/app.js" type="text/javascript"></script>
-        <!-- Setting List -->
-        <script src="${pageContext.request.contextPath}/manager/js/UserList.js" type="text/javascript"></script>
+        <!-- User Detail -->
+        <script src="${pageContext.request.contextPath}/manager/js/UserDetail.js" type="text/javascript"></script>
     </body>
-    <c:if test="${not empty sessionScope.messageAddSuccess}">
-        <%
-            out.write("<script>");
-            out.write("alert(\" " + session.getAttribute("messageAddSuccess") + "\")");
-            out.write("</script>");
-        %>
-        <c:remove var="messageAddSuccess"/>
-    </c:if>
 </html>
-

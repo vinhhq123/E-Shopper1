@@ -40,6 +40,10 @@
         <servlet-name>CustomerEditController</servlet-name>
         <servlet-class>controller.manager.CustomerEditController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchCusContronller</servlet-name>
+        <servlet-class>controller.manager.SearchCusContronller</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>
         <url-pattern>/settingList</url-pattern>
@@ -79,6 +83,10 @@
     <servlet-mapping>
         <servlet-name>CustomerEditController</servlet-name>
         <url-pattern>/editCustomer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchCusContronller</servlet-name>
+        <url-pattern>/searchCus</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

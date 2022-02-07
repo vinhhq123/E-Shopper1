@@ -5,11 +5,16 @@
  */
 package dal;
 import dbcontext.DBContext;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import model.User;
 /**
@@ -95,4 +100,73 @@ public class CustomerDAO extends DBContext{
 
         return user;
     }
+     public User getUserByUserId(int uid) throws Exception {
+
+        String sql = "SELECT uid,fullname,title,gender,phone,address,aid \n" +
+                        "from user where uid = " + uid;
+        System.out.println(sql);
+        User user = null;
+  
+
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                user = new User();
+                user.setUid(results.getInt("uid"));
+                user.setFullname(results.getString("fullname"));
+                user.setTitle(results.getString("title"));
+                user.setGender(results.getBoolean("gender"));
+                user.setPhone(results.getString("phone"));
+                user.setAddress(results.getString("address"));
+                user.setAid(results.getInt("aid"));
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (SQLException | IOException ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return user;
+    }
+      public int updateUser(User s) throws SQLException {
+        String sql = "update user\n" +
+                    "SET fullname = ?, title = ?, gender = ?,phone =? , address= ?\n" +
+                    "where uid = ?;";
+        int row = 0;
+   
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, s.getFullname());
+            preparedStatement.setString(2, s.getTitle());
+            preparedStatement.setBoolean(3, s.isGender());
+            preparedStatement.setString(4, s.getPhone());
+            preparedStatement.setString(5, s.getAddress());
+            preparedStatement.setInt(6, s.getUid());
+           
+            row = preparedStatement.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return row;
+    }
+      
 }
