@@ -71,7 +71,7 @@ public class SearchCusContronller extends HttpServlet {
 
         try {
 
-            userList = userDAO.searchUser(searchField, role, status);
+            userList = userDAO.searchUser(searchField,"5", status);
 
             settingList = settingDAO.getAllSetting();
             accountList = accountDAO.getAllAccount();
