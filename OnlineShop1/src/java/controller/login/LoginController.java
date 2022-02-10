@@ -69,12 +69,12 @@ public class LoginController extends HttpServlet {
             request.setAttribute("fail", fail);
             request.getRequestDispatcher("/login/viewLogin.jsp").forward(request, response);
         } else {
-<<<<<<< Updated upstream
+
             response.getWriter().println("login sucessful!");
-=======
+
             request.getSession().setAttribute("account", account);
             request.getRequestDispatcher("/home").forward(request, response);
->>>>>>> Stashed changes
+
         }
         request.getSession().setAttribute("account", account);
     }
