@@ -5,7 +5,7 @@
  */
 package controller.login;
 
-import dal.LoginDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Account;
+import model.User;
 
 /**
  *
@@ -63,14 +63,14 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        LoginDAO db = new LoginDAO();
-        Account account = db.getAccount(email, password);
-        if(account == null){
+        UserDAO usr = new UserDAO();
+        User user = usr.getAccount(email, password);
+        if(user == null){
             String fail = "Login faild, please re-login!";
             request.setAttribute("fail", fail);
             request.getRequestDispatcher("Login.jsp").forward(request, response);
         } else {
-            request.getSession().setAttribute("account", account);
+            request.getSession().setAttribute("account", user);
             request.getRequestDispatcher("home").forward(request, response);
         }
         

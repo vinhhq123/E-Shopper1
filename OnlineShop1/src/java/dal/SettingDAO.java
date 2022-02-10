@@ -68,7 +68,33 @@ public class SettingDAO extends DBContext {
         Setting setting = null;
 
         if (type != "") {
-            sql += " and settingType like " + "'%" + type + "%'";
+            switch (type) {
+                case "User Role":
+                    sql += " and settingType = 1";
+                    break;
+                case "Account Status":
+                    sql += " and settingType = 2";
+                    break;
+                case "Post Category":
+                    sql += " and settingType = 3";
+                    break;
+                case "Post Status":
+                    sql += " and settingType = 4";
+                    break;
+                case "Product Category":
+                    sql += " and settingType = 5";
+                    break;
+                case "Product Status":
+                    sql += " and settingType = 6";
+                    break;
+                case "Feedback Status":
+                    sql += " and settingType = 7";
+                    break;
+                case "Order Status":
+                    sql += " and settingType = 8";
+                    break;
+
+            }
         }
         if (status != "") {
             sql += " and settingStatus = " + status;

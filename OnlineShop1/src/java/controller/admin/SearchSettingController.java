@@ -10,7 +10,9 @@ import dal.SettingTypeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -37,7 +39,7 @@ public class SearchSettingController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -52,26 +54,35 @@ public class SearchSettingController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         // Get parameter from request
         String searchField = request.getParameter("table_search").trim();
         String type = request.getParameter("type");
         String status = request.getParameter("status");
-        
+
         // If user does not filter search by SettingStatus
-        if(status == null) status= "";
-        
+        if (status == null) {
+            status = "";
+        }
+
         SettingDAO settingDAO = new SettingDAO();
         SettingTypeDAO settingTypeDAO = new SettingTypeDAO();
         List<Setting> settingSearch = new ArrayList<>();
-        List<SettingType> settingTypes = new ArrayList<>();
-        
+        List<String> settingTypes = new ArrayList<>();
+
+        // Read setting properties file
+        ResourceBundle rb = ResourceBundle.getBundle("resources.setting");
+        Enumeration<String> keys = rb.getKeys();
+        while (keys.hasMoreElements()) {
+            String key = keys.nextElement();
+            String value = rb.getString(key);
+            settingTypes.add(value);
+        }
+
         try {
-            // Search Setting by selected filter and return an arrayListtt result
+            // Search Setting by selected filter and return an arrayList result
             settingSearch = settingDAO.searchSeting(searchField, type, status);
-            // Get all the setting types from the database
-            settingTypes = settingTypeDAO.getAllSettingType();
-            
+
             request.setAttribute("SettingList", settingSearch);
             request.setAttribute("types", settingTypes);
             request.setAttribute("searchValue", searchField);

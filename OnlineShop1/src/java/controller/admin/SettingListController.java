@@ -10,7 +10,9 @@ import dal.SettingTypeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Setting;
 import model.SettingType;
+import model.User;
 
 /**
  *
@@ -64,40 +67,43 @@ public class SettingListController extends HttpServlet {
         if (request.getParameter("currentPage") != null) {
             currentPage = Integer.parseInt(request.getParameter("currentPage"));
         }
-//
-//        AccountDAO accountDAO = new AccountDAO();
-//        ContactDAO contactDAO = new ContactDAO();
+        
         SettingDAO settingDAO = new SettingDAO();
         SettingTypeDAO settingTypeDAO = new SettingTypeDAO();
         List<Setting> settingList = new ArrayList<>();
-        List<SettingType> settingType = new ArrayList<>();
+        List<String> settingType = new ArrayList<>();
+        User  user = new User();
+
+        // Read setting properties file
+        ResourceBundle rb = ResourceBundle.getBundle("resources.setting");
+        Enumeration<String> keys = rb.getKeys();
+        while (keys.hasMoreElements()) {
+            String key = keys.nextElement();
+            String value = rb.getString(key);
+            settingType.add(value);
+        }
 
         try {
-//            Account account = accountDAO.getAccountByEmail("vinhhqse05532@fpt.edu.vn");
-//            int aid = account.getAid();
-//            Contact contact = contactDAO.getContactByAccountID(aid);
 
-            // Initialize a new session
-            HttpSession session = request.getSession(true);
-            // Temporary loged in user full name
-            fullname = "Temp";
+            // Get session
+            HttpSession session = request.getSession();
+            // get account saved in session 
+            user = (User) session.getAttribute("account");
 
             // Get all the setting in the selected page
             settingList = settingDAO.getSettingByPage(currentPage, recordsPerPage);
-            // Get all the setting types from the database
-            settingType = settingTypeDAO.getAllSettingType();
+            fullname = user.getFullname();
 
             // Count total number of Setting in the Setting table
             int rows = settingDAO.getNumberOfRows();
             // Count total number of page
             int numOfPage = rows / recordsPerPage;
-            if (numOfPage % recordsPerPage > 0) {
+            if (rows % recordsPerPage > 0) {
                 numOfPage++;
             }
 
             request.setAttribute("SettingList", settingList);
             session.setAttribute("fullname", fullname);
-//            request.setAttribute("fullname", fullname);
             request.setAttribute("types", settingType);
             request.setAttribute("numOfPage", numOfPage);
             request.setAttribute("recordsPerPage", recordsPerPage);

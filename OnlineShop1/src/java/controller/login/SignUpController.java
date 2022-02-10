@@ -5,8 +5,6 @@
  */
 package controller.login;
 
-import dal.AccountDAO;
-import dal.LoginDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,7 +15,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Account;
 import model.User;
 
 /**
@@ -79,11 +76,11 @@ public class SignUpController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            AccountDAO accDB = new AccountDAO();
+            UserDAO usrDB = new UserDAO();
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             String rePassword = request.getParameter("rePassword");
-            if(accDB.checkAccountExist(email) != null)
+            if(usrDB.checkAccountExist(email) != null)
             {
                 String fail1 = "Email already exists!";
                 request.setAttribute("fail1", fail1);
@@ -95,10 +92,9 @@ public class SignUpController extends HttpServlet {
                 request.getRequestDispatcher("Login.jsp").forward(request, response);
             }
             else {
-                accDB.addAccount(email,password);
-                LoginDAO db = new LoginDAO();
-                Account account = db.getAccount(email, password);
-                request.getSession().setAttribute("account", account);
+                usrDB.addAccount(email,password);
+                User user = usrDB.getAccount(email, password);
+                request.getSession().setAttribute("account", user);
                 response.sendRedirect("home");
             }
         } catch (SQLException ex) {
