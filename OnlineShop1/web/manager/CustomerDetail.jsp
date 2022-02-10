@@ -329,7 +329,7 @@
                                     <div class="col-lg-1"></div>
                                     <div class="col-lg-7">
                                         <div class="panel-body table-responsive">
-                                            <form action="<%=request.getContextPath()%>/editCustomer" method="POST">
+                                            <form class="form-horizontal" action="<%=request.getContextPath()%>/editCustomer"   method="POST">
                                               <input type="hidden" value="${currentUser.aid}" name="accountId"> 
                                                <input type="hidden" value="${currentUser.uid}" name="uid"> 
                                                 <div class="form-group">
@@ -372,7 +372,7 @@
                                                 <div class="form-group">
                                                     <label for="phone" class="col-lg-2 col-sm-2 control-label">Phone</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="phone" placeholder="Phone" value="${currentUser.phone}" name="phone">
+                                                        <input type="phone" class="form-control" id="phone" placeholder="Phone" value="${currentUser.phone}" name="phone">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -384,7 +384,7 @@
                                   
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-2 col-lg-10">
-                                                        <button type="submit" class="btn btn-success">Save</button>
+                                                        <button type="submit" value="Submit" class="btn btn-success">Save</button>
                                                         <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/listCustomer'">Back</button>
                                                     </div>
                                                 </div>
@@ -407,13 +407,15 @@
 
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-        <script src="${pageContext.request.contextPath}/manager/js/jquery.min.js" type="text/javascript"></script>
+        <!--script src="${pageContext.request.contextPath}/manager/js/jquery.min.js" type="text/javascript"></script>
 
         <!-- Bootstrap -->
         <script src="${pageContext.request.contextPath}/manager/js/bootstrap.min.js" type="text/javascript"></script>
         <!-- Director App -->
         <script src="${pageContext.request.contextPath}/manager/js/Director/app.js" type="text/javascript"></script>
         <!-- User Detail -->
-        <script src="${pageContext.request.contextPath}/manager/js/UserDetail.js" type="text/javascript"></script>
+      
+      
+        
     </body>
 </html>

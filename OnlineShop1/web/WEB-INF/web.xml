@@ -44,6 +44,10 @@
         <servlet-name>SearchCusContronller</servlet-name>
         <servlet-class>controller.manager.SearchCusContronller</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CustomerAddController</servlet-name>
+        <servlet-class>controller.manager.CustomerAddController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>
         <url-pattern>/settingList</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>SearchCusContronller</servlet-name>
         <url-pattern>/searchCus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CustomerAddController</servlet-name>
+        <url-pattern>/addCus</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -20,14 +20,10 @@ function validationEdit() {
 //        return false;
 //    }
 
-    var email = document.forms["editUser"]["email"];
-    var phone = document.forms["editUser"]["phone"];
-    var avatar = document.forms["editUser"]["image"];
-    if (!emailPattern.test(email.value)) {
-//        errorEmail = "Email is not in the right format !!!";
-        alert("Email is not in the right format !!!");
-        return false;
-    }
+    
+    var phone = document.forms["editCustomer"]["phone"];
+    
+   
     if (!phonePattern.test(phone.value)) {
         alert("Phone is not in correct format !!!");
         return false;
@@ -36,12 +32,9 @@ function validationEdit() {
         alert("Phone must be 10 numbers !!!");
         return false;
     }
-    // CHUA CHECK DC
-    if (document.getElementById("file").files.length === 0) {
-        alert("Please choose an image !!!");
-        return false;
-    }
-    alert(document.forms["editUser"]["name"]);
+   
+   
+    alert(document.forms["editCustomer"]["name"]);
 }
 
 function removeSpaces(string) {
