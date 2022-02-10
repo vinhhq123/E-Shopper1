@@ -41,7 +41,7 @@ public class SettingDAO extends DBContext {
                 setting.setSettingId(results.getInt("settingId"));
                 setting.setSettingType(results.getInt("settingType"));
                 setting.setSettingValue(results.getString("settingValue"));
-                setting.setSettingOrder(results.getString("settingOrder"));
+                setting.setSettingOrder(results.getInt("settingOrder"));
                 setting.setSettingStatus(results.getBoolean("settingStatus"));
                 settings.add(setting);
             }
@@ -110,7 +110,7 @@ public class SettingDAO extends DBContext {
                 setting.setSettingId(results.getInt("settingId"));
                 setting.setSettingType(results.getInt("settingType"));
                 setting.setSettingValue(results.getString("settingValue"));
-                setting.setSettingOrder(results.getString("settingOrder"));
+                setting.setSettingOrder(results.getInt("settingOrder"));
                 setting.setSettingStatus(results.getBoolean("settingStatus"));
                 settings.add(setting);
             }
@@ -189,7 +189,7 @@ public class SettingDAO extends DBContext {
                 setting.setSettingId(results.getInt("settingId"));
                 setting.setSettingType(results.getInt("settingType"));
                 setting.setSettingValue(results.getString("settingValue"));
-                setting.setSettingOrder(results.getString("settingOrder"));
+                setting.setSettingOrder(results.getInt("settingOrder"));
                 setting.setSettingStatus(results.getBoolean("settingStatus"));
                 settings.add(setting);
             }
@@ -245,7 +245,7 @@ public class SettingDAO extends DBContext {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, s.getSettingType());
             preparedStatement.setString(2, s.getSettingValue());
-            preparedStatement.setString(3, s.getSettingOrder());
+            preparedStatement.setInt(3, s.getSettingOrder());
             preparedStatement.setBoolean(4, s.isSettingStatus());
             preparedStatement.executeUpdate();
         } catch (Exception ex) {
@@ -282,7 +282,7 @@ public class SettingDAO extends DBContext {
                     setting.setSettingId(results.getInt("settingId"));
                     setting.setSettingType(results.getInt("settingType"));
                     setting.setSettingValue(results.getString("settingValue"));
-                    setting.setSettingOrder(results.getString("settingOrder"));
+                    setting.setSettingOrder(results.getInt("settingOrder"));
                     setting.setSettingStatus(results.getBoolean("settingStatus"));
                 }
             }
@@ -376,7 +376,7 @@ public class SettingDAO extends DBContext {
             //results = preparedStatement.executeQuery();
             preparedStatement.setInt(1, s.getSettingType());
             preparedStatement.setString(2, s.getSettingValue());
-            preparedStatement.setString(3, s.getSettingOrder());
+            preparedStatement.setInt(3, s.getSettingOrder());
             preparedStatement.setBoolean(4, s.isSettingStatus());
             preparedStatement.setInt(5, s.getSettingId());
             preparedStatement.executeUpdate();

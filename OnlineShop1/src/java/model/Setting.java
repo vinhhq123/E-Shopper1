@@ -14,21 +14,22 @@ public class Setting {
     private int settingId;
     private int settingType;
     private String settingValue;
-    private String settingOrder;
+    private int settingOrder;
     private boolean settingStatus;
     
 
     public Setting() {
     }
 
-    public Setting(int settingId, int settingType, String settingValue, String settingOrder, boolean settingStatus, SettingType typename) {
+    public Setting(int settingId, int settingType, String settingValue, int settingOrder, boolean settingStatus) {
         this.settingId = settingId;
         this.settingType = settingType;
         this.settingValue = settingValue;
         this.settingOrder = settingOrder;
         this.settingStatus = settingStatus;
-        
     }
+
+
 
     public int getSettingId() {
         return settingId;
@@ -54,13 +55,14 @@ public class Setting {
         this.settingValue = settingValue;
     }
 
-    public String getSettingOrder() {
+    public int getSettingOrder() {
         return settingOrder;
     }
 
-    public void setSettingOrder(String settingOrder) {
+    public void setSettingOrder(int settingOrder) {
         this.settingOrder = settingOrder;
     }
+
 
     public boolean isSettingStatus() {
         return settingStatus;
