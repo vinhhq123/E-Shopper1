@@ -3,25 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.login;
+package controller.user;
 
-import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.User;
 
 /**
  *
  * @author hungn
  */
-public class SignUpController extends HttpServlet {
+public class HomeController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,18 +30,7 @@ public class SignUpController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SignUpController</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SignUpController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        request.getRequestDispatcher("./user/index.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -61,7 +45,7 @@ public class SignUpController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("Login.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -75,32 +59,7 @@ public class SignUpController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            UserDAO usrDB = new UserDAO();
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            String rePassword = request.getParameter("rePassword");
-            if(usrDB.checkAccountExist(email) != null)
-            {
-                String fail1 = "Email already exists!";
-                request.setAttribute("fail1", fail1);
-                request.getRequestDispatcher("Login.jsp").forward(request, response);
-            }
-            else if (!password.equals(rePassword)){
-                String fail2 = "Password is not correct!";
-                request.setAttribute("fail2", fail2);
-                request.getRequestDispatcher("Login.jsp").forward(request, response);
-            }
-            else {
-                usrDB.addAccount(email,password);
-                User user = usrDB.getAccount(email, password);
-                request.getSession().setAttribute("account", user);
-                response.sendRedirect("home");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        processRequest(request, response);
     }
 
     /**

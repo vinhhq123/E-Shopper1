@@ -3,14 +3,29 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SWP/New%20folder/g6/OnlineShop1/src/java/controller/admin/SearchSettingController.java</file>
-            <file>file:/D:/SWP/New%20folder/g6/OnlineShop1/src/java/dal/UserDAO.java</file>
-            <file>file:/D:/SWP/New%20folder/g6/OnlineShop1/src/java/dbcontext/DBContext.java</file>
-            <file>file:/D:/SWP/New%20folder/g6/OnlineShop1/src/java/dal/SettingDAO.java</file>
-            <file>file:/D:/SWP/New%20folder/g6/OnlineShop1/web/admin/Error.jsp</file>
-            <file>file:/D:/SWP/New%20folder/g6/OnlineShop1/src/java/controller/admin/SettingListController.java</file>
-            <file>file:/D:/SWP/New%20folder/g6/OnlineShop1/src/java/model/User.java</file>
-            <file>file:/D:/SWP/New%20folder/g6/OnlineShop1/src/java/controller/login/LoginController.java</file>
+            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/assets/js/jquery.js</file>
+            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/login/LoginController.java</file>
+            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/admin/SearchSettingController.java</file>
+            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/colorlib-regform-4/form_add.jsp</file>
+            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/admin/SettingDetailAdd.java</file>
+            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/dbcontext/DBContext.java</file>
+            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/assets/js/html5shiv.js</file>
+            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/dal/SettingTypeDAO.java</file>
+            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/assets/js/price-range.js</file>
+            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/admin/SettingListController.java</file>
+            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/assets/js/main.js</file>
+            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/assets/js/bootstrap.min.js</file>
+            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/dal/UserDAO.java</file>
+            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/model/User.java</file>
+            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/colorlib-regform-4/form_edit.jsp</file>
+            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/model/Setting.java</file>
+            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/assets/js/contact.js</file>
+            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/assets/js/jquery.scrollUp.min.js</file>
+            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/dal/SettingDAO.java</file>
+            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/login/SignUpController.java</file>
+            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/assets/js/jquery.prettyPhoto.js</file>
+            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/Login.jsp</file>
+            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/assets/js/gmaps.js</file>
         </group>
     </open-files>
 </project-private>

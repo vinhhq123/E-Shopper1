@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.login;
+package controller.user;
 
 import dal.UserDAO;
 import java.io.IOException;
@@ -47,7 +47,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("Login.jsp").forward(request, response);
+        request.getRequestDispatcher("./user/Login.jsp").forward(request, response);
     }
 
     /**
@@ -68,10 +68,10 @@ public class LoginController extends HttpServlet {
         if(user == null){
             String fail = "Login faild, please re-login!";
             request.setAttribute("fail", fail);
-            request.getRequestDispatcher("Login.jsp").forward(request, response);
+            request.getRequestDispatcher("./user/Login.jsp").forward(request, response);
         } else {
             request.getSession().setAttribute("account", user);
-            request.getRequestDispatcher("home").forward(request, response);
+            response.sendRedirect("home");
         }
         
     }

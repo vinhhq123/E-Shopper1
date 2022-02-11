@@ -26,11 +26,11 @@
     </servlet>
     <servlet>
         <servlet-name>LoginController</servlet-name>
-        <servlet-class>controller.login.LoginController</servlet-class>
+        <servlet-class>controller.user.LoginController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>HomeController</servlet-name>
-        <servlet-class>controller.homepage.HomeController</servlet-class>
+        <servlet-class>controller.user.HomeController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>
@@ -48,7 +48,6 @@
         <servlet-name>SearchSettingController</servlet-name>
         <url-pattern>/searchSetting</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>ActivateSettingController</servlet-name>
         <url-pattern>/activateSetting</url-pattern>
