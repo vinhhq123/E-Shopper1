@@ -110,7 +110,7 @@
                         <div class="login-form"><!--login form-->
 
                             <h2>Login to your account</h2>
-                            <form action="../login" method="POST">
+                            <form action="login" method="POST">
                                 <input type="text" placeholder="Email" name="email" /> </br>
                                 <input type="password" placeholder="password" name="password" /> </br>
                                 <span>
@@ -124,22 +124,9 @@
                         </div><!--/login form-->
                     </div>
                     <div class="col-sm-1">
-                        <h2 class="or">OR</h2>
                     </div>
                     <div class="col-sm-4">
-                        <div class="signup-form"><!--sign up form-->
-                            <h2>New User Signup!</h2>
-                            <form action="<%=request.getContextPath()%>/SignUp" method ="POST">
-                                <input type="text" name="name" placeholder="Name"/>
-                                <input type="email" name="email" placeholder="Email Address" required/>
-                                                        <p style="color: red">${requestScope.fail1}</p>
-							<input type="password" name="password" placeholder="Password"required/>
-                                                        <input type="password" name="rePassword" placeholder="Confirm Password"required/>
-                                                        <p style="color: red">${requestScope.fail2}</p>
-                                
-                                <button type="submit" class="btn btn-default">Signup</button>
-                            </form>
-                        </div><!--/sign up form-->
+                       
                     </div>
                 </div>
             </div>

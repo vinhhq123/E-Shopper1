@@ -48,6 +48,7 @@ public class LoginController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher("./user/Login.jsp").forward(request, response);
+        
     }
 
     /**
@@ -68,7 +69,7 @@ public class LoginController extends HttpServlet {
         if(user == null){
             String fail = "Login faild, please re-login!";
             request.setAttribute("fail", fail);
-            request.getRequestDispatcher("./user/Login.jsp").forward(request, response);
+            response.sendRedirect("login");
         } else {
             request.getSession().setAttribute("account", user);
             response.sendRedirect("home");
