@@ -32,6 +32,14 @@
         <servlet-name>HomeController</servlet-name>
         <servlet-class>controller.homepage.HomeController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PostList</servlet-name>
+        <servlet-class>controller.post.PostList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PostDetail</servlet-name>
+        <servlet-class>controller.post.PostDetail</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>
         <url-pattern>/settingList</url-pattern>
@@ -48,7 +56,6 @@
         <servlet-name>SearchSettingController</servlet-name>
         <url-pattern>/searchSetting</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>ActivateSettingController</servlet-name>
         <url-pattern>/activateSetting</url-pattern>
@@ -64,6 +71,14 @@
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostList</servlet-name>
+        <url-pattern>/postlist</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostDetail</servlet-name>
+        <url-pattern>/postdetail</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
