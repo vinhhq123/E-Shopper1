@@ -186,7 +186,9 @@ public class AddNewUserController extends HttpServlet {
 //                            boolean checkEmail = accountDAO.sendEmailActivation(email, name);
 //                            if (checkEmail) {
                     successMessage = "Add new User successfuly .";
+                    String avatar = userDAO.getLastInsertedUser().getAvatar();
                     session.setAttribute("messageAddSuccess", successMessage);
+                    request.setAttribute("imageValue", avatar);
                     request.getRequestDispatcher("./admin/AddNewUser.jsp").forward(request, response);
                     //request.getRequestDispatcher("userList").forward(request, response);
 //                                response.sendRedirect("userList");
@@ -197,6 +199,10 @@ public class AddNewUserController extends HttpServlet {
             }
         } catch (SQLException ex) {
             Logger.getLogger(AddNewUserController.class.getName()).log(Level.SEVERE, null, ex);
+            request.getRequestDispatcher("./admin/Error.jsp").forward(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(AddNewUserController.class.getName()).log(Level.SEVERE, null, ex);
+            request.getRequestDispatcher("./admin/Error.jsp").forward(request, response);
         }
 
     }
