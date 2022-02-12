@@ -84,7 +84,7 @@
                                             </form>
                                         </div>
                                         <div class="col-sm-4">
-                                            <button type="button" class="btn btn-success" style="float: right" onclick="window.location = './admin/Addnewcustomer'">Add New User</button>
+                                            <button type="button" class="btn btn-success" style="float: right" onclick="window.location = './admin/Addnewcustomer.jsp'">Add New User</button>
 <!--                                                <a href="<%=request.getContextPath()%>/addNewUser" style="float: right"> Add new</a>-->
                                         </div>
 
