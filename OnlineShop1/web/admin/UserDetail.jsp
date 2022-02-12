@@ -83,7 +83,7 @@
                                                                     <img src="data:image/jpg;base64,${currentUser.avatar}" id="output" width="200" />
                                                                 </c:if>
                                                                 <c:if test="${empty currentUser.avatar}">
-                                                                    <img src="${pageContext.request.contextPath}/admin/img/avatar3.png" id="output" width="200" alt="default image"/>
+                                                                    <img src="${pageContext.request.contextPath}/admin/img/user-bg.png" id="output" width="200" alt="default image"/>
                                                                 </c:if>
                                                             </label>
                                                             <input id="file" type="file" onchange="loadFile(event)" name="image"/>

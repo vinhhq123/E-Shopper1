@@ -6,10 +6,12 @@
 package controller.admin;
 
 import dal.UserDAO;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -91,6 +93,7 @@ public class AddNewUserController extends HttpServlet {
         String gender = "";
         String status = "";
         String successMessage = "";
+        String base64Image = "";
         boolean genderbit = true;
         int accountStaus = 0;
 
@@ -133,10 +136,13 @@ public class AddNewUserController extends HttpServlet {
             System.out.println(filePart.getContentType());
             // Obtains input stream of the upload file
             inputStream = filePart.getInputStream();
+
         }
 
         UserDAO userDAO = new UserDAO();
         User user = null;
+        // Get session
+        HttpSession session = request.getSession();
 
         try {
             User checkUserExisted = userDAO.checkAccountExist(email);
@@ -149,7 +155,22 @@ public class AddNewUserController extends HttpServlet {
             request.setAttribute("genderValue", gender);
             request.setAttribute("statusValue", status);
             if (checkUserExisted != null) {
+                // Get image to display in string
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                byte[] buffer = new byte[4096];
+                int bytesRead = -1;
+
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+
+                byte[] imageBytes = outputStream.toByteArray();
+                base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                outputStream.close();
+
                 error = "This email has already been registered !!!";
+                request.setAttribute("imageValue", base64Image);
                 request.setAttribute("error", error);
                 request.getRequestDispatcher("./admin/AddNewUser.jsp").forward(request, response);
             } else if (filePart.getSize() == 0) {
@@ -165,8 +186,6 @@ public class AddNewUserController extends HttpServlet {
 //                            boolean checkEmail = accountDAO.sendEmailActivation(email, name);
 //                            if (checkEmail) {
                     successMessage = "Add new User successfuly .";
-                    // Get session
-                    HttpSession session = request.getSession();
                     session.setAttribute("messageAddSuccess", successMessage);
                     request.getRequestDispatcher("./admin/AddNewUser.jsp").forward(request, response);
                     //request.getRequestDispatcher("userList").forward(request, response);

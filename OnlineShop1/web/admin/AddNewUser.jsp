@@ -73,7 +73,12 @@
                                                     <div class="col-lg-10">
                                                         <div class="profile-pic">
                                                             <label class="-label" for="file">
-                                                                <img src="${pageContext.request.contextPath}/admin/img/avatar5.png" id="output" width="200" />
+                                                                <c:if test="${ not empty imageValue}">
+                                                                    <img src="data:image/jpg;base64,${imageValue}" id="output" width="200" />
+                                                                </c:if>
+                                                                <c:if test="${empty imageValue}">
+                                                                    <img src="${pageContext.request.contextPath}/admin/img/user-bg.png" id="output" width="200" />
+                                                                </c:if>
                                                             </label>
                                                             <input id="file" type="file" onchange="loadFile(event)" name="image"/>
                                                             <c:if test="${not empty errorImage}">
