@@ -56,6 +56,22 @@
         <servlet-name>SearchUserController</servlet-name>
         <servlet-class>controller.admin.SearchUserController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CusListController</servlet-name>
+        <servlet-class>controller.manager.CusListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CusEditController</servlet-name>
+        <servlet-class>controller.manager.CusEditController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CusSearchController</servlet-name>
+        <servlet-class>controller.manager.CusSearchController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CusAddController</servlet-name>
+        <servlet-class>controller.manager.CusAddController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>
         <url-pattern>/settingList</url-pattern>
@@ -111,6 +127,22 @@
     <servlet-mapping>
         <servlet-name>SearchUserController</servlet-name>
         <url-pattern>/searchUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CusListController</servlet-name>
+        <url-pattern>/cusList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CusEditController</servlet-name>
+        <url-pattern>/cusEdit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CusSearchController</servlet-name>
+        <url-pattern>/cusSearch</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CusAddController</servlet-name>
+        <url-pattern>/cusAdd</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
