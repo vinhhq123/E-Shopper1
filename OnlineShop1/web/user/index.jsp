@@ -42,7 +42,7 @@
                                                         <div class="shop-menu pull-right">
                                                                 <ul class="nav navbar-nav">
                                                                     <c:if test="${sessionScope.account != null}">
-                                                                        <li><a href="settingList"><i class="fa fa-user"></i> ${sessionScope.account.email}</a></li>
+                                                                        <li><a href="setting/list"><i class="fa fa-user"></i> ${sessionScope.account.email}</a></li>
                                                                     </c:if>
                                                                         
 <!--                                                                        <li><a href="./admin/SettingList.jsp"><i class="fa fa-user"></i> Account</a></li>-->

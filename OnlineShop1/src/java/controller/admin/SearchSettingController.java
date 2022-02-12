@@ -6,7 +6,7 @@
 package controller.admin;
 
 import dal.SettingDAO;
-import dal.SettingTypeDAO;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Setting;
-import model.SettingType;
+
 
 /**
  *
@@ -66,7 +66,7 @@ public class SearchSettingController extends HttpServlet {
         }
 
         SettingDAO settingDAO = new SettingDAO();
-        SettingTypeDAO settingTypeDAO = new SettingTypeDAO();
+        //SettingTypeDAO settingTypeDAO = new SettingTypeDAO();
         List<Setting> settingSearch = new ArrayList<>();
         List<String> settingTypes = new ArrayList<>();
 
