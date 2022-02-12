@@ -444,4 +444,66 @@ public class UserDAO extends DBContext {
         }
         return check;
     }
+    
+        public User getLastInsertedUser() throws Exception {
+
+        String sql = "SELECT * FROM user ORDER BY uid DESC LIMIT 1; ";
+        System.out.println(sql);
+        User user = null;
+        String noImage = "";
+
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                user = new User();
+                user.setUid(results.getInt("uid"));
+                user.setEmail(results.getString("email"));
+                user.setFullname(results.getString("fullname"));
+                user.setTitle(results.getString("title"));
+                user.setGender(results.getBoolean("gender"));
+                user.setPhone(results.getString("phone"));
+                user.setAddress(results.getString("address"));
+
+                Blob blob = results.getBlob("avatar");
+                if (blob != null) {
+
+                    InputStream inputStream = blob.getBinaryStream();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                    inputStream.close();
+                    outputStream.close();
+                    user.setAvatar(base64Image);
+                } else {
+                    user.setAvatar(noImage);
+                }
+
+                user.setAccountStatus(results.getInt("settingStatus"));
+                user.setRole(results.getInt("role"));
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (SQLException | IOException ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return user;
+    }
 }
