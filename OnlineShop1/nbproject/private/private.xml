@@ -3,18 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/dbcontext/DBContext.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/dal/SettingTypeDAO.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/model/PostDetail.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/model/User.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/dal/SettingDAO.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/dal/UserDAO.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/controller/post/PostController.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/model/PostList.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/post/PostDetail.jsp</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/controller/login/LoginController.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/dal/PostDAO.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/post/PostList.jsp</file>
+            <file>file:/C:/Users/84984/Desktop/OnlineShop/OnlineShop1/src/java/model/PostList.java</file>
+            <file>file:/C:/Users/84984/Desktop/OnlineShop/OnlineShop1/src/java/dbcontext/DBContext.java</file>
+            <file>file:/C:/Users/84984/Desktop/OnlineShop/OnlineShop1/src/java/dal/ProductDao.java</file>
+            <file>file:/C:/Users/84984/Desktop/OnlineShop/OnlineShop1/src/java/model/Product.java</file>
+            <file>file:/C:/Users/84984/Desktop/OnlineShop/OnlineShop1/src/java/dal/PostDAO.java</file>
+            <file>file:/C:/Users/84984/Desktop/OnlineShop/OnlineShop1/src/java/model/SettingType.java</file>
+            <file>file:/C:/Users/84984/Desktop/OnlineShop/OnlineShop1/src/java/dal/UserDAO.java</file>
+            <file>file:/C:/Users/84984/Desktop/OnlineShop/OnlineShop1/src/java/model/User.java</file>
+            <file>file:/C:/Users/84984/Desktop/OnlineShop/OnlineShop1/src/java/dal/SettingDAO.java</file>
+            <file>file:/C:/Users/84984/Desktop/OnlineShop/OnlineShop1/src/java/model/PostDetail.java</file>
+            <file>file:/C:/Users/84984/Desktop/OnlineShop/OnlineShop1/src/java/model/Setting.java</file>
         </group>
     </open-files>
 </project-private>

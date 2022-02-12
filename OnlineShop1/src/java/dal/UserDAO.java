@@ -74,8 +74,8 @@ public class UserDAO extends DBContext {
         return null;
     }
 
-    public void addAccount(String Email, String Pass) throws SQLException {
-        String sql = "INSERT INTO user (email, password, accountStatus, role) VALUES (?, ?, '6', '5');";
+    public void register(String Email, String Pass) throws SQLException {
+        String sql = "INSERT INTO user (email, fullname, password, title, gender, phone, address, accountStatus, role) VALUES (?, ?, ?, ?, ?, ?, ?, 23, 5);";
         try {
             connection = getConnection();
             preparedStatement = connection.prepareStatement(sql);
