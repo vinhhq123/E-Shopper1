@@ -50,10 +50,10 @@
                                                                         <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                                                                         <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                                                         <c:if test="${sessionScope.account != null}">
-                                                                        <li><a href="./user/Login.jsp"><i class="fa fa-lock"></i> Logout</a></li>
+                                                                        <li><a href="login"><i class="fa fa-lock"></i> Logout</a></li>
                                                                         </c:if>
                                                                          <c:if test="${sessionScope.account == null}">
-                                                                         <li><a href="./user/Login.jsp"><i class="fa fa-lock"></i> Login</a></li>
+                                                                         <li><a href="login"><i class="fa fa-lock"></i> Login</a></li>
                                                                         </c:if>
                                                                 </ul>
                                                         </div>

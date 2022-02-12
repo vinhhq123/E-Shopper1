@@ -3,11 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
-function sortTable(n) {
+function sortTable(n){
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    table = document.getElementById("SettingListTable");
+    table = document.getElementById("UserListTable");
     switching = true;
     // Set the sorting direction to ascending:
     dir = "asc";
@@ -65,7 +63,3 @@ function removeSpaces(string) {
     
 }
 
-var loadFile = function (event) {
-    var image = document.getElementById("output");
-    image.src = URL.createObjectURL(event.target.files[0]);
-};

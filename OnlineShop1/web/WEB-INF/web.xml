@@ -34,11 +34,43 @@
     </servlet>
     <servlet>
         <servlet-name>PostList</servlet-name>
-        <servlet-class>controller.post.PostList</servlet-class>
+        <servlet-class>controller.marketing.PostList</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PostDetail</servlet-name>
-        <servlet-class>controller.post.PostDetail</servlet-class>
+        <servlet-class>controller.marketing.PostDetail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserListController</servlet-name>
+        <servlet-class>controller.admin.UserListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddNewUserController</servlet-name>
+        <servlet-class>controller.admin.AddNewUserController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditUserController</servlet-name>
+        <servlet-class>controller.admin.EditUserController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchUserController</servlet-name>
+        <servlet-class>controller.admin.SearchUserController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CusListController</servlet-name>
+        <servlet-class>controller.manager.CusListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CusEditController</servlet-name>
+        <servlet-class>controller.manager.CusEditController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CusSearchController</servlet-name>
+        <servlet-class>controller.manager.CusSearchController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CusAddController</servlet-name>
+        <servlet-class>controller.manager.CusAddController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>
@@ -79,6 +111,38 @@
     <servlet-mapping>
         <servlet-name>PostDetail</servlet-name>
         <url-pattern>/postdetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserListController</servlet-name>
+        <url-pattern>/userList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddNewUserController</servlet-name>
+        <url-pattern>/addNewUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditUserController</servlet-name>
+        <url-pattern>/editUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchUserController</servlet-name>
+        <url-pattern>/searchUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CusListController</servlet-name>
+        <url-pattern>/cusList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CusEditController</servlet-name>
+        <url-pattern>/cusEdit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CusSearchController</servlet-name>
+        <url-pattern>/cusSearch</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CusAddController</servlet-name>
+        <url-pattern>/cusAdd</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
