@@ -67,7 +67,7 @@ public class SettingDetailAdd extends HttpServlet {
             throws ServletException, IOException {
         try {           
    
-            request.getRequestDispatcher("./admin/colorlib-regform-4/form_add.jsp").forward(request, response);
+            request.getRequestDispatcher("./admin/SettingAdd.jsp").forward(request, response);
         } catch (Exception ex) {
             Logger.getLogger(SettingDetailAdd.class.getName()).log(Level.SEVERE, null, ex);
         }

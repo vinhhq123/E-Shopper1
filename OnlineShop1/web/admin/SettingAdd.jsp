@@ -1,8 +1,9 @@
 <%-- 
-    Document   : SettingEdit
-    Created on : Feb 12, 2022, 7:55:49 PM
+    Document   : SettingAdd
+    Created on : Feb 12, 2022, 9:06:17 PM
     Author     : HL2020
 --%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -62,39 +63,29 @@
                                     <div class="col-lg-1"></div>
                                     <div class="col-lg-7">
                                         <div class="panel-body table-responsive">
-                                            <form class="form-horizontal"  action="settingEdit" method="POST">
+                                            <form class="form-horizontal"  action="addnewSetting" method="POST">
                                                <input type="hidden" name="settingId" value="${requestScope.setting.getSettingId()}"/>
                                                 
-                                                <div class="form-group">
-                                                    <label class="col-lg-2 col-sm-2 control-label">Setting Type</label>
+                                               <div class="form-group">
+                                                    <label  class="col-lg-2 col-sm-2 control-label">Setting Type</label>
                                                     <div class="col-lg-10">
-                                                        
-                                                   <select class="form-control m-b-10" name="settingType">
-                                                   <c:forEach items="${requestScope.typename}" var="ty">
-                                                       <option value="${ty}">${ty}</option>
-                                                   </c:forEach>
-                                                        </select>
-                                                        
+                                                       
+                                                       <input class="form-control" placeholder="Input number of type" type="text"  name="type" >
                                                     </div>
                                                 </div>
-                                            
-                                                <div class="form-group">
-                                                   <label class="col-lg-2 col-sm-2 control-label">Setting Value</label>
+                                            <div class="form-group">
+                                                    <label  class="col-lg-2 col-sm-2 control-label">Setting Value</label>
                                                     <div class="col-lg-10">
-                                                        
-                                                       <select class="form-control m-b-10" name="settingValue">
-                                                            <c:forEach items="${requestScope.valuebytye}" var="tyy">
-                                                               <option value="${tyy}">${tyy} </option>
-                                                           </c:forEach>
-                                                        </select>
-                                      
+                                                       
+                                                       <input class="form-control" placeholder="Value" type="text"  name="value" >
                                                     </div>
                                                 </div>
+                                               
                                                 <div class="form-group">
                                                     <label  class="col-lg-2 col-sm-2 control-label">Setting Order</label>
                                                     <div class="col-lg-10">
                                                        
-                                                       <input class="form-control" placeholder="Order" type="text"  value="${requestScope.setting.getSettingOrder()}" name="settingOrder" >
+                                                       <input class="form-control" placeholder="Order" type="text" name="order" >
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -103,7 +94,7 @@
                                                         <label class="col-sm-2 control-label col-lg-2">Setting Status</label>
                                                         <div class="radio-inline">
                                                             <label>
-                                                                <input type="radio"  ${(requestScope.setting.isSettingStatus()) ? "checked=\"checked\"" : ""} name="settingStatus"              
+                                                                <input type="radio"  ${(requestScope.setting.isSettingStatus()) ? "checked=\"checked\"" : ""} name="status"              
                                                 value="0" >
                                                                 Active
                                                             </label>
@@ -111,7 +102,7 @@
                                                         <div class="radio-inline">
                                                             <label>
                                                                 <input type="radio" ${(!requestScope.setting.isSettingStatus()) ? "checked=\"checked\"" : ""} 
-                                            name="settingStatus" value="1">
+                                            name="status" value="1">
                                                                 Inactive
                                                             </label>
                                                         </div>
@@ -154,4 +145,3 @@
         <script src="${pageContext.request.contextPath}/admin/js/UserDetail.js" type="text/javascript"></script>
     </body>
 </html>
-
