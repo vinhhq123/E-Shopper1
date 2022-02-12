@@ -31,7 +31,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<%=request.getContextPath()%>/userList">
+                    <a href="<%=request.getContextPath()%>/user/list">
                         <i class="fa fa-users"></i> <span>User List</span>
                     </a>
                 </li>
