@@ -72,6 +72,10 @@
         <servlet-name>CusAddController</servlet-name>
         <servlet-class>controller.manager.CusAddController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RegisterController</servlet-name>
+        <servlet-class>controller.user.RegisterController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>
         <url-pattern>/settingList</url-pattern>
@@ -143,6 +147,10 @@
     <servlet-mapping>
         <servlet-name>CusAddController</servlet-name>
         <url-pattern>/cusAdd</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisterController</servlet-name>
+        <url-pattern>/register</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

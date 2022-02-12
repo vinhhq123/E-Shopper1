@@ -89,13 +89,18 @@ public class UserDAO extends DBContext {
         return null;
     }
 
-    public void register(String Email, String Pass) throws SQLException {
+    public void register(String Email,String name, String Pass, String title, Boolean gen, String phone, String address) throws SQLException {
         String sql = "INSERT INTO user (email, fullname, password, title, gender, phone, address, accountStatus, role) VALUES (?, ?, ?, ?, ?, ?, ?, 23, 5);";
         try {
             connection = getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, Email);
-            preparedStatement.setString(2, Pass);
+            preparedStatement.setString(2, name);
+            preparedStatement.setString(3, Pass);
+            preparedStatement.setString(4, title);
+            preparedStatement.setBoolean(5, gen);
+            preparedStatement.setString(6, phone);
+            preparedStatement.setString(7, address);
             preparedStatement.executeUpdate();
         } catch (Exception ex) {
             System.out.println("Exception ==== " + ex);
