@@ -6,6 +6,7 @@
 package controller.admin;
 
 import dal.SettingDAO;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -123,6 +124,7 @@ public class SettingController extends HttpServlet {
         }
 
         SettingDAO settingDAO = new SettingDAO();
+        //SettingTypeDAO settingTypeDAO = new SettingTypeDAO();
         List<Setting> settingList = new ArrayList<>();
         List<String> settingType = new ArrayList<>();
         User user = new User();
