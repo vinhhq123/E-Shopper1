@@ -62,7 +62,7 @@
                                         <div class="box-tools m-b-15">
                                             <div class="row">
                                                 <div class="col-sm-8">
-                                                    <form class="form-inline" role="form" action="<%=request.getContextPath()%>/searchSetting" method="get">
+                                                    <form class="form-inline" role="form" action="<%=request.getContextPath()%>/setting/search" method="get">
                                                     <div class="form-group">
                                                         <label class="sr-only" for="exampleInputEmail2">Email address</label>
                                                         <input type="text" name="table_search" class="form-control" id="exampleInputEmail2" placeholder="Search by value" value="${requestScope.searchValue}" onblur="this.value = removeSpaces(this.value);">
@@ -121,10 +121,10 @@
                                             </c:if>
                                             <td><a href="<%=request.getContextPath()%>/settingEdit?settingId=${con.getSettingId()}">Edit</a>            
                                                 <c:if test="${con.isSettingStatus()}">
-                                                    <a href="<%=request.getContextPath()%>/activateSetting?sid=${con.getSettingId()}&status=${con.isSettingStatus()}" onclick="return confirm('Do you want to deacivate this seting?')">Deactivate</a>
+                                                    <a href="<%=request.getContextPath()%>/setting/activate?sid=${con.getSettingId()}&status=${con.isSettingStatus()}" onclick="return confirm('Do you want to deacivate this seting?')">Deactivate</a>
                                                 </c:if>
                                                 <c:if test="${! con.isSettingStatus()}">
-                                                    <a href="<%=request.getContextPath()%>/activateSetting?sid=${con.getSettingId()}&status=${con.isSettingStatus()}" onclick="return confirm('Do you want to acivate this setting?')">Activate</a>
+                                                    <a href="<%=request.getContextPath()%>/setting/activate?sid=${con.getSettingId()}&status=${con.isSettingStatus()}" onclick="return confirm('Do you want to acivate this setting?')">Activate</a>
                                                 </c:if>
                                             </td>
                                             </tr>
@@ -139,7 +139,7 @@
                                         <ul class="pagination pagination-sm no-margin pull-right">
                                             <c:if test="${requestScope.currentPage != 1}">
                                                 <li><a
-                                                        href="<%=request.getContextPath()%>/settingList?currentPage=${requestScope.currentPage-1}">Previous</a>
+                                                        href="<%=request.getContextPath()%>/setting/list?currentPage=${requestScope.currentPage-1}">Previous</a>
                                                 </li>
                                             </c:if>
 
@@ -152,7 +152,7 @@
                                                     </c:when>
                                                     <c:otherwise>
                                                         <li><a
-                                                                href="<%=request.getContextPath()%>/settingList?currentPage=${i}">${i}</a>
+                                                                href="<%=request.getContextPath()%>/setting/list?currentPage=${i}">${i}</a>
                                                         </li>
                                                     </c:otherwise>
                                                 </c:choose>
@@ -160,7 +160,7 @@
 
                                             <c:if test="${requestScope.currentPage lt requestScope.numOfPage}">
                                                 <li><a
-                                                        href="<%=request.getContextPath()%>/settingList?currentPage=${requestScope.currentPage+1}">Next</a>
+                                                        href="<%=request.getContextPath()%>/setting/list?currentPage=${requestScope.currentPage+1}">Next</a>
                                                 </li>
                                             </c:if>
                                         </ul>

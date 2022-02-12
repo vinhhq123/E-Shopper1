@@ -66,7 +66,7 @@
                 </li>
 
                 <li>
-                    <a href="<%=request.getContextPath()%>/settingList">
+                    <a href="<%=request.getContextPath()%>/setting/list">
                         <i class="fa fa-wrench"></i> <span>Setting List</span>
                     </a>
                 </li>
