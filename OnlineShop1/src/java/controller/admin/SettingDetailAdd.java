@@ -9,6 +9,10 @@ import dal.SettingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -61,7 +65,14 @@ public class SettingDetailAdd extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("./admin/colorlib-regform-4/form_add.jsp").forward(request, response);
+        try {           
+   
+            request.getRequestDispatcher("./admin/colorlib-regform-4/form_add.jsp").forward(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(SettingDetailAdd.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
     }
 
     /**
@@ -75,18 +86,21 @@ public class SettingDetailAdd extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+       
         try {
+            
             Setting s=new Setting();
+            
             s.setSettingType(Integer.parseInt(request.getParameter("type")));
             s.setSettingValue(request.getParameter("value"));
             s.setSettingOrder(Integer.parseInt(request.getParameter("order")));
-//        s.setSettingStatus(request.getParameter("value"));
+ //        s.setSettingStatus(request.getParameter("value"));
             s.setSettingStatus(request.getParameter("status").equals("0"));
             SettingDAO db =new SettingDAO();
             db.insertSetting(s);
             response.sendRedirect("settingList");
 
-//s.setId(Integer.parseInt(request.getParameter("id")));
+            //s.setId(Integer.parseInt(request.getParameter("id")));
         } catch (SQLException ex) {
             Logger.getLogger(SettingDetailAdd.class.getName()).log(Level.SEVERE, null, ex);
         }

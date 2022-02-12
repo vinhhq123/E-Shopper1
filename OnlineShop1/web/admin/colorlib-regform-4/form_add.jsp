@@ -59,6 +59,7 @@
                                     <input class="input--style-4" type="text" name="type">
                                 </div>
                             </div>
+
                              <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Setting Value</label>

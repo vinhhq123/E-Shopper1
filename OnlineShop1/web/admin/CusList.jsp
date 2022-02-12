@@ -130,7 +130,7 @@
                                                         <td> <span class="label label-danger">Inactive</span></td>
                                                     </c:if>
                                                 </c:if>
-                                                <td><button type="button" class="btn-xs btn-primary" onclick="window.location = '<%=request.getContextPath()%>/editUser?uid=${con.getUid()}'">Edit</button></td>
+                                                <td><button type="button" class="btn-xs btn-primary" onclick="window.location = '<%=request.getContextPath()%>/cusEdit?uid=${con.getUid()}'">Edit</button></td>
                                             </tr>
                                         </c:forEach>
                                     </table>

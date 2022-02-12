@@ -63,7 +63,7 @@
                                     <div class="col-lg-1"></div>
                                     <div class="col-lg-7">
                                         <div class="panel-body table-responsive">
-                                            <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/editUser?uid=<c:out value="${currentUser.uid}"/>" method="POST" name="editUser"  enctype="multipart/form-data">
+                                            <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/cusEdit?uid=<c:out value="${currentUser.uid}"/>" method="POST" name="editUser"  enctype="multipart/form-data">
                                                 <c:if test="${not empty successEditMessage}">
                                                     <h4 class="help-block" style="color: green" id="successEditMessage">${successEditMessage}</h4>
                                                     <c:remove var="successEditMessage"/>
@@ -138,20 +138,17 @@
                                                         <input type="text" class="form-control" id="address" placeholder="Address" value="${currentUser.address}" name="address" required>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="role" class="col-lg-2 col-sm-2 control-label">Role</label>
+                                              <div  class="form-group">
+                                                    <label  for="role" class="col-lg-2 col-sm-2 control-label">Role</label>
                                                     <div class="col-lg-10">
-                                                        <select class="form-control m-b-10" name="role">
-                                                            <option value="1" <%=request.getAttribute("currentUserRole").equals("1") ? "selected" : ""%>>Admin</option>
-                                                            <option value="2" <%=request.getAttribute("currentUserRole").equals("2") ? "selected" : ""%>>Manager</option>
-                                                            <option value="3" <%=request.getAttribute("currentUserRole").equals("3") ? "selected" : ""%>>Sales</option>
-                                                            <option value="4" <%=request.getAttribute("currentUserRole").equals("4") ? "selected" : ""%>>Marketing</option>
+                                                        <select  class="form-control m-b-10" name="role">
+          
                                                             <option value="5" <%=request.getAttribute("currentUserRole").equals("5") ? "selected" : ""%>>Customer</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">User Status</label>
+                                                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Customer Status</label>
                                                     <div class="col-lg-10">
                                                         <div class="radio-inline">
                                                             <label>
@@ -170,7 +167,7 @@
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-2 col-lg-10">
                                                         <button type="submit" class="btn btn-success">Save</button>
-                                                        <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/userList'">Back</button>
+                                                        <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/cusList'">Back</button>
                                                     </div>
                                                 </div>
                                                 <input type="hidden" value="${currentUser.uid}" name="accountId"> 
