@@ -60,7 +60,7 @@
                                     <div class="panel-body table-responsive">
                                         <div class="row">
                                             <div class="col-sm-8">
-                                                <form class="form-inline" role="form" action="<%=request.getContextPath()%>/cusSearch" method="get">
+                                                <form class="form-inline" role="form" action="<%=request.getContextPath()%>/customer/search">
                                                 <div class="form-group">
                                                     <label class="sr-only" for="exampleInputEmail2">Email address</label>
                                                     <input type="text" name="table_search" class="form-control" id="exampleInputEmail2" placeholder="Fullname, email or phone" value="${requestScope.searchValue}" onblur="this.value = removeSpaces(this.value);">
@@ -84,7 +84,7 @@
                                             </form>
                                         </div>
                                         <div class="col-sm-4">
-                                            <button type="button" class="btn btn-success" style="float: right" onclick="window.location = './admin/Addnewcustomer.jsp'">Add New User</button>
+                                            <button type="button" class="btn btn-success" style="float: right" onclick="window.location = '<%=request.getContextPath()%>/admin/Addnewcustomer.jsp'">New Customer</button>
 <!--                                                <a href="<%=request.getContextPath()%>/addNewUser" style="float: right"> Add new</a>-->
                                         </div>
 
@@ -130,7 +130,7 @@
                                                         <td> <span class="label label-danger">Inactive</span></td>
                                                     </c:if>
                                                 </c:if>
-                                                <td><button type="button" class="btn-xs btn-primary" onclick="window.location = '<%=request.getContextPath()%>/cusEdit?uid=${con.getUid()}'">Edit</button></td>
+                                                <td><button type="button" class="btn-xs btn-primary" onclick="window.location = '<%=request.getContextPath()%>/customer/getcustomer?uid=${con.getUid()}'">Edit</button></td>
                                             </tr>
                                         </c:forEach>
                                     </table>
@@ -144,7 +144,7 @@
                                         <ul class="pagination pagination-sm no-margin pull-right">
                                             <c:if test="${currentPage != 1}">
                                                 <li><a
-                                                        href="<%=request.getContextPath()%>/cusList?currentPage=${currentPage-1}">Previous</a>
+                                                        href="<%=request.getContextPath()%>/customer/list?currentPage=${currentPage-1}">Previous</a>
                                                 </li>
                                             </c:if>
 
@@ -157,7 +157,7 @@
                                                     </c:when>
                                                     <c:otherwise>
                                                         <li><a
-                                                                href="<%=request.getContextPath()%>/cusList?currentPage=${i}">${i}</a>
+                                                                href="<%=request.getContextPath()%>/customer/list?currentPage=${i}">${i}</a>
                                                         </li>
                                                     </c:otherwise>
                                                 </c:choose>
@@ -165,7 +165,7 @@
 
                                             <c:if test="${currentPage lt numOfPage}">
                                                 <li><a
-                                                        href="<%=request.getContextPath()%>/cusList?currentPage=${currentPage+1}">Next</a>
+                                                        href="<%=request.getContextPath()%>/customer/list?currentPage=${currentPage+1}">Next</a>
                                                 </li>
                                             </c:if>
                                         </ul>

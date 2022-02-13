@@ -43,6 +43,6 @@ public class PasswordEncrypt {
 
     public static void main(String[] args) {
         PasswordEncrypt obj = new PasswordEncrypt();
-        System.out.println(obj.generateEncryptedPassword("admin"));
+        System.out.println(obj.generateEncryptedPassword("123"));
     }
 }

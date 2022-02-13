@@ -63,7 +63,7 @@
                                     <div class="col-lg-1"></div>
                                     <div class="col-lg-7">
                                         <div class="panel-body table-responsive">
-                                            <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/cusEdit?uid=<c:out value="${currentUser.uid}"/>" method="POST" name="editUser"  enctype="multipart/form-data">
+                                            <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/customer/update?uid=<c:out value="${currentUser.uid}"/>" method="POST" name="/customer/update"  enctype="multipart/form-data">
                                                 <c:if test="${not empty successEditMessage}">
                                                     <h4 class="help-block" style="color: green" id="successEditMessage">${successEditMessage}</h4>
                                                     <c:remove var="successEditMessage"/>
@@ -167,7 +167,7 @@
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-2 col-lg-10">
                                                         <button type="submit" class="btn btn-success">Save</button>
-                                                        <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/cusList'">Back</button>
+                                                        <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/customer/list'">Back</button>
                                                     </div>
                                                 </div>
                                                 <input type="hidden" value="${currentUser.uid}" name="accountId"> 

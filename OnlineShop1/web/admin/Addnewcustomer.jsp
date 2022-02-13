@@ -62,7 +62,7 @@
                                         <div class="col-lg-1"></div>
                                         <div class="col-lg-7">
                                             <div class="panel-body table-responsive">
-                                                <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/cusAdd" method="POST" name="cusAdd"  enctype="multipart/form-data">
+                                                <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/customer/add" method="POST" name="/customer/add"  enctype="multipart/form-data">
                                                 <c:if test="${not empty messageAddSuccess}">
                                                     <b><h4 class="help-block" style="color: green" id="successEditMessage">${messageAddSuccess}</h4></b>
                                                         <c:remove var="messageAddSuccess"/>
