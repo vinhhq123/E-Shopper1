@@ -29,6 +29,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import model.Setting;
 import model.User;
+import resources.SendEmail;
 
 /**
  *
@@ -358,6 +359,7 @@ public class UserController extends HttpServlet {
 
         UserDAO userDAO = new UserDAO();
         User user = null;
+        SendEmail se = new SendEmail();
         // Get session
         HttpSession session = request.getSession();
 
@@ -400,17 +402,15 @@ public class UserController extends HttpServlet {
                 int checkAddUser = userDAO.addNewUserWithImage(email, name, title,
                         genderbit, phone, address, inputStream, convertedRole, accountStaus);
                 if (checkAddUser > 0) {
-//                            boolean checkEmail = accountDAO.sendEmailActivation(email, name);
-//                            if (checkEmail) {
-                    successMessage = "Add new User successfuly .";
-                    String avatar = userDAO.getLastInsertedUser().getAvatar();
-                    session.setAttribute("messageAddSuccess", successMessage);
-                    request.setAttribute("imageValue", avatar);
-                    request.getRequestDispatcher("/admin/AddNewUser.jsp").forward(request, response);
-                    //request.getRequestDispatcher("userList").forward(request, response);
-//                                response.sendRedirect("userList");
+                    boolean checkEmail = se.sendEmailActivation(email, name);
+                    if (checkEmail) {
+                        successMessage = "Add new User successfuly .";
+                        String avatar = userDAO.getLastInsertedUser().getAvatar();
+                        session.setAttribute("messageAddSuccess", successMessage);
+                        request.setAttribute("imageValue", avatar);
+                        request.getRequestDispatcher("/admin/AddNewUser.jsp").forward(request, response);
 
-//                            }
+                    }
                     // CHUA CHECK SEND EMAIL FAIL
                 }
             }
