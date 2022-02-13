@@ -98,11 +98,7 @@ public class RegisterController extends HttpServlet {
                 request.setAttribute("fail1", fail1);
                 request.getRequestDispatcher("./user/Register.jsp").forward(request, response);
             }
-            else if(!password.equals(rePassword)){
-                String fail2 = "RePassword not matched with Password!";
-                request.setAttribute("fail2", fail2);
-                request.getRequestDispatcher("./user/Register.jsp").forward(request, response);
-            }
+
             else{
                 PasswordEncrypt encryptedPass = new PasswordEncrypt();
                 usDB.register(email, name, encryptedPass.generateEncryptedPassword(password),title,gen,phone,address);
