@@ -64,6 +64,34 @@ public class UserDAO extends DBContext {
 //            }
 //        }
 //    }
+    
+    public void register(String Email,String name, String Pass, String title, Boolean gen, String phone, String address) throws SQLException {
+        String sql = "INSERT INTO user (email, fullname, password, title, gender, phone, address, accountStatus, role) VALUES (?, ?, ?, ?, ?, ?, ?, 23, 5);";
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, Email);
+            preparedStatement.setString(2, name);
+            preparedStatement.setString(3, Pass);
+            preparedStatement.setString(4, title);
+            preparedStatement.setBoolean(5, gen);
+            preparedStatement.setString(6, phone);
+            preparedStatement.setString(7, address);
+            preparedStatement.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+    }
+
 
  public User checkAccountExist(String Email) throws SQLException {
         String sql = "select * from user where email = ?";
@@ -573,4 +601,45 @@ public class UserDAO extends DBContext {
 
         return rows;
     }
+  
+  public List<User> getSaler(){
+
+        List<User> users = new ArrayList<>();
+        User user = null;
+
+        try {
+            String sql = "select * from user where role = 3 " ;
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                user = new User();
+                user.setUid(results.getInt("uid"));
+                user.setEmail(results.getString("email"));
+                user.setFullname(results.getString("fullname"));
+                user.setTitle(results.getString("title"));
+                user.setGender(results.getBoolean("gender"));
+                user.setPhone(results.getString("phone"));
+                user.setAddress(results.getString("address"));
+                user.setAccountStatus(results.getInt("accountStatus"));
+                user.setRole(results.getInt("role"));
+//                user.setAvatar(results.getString("avatar"));
+                users.add(user);
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return users;
+    }
+
 }
