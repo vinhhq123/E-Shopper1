@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.User;
+import resources.PasswordEncrypt;
 
 /**
  *
@@ -65,7 +66,8 @@ public class LoginController extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         UserDAO usr = new UserDAO();
-        User user = usr.getAccount(email, password);
+        PasswordEncrypt encryptedPass = new PasswordEncrypt();
+        User user = usr.getAccount(email, encryptedPass.generateEncryptedPassword(password));
         if(user == null){
             String fail = "Login faild, please re-login!";
             request.setAttribute("fail", fail);

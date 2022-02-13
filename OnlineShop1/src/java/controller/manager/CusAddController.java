@@ -83,7 +83,7 @@ public class CusAddController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       String email = "";
+        String email = "";
         String error = "";
         String phone = "";
         String name = "";
