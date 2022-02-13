@@ -5,12 +5,23 @@
  */
 package controller.manager;
 
+import controller.admin.SearchUserController;
+import dal.ProductDAO;
+import dal.SettingDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Product;
+import model.Setting;
+import model.User;
 
 /**
  *
@@ -56,7 +67,41 @@ public class SearchProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String searchField = request.getParameter("table_search").trim();
+        String category = request.getParameter("category");
+        String status = request.getParameter("status");
+        String saler = request.getParameter("saler");
+        if (status == null) {
+            status = "";
+        }
+
+        SettingDAO settingDAO = new SettingDAO();
+        UserDAO userDAO = new UserDAO();
+        ProductDAO proDAO = new ProductDAO();
+        List<Setting> statusList = new ArrayList<>();
+        List<Setting> categoryList = new ArrayList<>();
+        List<User> userList = new ArrayList<>();
+        List<Product> proList = new ArrayList<>();
+
+        try {
+
+            proList = proDAO.searchPro(searchField, category, status, saler);
+            userList = userDAO.getSaler();
+            categoryList = settingDAO.getAllSetting();
+            statusList = settingDAO.getAllSetting();
+            request.setAttribute("searchValue", searchField);
+            request.setAttribute("valueCategory", category);
+            request.setAttribute("valueStatus", status);
+            request.setAttribute("valueSaler", saler);
+            request.setAttribute("CategoryList", categoryList);
+            request.setAttribute("StatusList", statusList);
+            request.setAttribute("UserList", userList);
+            request.setAttribute("searchNow", true);
+            request.getRequestDispatcher("./admin/ProductList.jsp").forward(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(SearchUserController.class.getName()).log(Level.SEVERE, null, ex);
+            request.getRequestDispatcher("./admin/Error.jsp").forward(request, response);
+        }
     }
 
     /**
