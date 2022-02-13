@@ -5,7 +5,7 @@
  */
 package controller.manager;
 
-import controller.admin.AddNewUserController;
+
 import dal.ProductDAO;
 import dal.SettingDAO;
 import dal.UserDAO;
@@ -182,10 +182,10 @@ public class AddProductController extends HttpServlet {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(AddNewUserController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddProductController.class.getName()).log(Level.SEVERE, null, ex);
             request.getRequestDispatcher("./admin/Error.jsp").forward(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(AddNewUserController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddProductController.class.getName()).log(Level.SEVERE, null, ex);
             request.getRequestDispatcher("./admin/Error.jsp").forward(request, response);
         }
     }

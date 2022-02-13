@@ -459,6 +459,6 @@ public class UserController extends HttpServlet {
         outputStream.close();
         PostDAO postDao = new PostDAO();
         postDao.insertPost(content, base64Image, title, author);
-        request.getRequestDispatcher("post/PostDetail.jsp").forward(request, response);
+        request.getRequestDispatcher("/post/PostDetail.jsp").forward(request, response);
     }
 }
