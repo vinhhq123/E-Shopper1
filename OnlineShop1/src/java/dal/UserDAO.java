@@ -545,5 +545,32 @@ public class UserDAO extends DBContext {
         }
         return user;
     }
+  public int getNumberOfRowsCus() throws Exception {
 
+        int rows = 0;
+        String sql = "select COUNT(uid) from User where role = 5;";
+
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                rows = results.getInt(1);
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+
+        return rows;
+    }
 }
