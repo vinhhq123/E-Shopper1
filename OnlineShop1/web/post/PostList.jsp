@@ -132,8 +132,8 @@
                                         <ul role="menu" class="sub-menu">
                                             <li><a href="blog.html" class="active">Blog List</a></li>
                                             <li><a href="blog-single.html">Blog Single</a></li>
-                                            <li><a href="blog-single.html">Post Single</a></li>
-                                            <li><a href="blog-single.html">Post Single</a></li>
+                                            <li><a href="postlist">Post List</a></li>
+                                            <li><a href="postdetail">Post Single</a></li>
                                         </ul>
                                     </li> 
                                     <li><a href="404.html">404</a></li>

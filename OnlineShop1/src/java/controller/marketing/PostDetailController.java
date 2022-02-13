@@ -5,18 +5,26 @@
  */
 package controller.marketing;
 
+import dal.PostDAO;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.Base64;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import model.User;
 
 /**
  *
  * @author CHANHSIRO
  */
-public class PostDetail extends HttpServlet {
+@MultipartConfig
+public class PostDetailController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -27,8 +35,6 @@ public class PostDetail extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -55,6 +61,34 @@ public class PostDetail extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String title = request.getParameter("title");
+        String authorRaw = request.getParameter("author");
+        int author = 1;
+        String content = request.getParameter("content");
+        InputStream inputStream = null;
+        Part filePart = request.getPart("image");
+        if (filePart != null) {
+            System.out.println(filePart.getName());
+            System.out.println(filePart.getSize());
+            System.out.println(filePart.getContentType());
+            // Obtains input stream of the upload file
+            inputStream = filePart.getInputStream();
+            
+        }
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        byte[] buffer = new byte[4096];
+        int bytesRead = -1;
+
+        while ((bytesRead = inputStream.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, bytesRead);
+        }
+
+        byte[] imageBytes = outputStream.toByteArray();
+        String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+        outputStream.close();
+        PostDAO postDao = new PostDAO();
+        postDao.insertPost(content, base64Image, title, author);
+        request.getRequestDispatcher("post/PostDetail.jsp").forward(request, response);
     }
 
     /**

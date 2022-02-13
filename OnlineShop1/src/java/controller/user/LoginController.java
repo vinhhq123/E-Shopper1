@@ -69,7 +69,7 @@ public class LoginController extends HttpServlet {
         if(user == null){
             String fail = "Login faild, please re-login!";
             request.setAttribute("fail", fail);
-            response.sendRedirect("login");
+            request.getRequestDispatcher("./user/Login.jsp").forward(request, response);
         } else {
             request.getSession().setAttribute("account", user);
             response.sendRedirect("home");

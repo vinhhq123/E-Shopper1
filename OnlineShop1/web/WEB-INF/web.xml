@@ -34,11 +34,11 @@
     </servlet>
     <servlet>
         <servlet-name>PostList</servlet-name>
-        <servlet-class>controller.marketing.PostList</servlet-class>
+        <servlet-class>controller.marketing.PostListController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PostDetail</servlet-name>
-        <servlet-class>controller.marketing.PostDetail</servlet-class>
+        <servlet-class>controller.marketing.PostDetailController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>

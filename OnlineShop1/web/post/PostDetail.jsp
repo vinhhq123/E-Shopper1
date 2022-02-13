@@ -138,7 +138,7 @@
               <div class="shop-menu pull-right">
                 <ul class="nav navbar-nav">
                   <li>
-                    <a href=""><i class="fa fa-user"></i> Account</a>
+                    <a href=""><i class="fa fa-user"></i> ${sessionScope.account.fullname}</a>
                   </li>
                   <li>
                     <a href=""><i class="fa fa-star"></i> Wishlist</a>
@@ -362,7 +362,7 @@
             <div class="blog-post-area">
               <h2 class="title text-center">POST SINGLE</h2>
               <div class="single-blog-post">
-                <form style="border: 0.5px solid #FE980F; border-radius:4px" action="" method="POST" enctype="multipart/form-data">
+                <form style="border: 0.5px solid #FE980F; border-radius:4px" action="postdetail" method="POST" enctype="multipart/form-data">
                   <table style="
     				margin-left: auto;
 					margin-right: auto;
@@ -375,6 +375,14 @@
 							type="text"
 							name="title"
 							placeholder="Title of the product"
+						  />
+						</td>
+                                                <td>
+						  <input
+							type="text"
+							name="author"
+                                                        value="${sessionScope.account.uid}"
+							placeholder="id"
 						  />
 						</td>
 					  </tr>
@@ -394,7 +402,7 @@
 						<td>Content:</td>
 						<td>
 						  <textarea style="border-radius: 4px;"
-							name="description"
+							name="content"
 							cols="60"
 							rows="5"
 							placeholder="Content of the product"
@@ -408,8 +416,7 @@
 						<td colspan="2">
 						  <input
 							type="submit"
-							name="submit"
-							value="POST"
+                                                        value="POST"
 							class="btn-secondary"
 						  />
 						</td>
