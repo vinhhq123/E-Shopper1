@@ -147,6 +147,7 @@
                         <div class="form-group">
                             <label for="address">Phone Number:</label>
                             <input type="text" name="phone" id="phone" value="${phone}" required/>
+                            <p style="color: red">${requestScope.fail2}</p>
                         </div>
                         <div class="form-group">
                             <label for="address">Address:</label>
@@ -159,8 +160,8 @@
                         </div>
                         <div class="form-group">
                             <label for="name">Repeat Password:</label>
-                            <input type="password" name="repassword" id="repassword" required/>
-                            <p style="color: red">${requestScope.fail2}</p>
+                            <input type="password" name="rePassword" id="repassword" required/>
+                            <p style="color: red">${requestScope.fail3}</p>
                         </div>
                         </div>
                         <div class="form-submit">

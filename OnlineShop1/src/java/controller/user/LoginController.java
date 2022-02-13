@@ -65,13 +65,14 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        request.setAttribute("email", email);
         UserDAO usr = new UserDAO();
         PasswordEncrypt encryptedPass = new PasswordEncrypt();
         User user = usr.getAccount(email, encryptedPass.generateEncryptedPassword(password));
         if(user == null){
             String fail = "Login faild, please re-login!";
             request.setAttribute("fail", fail);
-            response.sendRedirect("login");
+            request.getRequestDispatcher("./user/Login.jsp").forward(request, response);
         } else {
             request.getSession().setAttribute("account", user);
             response.sendRedirect("home");
