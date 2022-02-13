@@ -13,14 +13,6 @@
         <servlet-class>controller.admin.SearchSettingController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SettingDetailAdd</servlet-name>
-        <servlet-class>controller.admin.SettingDetailAdd</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SettingDetailEdit</servlet-name>
-        <servlet-class>controller.admin.SettingDetailEdit</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>SignUpController</servlet-name>
         <servlet-class>controller.login.SignUpController</servlet-class>
     </servlet>
@@ -57,22 +49,6 @@
         <servlet-class>controller.admin.SearchUserController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>CusListController</servlet-name>
-        <servlet-class>controller.manager.CusListController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CusEditController</servlet-name>
-        <servlet-class>controller.manager.CusEditController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CusSearchController</servlet-name>
-        <servlet-class>controller.manager.CusSearchController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CusAddController</servlet-name>
-        <servlet-class>controller.manager.CusAddController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>RegisterController</servlet-name>
         <servlet-class>controller.user.RegisterController</servlet-class>
     </servlet>
@@ -95,14 +71,6 @@
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>
         <url-pattern>/settingList</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SettingDetailAdd</servlet-name>
-        <url-pattern>/addnewSetting</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SettingDetailEdit</servlet-name>
-        <url-pattern>/settingEdit</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SearchSettingController</servlet-name>
@@ -147,22 +115,6 @@
     <servlet-mapping>
         <servlet-name>SearchUserController</servlet-name>
         <url-pattern>/searchUser</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CusListController</servlet-name>
-        <url-pattern>/cusList</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CusEditController</servlet-name>
-        <url-pattern>/cusEdit</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CusSearchController</servlet-name>
-        <url-pattern>/cusSearch</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CusAddController</servlet-name>
-        <url-pattern>/cusAdd</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>

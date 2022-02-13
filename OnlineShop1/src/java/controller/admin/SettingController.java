@@ -9,6 +9,7 @@ import dal.SettingDAO;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -29,7 +30,7 @@ import model.User;
  * @author VINH
  */
 @WebServlet(name = "SettingController", urlPatterns = {"/setting/list","/setting/search"
-,"/setting/activate"})
+,"/setting/activate","/setting/edit","/setting/add","/setting/getSettingID"})
 public class SettingController extends HttpServlet {
 
     /**
@@ -82,6 +83,16 @@ public class SettingController extends HttpServlet {
             case "/setting/activate":
                 changeSettingStatus(request, response);
                 break;
+            case "/setting/edit":
+                settingUpdate(request, response);
+                break;
+            case "/setting/add":
+                AddNewSetting(request, response);
+                break;
+            case "/setting/getSettingID":
+                getSettingID(request, response);
+                break;
+                
         }
     }
 
@@ -147,7 +158,7 @@ public class SettingController extends HttpServlet {
 
             // Get all the setting in the selected page
             settingList = settingDAO.getSettingByPage(currentPage, recordsPerPage);
-            fullname = user.getFullname();
+//            fullname = user.getFullname();
 
             // Count total number of Setting in the Setting table
             int rows = settingDAO.getNumberOfRows();
@@ -158,7 +169,7 @@ public class SettingController extends HttpServlet {
             }
 
             request.setAttribute("SettingList", settingList);
-            session.setAttribute("fullname", fullname);
+            //session.setAttribute("fullname", fullname);
             request.setAttribute("types", settingType);
             request.setAttribute("numOfPage", numOfPage);
             request.setAttribute("recordsPerPage", recordsPerPage);
@@ -247,5 +258,101 @@ public class SettingController extends HttpServlet {
             Logger.getLogger(SettingController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+      protected void settingUpdate(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+          int urole=0;
+        String role;
+//        int id=0;
+//        id = Integer.parseInt(request.getParameter("id"));
+       // respond.getWriter().print(id);
+        try {
+            Setting s = new Setting();
+            s.setSettingId(Integer.parseInt(request.getParameter("settingId")));
+           // s.setSettingType(Integer.parseInt(request.getParameter("settingType")));
+            role=request.getParameter("settingType");
+            switch(role){
+                case "User Role":urole=1;
+                break;
+                case "Account Status":urole=2;
+                break;
+                case "Post Category":urole=3;
+                break;
+                case "Post Status":urole=4;
+                break;
+                case "Product Category":urole=5;
+                break;
+                case "Product Status":urole=6;
+                break;
+                case "Feedback Status":urole=7;
+                break;
+                case "Order Status":urole=8;
+                break;
+            }
+            
+            s.setSettingType(urole);
+            s.setSettingValue(request.getParameter("settingValue"));
+            s.setSettingOrder(Integer.parseInt(request.getParameter("settingOrder")));
+            s.setSettingStatus(request.getParameter("settingStatus").equals("0"));
+         
+            SettingDAO db= new SettingDAO();
+            db.editsetting(s);
+            response.sendRedirect("list");
+        } catch (Exception ex) {
+            Logger.getLogger(SettingController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      }
+      protected void getSettingID(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+           try {           
+            int id = Integer.parseInt(request.getParameter("settingId"));
+            //int id = 1;
+            int value=0;
+            SettingDAO db = new SettingDAO();
+            Setting setting =db.getAllSettingTypeName(id);
+          
+            List<String> settingType = new ArrayList<>();
+            
+            ResourceBundle rb = ResourceBundle.getBundle("resources.setting");
+            Enumeration<String> keys = rb.getKeys();
+            while (keys.hasMoreElements()) {
+            String key = keys.nextElement();
+            String val = rb.getString(key);
+            settingType.add(val);
+          }
+           
+            
+            List<String> getValuebyTye =  new ArrayList<>();
+            value = db.getValuebySetting(id);      
+            getValuebyTye= db.getValuebyType(value);
+            
+            request.setAttribute("valuebytye", getValuebyTye);
+            request.setAttribute("setting", setting);
+            request.setAttribute("typename", settingType);
+            request.getRequestDispatcher("/admin/SettingEdit.jsp").forward(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(SettingController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      }
+      protected void AddNewSetting(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+           try {
+            
+            Setting s=new Setting();
+            
+            s.setSettingType(Integer.parseInt(request.getParameter("type")));
+            s.setSettingValue(request.getParameter("value"));
+            s.setSettingOrder(Integer.parseInt(request.getParameter("order")));
+ //        s.setSettingStatus(request.getParameter("value"));
+            s.setSettingStatus(request.getParameter("status").equals("0"));
+            SettingDAO db =new SettingDAO();
+            db.insertSetting(s);
+            response.sendRedirect("list");
+
+            //s.setId(Integer.parseInt(request.getParameter("id")));
+        } catch (SQLException ex) {
+            Logger.getLogger(SettingController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      }
+      
 
 }
