@@ -82,9 +82,8 @@ public class CusListController extends HttpServlet {
         
         try {
             settingList = settingDAO.getAllSetting();
-            userList = userDAO.getCusByPage(currentPage, recordsPerPage);
-            
-            int rows = userDAO.getNumberOfRows();
+            userList = userDAO.getCusByPage(currentPage, recordsPerPage);           
+            int rows = userDAO.getNumberOfRowsCus();
             // Count total number of page
             int numOfPage = rows / recordsPerPage;
             if (rows % recordsPerPage > 0) {
