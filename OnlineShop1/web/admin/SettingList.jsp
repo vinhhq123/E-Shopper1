@@ -86,7 +86,7 @@
                                                 </form>
                                             </div>
                                             <div class="col-sm-4">
-                                                <a href="<%=request.getContextPath()%>/addnewSetting" style="float: right"> Add new</a>
+                                                 <button type="button" class="btn btn-success" style="float: right" onclick="window.location = '<%=request.getContextPath()%>/admin/SettingAdd.jsp'">Add new</button>
                                             </div>
 
                                         </div>
@@ -119,7 +119,7 @@
                                                     <c:if test="${! con.isSettingStatus()}">
                                                 <span class="label label-danger">Inactive</span></td>
                                             </c:if>
-                                            <td><a href="<%=request.getContextPath()%>/settingEdit?settingId=${con.getSettingId()}">Edit</a>            
+                                            <td><a href="<%=request.getContextPath()%>/setting/getSettingID?settingId=${con.getSettingId()}">Edit</a>            
                                                 <c:if test="${con.isSettingStatus()}">
                                                     <a href="<%=request.getContextPath()%>/setting/activate?sid=${con.getSettingId()}&status=${con.isSettingStatus()}" onclick="return confirm('Do you want to deacivate this seting?')">Deactivate</a>
                                                 </c:if>
