@@ -39,6 +39,19 @@ public class User {
         this.accountStatus = accountStatus;
         this.role = role;
     }
+    
+        public User(int uid, String email, String fullname, String password, String title, boolean gender, String phone, String address, int accountStatus, int role) {
+        this.uid = uid;
+        this.email = email;
+        this.fullname = fullname;
+        this.password = password;
+        this.title = title;
+        this.gender = gender;
+        this.phone = phone;
+        this.address = address;
+        this.accountStatus = accountStatus;
+        this.role = role;
+    }
 
    
 

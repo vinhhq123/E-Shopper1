@@ -32,7 +32,7 @@
                 </li>
                
                 <li>
-                    <a href="general.html">
+                    <a href="<%=request.getContextPath()%>/proList">
                         <i class="fa fa-book"></i> <span>Product List</span>
                     </a>
                 </li>
