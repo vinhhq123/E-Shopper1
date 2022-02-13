@@ -5,7 +5,6 @@
  */
 package controller.manager;
 
-import controller.admin.UserListController;
 import dal.SettingDAO;
 import dal.UserDAO;
 import java.io.IOException;

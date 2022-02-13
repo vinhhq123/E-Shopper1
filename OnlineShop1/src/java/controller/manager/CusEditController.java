@@ -5,7 +5,6 @@
  */
 package controller.manager;
 
-import controller.admin.EditUserController;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.InputStream;
@@ -175,7 +174,7 @@ public class CusEditController extends HttpServlet {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(EditUserController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CusEditController.class.getName()).log(Level.SEVERE, null, ex);
             request.getRequestDispatcher("./admin/Error.jsp").forward(request, response);
         }
     }

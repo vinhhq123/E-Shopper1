@@ -5,7 +5,6 @@
  */
 package controller.manager;
 
-import controller.admin.SearchUserController;
 import dal.SettingDAO;
 import dal.UserDAO;
 import java.io.IOException;
@@ -92,7 +91,7 @@ public class CusSearchController extends HttpServlet {
             request.setAttribute("searchNow", true);
             request.getRequestDispatcher("./admin/CusList.jsp").forward(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(SearchUserController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CusSearchController.class.getName()).log(Level.SEVERE, null, ex);
             request.getRequestDispatcher("./admin/Error.jsp").forward(request, response);
         }
     }

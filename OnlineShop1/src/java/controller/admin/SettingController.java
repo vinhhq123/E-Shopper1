@@ -166,7 +166,7 @@ public class SettingController extends HttpServlet {
             request.getRequestDispatcher("/admin/SettingList.jsp").forward(request, response);
 
         } catch (Exception ex) {
-            Logger.getLogger(SettingListController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SettingController.class.getName()).log(Level.SEVERE, null, ex);
             request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
 
         }
@@ -208,7 +208,7 @@ public class SettingController extends HttpServlet {
             request.getRequestDispatcher("/admin/SettingList.jsp").forward(request, response);
 
         } catch (Exception ex) {
-            Logger.getLogger(SettingListController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SettingController.class.getName()).log(Level.SEVERE, null, ex);
             request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
 
         }
@@ -244,7 +244,7 @@ public class SettingController extends HttpServlet {
                 request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
             }
         } catch (Exception ex) {
-            Logger.getLogger(SettingListController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SettingController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

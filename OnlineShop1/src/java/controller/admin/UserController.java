@@ -29,6 +29,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import model.Setting;
 import model.User;
+import resources.PasswordEncrypt;
 import resources.SendEmail;
 
 /**
@@ -185,7 +186,7 @@ public class UserController extends HttpServlet {
             request.setAttribute("searchNow", true);
             request.getRequestDispatcher("/admin/UserList.jsp").forward(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(SearchUserController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
             request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
         }
     }
@@ -215,7 +216,7 @@ public class UserController extends HttpServlet {
             request.setAttribute("currentUserStatus", accountStatus);
             request.getRequestDispatcher("/admin/UserDetail.jsp").forward(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(EditUserController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -293,7 +294,7 @@ public class UserController extends HttpServlet {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(EditUserController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
             request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
         }
     }
@@ -360,6 +361,7 @@ public class UserController extends HttpServlet {
         UserDAO userDAO = new UserDAO();
         User user = null;
         SendEmail se = new SendEmail();
+        PasswordEncrypt passwordEncrypt = new PasswordEncrypt();
         // Get session
         HttpSession session = request.getSession();
 
@@ -399,8 +401,9 @@ public class UserController extends HttpServlet {
             } else {
                 // Insert into Account table with user entered email and default password is 123
                 int convertedRole = Integer.parseInt(role);
+                String password = passwordEncrypt.generateEncryptedPassword("123");
                 int checkAddUser = userDAO.addNewUserWithImage(email, name, title,
-                        genderbit, phone, address, inputStream, convertedRole, accountStaus);
+                        genderbit, phone, address, inputStream, convertedRole, accountStaus,password);
                 if (checkAddUser > 0) {
                     boolean checkEmail = se.sendEmailActivation(email, name);
                     if (checkEmail) {
@@ -415,10 +418,10 @@ public class UserController extends HttpServlet {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(AddNewUserController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
             request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(AddNewUserController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
             request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
         }
 

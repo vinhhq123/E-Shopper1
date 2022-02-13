@@ -5,7 +5,6 @@
  */
 package controller.manager;
 
-import controller.admin.AddNewUserController;
 import dal.UserDAO;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -198,10 +197,10 @@ public class CusAddController extends HttpServlet {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(AddNewUserController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CusAddController.class.getName()).log(Level.SEVERE, null, ex);
             request.getRequestDispatcher("./admin/Error.jsp").forward(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(AddNewUserController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CusAddController.class.getName()).log(Level.SEVERE, null, ex);
             request.getRequestDispatcher("./admin/Error.jsp").forward(request, response);
         }
     }

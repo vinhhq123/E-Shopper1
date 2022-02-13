@@ -64,8 +64,34 @@ public class UserDAO extends DBContext {
 //            }
 //        }
 //    }
+    public void register(String Email, String name, String Pass, String title, Boolean gen, String phone, String address) throws SQLException {
+        String sql = "INSERT INTO user (email, fullname, password, title, gender, phone, address, accountStatus, role) VALUES (?, ?, ?, ?, ?, ?, ?, 23, 5);";
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, Email);
+            preparedStatement.setString(2, name);
+            preparedStatement.setString(3, Pass);
+            preparedStatement.setString(4, title);
+            preparedStatement.setBoolean(5, gen);
+            preparedStatement.setString(6, phone);
+            preparedStatement.setString(7, address);
+            preparedStatement.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
 
- public User checkAccountExist(String Email) throws SQLException {
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+    }
+
+    public User checkAccountExist(String Email) throws SQLException {
         String sql = "select * from user where email = ?";
         try {
             connection = getConnection();
@@ -362,9 +388,9 @@ public class UserDAO extends DBContext {
     }
 
     public int addNewUserWithImage(String email, String fullname, String title, boolean gender,
-            String phone, String address, InputStream avatar, int role, int userStatus) throws SQLException {
+            String phone, String address, InputStream avatar, int role, int userStatus, String password) throws SQLException {
         String sql = "INSERT INTO user (email,fullname, title, gender, phone, address, "
-                + "avatar, role, accountStatus) VALUES (?,?,?,?,?,?,?,?,?);";
+                + "avatar, role, accountStatus, password) VALUES (?,?,?,?,?,?,?,?,?,?);";
         int row = 0;
         try {
             connection = getConnection();
@@ -380,6 +406,7 @@ public class UserDAO extends DBContext {
             }
             preparedStatement.setInt(8, role);
             preparedStatement.setInt(9, userStatus);
+            preparedStatement.setString(10, password);
             row = preparedStatement.executeUpdate();
         } catch (Exception ex) {
             System.out.println("Exception ==== " + ex);
@@ -444,6 +471,7 @@ public class UserDAO extends DBContext {
         }
         return check;
     }
+
     public List<User> getCusByPage(int currentPage, int recordsPerPage) {
 
         List<User> users = new ArrayList<>();
@@ -484,6 +512,7 @@ public class UserDAO extends DBContext {
         }
         return users;
     }
+
     public User getLastInsertedUser() throws Exception {
 
         String sql = "SELECT * FROM user ORDER BY uid DESC LIMIT 1; ";
@@ -545,7 +574,8 @@ public class UserDAO extends DBContext {
         }
         return user;
     }
-  public int getNumberOfRowsCus() throws Exception {
+
+    public int getNumberOfRowsCus() throws Exception {
 
         int rows = 0;
         String sql = "select COUNT(uid) from User where role = 5;";
@@ -573,4 +603,45 @@ public class UserDAO extends DBContext {
 
         return rows;
     }
+
+    public List<User> getSaler() {
+
+        List<User> users = new ArrayList<>();
+        User user = null;
+
+        try {
+            String sql = "select * from user where role = 3 ";
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                user = new User();
+                user.setUid(results.getInt("uid"));
+                user.setEmail(results.getString("email"));
+                user.setFullname(results.getString("fullname"));
+                user.setTitle(results.getString("title"));
+                user.setGender(results.getBoolean("gender"));
+                user.setPhone(results.getString("phone"));
+                user.setAddress(results.getString("address"));
+                user.setAccountStatus(results.getInt("accountStatus"));
+                user.setRole(results.getInt("role"));
+//                user.setAvatar(results.getString("avatar"));
+                users.add(user);
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return users;
+    }
+
 }
