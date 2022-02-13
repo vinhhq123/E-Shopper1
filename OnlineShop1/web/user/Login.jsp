@@ -111,7 +111,7 @@
 
                             <h2>Login to your account</h2>
                             <form action="login" method="POST">
-                                <input type="text" placeholder="Email" name="email" /> </br>
+                                <input type="text" placeholder="Email" name="email" value="${email}"  /> </br>
                                 <input type="password" placeholder="password" name="password" /> </br>
                                 <span>
                                     <input type="checkbox" class="checkbox"> 

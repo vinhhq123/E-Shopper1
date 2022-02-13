@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Setting;
-import model.SettingType;
+
 
 /**
  *
@@ -395,5 +395,77 @@ public class SettingDAO extends DBContext {
         }
         System.out.println("===============================================");
 
+    }
+    
+        public List<Setting> getAllProCategory() throws Exception {
+
+        List<Setting> settings = new ArrayList<>();
+        String sql = "select * from setting where settingType = 5";
+        Setting setting = null;
+
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                setting = new Setting();
+                setting.setSettingId(results.getInt("settingId"));
+                setting.setSettingType(results.getInt("settingType"));
+                setting.setSettingValue(results.getString("settingValue"));
+                setting.setSettingOrder(results.getInt("settingOrder"));
+                setting.setSettingStatus(results.getBoolean("settingStatus"));
+                settings.add(setting);
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+
+        return settings;
+    }
+        
+        public List<Setting> getAllProStatus() throws Exception {
+
+        List<Setting> settings = new ArrayList<>();
+        String sql = "select * from setting where settingType = 6";
+        Setting setting = null;
+
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                setting = new Setting();
+                setting.setSettingId(results.getInt("settingId"));
+                setting.setSettingType(results.getInt("settingType"));
+                setting.setSettingValue(results.getString("settingValue"));
+                setting.setSettingOrder(results.getInt("settingOrder"));
+                setting.setSettingStatus(results.getBoolean("settingStatus"));
+                settings.add(setting);
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+
+        return settings;
     }
 }

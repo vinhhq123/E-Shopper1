@@ -49,7 +49,7 @@
                             <div class="rs-select2 js-select-simple select--no-search">
                                 <select name="settingType">
                                    <c:forEach items="${requestScope.typename}" var="ty">
-                                       <option value="${ty.getSettingTypeId()}">${ty.getTypeName()} </option>
+                                       <option value="${ty}">${ty}</option>
                                    </c:forEach>
                                 </select>
                                 <div class="select-dropdown"></div>

@@ -64,3 +64,8 @@ function removeSpaces(string) {
     return string.replace(/\s+/g, ' ').trim();
     
 }
+
+var loadFile = function (event) {
+    var image = document.getElementById("output");
+    image.src = URL.createObjectURL(event.target.files[0]);
+};
