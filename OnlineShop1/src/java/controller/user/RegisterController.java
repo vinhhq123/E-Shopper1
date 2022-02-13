@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import resources.PasswordEncrypt;
+import resources.Validate;
 
 /**
  *
@@ -91,6 +92,7 @@ public class RegisterController extends HttpServlet {
             request.setAttribute("address", address);
             request.setAttribute("password", password);
             request.setAttribute("repassword", rePassword);
+            Validate validate = new Validate();
         try {
             if(usDB.checkAccountExist(email) != null)
             {
@@ -98,7 +100,17 @@ public class RegisterController extends HttpServlet {
                 request.setAttribute("fail1", fail1);
                 request.getRequestDispatcher("./user/Register.jsp").forward(request, response);
             }
-
+            else if (validate.checkPhone(phone) == false) {
+                // check validate phone number
+                String fail2 = "Phone number format is not correct!";
+                request.setAttribute("fail2", fail2);
+                request.getRequestDispatcher("./user/Register.jsp").forward(request, response);
+            }
+            else if(!password.equals(rePassword)){
+                String fail3 = "Password and RePassword are not matched!";
+                request.setAttribute("fail3", fail3);
+                request.getRequestDispatcher("./user/Register.jsp").forward(request, response);
+            }
             else{
                 PasswordEncrypt encryptedPass = new PasswordEncrypt();
                 usDB.register(email, name, encryptedPass.generateEncryptedPassword(password),title,gen,phone,address);
