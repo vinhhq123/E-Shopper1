@@ -3,37 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/admin/SettingDetailEdit.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/colorlib-regform-4/form_add.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/admin/SearchSettingController.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/Addnewcustomer.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/admin/SettingController.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/manager/CusSearchController.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/admin/EditUserController.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/AddNewUser.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/dal/UserDAO.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/colorlib-regform-4/form_edit.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/admin/AddNewUserController.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/manager/CusEditController.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/manager/CusAddController.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/UserDetail.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/admin/UserListController.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/dbcontext/DBContext.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/admin/SettingDetailAdd.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/SettingList.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/SideBarManager.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/resources/setting.properties</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/admin/SettingListController.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/CusList.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/admin/SearchUserController.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/manager/CusListController.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/model/User.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/SideBarAdmin.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/UserList.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/HeaderAdmin.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/dal/SettingDAO.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/CusDetail.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/SettingEdit.jsp</file>
+            <file>file:/C:/Users/84984/Desktop/OnlineShop/OnlineShop1/src/java/controller/user/RegisterController.java</file>
+            <file>file:/C:/Users/84984/Desktop/OnlineShop/OnlineShop1/web/user/Register.jsp</file>
+            <file>file:/C:/Users/84984/Desktop/OnlineShop/OnlineShop1/src/java/dbcontext/DBContext.java</file>
+            <file>file:/C:/Users/84984/Desktop/OnlineShop/OnlineShop1/src/java/dal/UserDAO.java</file>
+            <file>file:/C:/Users/84984/Desktop/OnlineShop/OnlineShop1/src/java/controller/user/LoginController.java</file>
         </group>
     </open-files>
 </project-private>

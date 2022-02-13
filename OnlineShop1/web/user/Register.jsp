@@ -112,7 +112,8 @@
                         <h2>Registration form</h2>
                         <div class="form-group">
                             <label for="email">Email Address:</label>
-                            <input type="email" name="email" id="email" required/>
+                            <input type="email" name="email" id="email" value="${email}" required/>
+                            <p style="color: red">${requestScope.fail1}</p>
                         </div>
                         <div class="form-row">
                         <div class="form-group">
@@ -127,7 +128,7 @@
                         </div>
                         <div class="form-group">
                             <label for="name">Name:</label>
-                            <input type="text" name="name" id="name" required/>
+                            <input type="text" name="name" id="name" value="${name}" required/>
                         </div>
                         </div>
                         <div class="form-radio">
@@ -145,11 +146,11 @@
                         </div>
                         <div class="form-group">
                             <label for="address">Phone Number:</label>
-                            <input type="text" name="phone" id="phone" required/>
+                            <input type="text" name="phone" id="phone" value="${phone}" required/>
                         </div>
                         <div class="form-group">
                             <label for="address">Address:</label>
-                            <input type="text" name="address" id="address" required/>
+                            <input type="text" name="address" id="address" value="${address}" required/>
                         </div>
                         <div class="form-row">
                         <div class="form-group">
@@ -159,6 +160,7 @@
                         <div class="form-group">
                             <label for="name">Repeat Password:</label>
                             <input type="password" name="repassword" id="repassword" required/>
+                            <p style="color: red">${requestScope.fail2}</p>
                         </div>
                         </div>
                         <div class="form-submit">

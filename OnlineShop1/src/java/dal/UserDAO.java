@@ -551,4 +551,44 @@ public class UserDAO extends DBContext {
         return user;
     }
 
+        public List<User> getSaler(){
+
+        List<User> users = new ArrayList<>();
+        User user = null;
+
+        try {
+            String sql = "select * from user where role = 3 " ;
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                user = new User();
+                user.setUid(results.getInt("uid"));
+                user.setEmail(results.getString("email"));
+                user.setFullname(results.getString("fullname"));
+                user.setTitle(results.getString("title"));
+                user.setGender(results.getBoolean("gender"));
+                user.setPhone(results.getString("phone"));
+                user.setAddress(results.getString("address"));
+                user.setAccountStatus(results.getInt("accountStatus"));
+                user.setRole(results.getInt("role"));
+//                user.setAvatar(results.getString("avatar"));
+                users.add(user);
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return users;
+    }
+    
 }

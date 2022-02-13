@@ -3,25 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.user;
+package controller.manager;
 
+import dal.SettingDAO;
 import dal.UserDAO;
+import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import resources.PasswordEncrypt;
+import model.Product;
+import model.Setting;
+import model.User;
 
 /**
  *
  * @author Edwars
  */
-public class RegisterController extends HttpServlet {
+public class ProductListController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +45,10 @@ public class RegisterController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet RegisterController</title>");            
+            out.println("<title>Servlet ProductListController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet RegisterController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ProductListController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,7 +66,47 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("./user/Register.jsp").forward(request, response);
+       int currentPage = 1;
+        // Set total records per page is 5
+        int recordsPerPage = 5;
+
+        // Get the current page from request if there any
+        if (request.getParameter("currentPage") != null) {
+            currentPage = Integer.parseInt(request.getParameter("currentPage"));
+        }
+        
+        SettingDAO settingDAO = new SettingDAO();
+        UserDAO userDAO = new UserDAO();
+        ProductDAO proDAO = new ProductDAO();
+        List<Setting> statusList = new ArrayList<>();
+        List<Setting> categoryList = new ArrayList<>();
+        List<User> userList = new ArrayList<>();
+        List<Product> proList = new ArrayList<>();
+        
+        try {
+            statusList = settingDAO.getAllProStatus();
+            categoryList = settingDAO.getAllProCategory();
+            userList = userDAO.getSaler();
+            proList = proDAO.getProByPage(currentPage, recordsPerPage);
+            
+            int rows = proDAO.getNumberOfRows();
+            // Count total number of page
+            int numOfPage = rows / recordsPerPage;
+            if (rows % recordsPerPage > 0) {
+                numOfPage++;
+            }
+            request.setAttribute("SettingList", statusList);
+            request.setAttribute("SettingList", categoryList);
+            request.setAttribute("UserList", userList);
+            request.setAttribute("numOfPage", numOfPage);
+            request.setAttribute("recordsPerPage", recordsPerPage);
+            request.setAttribute("currentPage", currentPage);
+            request.getRequestDispatcher("./admin/ProductList.jsp").forward(request, response);
+            
+        } catch (Exception ex) {
+            Logger.getLogger(CusListController.class.getName()).log(Level.SEVERE, null, ex);
+            request.getRequestDispatcher("./admin/Error.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -75,42 +120,7 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            UserDAO usDB = new UserDAO();
-            String email = request.getParameter("email");
-            String name = request.getParameter("name");
-            String title = request.getParameter("title");
-            Boolean gen =  request.getParameter("gender").equals("male");
-            String phone = request.getParameter("phone");
-            String address = request.getParameter("address");
-            String password = request.getParameter("password");
-            String rePassword = request.getParameter("rePassword");
-            
-            request.setAttribute("name", name);
-            request.setAttribute("phone", phone);
-            request.setAttribute("email", email);
-            request.setAttribute("address", address);
-            request.setAttribute("password", password);
-            request.setAttribute("repassword", rePassword);
-        try {
-            if(usDB.checkAccountExist(email) != null)
-            {
-                String fail1 = "Email already exists!";
-                request.setAttribute("fail1", fail1);
-                request.getRequestDispatcher("./user/Register.jsp").forward(request, response);
-            }
-            else if(!password.equals(rePassword)){
-                String fail2 = "RePassword not matched with Password!";
-                request.setAttribute("fail2", fail2);
-                request.getRequestDispatcher("./user/Register.jsp").forward(request, response);
-            }
-            else{
-                PasswordEncrypt encryptedPass = new PasswordEncrypt();
-                usDB.register(email, name, encryptedPass.generateEncryptedPassword(password),title,gen,phone,address);
-                request.getRequestDispatcher("./user/Login.jsp").forward(request, response);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
