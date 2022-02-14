@@ -78,18 +78,11 @@ public class EditProductController extends HttpServlet {
         int productId = Integer.parseInt(pid);
 
         try {
-            currentPro = proDAO.getProductById(productId);
-            
-            String Category = currentPro.getCategoryID()+"";
-            String Status = currentPro.getProductStatus()+ "";  
-            String Saler = currentPro.getSalesId()+ ""; 
+            currentPro = proDAO.getProductById(productId); 
             request.setAttribute("currentPro", currentPro);
-            request.setAttribute("Saler", Saler);
-            request.setAttribute("Category", Category);
-            request.setAttribute("currentStatus",Status );
             request.getRequestDispatcher("./admin/ProductDetails.jsp").forward(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditProductController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -119,7 +112,6 @@ public class EditProductController extends HttpServlet {
         String quan = "";
         String successMessage = "";
         String base64Image = "";
-        int proStaus = 0;
          
         int pid = Integer.parseInt(request.getParameter("pid"));
         title = request.getParameter("title");
@@ -133,18 +125,6 @@ public class EditProductController extends HttpServlet {
         update = request.getParameter("update");
         quan = request.getParameter("quan");
         // If active radio button is selected
-        if (request.getParameter("status").equals("17")) {
-            // In Setting table in the database 
-            // user has accountStatus is Active and registered 
-            // but not verified has settingId = 26
-            proStaus = 17;
-        } else {
-            // In Setting table in the database 
-            // user has accountStatus is Inactive and registered 
-            // but not verified has settingId = 6
-            proStaus = 16;
-        }
-
         // Input stream of the upload file
         InputStream inputStream = null;
         // Obtains the upload file
@@ -193,10 +173,10 @@ public class EditProductController extends HttpServlet {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditProductController.class.getName()).log(Level.SEVERE, null, ex);
             request.getRequestDispatcher("./admin/Error.jsp").forward(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditProductController.class.getName()).log(Level.SEVERE, null, ex);
             request.getRequestDispatcher("./admin/Error.jsp").forward(request, response);
         }
     }

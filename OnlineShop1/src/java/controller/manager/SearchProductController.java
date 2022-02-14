@@ -26,7 +26,7 @@ import model.User;
  *
  * @author Edwars
  */
-public class ProductSearchController extends HttpServlet {
+public class SearchProductController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -98,7 +98,7 @@ public class ProductSearchController extends HttpServlet {
             request.setAttribute("searchNow", true);
             request.getRequestDispatcher("./admin/ProductList.jsp").forward(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(ProductSearchController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SearchProductController.class.getName()).log(Level.SEVERE, null, ex);
             request.getRequestDispatcher("./admin/Error.jsp").forward(request, response);
         }
 

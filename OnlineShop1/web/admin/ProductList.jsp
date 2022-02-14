@@ -58,69 +58,14 @@
                                     <!-- </div> -->
                                     <div class="panel-body table-responsive">
                                         <div class="row">
-                                            <div class="col-sm-8">
-                                                <form class="form-inline" role="form" action="<%=request.getContextPath()%>/proSearch">
-                                                <div class="form-group">
-                                                    <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                                                    <input type="text" name="table_search" class="form-control" id="exampleInputEmail2" placeholder="Title or feature" value="${requestScope.searchValue}" onblur="this.value = removeSpaces(this.value);">
-                                                </div>
-                                                <div class="form-group">
-                                                    <select class="select" aria-label="Default select example" name="category">
-                                                        <c:if test="${empty valueCategory}">
-                                                            <option selected value="">All Category</option>
-                                                            <c:forEach items="${CategoryList}" var="cat">
-                                                            <option value="${cat.getSettingId()}">${cat.getSettingValue()}</option>
-                                                            </c:forEach>
-                                                        </c:if>
-                                                        <c:if test="${not empty valueCategory}">
-                                                            <option value="">All Roles</option>
-                                                            <c:forEach items="${CategoryList}" var="cat">
-                                                            <option value="${cat.getSettingId()}" <%=request.getAttribute("valueCategory").equals("${cat.getSettingId()}") ? "selected" : ""%>>${cat.getSettingValue()}</option>
-                                                            </c:forEach>
-                                                        </c:if>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <select class="select" aria-label="Default select example" name="saler">
-                                                        <c:if test="${empty valueSaler}">
-                                                            <option selected value="">All Salers</option>
-                                                            <c:forEach items="${UserList}" var="urs">
-                                                            <option value="${urs.getUid()}">${urs.getFullname()}</option>
-                                                            </c:forEach>
-                                                        </c:if>
-                                                        <c:if test="${not empty valueSaler}">
-                                                            <option value="">All Salers</option>
-                                                            <c:forEach items="${UserList}" var="urs">
-                                                            <option value="${urs.getUid()}"<%=request.getAttribute("valueSaler").equals("${urs.getUid()}") ? "selected" : ""%>>${urs.getFullname()}</option>
-                                                            </c:forEach>
-                                                        </c:if>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <select class="select" aria-label="Default select example" name="status">
-                                                        <c:if test="${empty valueStatus}">
-                                                            <option value="" selected="">All Statuses</option>
-                                                            <c:forEach items="${StatusList}" var="sta">
-                                                            <option value="${sta.getSettingId()}">${sta.getSettingValue()}</option>
-                                                            </c:forEach>
-                                                        </c:if>
-                                                        <c:if test="${not empty valueStatus}">                         
-                                                            <option value="">All Statuses</option>
-                                                            <c:forEach items="${StatusList}" var="sta">
-                                                            <option value="${sta.getSettingId()}"<%=request.getAttribute("valueStatus").equals("${sta.getSettingId()}") ? "selected" : ""%>>${sta.getSettingValue()}</option>
-                                                            </c:forEach>
-                                                        </c:if>
-                                                    </select>
-                                                </div>
-                                                
-                                                <button type="submit" class="btn btn-success">Search</button>
-                                            </form>
-                                        </div>
-                                        <div class="col-sm-4">
+                                      
+                                        <div class="col-sm-1">
                                             <button type="button" class="btn btn-success" style="float: right" onclick="window.location = '<%=request.getContextPath()%>/admin/ProductAdd.jsp'">Add New Product</button>
 <!--                                                <a href="<%=request.getContextPath()%>/addNewUser" style="float: right"> Add new</a>-->
                                         </div>
-
+                                        <div class="col-sm-8">
+                                                
+                                        </div>
                                     </div>
                                     <br>
                                     <table class="table table-striped" id="SettingListTable">

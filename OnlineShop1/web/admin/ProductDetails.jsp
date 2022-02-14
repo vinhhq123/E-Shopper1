@@ -63,7 +63,7 @@
                                     <div class="col-lg-1"></div>
                                     <div class="col-lg-7">
                                         <div class="panel-body table-responsive">
-                                            <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/proEdit?pid=<c:out value="${currentPro.uid}"/>" method="POST" name="updateProduct"  enctype="multipart/form-data">
+                                            <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/proEdit?pid=<c:out value="${currentPro.pid}"/>" method="POST" name="/proEdit"  enctype="multipart/form-data">
                                                 <c:if test="${not empty successEditMessage}">
                                                     <h4 class="help-block" style="color: green" id="successEditMessage">${successEditMessage}</h4>
                                                     <c:remove var="successEditMessage"/>
@@ -99,32 +99,32 @@
                                                 <div class="form-group">
                                                     <label for="lprice" class="col-lg-2 col-sm-2 control-label">List Price</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="lprice"  name="lprice" value="${currentPro.lprice}"required  >
+                                                        <input type="text" class="form-control" id="lprice" value="${currentPro.lprice}" name="lprice" required  >
                                                     </div>
                                                 </div>
-                                                    <div class="form-group">
+                                                <div class="form-group">
                                                     <label for="sprice" class="col-lg-2 col-sm-2 control-label">Sale Price</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="sprice"  name="sprice" value="${currentPro.sprice}"required  >
+                                                        <input type="text" class="form-control" id="sprice" value="${currentPro.sprice}"  name="sprice" required  >
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="feature" class="col-lg-2 col-sm-2 control-label">Feature</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="feature" name="feature" value="${currentPro.featured}"  required>
+                                                        <input type="text" class="form-control" id="feature" value="${currentPro.featured}"  name="feature"  required>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="breif" class="col-lg-2 col-sm-2 control-label">Breif</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="breif" name="breif" value="${currentPro.breif}"required>
+                                                        <input type="text" class="form-control" id="breif" value="${currentPro.breif}" name="breif" required>
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label for="quan" class="col-lg-2 col-sm-2 control-label">Quantity</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="quan" name="quan" required value="${currentPro.quantity}" required >
+                                                        <input type="text" class="form-control" id="quan" value="${currentPro.quantity}" name="quan"  required >
                                                     </div>
                                                 </div>
                                                 
@@ -167,13 +167,13 @@
                                                 <div class="form-group">
                                                     <label for="update" class="col-lg-2 col-sm-2 control-label">Update Date</label>
                                                     <div class="col-lg-10">
-                                                        <input type="date" class="form-control" id="update"  name="update" value="${currentPro.updatedDate}" required>
+                                                        <input type="date" class="form-control" id="update" value="${currentPro.updatedDate}" name="update"  required>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-2 col-lg-10">
-                                                        <button type="submit" class="btn btn-success">Save</button>
-                                                        <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/proList'">Back</button>
+                                                        <button type="submit" class="btn btn-success">Update Product Information</button>
+                                                        <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/proList'">Back to Product List</button>
                                                     </div>
                                                 </div>
                                                 <input type="hidden" value="${currentPro.pid}" name="pid"> 
@@ -205,3 +205,4 @@
         <script src="${pageContext.request.contextPath}/admin/js/UserDetail.js" type="text/javascript"></script>
     </body>
 </html>
+s

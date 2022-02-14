@@ -108,7 +108,7 @@ public class ProductListController extends HttpServlet {
             request.getRequestDispatcher("/admin/ProductList.jsp").forward(request, response);
             
         } catch (Exception ex) {
-            Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductListController.class.getName()).log(Level.SEVERE, null, ex);
             request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
         }
     }
