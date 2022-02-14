@@ -139,7 +139,7 @@ public class UserDAO extends DBContext {
 
     public User getAccount(String email, String password) {
         try {
-            String sql = "SELECT email, password ,fullname,uid FROM onlineshop1.user WHERE email = ? and password = ?";
+            String sql = "SELECT email, password ,fullname,uid FROM user WHERE email = ? and password = ?";
             connection = getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, email);
@@ -303,7 +303,7 @@ public class UserDAO extends DBContext {
                 user.setGender(results.getBoolean("gender"));
                 user.setPhone(results.getString("phone"));
                 user.setAddress(results.getString("address"));
-
+                
                 Blob blob = results.getBlob("avatar");
                 if (blob != null) {
 

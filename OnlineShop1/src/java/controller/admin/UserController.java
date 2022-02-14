@@ -6,6 +6,7 @@
  */
 package controller.admin;
 
+import dal.PostDAO;
 import dal.SettingDAO;
 import dal.UserDAO;
 import java.io.ByteArrayOutputStream;
@@ -85,6 +86,7 @@ public class UserController extends HttpServlet {
             case "/user/list":
                 userList(request, response);
                 break;
+            
         }
 
     }
@@ -426,4 +428,5 @@ public class UserController extends HttpServlet {
         }
 
     }
+    
 }

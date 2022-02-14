@@ -49,7 +49,7 @@
                                         </ul>
                                     </div>
                                     <a href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">
-                                        <img src="${o.thumbnail}" alt="">
+                                        <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="">
                                     </a>
                                     <p>${o.breifInformation}</p>
                                     <a  class="btn btn-primary" href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">Read More</a>
