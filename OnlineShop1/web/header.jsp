@@ -62,9 +62,17 @@
                             <li><a href="${pageContext.request.contextPath}/index.jsp" class="active">Home</a></li>
                             <li><a href="#">Shop<i></i></a>
                             </li> 
-                            <li class=""><a href="<%=request.getContextPath()%>/blog/bloglist">Blog<i class=""></i></a>
-                            </li> 
-                            <li><a href="contact-us.html">Contact</a></li>
+                            <li class="dropdown"><a href="#" class="active">Blog<i class="fa fa-angle-down"></i></a>
+                                        <ul role="menu" class="sub-menu">
+                                            <li class=""><a href="<%=request.getContextPath()%>/blog/bloglist">Blog<i class=""></i></a>
+                                            </li>
+                                            <li class=""><a href="<%=request.getContextPath()%>/post/list">Post List<i class=""></i></a>
+                            </li>
+                                            <li class=""><a href="<%=request.getContextPath()%>/post/PostDetail.jsp">Post Detail<i class=""></i></a>
+                            </li>
+                                            
+                                        </ul>
+                                    </li> 
                         </ul>
                     </div>
                 </div>

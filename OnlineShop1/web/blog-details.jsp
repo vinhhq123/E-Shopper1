@@ -46,7 +46,7 @@
                                     </ul>
                                 </div>
                                 <a href="">
-                                    <img src="${blog.thumbnail}" alt="">
+                                    <img src="data:image/jpg;base64,${p.getThumbnail()}" alt="">
                                 </a>
                                 <p>
                                     ${blog.postContent}

@@ -23,7 +23,7 @@ public class PostList {
     private String featured;
     private int satatusPL;
     private Date updateDate;
-
+    private User user;
     public PostList() {
     }
 
@@ -43,6 +43,16 @@ public class PostList {
     public PostList(String category) {
         this.category = category;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
+    
 
     public int getPostId() {
         return postId;

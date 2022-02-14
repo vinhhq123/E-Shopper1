@@ -72,6 +72,7 @@
         <servlet-name>SearchSettingController</servlet-name>
         <url-pattern>/searchSetting</url-pattern>
     </servlet-mapping>
+    
     <servlet-mapping>
         <servlet-name>ActivateSettingController</servlet-name>
         <url-pattern>/activateSetting</url-pattern>

@@ -3,16 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/dbcontext/DBContext.java</file>
-            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/model/User.java</file>
-            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/controller/user/HomeController.java</file>
-            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/blog-details.jsp</file>
-            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/controller/marketing/BlogController.java</file>
-            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/blog.jsp</file>
-            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/dal/PostDAO.java</file>
-            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/index.jsp</file>
-            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/model/PostList.java</file>
-            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/header.jsp</file>
+            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/controller/marketing/PostListController.java</file>
+            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/controller/user/HomeController.java</file>
+            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/controller/marketing/PostDetailController.java</file>
+            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/dal/UserDAO.java</file>
+            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/controller/marketing/PostController.java</file>
+            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/model/PostList.java</file>
+            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/post/PostDetail.jsp</file>
+            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/controller/admin/UserController.java</file>
+            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/dal/PostDAO.java</file>
+            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/post/PostList.jsp</file>
         </group>
     </open-files>
 </project-private>
