@@ -6,16 +6,11 @@
 package dal;
 
 import dbcontext.DBContext;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Base64;
+import java.util.List;
 import model.PostList;
 import model.User;
 
@@ -24,89 +19,162 @@ import model.User;
  * @author CHANHSIRO
  */
 public class PostDAO extends DBContext {
-        private Connection connection = null;
-        private PreparedStatement preparedStatement = null;
-        private ResultSet results = null;
 
-    public void insertPost(String postContent, InputStream thumbnail, String postTitle, int postAuthor) {
-        
-        String sql = "INSERT INTO `post` (`thumbnail`, `postTitle`, `postContent`, `postAuthor`) \n" +
-"        VALUES (?, ?, ?, ?)";
+    Connection connection = null;
+    PreparedStatement ps = null;
+    ResultSet result = null;
+
+    public List<PostList> getBlogSortByDate() {
+        List<PostList> list = new ArrayList<>();
+        String query = "select p.*, u.uid, u.fullname from post p inner join user u on p.postAuthor = u.uid order by p.postdDate desc";
         try {
-            connection = getConnection();
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setBlob(1, thumbnail);
-            preparedStatement.setString(2, postTitle);
-            preparedStatement.setString(3, postContent);
-            preparedStatement.setInt(4, postAuthor);
-            preparedStatement.executeUpdate();
-        } catch (Exception ex) {
-            System.out.println("Exception ==== " + ex);
-        } finally {
-            try {
-                closeConnection(connection);
-                closePrepareStatement(preparedStatement);
-                //closeResultSet(results);
+            connection = new DBContext().getConnection();
+            ps = connection.prepareStatement(query);
+            result = ps.executeQuery();
 
-            } catch (Exception ex) {
-                System.out.println("Exception ==== " + ex);
+            while (result.next()) {
+                PostList p = new PostList();
+                p.setPostId(result.getInt("postId"));
+                p.setThumbnail(result.getString("thumbnail"));
+                p.setPostTitle(result.getString("postTitle"));
+                p.setBreifInformation(result.getString("breifInformation"));
+                p.setPostContent(result.getString("postContent"));
+                User u = new User(result.getInt("uid"), result.getString("fullname"));
+                p.setPostAuthor(u);
+                p.setCategory(result.getString("postCategory"));
+                p.setFeatured(result.getString("featured"));
+                p.setSatatusPL(result.getInt("status"));
+                p.setUpdateDate(result.getDate("postdDate"));
+                list.add(p);
             }
+        } catch (Exception e) {
+
         }
-        
+        return list;
     }
-    
-    public ArrayList<PostList> getPostList() throws Exception {
-            ArrayList<PostList> postlist = new ArrayList<>();
+
+    public PostList getBlogById(int id) {
+        String query = "select p.*, u.uid, u.fullname from post p inner join user u on p.postAuthor = u.uid where p.postId = ?";
         try {
-        String sql = "select  p.thumbnail, p.postTitle, p.postContent, u.fullname from post as p\n" +
-                        "Inner Join user as u ON u.uid = p.postAuthor";
-        System.out.println(sql);
-        String noImage = "";
-            connection = getConnection();
-            preparedStatement = connection.prepareStatement(sql);
-            results = preparedStatement.executeQuery();
-            
-            while (results.next()) {
-                PostList post = new PostList();
-                post.setPostContent(results.getString("postContent"));
-                post.setPostTitle(results.getString("postTitle"));
-                User user = new User();
-                user.setFullname(results.getString("fullname"));
-                post.setUser(user);
-                Blob blob = results.getBlob("thumbnail");
-                if (blob != null) {
-                    InputStream inputStream = blob.getBinaryStream();
-                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                    byte[] buffer = new byte[4096];
-                    int bytesRead = -1;
+            connection = new DBContext().getConnection();
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            result = ps.executeQuery();
 
-                    while ((bytesRead = inputStream.read(buffer)) != -1) {
-                        outputStream.write(buffer, 0, bytesRead);
-                    }
-
-                    byte[] imageBytes = outputStream.toByteArray();
-                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-
-                    inputStream.close();
-                    outputStream.close();
-                    post.setThumbnail(base64Image);
-                } else {
-                    post.setThumbnail(noImage);
-                }
-                postlist.add(post);
+            while (result.next()) {
+                PostList p = new PostList();
+                p.setPostId(result.getInt("postId"));
+                p.setThumbnail(result.getString("thumbnail"));
+                p.setPostTitle(result.getString("postTitle"));
+                p.setBreifInformation(result.getString("breifInformation"));
+                p.setPostContent(result.getString("postContent"));
+                User u = new User(result.getInt("uid"), result.getString("fullname"));
+                p.setPostAuthor(u);
+                p.setCategory(result.getString("postCategory"));
+                p.setFeatured(result.getString("featured"));
+                p.setSatatusPL(result.getInt("status"));
+                p.setUpdateDate(result.getDate("postdDate"));
+                return p;
             }
-        } catch (Exception ex) {
-            System.out.println("Exception ==== " + ex);
-        } finally {
-            try {
-                closeConnection(connection);
-                closePrepareStatement(preparedStatement);
-                //closeResultSet(results);
+        } catch (Exception e) {
 
-            } catch (SQLException | IOException ex) {
-                System.out.println("Exception ==== " + ex);
-            }
         }
-        return postlist;
+        return null;
+    }
+
+    public List<PostList> getBlogCategory() {
+        List<PostList> listPostCate = new ArrayList<>();
+        String query = "SELECT postCategory FROM post";
+        try {
+            connection = new DBContext().getConnection();
+            ps = connection.prepareStatement(query);
+            result = ps.executeQuery();
+
+            while (result.next()) {
+                listPostCate.add(new PostList(result.getString(1)));
+            }
+        } catch (Exception e) {
+
+        }
+        return listPostCate;
+    }
+
+    public List<PostList> getBlogByPostCategory(String id) {
+        List<PostList> list = new ArrayList<>();
+        String query = "select p.* , u.uid, u.fullname from post p inner join user u on p.postAuthor = u.uid where p.postCategory = ?";
+        try {
+            connection = new DBContext().getConnection();
+            ps = connection.prepareStatement(query);
+            ps.setString(1, id);
+            result = ps.executeQuery();
+
+            while (result.next()) {
+                PostList p = new PostList();
+                p.setPostId(result.getInt("postId"));
+                p.setThumbnail(result.getString("thumbnail"));
+                p.setPostTitle(result.getString("postTitle"));
+                p.setBreifInformation(result.getString("breifInformation"));
+                p.setPostContent(result.getString("postContent"));
+                User u = new User(result.getInt("uid"), result.getString("fullname"));
+                p.setPostAuthor(u);
+                p.setCategory(result.getString("postCategory"));
+                p.setFeatured(result.getString("featured"));
+                p.setSatatusPL(result.getInt("status"));
+                p.setUpdateDate(result.getDate("postdDate"));
+                list.add(p);
+            }
+        } catch (Exception e) {
+
+        }
+        return list;
+    }
+
+    public List<PostList> searchBlogByTitle(String search) {
+        List<PostList> list = new ArrayList<>();
+        String query = "select p.* , u.uid, u.fullname from post p inner join user u on p.postAuthor = u.uid where p.postTitle like ?";
+        try {
+            connection = new DBContext().getConnection();
+            ps = connection.prepareStatement(query);
+            ps.setString(1, "%" + search + "%");
+            result = ps.executeQuery();
+
+            while (result.next()) {
+                PostList p = new PostList();
+                p.setPostId(result.getInt("postId"));
+                p.setThumbnail(result.getString("thumbnail"));
+                p.setPostTitle(result.getString("postTitle"));
+                p.setBreifInformation(result.getString("breifInformation"));
+                p.setPostContent(result.getString("postContent"));
+                User u = new User(result.getInt("uid"), result.getString("fullname"));
+                p.setPostAuthor(u);
+                p.setCategory(result.getString("postCategory"));
+                p.setFeatured(result.getString("featured"));
+                p.setSatatusPL(result.getInt("status"));
+                p.setUpdateDate(result.getDate("postdDate"));
+                list.add(p);
+            }
+        } catch (Exception e) {
+
+        }
+        return list;
+    }
+
+    public List<PostList> getBlogByPage(List<PostList> list,
+            int start, int end) {
+        ArrayList<PostList> arr = new ArrayList<>();
+        for (int i = start; i < end; i++) {
+            arr.add(list.get(i));
+        }
+        return arr;
+    }
+
+    public static void main(String[] args) {
+        PostDAO dao = new PostDAO();
+        //List<PostList> list = dao.getBlogByPostCategory("1");
+        PostList p = dao.getBlogById(1);
+//        for (PostList postList : list) {
+//            System.out.println(postList);
+//        }
+        System.out.println(p);
     }
 }

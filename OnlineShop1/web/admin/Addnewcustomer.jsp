@@ -68,26 +68,7 @@
                                                         <c:remove var="messageAddSuccess"/>
                                                     <br>
                                                 </c:if>
-                                                <div class="form-group">
-                                                    <label for="avatar" class="col-lg-2 col-sm-2 control-label">Avatar</label>
-                                                    <div class="col-lg-10">
-                                                        <div class="profile-pic">
-                                                            <label class="-label" for="file">
-                                                                <c:if test="${ not empty imageValue}">
-                                                                    <img src="data:image/jpg;base64,${imageValue}" id="output" width="200" />
-                                                                </c:if>
-                                                                <c:if test="${empty imageValue}">
-                                                                    <img src="${pageContext.request.contextPath}/admin/img/user-bg.png" id="output" width="200" />
-                                                                </c:if>
-                                                            </label>
-                                                            <input id="file" type="file" onchange="loadFile(event)" name="image"/>
-                                                            <c:if test="${not empty errorImage}">
-                                                                <p class="help-block" style="color: red" id="errorEmailMessage">${errorImage}</p>
-                                                                <c:remove var="errorImage"/>
-                                                            </c:if>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                               
                                                 <div class="form-group">
                                                     <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Email</label>
                                                     <div class="col-lg-10">
@@ -147,6 +128,7 @@
                                                     <div class="col-lg-10">
                                                         <input type="text" class="form-control" id="phone" placeholder="Phone" name="phone" required value="${phoneValue}" pattern="[0-9]{10}" title="Phone must be 10 digits and contains numbers only">
                                                     </div>
+                                                    
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="address" class="col-lg-2 col-sm-2 control-label">Address</label>
@@ -154,22 +136,9 @@
                                                         <input type="text" class="form-control" id="address" placeholder="Address" name="address" value="${addressValue}" onblur="this.value = removeSpaces(this.value);" required>
                                                     </div>
                                                 </div>
+                                                
                                                 <div class="form-group">
-                                                    <label for="role" class="col-lg-2 col-sm-2 control-label">Role</label>
-                                                    <div class="col-lg-10">
-                                                        <select class="form-control m-b-10" name="role">
-                                                            <c:if test="${empty roleValue}">
-                                                              
-                                                                <option value="5">Customer</option>
-                                                            </c:if>
-                                                            <c:if test="${not empty roleValue}">                                                              
-                                                                <option value="5" <%=request.getAttribute("roleValue").equals("5") ? "selected" : ""%>>Customer</option>
-                                                            </c:if>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">User Status</label>
+                                                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Status</label>
                                                     <div class="col-lg-10">
                                                         <c:if test="${not empty statusValue}">
                                                             <div class="radio-inline">
@@ -201,23 +170,47 @@
                                                         </c:if>
                                                     </div>
                                                 </div>
+                                                     <div class="form-group">
+                                                    <label for="avatar" class="col-lg-2 col-sm-2 control-label">Avatar</label>
+                                                    <div class="col-lg-offset-5 col-lg-15">
+                                                        <div class="profile-pic">
+                                                            <label class="-label" for="file">
+                                                                <c:if test="${ not empty imageValue}">
+                                                                    <img src="data:image/jpg;base64,${imageValue}" id="output" width="200" />
+                                                                </c:if>
+                                                                <c:if test="${empty imageValue}">
+                                                                   
+                                                                    <img src="${pageContext.request.contextPath}/admin/img/no-avatar.png" id="output" width="200" />
+                                                                </c:if>
+                                                            </label>
+                                                            <input id="file" type="file" onchange="loadFile(event)" name="image"/>
+                                                            <c:if test="${not empty errorImage}">
+                                                                <p class="help-block" style="color: red" id="errorEmailMessage">${errorImage}</p>
+                                                                <c:remove var="errorImage"/>
+                                                            </c:if>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="form-group">
-                                                    <div class="col-lg-offset-2 col-lg-10">
+                                                    <div class="col-lg-offset-6 col-lg-15">
                                                         <button type="submit" class="btn btn-success">Save</button>
-                                                        <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/cusList'">Back</button>
+                                           
                                                     </div>
                                                 </div>
                                             </form>
+                                                
                                         </div><!-- /.box-body -->
+                                        <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/customer/list'"> Back Customer List</button>
                                     </div>
                                     <div class="col-lg-4"></div>
+                                  
                                 </div>
                             </div><!-- /.box -->
                         </div>
                     </div>
                 </section><!-- /.content -->
                 <div class="footer-main">
-                    Copyright &copy Online Shop , 2022
+                 Copyright &copy Online Shop , 2022   
                 </div>
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->

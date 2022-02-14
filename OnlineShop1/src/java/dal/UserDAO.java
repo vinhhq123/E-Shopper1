@@ -515,7 +515,7 @@ public class UserDAO extends DBContext {
 
     public User getLastInsertedUser() throws Exception {
 
-        String sql = "SELECT * FROM user ORDER BY uid DESC LIMIT 1; ";
+        String sql = "SELECT *,user.accountstatus,user.role FROM user ORDER BY uid DESC LIMIT 1; ";
         System.out.println(sql);
         User user = null;
         String noImage = "";
@@ -557,7 +557,7 @@ public class UserDAO extends DBContext {
                     user.setAvatar(noImage);
                 }
 
-                user.setAccountStatus(results.getInt("settingStatus"));
+                user.setAccountStatus(results.getInt("accountStatus"));
                 user.setRole(results.getInt("role"));
             }
         } catch (Exception ex) {
@@ -642,6 +642,110 @@ public class UserDAO extends DBContext {
             }
         }
         return users;
+    }
+     public int updateCus(String fullname, String title, boolean gender,
+            String phone, String address, InputStream avatar, int accountStatus,
+            int uid) throws SQLException {
+        String sql = "UPDATE onlineshop1.user\n"
+                + "SET fullname = ?,title = ?,gender = ?,phone = ?,address = ? ,accountStatus = ?,role = 5";
+        int row = 0;
+        if (avatar != null) {
+            sql += " ,avatar = ? WHERE uid = ?;";
+        } else {
+            sql += " WHERE uid = ?;";
+        }
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, fullname);
+            preparedStatement.setString(2, title);
+            preparedStatement.setBoolean(3, gender);
+            preparedStatement.setString(4, phone);
+            preparedStatement.setString(5, address);
+            preparedStatement.setInt(6, accountStatus);
+            
+            if (avatar != null) {
+                preparedStatement.setBlob(7, avatar);
+                preparedStatement.setInt(8, uid);
+            } else {
+                preparedStatement.setInt(9, uid);
+            }
+            row = preparedStatement.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return row;
+    }
+     public User getCusByUserId(int uid) throws Exception {
+
+        String sql = "select u.*,s.settingStatus from user as u join setting as s "
+                + " on u.accountStatus = s.settingId where u.role=5 and where u.uid =  " + uid;
+        System.out.println(sql);
+        User user = null;
+        String noImage = "";
+
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                user = new User();
+                user.setUid(results.getInt("uid"));
+                user.setEmail(results.getString("email"));
+                user.setFullname(results.getString("fullname"));
+                user.setTitle(results.getString("title"));
+                user.setGender(results.getBoolean("gender"));
+                user.setPhone(results.getString("phone"));
+                user.setAddress(results.getString("address"));
+
+                Blob blob = results.getBlob("avatar");
+                if (blob != null) {
+
+                    InputStream inputStream = blob.getBinaryStream();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                    inputStream.close();
+                    outputStream.close();
+                    user.setAvatar(base64Image);
+                } else {
+                    user.setAvatar(noImage);
+                }
+
+                user.setAccountStatus(results.getInt("settingStatus"));
+                //user.setRole(results.getInt("role"));
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (SQLException | IOException ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return user;
     }
 
 }

@@ -25,14 +25,6 @@
         <servlet-class>controller.user.HomeController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>PostList</servlet-name>
-        <servlet-class>controller.marketing.PostListController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>PostDetail</servlet-name>
-        <servlet-class>controller.marketing.PostDetailController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>UserListController</servlet-name>
         <servlet-class>controller.admin.UserListController</servlet-class>
     </servlet>
@@ -97,14 +89,6 @@
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>PostList</servlet-name>
-        <url-pattern>/postlist</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>PostDetail</servlet-name>
-        <url-pattern>/postdetail</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>UserListController</servlet-name>
         <url-pattern>/userList</url-pattern>
     </servlet-mapping>
@@ -119,10 +103,6 @@
     <servlet-mapping>
         <servlet-name>SearchUserController</servlet-name>
         <url-pattern>/searchUser</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>RegisterController</servlet-name>
-        <url-pattern>/register</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AddProductController</servlet-name>
@@ -143,6 +123,22 @@
     <servlet-mapping>
         <servlet-name>ProductController</servlet-name>
         <url-pattern>/product</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisterController</servlet-name>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductListController</servlet-name>
+        <url-pattern>/proList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchProductController</servlet-name>
+        <url-pattern>/proSearch</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProductController</servlet-name>
+        <url-pattern>/proEdit</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

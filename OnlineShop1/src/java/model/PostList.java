@@ -12,21 +12,22 @@ import java.sql.Date;
  * @author CHANHSIRO
  */
 public class PostList {
+
     private int postId;
     private String thumbnail;
     private String postTitle;
     private String breifInformation;
     private String postContent;
-    private String postAuthor;
+    User postAuthor;
     private String category;
     private String featured;
     private int satatusPL;
-    private Date postDate;
-    private User user;
+    private Date updateDate;
+
     public PostList() {
     }
 
-    public PostList(int postId, String thumbnail, String postTitle, String breifInformation, String postContent, String postAuthor, String category, String featured, int satatusPL, Date postDate) {
+    public PostList(int postId, String thumbnail, String postTitle, String breifInformation, String postContent, User postAuthor, String category, String featured, int satatusPL, Date updateDate) {
         this.postId = postId;
         this.thumbnail = thumbnail;
         this.postTitle = postTitle;
@@ -36,18 +37,13 @@ public class PostList {
         this.category = category;
         this.featured = featured;
         this.satatusPL = satatusPL;
-        this.postDate = postDate;
+        this.updateDate = updateDate;
     }
 
-    public User getUser() {
-        return user;
+    public PostList(String category) {
+        this.category = category;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-    
-    
     public int getPostId() {
         return postId;
     }
@@ -88,11 +84,11 @@ public class PostList {
         this.postContent = postContent;
     }
 
-    public String getPostAuthor() {
+    public User getPostAuthor() {
         return postAuthor;
     }
 
-    public void setPostAuthor(String postAuthor) {
+    public void setPostAuthor(User postAuthor) {
         this.postAuthor = postAuthor;
     }
 
@@ -120,13 +116,11 @@ public class PostList {
         this.satatusPL = satatusPL;
     }
 
-    public Date getPostDate() {
-        return postDate;
+    public Date getUpdateDate() {
+        return updateDate;
     }
 
-    public void setPostDate(Date postDate) {
-        this.postDate = postDate;
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
-    
-    
 }

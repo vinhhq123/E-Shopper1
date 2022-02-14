@@ -10,7 +10,7 @@ package model;
  * @author VINH
  */
 public class User {
-    
+
     private int uid;
     private String email;
     private String fullname;
@@ -39,8 +39,8 @@ public class User {
         this.accountStatus = accountStatus;
         this.role = role;
     }
-    
-        public User(int uid, String email, String fullname, String password, String title, boolean gender, String phone, String address, int accountStatus, int role) {
+
+    public User(int uid, String email, String fullname, String password, String title, boolean gender, String phone, String address, int accountStatus, int role) {
         this.uid = uid;
         this.email = email;
         this.fullname = fullname;
@@ -53,7 +53,10 @@ public class User {
         this.role = role;
     }
 
-   
+    public User(int uid, String fullname) {
+        this.uid = uid;
+        this.fullname = fullname;
+    }
 
     public int getUid() {
         return uid;
@@ -143,5 +146,4 @@ public class User {
         this.password = password;
     }
 
-   
 }

@@ -5,7 +5,6 @@
  */
 package controller.manager;
 
-
 import dal.ProductDAO;
 import dal.SettingDAO;
 import dal.UserDAO;
@@ -99,7 +98,7 @@ public class SearchProductController extends HttpServlet {
             request.setAttribute("searchNow", true);
             request.getRequestDispatcher("./admin/ProductList.jsp").forward(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(AddProductController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SearchProductController.class.getName()).log(Level.SEVERE, null, ex);
             request.getRequestDispatcher("./admin/Error.jsp").forward(request, response);
         }
     }

@@ -148,8 +148,8 @@ public class CustomerController extends HttpServlet {
         UserDAO userDAO = new UserDAO();
         List<Setting> settingList = new ArrayList<>();
         List<User> userList = new ArrayList<>(); 
-
         // get 
+        
         String tablesearch = request.getParameter("table_search").trim();
         String rolecustomer = request.getParameter("role");
         String status = request.getParameter("status");
@@ -218,7 +218,7 @@ public class CustomerController extends HttpServlet {
         String phone = "";      
         String title = "";
         String address = "";
-        String role = "";
+        String role = "5";
         String gender = "";
         String status = "";
         String success = "";
@@ -231,7 +231,6 @@ public class CustomerController extends HttpServlet {
         fullname = request.getParameter("fullname").trim();
         title = request.getParameter("title").trim();
         address = request.getParameter("address").trim();
-        role = request.getParameter("role");
         gender = request.getParameter("gender");
         status = request.getParameter("status");
 
@@ -264,8 +263,7 @@ public class CustomerController extends HttpServlet {
             request.setAttribute("phoneValue", phone);
             request.setAttribute("nameValue", fullname);
             request.setAttribute("titleValue", title);
-            request.setAttribute("addressValue", address);
-            request.setAttribute("roleValue", role);
+            request.setAttribute("addressValue", address);           
             request.setAttribute("genderValue", gender);
             request.setAttribute("statusValue", status);
             if (checkUserExisted != null) {
@@ -298,14 +296,7 @@ public class CustomerController extends HttpServlet {
                 int checkAddUser = userDAO.addNewUserWithImage(email, fullname, title,
                         gendercheck, phone, address, inputImage, convertedRole, accSta,password);
                 if (checkAddUser > 0) {
-//                            boolean checkEmail = accountDAO.sendEmailActivation(email, name);
-//                            if (checkEmail) {
-                    success = "Add new Customer successfuly .";
-                    String avatar = userDAO.getLastInsertedUser().getAvatar();
-                    session.setAttribute("messageAddSuccess", success);
-                    request.setAttribute("imageValue", avatar);
-                    request.getRequestDispatcher("/admin/Addnewcustomer.jsp").forward(request, response);
-
+                         response.sendRedirect("list");
                 }
             }
         } catch (SQLException ex) {
@@ -330,7 +321,7 @@ public class CustomerController extends HttpServlet {
         String phone = "";
         String title = "";
         String address = "";
-        String role = "";
+        String role = "5";
         String success = "";
         String error = "";
         boolean genderbit = true;
@@ -340,7 +331,7 @@ public class CustomerController extends HttpServlet {
         fullname = request.getParameter("name").trim();
         title = request.getParameter("title").trim();
         address = request.getParameter("address").trim();
-        role = request.getParameter("role");
+        //role = request.getParameter("5");
         uid = Integer.parseInt(request.getParameter("uid"));
         accID = Integer.parseInt(request.getParameter("accountId"));
 
@@ -376,9 +367,7 @@ public class CustomerController extends HttpServlet {
             int checkUpdateUser = userDAO.updateUser(fullname, title, genderbit,
                     phone, address, inputImage, accountStaus, accountRole, uid);
             if (checkUpdateUser > 0) {
-                success = "Update Customer Succesfully ";
-                session.setAttribute("successEditMessage", success);
-                response.sendRedirect("getcustomer?uid=" + uid);
+                response.sendRedirect("list");
             } else {
                 error = "Unexcepted error occured. Please try again later !!!";
                 session.setAttribute("errorEditMessage", error);

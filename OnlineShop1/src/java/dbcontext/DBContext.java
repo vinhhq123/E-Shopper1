@@ -24,10 +24,10 @@ public class DBContext {
             Class.forName("com.mysql.cj.jdbc.Driver");
             String serverName = "localhost";
             String portNumber = "3306";
-            String dbName = "onlineshop3";
+            String dbName = "onlineshop1";
             String url = "jdbc:mysql://" + serverName + ":" + portNumber + "/" + dbName + "?" + condition;
             String username = "root";
-            String password = "Vuhaianh@123";
+            String password = "123456789";
 
             Connection connection = DriverManager.getConnection(url, username, password);
             return connection;
