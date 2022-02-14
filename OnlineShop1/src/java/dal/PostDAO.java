@@ -27,7 +27,7 @@ public class PostDAO extends DBContext {
 
     public List<PostList> getBlogSortByDate() {
         List<PostList> list = new ArrayList<>();
-        String query = "select p.* , u.fullname from post p inner join user u on p.postAuthor = u.uid";
+        String query = "select p.*, u.uid, u.fullname from post p inner join user u on p.postAuthor = u.uid order by p.postdDate desc";
         try {
             connection = new DBContext().getConnection();
             ps = connection.prepareStatement(query);
@@ -35,17 +35,17 @@ public class PostDAO extends DBContext {
 
             while (result.next()) {
                 PostList p = new PostList();
-                p.setPostId(result.getInt(1));
-                p.setThumbnail(result.getString(2));
-                p.setPostTitle(result.getString(3));
-                p.setBreifInformation(result.getString(4));
-                p.setPostContent(result.getString(5));
-                User u = new User(result.getString(6));
+                p.setPostId(result.getInt("postId"));
+                p.setThumbnail(result.getString("thumbnail"));
+                p.setPostTitle(result.getString("postTitle"));
+                p.setBreifInformation(result.getString("breifInformation"));
+                p.setPostContent(result.getString("postContent"));
+                User u = new User(result.getInt("uid"), result.getString("fullname"));
                 p.setPostAuthor(u);
-                p.setCategory(result.getString(7));
-                p.setFeatured(result.getString(8));
-                p.setSatatusPL(result.getInt(9));
-                p.setUpdateDate(result.getDate(10));
+                p.setCategory(result.getString("postCategory"));
+                p.setFeatured(result.getString("featured"));
+                p.setSatatusPL(result.getInt("status"));
+                p.setUpdateDate(result.getDate("postdDate"));
                 list.add(p);
             }
         } catch (Exception e) {
@@ -54,38 +54,27 @@ public class PostDAO extends DBContext {
         return list;
     }
 
-    public PostList getBlogById(String id) {
-        // List<PostList> list = new ArrayList<>();
-        String query = "select p.* , u.fullname from post p inner join user u on p.postAuthor = u.uid where p.postId = ?";
+    public PostList getBlogById(int id) {
+        String query = "select p.*, u.uid, u.fullname from post p inner join user u on p.postAuthor = u.uid where p.postId = ?";
         try {
             connection = new DBContext().getConnection();
             ps = connection.prepareStatement(query);
-            ps.setString(1, id);
+            ps.setInt(1, id);
             result = ps.executeQuery();
 
             while (result.next()) {
-//                return new PostList(result.getInt(1), 
-//                        result.getString(2), 
-//                        result.getString(3), 
-//                        result.getString(4), 
-//                        result.getString(5), 
-//                        result.getString(6), 
-//                        result.getString(7), 
-//                        result.getString(8), 
-//                        result.getInt(9), 
-//                        result.getDate(10));
                 PostList p = new PostList();
-                p.setPostId(result.getInt(1));
-                p.setThumbnail(result.getString(2));
-                p.setPostTitle(result.getString(3));
-                p.setBreifInformation(result.getString(4));
-                p.setPostContent(result.getString(5));
-                User u = new User(result.getString(6));
+                p.setPostId(result.getInt("postId"));
+                p.setThumbnail(result.getString("thumbnail"));
+                p.setPostTitle(result.getString("postTitle"));
+                p.setBreifInformation(result.getString("breifInformation"));
+                p.setPostContent(result.getString("postContent"));
+                User u = new User(result.getInt("uid"), result.getString("fullname"));
                 p.setPostAuthor(u);
-                p.setCategory(result.getString(7));
-                p.setFeatured(result.getString(8));
-                p.setSatatusPL(result.getInt(9));
-                p.setUpdateDate(result.getDate(10));
+                p.setCategory(result.getString("postCategory"));
+                p.setFeatured(result.getString("featured"));
+                p.setSatatusPL(result.getInt("status"));
+                p.setUpdateDate(result.getDate("postdDate"));
                 return p;
             }
         } catch (Exception e) {
@@ -113,7 +102,7 @@ public class PostDAO extends DBContext {
 
     public List<PostList> getBlogByPostCategory(String id) {
         List<PostList> list = new ArrayList<>();
-        String query = "select p.* , u.fullname from post p inner join user u on p.postAuthor = u.uid where p.postCategory = ?";
+        String query = "select p.* , u.uid, u.fullname from post p inner join user u on p.postAuthor = u.uid where p.postCategory = ?";
         try {
             connection = new DBContext().getConnection();
             ps = connection.prepareStatement(query);
@@ -122,17 +111,17 @@ public class PostDAO extends DBContext {
 
             while (result.next()) {
                 PostList p = new PostList();
-                p.setPostId(result.getInt(1));
-                p.setThumbnail(result.getString(2));
-                p.setPostTitle(result.getString(3));
-                p.setBreifInformation(result.getString(4));
-                p.setPostContent(result.getString(5));
-                User u = new User(result.getString(6));
+                p.setPostId(result.getInt("postId"));
+                p.setThumbnail(result.getString("thumbnail"));
+                p.setPostTitle(result.getString("postTitle"));
+                p.setBreifInformation(result.getString("breifInformation"));
+                p.setPostContent(result.getString("postContent"));
+                User u = new User(result.getInt("uid"), result.getString("fullname"));
                 p.setPostAuthor(u);
-                p.setCategory(result.getString(7));
-                p.setFeatured(result.getString(8));
-                p.setSatatusPL(result.getInt(9));
-                p.setUpdateDate(result.getDate(10));
+                p.setCategory(result.getString("postCategory"));
+                p.setFeatured(result.getString("featured"));
+                p.setSatatusPL(result.getInt("status"));
+                p.setUpdateDate(result.getDate("postdDate"));
                 list.add(p);
             }
         } catch (Exception e) {
@@ -143,7 +132,7 @@ public class PostDAO extends DBContext {
 
     public List<PostList> searchBlogByTitle(String search) {
         List<PostList> list = new ArrayList<>();
-        String query = "select p.* , u.fullname from post p inner join user u on p.postAuthor = u.uid where p.postTitle like ?";
+        String query = "select p.* , u.uid, u.fullname from post p inner join user u on p.postAuthor = u.uid where p.postTitle like ?";
         try {
             connection = new DBContext().getConnection();
             ps = connection.prepareStatement(query);
@@ -152,17 +141,17 @@ public class PostDAO extends DBContext {
 
             while (result.next()) {
                 PostList p = new PostList();
-                p.setPostId(result.getInt(1));
-                p.setThumbnail(result.getString(2));
-                p.setPostTitle(result.getString(3));
-                p.setBreifInformation(result.getString(4));
-                p.setPostContent(result.getString(5));
-                User u = new User(result.getString(6));
+                p.setPostId(result.getInt("postId"));
+                p.setThumbnail(result.getString("thumbnail"));
+                p.setPostTitle(result.getString("postTitle"));
+                p.setBreifInformation(result.getString("breifInformation"));
+                p.setPostContent(result.getString("postContent"));
+                User u = new User(result.getInt("uid"), result.getString("fullname"));
                 p.setPostAuthor(u);
-                p.setCategory(result.getString(7));
-                p.setFeatured(result.getString(8));
-                p.setSatatusPL(result.getInt(9));
-                p.setUpdateDate(result.getDate(10));
+                p.setCategory(result.getString("postCategory"));
+                p.setFeatured(result.getString("featured"));
+                p.setSatatusPL(result.getInt("status"));
+                p.setUpdateDate(result.getDate("postdDate"));
                 list.add(p);
             }
         } catch (Exception e) {
@@ -171,11 +160,15 @@ public class PostDAO extends DBContext {
         return list;
     }
 
+   
+    
     public static void main(String[] args) {
         PostDAO dao = new PostDAO();
-        List<PostList> list = dao.getBlogCategory();
-        for (PostList postList : list) {
-            System.out.println(postList);
-        }
+        //List<PostList> list = dao.getBlogByPostCategory("1");
+        PostList p = dao.getBlogById(1);
+//        for (PostList postList : list) {
+//            System.out.println(postList);
+//        }
+        System.out.println(p);
     }
 }
