@@ -103,7 +103,7 @@ public class BlogController extends HttpServlet {
     protected void getBlogById(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String id = request.getParameter("postId");
+        int id = Integer.parseInt(request.getParameter("postId"));
         PostDAO dao = new PostDAO();
         PostList blog = dao.getBlogById(id);
         List<model.PostList> listPostCate = dao.getBlogCategory();
