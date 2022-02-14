@@ -515,7 +515,7 @@ public class UserDAO extends DBContext {
 
     public User getLastInsertedUser() throws Exception {
 
-        String sql = "SELECT * FROM user ORDER BY uid DESC LIMIT 1; ";
+        String sql = "SELECT *,user.accountstatus,user.role FROM user ORDER BY uid DESC LIMIT 1; ";
         System.out.println(sql);
         User user = null;
         String noImage = "";
@@ -557,7 +557,7 @@ public class UserDAO extends DBContext {
                     user.setAvatar(noImage);
                 }
 
-                user.setAccountStatus(results.getInt("settingStatus"));
+                user.setAccountStatus(results.getInt("accountStatus"));
                 user.setRole(results.getInt("role"));
             }
         } catch (Exception ex) {

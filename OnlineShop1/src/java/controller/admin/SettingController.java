@@ -158,7 +158,7 @@ public class SettingController extends HttpServlet {
 
             // Get all the setting in the selected page
             settingList = settingDAO.getSettingByPage(currentPage, recordsPerPage);
-//            fullname = user.getFullname();
+            fullname = user.getFullname();
 
             // Count total number of Setting in the Setting table
             int rows = settingDAO.getNumberOfRows();
@@ -169,7 +169,7 @@ public class SettingController extends HttpServlet {
             }
 
             request.setAttribute("SettingList", settingList);
-            //session.setAttribute("fullname", fullname);
+            session.setAttribute("fullname", fullname);
             request.setAttribute("types", settingType);
             request.setAttribute("numOfPage", numOfPage);
             request.setAttribute("recordsPerPage", recordsPerPage);
