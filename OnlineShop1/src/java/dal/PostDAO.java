@@ -5,7 +5,6 @@
  */
 package dal;
 
-
 import dbcontext.DBContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -160,8 +159,15 @@ public class PostDAO extends DBContext {
         return list;
     }
 
-   
-    
+    public List<PostList> getBlogByPage(List<PostList> list,
+            int start, int end) {
+        ArrayList<PostList> arr = new ArrayList<>();
+        for (int i = start; i < end; i++) {
+            arr.add(list.get(i));
+        }
+        return arr;
+    }
+
     public static void main(String[] args) {
         PostDAO dao = new PostDAO();
         //List<PostList> list = dao.getBlogByPostCategory("1");
