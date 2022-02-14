@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,6 +34,7 @@ import model.User;
  *
  * @author Edwars
  */
+@MultipartConfig(maxFileSize = 16177215)
 public class AddProductController extends HttpServlet {
 
     /**
@@ -75,7 +77,25 @@ public class AddProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+            SettingDAO settingDAO = new SettingDAO();
+            UserDAO userDAO = new UserDAO();
+            ProductDAO proDAO = new ProductDAO();
+            List<Setting> statusList = new ArrayList<>();
+            List<Setting> categoryList = new ArrayList<>();
+            List<User> userList = new ArrayList<>();
+            List<Product> proList = new ArrayList<>();
+        try {
+
+            statusList = settingDAO.getAllProStatus();
+            categoryList = settingDAO.getAllProCategory();
+            userList = userDAO.getSaler();
+            request.setAttribute("StatusList", statusList);
+            request.setAttribute("CategoryList", categoryList);
+            request.setAttribute("UserList", userList);
             request.getRequestDispatcher("./admin/ProductAdd.jsp").forward(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(AddProductController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -114,18 +134,8 @@ public class AddProductController extends HttpServlet {
         status = request.getParameter("status");
         update = request.getParameter("update");
         quan = request.getParameter("quan");
+        status = request.getParameter("status");
         // If active radio button is selected
-        if (request.getParameter("status").equals("1")) {
-            // In Setting table in the database 
-            // user has accountStatus is Active and registered 
-            // but not verified has settingId = 26
-            proStaus = 17;
-        } else {
-            // In Setting table in the database 
-            // user has accountStatus is Inactive and registered 
-            // but not verified has settingId = 6
-            proStaus = 16;
-        }
 
         // Input stream of the upload file
         InputStream inputStream = null;
@@ -139,7 +149,6 @@ public class AddProductController extends HttpServlet {
             System.out.println(filePart.getContentType());
             // Obtains input stream of the upload file
             inputStream = filePart.getInputStream();
-
         }
 
         Product pro = null;
@@ -168,7 +177,7 @@ public class AddProductController extends HttpServlet {
                 if (checkAddPro > 0) {
 //                            boolean checkEmail = accountDAO.sendEmailActivation(email, name);
 //                            if (checkEmail) {
-                    successMessage = "Add new product successfuly .";
+                    successMessage = "New product is added successfully!";
                     String avatar = proDB.getLastInsertedProduct().getThumbnail();
                     session.setAttribute("messageAddSuccess", successMessage);
                     request.setAttribute("imageValue", avatar);

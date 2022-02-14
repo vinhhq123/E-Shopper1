@@ -26,7 +26,7 @@ import model.User;
  *
  * @author Edwars
  */
-public class SearchProductController extends HttpServlet {
+public class ProductSearchController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,10 +45,10 @@ public class SearchProductController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SearchProductController</title>");            
+            out.println("<title>Servlet ProductSearchController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SearchProductController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ProductSearchController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -85,9 +85,9 @@ public class SearchProductController extends HttpServlet {
         try {
 
             proList = proDAO.searchPro(searchField, category, status, saler);
+            statusList = settingDAO.getAllProStatus();
+            categoryList = settingDAO.getAllProCategory();
             userList = userDAO.getSaler();
-            categoryList = settingDAO.getAllSetting();
-            statusList = settingDAO.getAllSetting();
             request.setAttribute("searchValue", searchField);
             request.setAttribute("valueCategory", category);
             request.setAttribute("valueStatus", status);
@@ -98,9 +98,10 @@ public class SearchProductController extends HttpServlet {
             request.setAttribute("searchNow", true);
             request.getRequestDispatcher("./admin/ProductList.jsp").forward(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(SearchProductController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductSearchController.class.getName()).log(Level.SEVERE, null, ex);
             request.getRequestDispatcher("./admin/Error.jsp").forward(request, response);
         }
+
     }
 
     /**
