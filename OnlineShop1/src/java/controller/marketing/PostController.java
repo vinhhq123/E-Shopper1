@@ -27,7 +27,7 @@ import model.PostList;
  */
 
 @MultipartConfig(maxFileSize = 16177215)
-@WebServlet(name = "PostController", urlPatterns = {"/post/list", "/post/add"})
+@WebServlet(name = "PostController", urlPatterns = {"/post/list", "/post/add", "/post/delete", "/post/update", "/post/edit"})
 public class PostController extends HttpServlet {
 
     /**
@@ -66,6 +66,15 @@ public class PostController extends HttpServlet {
             case "/post/list":
                 postList(request, response);
                 break;
+            case "/post/delete":
+                postDelete(request, response);
+                break;
+            case "/post/update":
+                postUpdate(request, response);
+                break;
+            case "/post/edit":
+                postEdit(request, response);
+                break; 
         }
 
     }
@@ -88,7 +97,7 @@ public class PostController extends HttpServlet {
             throws ServletException, IOException {
         String title = request.getParameter("title");
         String authorRaw = request.getParameter("author");
-        int author = 1;
+        int author = Integer.parseInt(authorRaw);
         String content = request.getParameter("content");
         InputStream inputStream = null;
         Part filePart = request.getPart("image");
@@ -111,6 +120,57 @@ public class PostController extends HttpServlet {
             ArrayList<PostList> postlist = pd.getPostList();
             request.setAttribute("postlist", postlist);
             request.getRequestDispatcher("/post/PostList.jsp").forward(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(PostController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    protected void postDelete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            PostDAO pd = new PostDAO();
+            int postId = Integer.parseInt(request.getParameter("postId"));
+            pd.delete(postId);
+            response.sendRedirect("./list");
+        } catch (Exception ex) {
+            Logger.getLogger(PostController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    protected void postUpdate(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            
+            PostDAO pd = new PostDAO();
+            String postIdRaw = request.getParameter("postId");
+            if(postIdRaw != null){
+            int postId = Integer.parseInt(postIdRaw);
+            PostList postUpdate = pd.getBlogById(postId);
+            request.setAttribute("postUpdate", postUpdate);
+            request.getRequestDispatcher("/post/PostUpdate.jsp").forward(request, response);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(PostController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    protected void postEdit(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            String postTitle = request.getParameter("title");
+            String postContent = request.getParameter("content");
+            int postId = Integer.parseInt(request.getParameter("postId"));
+            InputStream inputStream = null;
+        Part filePart = request.getPart("image");
+        if (filePart != null) {
+            System.out.println(filePart.getName());
+            System.out.println(filePart.getSize());
+            System.out.println(filePart.getContentType());
+            // Obtains input stream of the upload file
+            inputStream = filePart.getInputStream();
+            PostDAO postDao = new PostDAO();
+        postDao.updatePost(postId, postTitle, postContent, inputStream);
+        request.getRequestDispatcher("/post/list").forward(request, response);
+        }
         } catch (Exception ex) {
             Logger.getLogger(PostController.class.getName()).log(Level.SEVERE, null, ex);
         }
