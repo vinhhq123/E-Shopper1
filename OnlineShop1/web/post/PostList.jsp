@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -295,15 +296,16 @@
                     <div class="col-sm-9">
                         <div class="blog-post-area">
                             <h2 class="title text-center">Latest From our Blog</h2>
+                            <c:forEach items="${postlist}" var="p">
                             <div class="single-blog-post">
-                                <h3>Girls Pink T Shirt arrived in store</h3>
+                                <h3>${p.getPostTitle()}</h3>
                                 <a style="float: right; " href="PostDetail.jsp"><button style="width:70px">Edit</button></a>
                                 <a style="float: right; margin: 0 10px;" href=""><button style="width:70px">Delete</button></a>
                                 <a style="float: right" href=""><button style="width:70px">View</button></a>
                                 <br><br>
                                 <div class="post-meta">
                                     <ul>
-                                        <li><i class="fa fa-user"></i> Mac Doe</li>
+                                        <li><i class="fa fa-user"></i>${p.user.fullname}</li>
                                         <li><i class="fa fa-clock-o"></i> 1:33 pm</li>
                                         <li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
                                     </ul>
@@ -316,57 +318,14 @@
                                     </span>
                                 </div>
                                 <a href="">
-                                    <img src="${pageContext.request.contextPath}/eShopper/images/blog/blog-one.jpg" alt="">
+                                    <img src="data:image/jpg;base64,${p.getThumbnail()}" alt="">
                                 </a>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                                <p>${p.postContent}</p>
                                 <a  class="btn btn-primary" href="">Read More</a>
                             </div>
+                                </c:forEach>
                                 <%-- xóa từ đây--%>
-                            <div class="single-blog-post">
-                                <h3>Girls Pink T Shirt arrived in store</h3>
-                                <div class="post-meta">
-                                    <ul>
-                                        <li><i class="fa fa-user"></i> Mac Doe</li>
-                                        <li><i class="fa fa-clock-o"></i> 1:33 pm</li>
-                                        <li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
-                                    </ul>
-                                    <span>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-half-o"></i>
-                                    </span>
-                                </div>
-                                <a href="">
-                                    <img src="${pageContext.request.contextPath}/eShopper/images/blog/blog-two.jpg" alt="">
-                                </a>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                                <a  class="btn btn-primary" href="">Read More</a>
-                            </div>
-                                <%-- xóa tới đây--%>
-                            <div class="single-blog-post">
-                                <h3>Girls Pink T Shirt arrived in store</h3>
-                                <div class="post-meta">
-                                    <ul>
-                                        <li><i class="fa fa-user"></i> Mac Doe</li>
-                                        <li><i class="fa fa-clock-o"></i> 1:33 pm</li>
-                                        <li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
-                                    </ul>
-                                    <span>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-half-o"></i>
-                                    </span>
-                                </div>
-                                <a href="">
-                                    <img src="${pageContext.request.contextPath}/eShopper/images/blog/blog-three.jpg" alt="">
-                                </a>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                                <a  class="btn btn-primary" href="">Read More</a>
-                            </div>
+                            
                             <div class="pagination-area">
                                 <ul class="pagination">
                                     <li><a href="" class="active">1</a></li>

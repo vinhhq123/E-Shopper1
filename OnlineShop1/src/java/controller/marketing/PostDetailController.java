@@ -63,7 +63,7 @@ public class PostDetailController extends HttpServlet {
             throws ServletException, IOException {
         String title = request.getParameter("title");
         String authorRaw = request.getParameter("author");
-        int author = 1;
+        int author = Integer.parseInt(authorRaw);
         String content = request.getParameter("content");
         InputStream inputStream = null;
         Part filePart = request.getPart("image");
@@ -73,22 +73,13 @@ public class PostDetailController extends HttpServlet {
             System.out.println(filePart.getContentType());
             // Obtains input stream of the upload file
             inputStream = filePart.getInputStream();
-            
+            PostDAO postDao = new PostDAO();
+        postDao.insertPost(content, inputStream, title, author);
+        request.getRequestDispatcher("./post/PostDetail.jsp").forward(request, response);
         }
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        byte[] buffer = new byte[4096];
-        int bytesRead = -1;
-
-        while ((bytesRead = inputStream.read(buffer)) != -1) {
-            outputStream.write(buffer, 0, bytesRead);
-        }
-
-        byte[] imageBytes = outputStream.toByteArray();
-        String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-        outputStream.close();
-        PostDAO postDao = new PostDAO();
-        postDao.insertPost(content, base64Image, title, author);
-        request.getRequestDispatcher("post/PostDetail.jsp").forward(request, response);
+        
+        
+        
     }
 
     /**

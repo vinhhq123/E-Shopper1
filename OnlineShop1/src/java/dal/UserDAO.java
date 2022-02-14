@@ -303,7 +303,7 @@ public class UserDAO extends DBContext {
                 user.setGender(results.getBoolean("gender"));
                 user.setPhone(results.getString("phone"));
                 user.setAddress(results.getString("address"));
-
+                
                 Blob blob = results.getBlob("avatar");
                 if (blob != null) {
 

@@ -39,7 +39,7 @@ import resources.SendEmail;
  */
 @MultipartConfig(maxFileSize = 16177215)
 @WebServlet(name = "UserController", urlPatterns = {"/user/list", "/user/search",
-    "/user/getUser", "/user/update", "/user/add", "/marketing/postdetail"})
+    "/user/getUser", "/user/update", "/user/add"})
 public class UserController extends HttpServlet {
 
     /**
@@ -86,9 +86,7 @@ public class UserController extends HttpServlet {
             case "/user/list":
                 userList(request, response);
                 break;
-            case "/marketing/postdetail":
-                postDetail(request, response);
-                break;
+            
         }
 
     }
@@ -430,35 +428,5 @@ public class UserController extends HttpServlet {
         }
 
     }
-    protected void postDetail(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String title = request.getParameter("title");
-        String authorRaw = request.getParameter("author");
-        int author = 1;
-        String content = request.getParameter("content");
-        InputStream inputStream = null;
-        Part filePart = request.getPart("image");
-        if (filePart != null) {
-            System.out.println(filePart.getName());
-            System.out.println(filePart.getSize());
-            System.out.println(filePart.getContentType());
-            // Obtains input stream of the upload file
-            inputStream = filePart.getInputStream();
-            
-        }
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        byte[] buffer = new byte[4096];
-        int bytesRead = -1;
-
-        while ((bytesRead = inputStream.read(buffer)) != -1) {
-            outputStream.write(buffer, 0, bytesRead);
-        }
-
-        byte[] imageBytes = outputStream.toByteArray();
-        String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-        outputStream.close();
-        PostDAO postDao = new PostDAO();
-        postDao.insertPost(content, base64Image, title, author);
-        request.getRequestDispatcher("/post/PostDetail.jsp").forward(request, response);
-    }
+    
 }

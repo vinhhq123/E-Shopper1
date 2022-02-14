@@ -362,7 +362,7 @@
             <div class="blog-post-area">
               <h2 class="title text-center">POST SINGLE</h2>
               <div class="single-blog-post">
-                <form style="border: 0.5px solid #FE980F; border-radius:4px" action="<%=request.getContextPath()%>/marketing/postdetail" method="POST" enctype="multipart/form-data">
+                <form style="border: 0.5px solid #FE980F; border-radius:4px" action="<%=request.getContextPath()%>/postdetail" method="POST" enctype="multipart/form-data">
                   <table style="
     				margin-left: auto;
 					margin-right: auto;
