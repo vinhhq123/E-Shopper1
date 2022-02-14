@@ -15,7 +15,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Add New User</title>
+        <title>Add New Product</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -37,15 +37,6 @@
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
-        <%
-            ArrayList<User> sales = (ArrayList<User>) request.getAttribute("saless");
-        %>
-        <%
-            ArrayList<Setting> category = (ArrayList<Setting>) request.getAttribute("category");
-        %>
-        <%
-            ArrayList<Setting> status = (ArrayList<Setting>) request.getAttribute("status");
-        %>
     </head>
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
@@ -63,7 +54,7 @@
                             <div class="col-xs-12">
                                 <div class="panel">
                                     <header class="panel-heading">
-                                        <b>Add New Customer</b>
+                                        <b>Add New Product</b>
 
                                     </header>
                                     <!-- <div class="box-header"> -->
@@ -153,6 +144,7 @@
                                                                 <option value="15" <%=request.getAttribute("categoryValue").equals("15") ? "selected" : ""%>>Bags</option>
                                                             </c:if>
                                                         </select>
+
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -162,63 +154,41 @@
                                                             <c:if test="${empty salerValue}">
                                                                 <option value="4" selected>Kylian Mbappe</option>
                                                                 <option value="5">Kendall Jenner</option>
-                                                                <option value="12">Nike</option>
-                                                                <option value="13">Jordan</option>
-                                                                <option value="14">Anta</option>
                                                             </c:if>
                                                             <c:if test="${not empty salerValue}">
-                                                                <option value="4" <%=request.getAttribute("salerValue").equals("4") ? "selected" : ""%>>Kylian Mbappe</option>
-                                                                <option value="5" <%=request.getAttribute("salerValue").equals("5") ? "selected" : ""%>>Kendall Jenner</option>
-                                                                <option value="12" <%=request.getAttribute("salerValue").equals("12") ? "selected" : ""%>>Nike</option>
-                                                                <option value="13" <%=request.getAttribute("salerValue").equals("13") ? "selected" : ""%>>Jordan</option>
-                                                                <option value="14" <%=request.getAttribute("salerValue").equals("14") ? "selected" : ""%>>Anta</option>
+                                                                  <option value="4" <%=request.getAttribute("salerValue").equals("13") ? "selected" : ""%>>Kylian Mbappe</option>
+                                                                  <option value="5" <%=request.getAttribute("salerValue").equals("14") ? "selected" : ""%>>Kendall Jenner</option>
                                                             </c:if>
                                                         </select>
+
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Product Status</label>
+                                                    <label for="saler" class="col-lg-2 col-sm-2 control-label">Product Status</label>
                                                     <div class="col-lg-10">
-                                                        <c:if test="${not empty statusValue}">
-                                                            <div class="radio-inline">
-                                                                <label>
-                                                                    <input type="radio" name="status" id="optionsRadios3" value="1" <%=request.getAttribute("statusValue").equals("1") ? "checked" : ""%>>
-                                                                    Active
-                                                                </label>
-                                                            </div>
-                                                            <div class="radio-inline">
-                                                                <label>
-                                                                    <input type="radio" name="status" id="optionsRadios4" value="0" <%=request.getAttribute("statusValue").equals("0") ? "checked" : ""%>>
-                                                                    Inactive
-                                                                </label>
-                                                            </div>
-                                                        </c:if>
-                                                        <c:if test="${empty statusValue}">
-                                                            <div class="radio-inline">
-                                                                <label>
-                                                                    <input type="radio" name="status" id="optionsRadios3" value="1" checked="">
-                                                                    Stocking
-                                                                </label>
-                                                            </div>
-                                                            <div class="radio-inline">
-                                                                <label>
-                                                                    <input type="radio" name="status" id="optionsRadios4" value="0">
-                                                                    Empty
-                                                                </label>
-                                                            </div>
-                                                        </c:if>
+                                                        <select class="form-control m-b-10" name="status">
+                                                            <c:if test="${empty salerValue}">
+                                                                <option value="16" selected>Stocking</option>
+                                                                <option value="17">Empty</option>
+                                                            </c:if>
+                                                            <c:if test="${not empty salerValue}">
+                                                                <option value="16" <%=request.getAttribute("statusValue").equals("16") ? "selected" : ""%>>Stocking</option>
+                                                                <option value="17" <%=request.getAttribute("statusValue").equals("17") ? "selected" : ""%>>Empty</option>
+                                                            </c:if>
+                                                        </select>
+
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="update" class="col-lg-2 col-sm-2 control-label">Update Date</label>
                                                     <div class="col-lg-10">
-                                                        <input type="date" class="form-control" id="update"  name="apdate" value="${updateValue}" required>
+                                                        <input type="date" class="form-control" id="update"  name="update" value="${updateValue}" required>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-2 col-lg-10">
-                                                        <button type="submit" class="btn btn-success">Save</button>
-                                                        <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/proList'">Back</button>
+                                                        <button type="submit" class="btn btn-success">Add Product</button>
+                                                        <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/proList'">View Product List</button>
                                                     </div>
                                                 </div>
                                             </form>

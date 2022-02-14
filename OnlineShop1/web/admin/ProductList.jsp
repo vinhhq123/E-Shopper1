@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>User List</title>
+        <title>Product List</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -38,7 +38,7 @@
         <jsp:include page="HeaderAdmin.jsp"></jsp:include>
             <div class="wrapper row-offcanvas row-offcanvas-left">
                 <!-- Left side column. contains the logo and sidebar -->
-            <jsp:include page="SideBarAdmin.jsp"></jsp:include>
+            <jsp:include page="SideBarManager.jsp"></jsp:include>
 
                 <!-- Right side column. Contains the navbar and content of the page -->
                 <aside class="right-side">
@@ -58,71 +58,14 @@
                                     <!-- </div> -->
                                     <div class="panel-body table-responsive">
                                         <div class="row">
-                                            <div class="col-sm-8">
-                                                <form class="form-inline" role="form" action="<%=request.getContextPath()%>/product/search">
-                                                <div class="form-group">
-                                                    <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                                                    <input type="text" name="table_search" class="form-control" id="exampleInputEmail2" placeholder="Title or feature" value="${requestScope.searchValue}" onblur="this.value = removeSpaces(this.value);">
-                                                </div>
-                                                <div class="form-group">
-                                                    <select class="select" aria-label="Default select example" name="category">
-                                                        <c:if test="${empty valueCategory}">
-                                                            <option selected value="">All Category</option>
-                                                            <option value="13">Shoes</option>
-                                                            <option value="14">Clothes</option>
-                                                            <option value="15">Bags</option>
-                                                        </c:if>
-                                                        <c:if test="${not empty valueCategory}">
-                                                            <option value="">All Roles</option>
-                                                            <option value="13" <%=request.getAttribute("valueCategory").equals("13") ? "selected" : ""%>>Shoes</option>
-                                                            <option value="14" <%=request.getAttribute("valueCategory").equals("14") ? "selected" : ""%>>Clothes</option>
-                                                            <option value="15" <%=request.getAttribute("valueCategory").equals("15") ? "selected" : ""%>>Bags</option>
-                                                        </c:if>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <select class="select" aria-label="Default select example" name="saler">
-                                                        <c:if test="${empty valueSaler}">
-                                                            <option selected value="">All Roles</option>
-                                                            <option value="4">Kylian Mbappe</option>
-                                                                <option value="5">Kendall Jenner</option>
-                                                                <option value="12">Nike</option>
-                                                                <option value="13">Jordan</option>
-                                                                <option value="14">Anta</option>
-                                                        </c:if>
-                                                        <c:if test="${not empty valueSaler}">
-                                                            <option value="">All Roles</option>
-                                                            <option value="4" <%=request.getAttribute("valueSaler").equals("4") ? "selected" : ""%>>Kylian Mbappe</option>
-                                                                <option value="5" <%=request.getAttribute("valueSaler").equals("5") ? "selected" : ""%>>Kendall Jenner</option>
-                                                                <option value="12" <%=request.getAttribute("valueSaler").equals("12") ? "selected" : ""%>>Nike</option>
-                                                                <option value="13" <%=request.getAttribute("valueSaler").equals("13") ? "selected" : ""%>>Jordan</option>
-                                                                <option value="14" <%=request.getAttribute("valueSaler").equals("14") ? "selected" : ""%>>Anta</option>
-                                                        </c:if>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <select class="select" aria-label="Default select example" name="status">
-                                                        <c:if test="${empty valueStatus}">
-                                                            <option value="" selected="">All Statuses</option>
-                                                            <option value="16">Empty</option>
-                                                            <option value="17">Stocking</option>
-                                                        </c:if>
-                                                        <c:if test="${not empty valueStatus}">                         
-                                                            <option value="">All Statuses</option>
-                                                            <option value="16" <%=request.getAttribute("valueStatus").equals("16") ? "selected" : ""%>>Empty</option>
-                                                            <option value="17" <%=request.getAttribute("valueStatus").equals("17") ? "selected" : ""%>>Stocking</option>
-                                                        </c:if>
-                                                    </select>
-                                                </div>
-                                                
-                                                <button type="submit" class="btn btn-success">Search</button>
-                                            </form>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <button type="button" class="btn btn-success" style="float: right" onclick="window.location = '<%=request.getContextPath()%>/admin/ProductAdd.jsp'">Add New User</button>
+                                      
+                                        <div class="col-sm-1">
+                                            <button type="button" class="btn btn-success" style="float: right" onclick="window.location = '<%=request.getContextPath()%>/admin/ProductAdd.jsp'">Add New Product</button>
 <!--                                                <a href="<%=request.getContextPath()%>/addNewUser" style="float: right"> Add new</a>-->
                                         </div>
-
+                                        <div class="col-sm-8">
+                                                
+                                        </div>
                                     </div>
                                     <br>
                                     <table class="table table-striped" id="SettingListTable">
@@ -139,41 +82,34 @@
                                             <th onclick="sortTable(9)">Update Date</th>
                                             <th>Actions</th>
                                         </tr>
-                                        <c:forEach items="${proList}" var="con">
+                                        <c:forEach items="${ProList}" var="pro">
                                             <tr>
-                                                <td>${con.getUid()}</td>
-                                                <td>${con.getFullname()}</td>
-                                                <td>${con.getTitle()}</td>
-                                                <td>${con.getPhone()}</td>  
-                                                <td>${con.getEmail()}</td>  
-
-                                                <c:forEach items="${SettingList}" var="set">
-                                                    <c:if test="${set.getSettingId() eq con.getRole()}">
-                                                        <td>${set.getSettingValue()}</td>
+                                                <td>${pro.getPid()}</td>
+                                                <td>${pro.getTitle()}</td>
+                                                <td>${pro.getLprice()}</td>
+                                                <td>${pro.getSprice()}</td>
+                                                <td>${pro.getFeatured()}</td>  
+                                                
+                                                <c:forEach items="${CategoryList}" var="cat">
+                                                    <c:if test="${cat.getSettingId() eq pro.getCategoryID()}">
+                                                        <td>${cat.getSettingValue()}</td>
                                                     </c:if>
                                                 </c:forEach>
-                                                <c:if test="${empty searchNow}">
-                                                    <c:forEach items="${SettingList}" var="set">
-                                                        <c:if test="${set.getSettingId() eq con.getAccountStatus()}">
-                                                            <td><c:if test="${set.isSettingStatus()}">
-                                                                    <span class="label label-success">Active</span>
-                                                                </c:if>
-                                                                <c:if test="${!set.isSettingStatus()}">
-                                                                    <span class="label label-danger">Inactive</span>
-                                                                </td>
-                                                            </c:if>
-                                                        </c:if>
-                                                    </c:forEach>
-                                                </c:if>
-                                                <c:if test="${not empty searchNow}">
-                                                    <c:if test="${con.getAccountStatus() == 1}">
-                                                        <td> <span class="label label-success">Active</span></td>
+                                                
+                                                <c:forEach items="${UserList}" var="urs">
+                                                    <c:if test="${urs.getUid() eq pro.getSalesId()}">
+                                                        <td>${urs.getFullname()}</td>
                                                     </c:if>
-                                                    <c:if test="${con.getAccountStatus() == 0 }">
-                                                        <td> <span class="label label-danger">Inactive</span></td>
+                                                </c:forEach>
+                                                        
+                                                 <c:forEach items="${StatusList}" var="sta">
+                                                    <c:if test="${sta.getSettingId() eq pro.getProductStatus()}">
+                                                        <td>${sta.getSettingValue()}</td>
                                                     </c:if>
-                                                </c:if>
-                                                <td><button type="button" class="btn-xs btn-primary" onclick="window.location = '<%=request.getContextPath()%>/product/getProduct?uid=${con.getPid()}'">Edit</button></td>
+                                                </c:forEach>
+                                                <td>${pro.getQuantity()}</td> 
+                                                <td>${pro.getUpdatedDate()}</td> 
+                                                <td><button type="button" class="btn-xs btn-primary" onclick="window.location = '<%=request.getContextPath()%>/proEdit?pid=${pro.getPid()}'">Edit</button></td>
                                             </tr>
                                         </c:forEach>
                                     </table>
@@ -187,7 +123,7 @@
                                         <ul class="pagination pagination-sm no-margin pull-right">
                                             <c:if test="${currentPage != 1}">
                                                 <li><a
-                                                        href="<%=request.getContextPath()%>/product/list?currentPage=${currentPage-1}">Previous</a>
+                                                        href="<%=request.getContextPath()%>/proList?currentPage=${currentPage-1}">Previous</a>
                                                 </li>
                                             </c:if>
 
@@ -200,7 +136,7 @@
                                                     </c:when>
                                                     <c:otherwise>
                                                         <li><a
-                                                                href="<%=request.getContextPath()%>/product/list?currentPage=${i}">${i}</a>
+                                                                href="<%=request.getContextPath()%>/proList?currentPage=${i}">${i}</a>
                                                         </li>
                                                     </c:otherwise>
                                                 </c:choose>
@@ -208,7 +144,7 @@
 
                                             <c:if test="${currentPage lt numOfPage}">
                                                 <li><a
-                                                        href="<%=request.getContextPath()%>/product/list?currentPage=${currentPage+1}">Next</a>
+                                                        href="<%=request.getContextPath()%>/proList?currentPage=${currentPage+1}">Next</a>
                                                 </li>
                                             </c:if>
                                         </ul>
