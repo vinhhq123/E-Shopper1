@@ -53,7 +53,8 @@ public class User {
         this.role = role;
     }
 
-    public User(String fullname) {
+    public User(int uid, String fullname) {
+        this.uid = uid;
         this.fullname = fullname;
     }
 
