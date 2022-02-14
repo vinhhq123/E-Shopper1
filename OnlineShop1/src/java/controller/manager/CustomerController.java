@@ -245,6 +245,8 @@ public class CustomerController extends HttpServlet {
        
         // Obtains the upload file
         // part in this multipart request
+        
+        
         Part filePart = request.getPart("image");
         if (filePart != null) {
             System.out.println(filePart.getName());
