@@ -104,7 +104,7 @@ public class ProductDAO extends DBContext{
      public List<Product> searchPro(String key, String cat, String status, String sale) throws Exception {
 
         List<Product> products = new ArrayList<>();
-        String sql = "SELECT productId,title,list_price,sale_price,featured,categoryId,u.uid as saleID, s.settingStatus as productStatus,quantity,updatedDate \n" +
+        String sql = "SELECT productId,title,list_price,sale_price,featured,categoryId,u.uid as salesID, s.settingStatus as productStatus,quantity,updatedDate \n" +
                      "FROM onlineshop1.product as p join setting as s on p.productStatus = s.settingstatus join user as u on p.salesId = u.uid  "
                      + "where (title like '%" + key + "%' "
                      + "or feature like '%" + key + "%' ";
@@ -155,8 +155,9 @@ public class ProductDAO extends DBContext{
      
      public Product getProductById(int pid) throws Exception {
 
-        String sql = "select u.*,s.settingStatus from user as u join setting as s "
-                + " on u.accountStatus = s.settingId where u.uid = " + pid;
+        String sql = "SELECT p*,u.uid, s.settingStatus \n" +
+                     "FROM onlineshop1.product as p join setting as s on p.productStatus = s.settingstatus join user as u on p.salesId = u.uid  \n"+    
+                     " where productid = " + pid;
         System.out.println(sql);
         Product product = null;
         String noImage = "";
@@ -298,5 +299,68 @@ public class ProductDAO extends DBContext{
             }
         }
         return row;
+    }
+    
+        public Product getLastInsertedProduct() throws Exception {
+
+        String sql = "SELECT * FROM product ORDER BY productid DESC LIMIT 1; ";
+        System.out.println(sql);
+        Product pro = null;
+        String noImage = "";
+
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                pro = new Product();
+                pro.setPid(results.getInt("productid"));
+                pro.setTitle(results.getString("title"));
+                pro.setLprice(results.getDouble("list_price"));
+                pro.setSprice(results.getDouble("sale_price"));
+                pro.setFeatured(results.getString("featured"));
+                pro.setProductStatus(results.getInt("productStatus"));
+                pro.setCategoryID(results.getInt("categoryId"));
+                pro.setBreif(results.getString("breif_information"));
+                pro.setQuantity(results.getInt("quantity"));
+                pro.setUpdatedDate(results.getDate("updatedDate"));
+                pro.setSalesId(results.getInt("salesId"));
+
+                Blob blob = results.getBlob("avatar");
+                if (blob != null) {
+
+                    InputStream inputStream = blob.getBinaryStream();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                    inputStream.close();
+                    outputStream.close();
+                    pro.setThumbnail(base64Image);
+                } else {
+                    pro.setThumbnail(noImage);
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (SQLException | IOException ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return pro;
     }
 }

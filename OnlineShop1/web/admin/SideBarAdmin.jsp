@@ -42,7 +42,7 @@
                 </li>
 
                 <li>
-                    <a href="basic_form.html">
+                    <a href="<%=request.getContextPath()%>/customer/list">
                         <i class="fa fa-user"></i> <span>Customer List</span>
                     </a>
                 </li>

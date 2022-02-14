@@ -108,7 +108,7 @@
             <div class="row">
             <div class="signup-content">
                 <div class="signup-form">
-                    <form method="POST" class="register-form" id="register-form">
+                    <form method="POST" action="register" class="register-form" id="register-form">
                         <h2>Registration form</h2>
                         <div class="form-group">
                             <label for="email">Email Address:</label>
@@ -134,7 +134,7 @@
                         <div class="form-radio">
                             <label for="gender" class="radio-label">Gender :</label>
                             <div class="form-radio-item">
-                                <input type="radio" name="gender" value="male" checked>
+                                <input type="radio" name="gender" value="male" checked >
                                 <label for="male">Male</label>
                                 <span class="check"></span>
                             </div>
