@@ -3,13 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/controller/manager/CustomerController.java</file>
-            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/dal/UserDAO.java</file>
-            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/dbcontext/DBContext.java</file>
             <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/controller/admin/UserController.java</file>
-            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/resources/SendEmail.java</file>
-            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/web/admin/Addnewcustomer.jsp</file>
-            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/controller/admin/SettingController.java</file>
         </group>
     </open-files>
 </project-private>
