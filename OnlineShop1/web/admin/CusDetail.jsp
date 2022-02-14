@@ -74,28 +74,14 @@
                                                     <c:remove var="errorEditMessage"/>
                                                     <br>
                                                 </c:if>
-                                                <div class="form-group">
-                                                    <label for="avatar" class="col-lg-2 col-sm-2 control-label">Avatar</label>
-                                                    <div class="col-lg-10">
-                                                        <div class="profile-pic">
-                                                            <label class="-label" for="file">
-                                                                <c:if test="${ not empty currentUser.avatar}">
-                                                                    <img src="data:image/jpg;base64,${currentUser.avatar}" id="output" width="200" />
-                                                                </c:if>
-                                                                <c:if test="${empty currentUser.avatar}">
-                                                                    <img src="${pageContext.request.contextPath}/admin/img/user-bg.png" id="output" width="200" alt="default image"/>
-                                                                </c:if>
-                                                            </label>
-                                                            <input id="file" type="file" onchange="loadFile(event)" name="image"/>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                               
                                                 
                                                 <div class="form-group">
-                                                    <label for="fullname" class="col-lg-2 col-sm-2 control-label">Fullname</label>
+                                                    <label for="fullname" class="col-lg-2 col-sm-5 control-label">Fullname</label>
                                                     <div class="col-lg-10">
                                                         <input type="text" class="form-control" id="fullname" placeholder="Fullname" value="${currentUser.fullname}" name="name" required>
                                                     </div>
+                                                    
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="title" class="col-lg-2 col-sm-2 control-label">Title</label>
@@ -139,18 +125,9 @@
                                                         <!--<p class="help-block">Example block-level help text here.</p>-->
                                                     </div>
                                                 </div>
-                                              <div  class="form-group">
-                                                    <label  for="role" class="col-lg-2 col-sm-2 control-label">Role</label>
-                                                    <div class="col-lg-10">
-                                                        <select  class="form-control m-b-10" name="role">
-          
-                                                            <option value="5" <%=request.getAttribute("currentUserRole").equals("5") ? "selected" : ""%>>Customer</option>
-                                                        </select>
-                                                    </div>
-                       
-                                                </div>
+                                         
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Customer Status</label>
+                                                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Status</label>
                                                     <div class="col-lg-10">
                                                         <div class="radio-inline">
                                                             <label>
@@ -166,16 +143,35 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                                 <div class="form-group">
+                                                    <label for="avatar" class="col-lg-2 col-sm-2 control-label">Avatar</label>
+                                                    <div class="col-lg-offset-5 col-lg-15">
+                                                        <div class="profile-pic">
+                                                            <label class="-label" for="file">
+                                                                <c:if test="${ not empty currentUser.avatar}">
+                                                                    <img src="data:image/jpg;base64,${currentUser.avatar}" id="output" width="200" />
+                                                                </c:if>
+                                                                <c:if test="${empty currentUser.avatar}">
+                                                                    <img src="${pageContext.request.contextPath}/admin/img/no-avatar.png" id="output" width="200" alt="default image"/>
+                                                                </c:if>
+                                                            </label>
+                                                            <input id="file" type="file" onchange="loadFile(event)" name="image"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="form-group">
-                                                    <div class="col-lg-offset-2 col-lg-10">
+                                                    <div class="col-lg-offset-6 col-lg-10">
                                                         <button type="submit" class="btn btn-success">Save</button>
-                                                        <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/customer/list'">Back</button>
+                                                        
                                                     </div>
                                                 </div>
                                                 <input type="hidden" value="${currentUser.uid}" name="accountId"> 
                                             </form>
-                                        </div><!-- /.box-body -->
+                                            
+                                        </div>
+                                            <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/customer/list'">Back Customer List</button>
                                     </div>
+                                            
                                     <div class="col-lg-4"></div>
                                 </div>
                             </div><!-- /.box -->
