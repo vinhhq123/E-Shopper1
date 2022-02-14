@@ -25,14 +25,6 @@
         <servlet-class>controller.user.HomeController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>PostList</servlet-name>
-        <servlet-class>controller.marketing.PostList</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>PostDetail</servlet-name>
-        <servlet-class>controller.marketing.PostDetail</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>UserListController</servlet-name>
         <servlet-class>controller.admin.UserListController</servlet-class>
     </servlet>
@@ -72,7 +64,6 @@
         <servlet-name>ProductController</servlet-name>
         <servlet-class>controller.manager.ProductController</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>
         <url-pattern>/settingList</url-pattern>
@@ -96,14 +87,6 @@
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>PostList</servlet-name>
-        <url-pattern>/postlist</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>PostDetail</servlet-name>
-        <url-pattern>/postdetail</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserListController</servlet-name>
@@ -145,7 +128,6 @@
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>ProductListController</servlet-name>
         <url-pattern>/proList</url-pattern>

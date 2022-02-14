@@ -92,11 +92,26 @@ public class BlogController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         //get data
         PostDAO dao = new PostDAO();
-        List<PostList> list = dao.getBlogSortByDate();
+        List<PostList> listpage = dao.getBlogSortByDate();
         List<PostList> listPostCate = dao.getBlogCategory();
+        int page, numperpage = 3;
+        int size = listpage.size();
+        int num = (size % 3 == 0 ? (size / 3) : ((size / 3)) + 1);
+        String xpage = request.getParameter("page");
+        if (xpage == null) {
+            page = 1;
+        } else {
+            page = Integer.parseInt(xpage);
+        }
+        int start, end;
+        start = (page - 1) * numperpage;
+        end = Math.min(page * numperpage, size);
+        List<PostList> list = dao.getBlogByPage(listpage, start, end);
         //set data
         request.setAttribute("listBlog", list);
         request.setAttribute("listPostCate", listPostCate);
+        request.setAttribute("page", page);
+        request.setAttribute("num", num);
         request.getRequestDispatcher("/blog.jsp").forward(request, response);
     }
 
