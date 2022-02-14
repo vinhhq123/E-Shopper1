@@ -218,7 +218,7 @@ public class CustomerController extends HttpServlet {
         String phone = "";      
         String title = "";
         String address = "";
-        String role = "";
+        String role = "5";
         String gender = "";
         String status = "";
         String success = "";
@@ -231,7 +231,7 @@ public class CustomerController extends HttpServlet {
         fullname = request.getParameter("fullname").trim();
         title = request.getParameter("title").trim();
         address = request.getParameter("address").trim();
-        role = request.getParameter("role");
+       // role = request.getParameter("role");
         gender = request.getParameter("gender");
         status = request.getParameter("status");
 
@@ -265,7 +265,7 @@ public class CustomerController extends HttpServlet {
             request.setAttribute("nameValue", fullname);
             request.setAttribute("titleValue", title);
             request.setAttribute("addressValue", address);
-            request.setAttribute("roleValue", role);
+            //request.setAttribute("roleValue", role);
             request.setAttribute("genderValue", gender);
             request.setAttribute("statusValue", status);
             if (checkUserExisted != null) {
@@ -330,7 +330,7 @@ public class CustomerController extends HttpServlet {
         String phone = "";
         String title = "";
         String address = "";
-        String role = "";
+        String role = "5";
         String success = "";
         String error = "";
         boolean genderbit = true;
@@ -340,7 +340,7 @@ public class CustomerController extends HttpServlet {
         fullname = request.getParameter("name").trim();
         title = request.getParameter("title").trim();
         address = request.getParameter("address").trim();
-        role = request.getParameter("role");
+        //role = request.getParameter("5");
         uid = Integer.parseInt(request.getParameter("uid"));
         accID = Integer.parseInt(request.getParameter("accountId"));
 
@@ -376,8 +376,6 @@ public class CustomerController extends HttpServlet {
             int checkUpdateUser = userDAO.updateUser(fullname, title, genderbit,
                     phone, address, inputImage, accountStaus, accountRole, uid);
             if (checkUpdateUser > 0) {
-//                success = "Update Customer Succesfully ";
-                session.setAttribute("successEditMessage", success);
                 response.sendRedirect("list");
             } else {
                 error = "Unexcepted error occured. Please try again later !!!";
