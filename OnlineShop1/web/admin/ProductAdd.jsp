@@ -168,12 +168,12 @@
                                                     <div class="col-lg-10">
                                                         <select class="form-control m-b-10" name="status">
                                                             <c:if test="${empty salerValue}">
-                                                                <option value="16" selected>Stocking</option>
-                                                                <option value="17">Empty</option>
+                                                                <option value="16" selected>Empty</option>
+                                                                <option value="17">Stocking</option>
                                                             </c:if>
                                                             <c:if test="${not empty salerValue}">
-                                                                <option value="16" <%=request.getAttribute("statusValue").equals("16") ? "selected" : ""%>>Stocking</option>
-                                                                <option value="17" <%=request.getAttribute("statusValue").equals("17") ? "selected" : ""%>>Empty</option>
+                                                                <option value="16" <%=request.getAttribute("statusValue").equals("16") ? "selected" : ""%>>Empty</option>
+                                                                <option value="17" <%=request.getAttribute("statusValue").equals("17") ? "selected" : ""%>>Stocking</option>
                                                             </c:if>
                                                         </select>
 

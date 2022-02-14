@@ -155,7 +155,7 @@ public class ProductDAO extends DBContext{
      
      public Product getProductById(int pid) throws Exception {
 
-        String sql = "SELECT * FROM product \n"+    
+        String sql = "SELECT productid, thumbnail, title, list_price, sale_price, featured, productStatus, categoryId, breif_information, quantity, updatedDate, salesId FROM product \n"+    
                      " where productid = " + pid;
         System.out.println(sql);
         Product product = null;
