@@ -5,7 +5,6 @@
  */
 package controller.manager;
 
-
 import dal.ProductDAO;
 import dal.SettingDAO;
 import dal.UserDAO;
