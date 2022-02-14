@@ -105,7 +105,7 @@ public class ProductDAO extends DBContext{
 
         List<Product> products = new ArrayList<>();
         String sql = "SELECT productId,title,list_price,sale_price,featured,categoryId,u.uid as salesID, s.settingStatus as productStatus,quantity,updatedDate \n" +
-                     "FROM onlineshop1.product as p join setting as s on p.productStatus = s.settingstatus join user as u on p.salesId = u.uid  "
+                     "FROM product as p join setting as s on p.productStatus = s.settingstatus join user as u on p.salesId = u.uid  "
                      + "where (title like '%" + key + "%' "
                      + "or feature like '%" + key + "%' ";
         Product product = null;
@@ -155,8 +155,7 @@ public class ProductDAO extends DBContext{
      
      public Product getProductById(int pid) throws Exception {
 
-        String sql = "SELECT p*,u.uid, s.settingStatus \n" +
-                     "FROM onlineshop1.product as p join setting as s on p.productStatus = s.settingstatus join user as u on p.salesId = u.uid  \n"+    
+        String sql = "SELECT * FROM product \n"+    
                      " where productid = " + pid;
         System.out.println(sql);
         Product product = null;
@@ -219,7 +218,7 @@ public class ProductDAO extends DBContext{
     }
      
      public int updateProduct(String title, Double lprice, Double sprice, String feature, InputStream thumbnail,int category, int saleid, int status,int quantity,String breif ,Date update, int pid) throws SQLException {
-        String sql = "UPDATE onlineshop1.product\n"
+        String sql = "UPDATE product\n"
                 + "SET title = ?,list_price = ?,sale_price = ?,featured = ?,categoryId =?, salesId = ?, productStatus = ?,quantity =?,breif_information=?,updatedDate= ?";
         int row = 0;
         if (thumbnail != null) {

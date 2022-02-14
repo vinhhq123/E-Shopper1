@@ -5,17 +5,30 @@
  */
 package controller.manager;
 
+import dal.ProductDAO;
+import dal.SettingDAO;
+import dal.UserDAO;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+import model.Product;
 
 /**
  *
  * @author Edwars
  */
+@MultipartConfig(maxFileSize = 16177215)
 public class EditProductController extends HttpServlet {
 
     /**
@@ -27,6 +40,9 @@ public class EditProductController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    SettingDAO settingDAO = new SettingDAO();
+        UserDAO userDAO = new UserDAO();
+        ProductDAO proDAO = new ProductDAO();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -56,7 +72,18 @@ public class EditProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         ProductDAO proDAO = new ProductDAO();
+        Product currentPro = new Product();
+        String pid = request.getParameter("pid");
+        int productId = Integer.parseInt(pid);
+
+        try {
+            currentPro = proDAO.getProductById(productId); 
+            request.setAttribute("currentPro", currentPro);
+            request.getRequestDispatcher("./admin/ProductDetails.jsp").forward(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(EditProductController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -70,7 +97,88 @@ public class EditProductController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        String success = "";
+        String error = "";
+        String title = "";
+        String lprice= "";
+        String sprice= "";
+        String feature = "";
+        String breif = "";
+        String category = "";
+        String saler = "";
+        String status = "";
+        String update = "";
+        String quan = "";
+        String successMessage = "";
+        String base64Image = "";
+         
+        int pid = Integer.parseInt(request.getParameter("pid"));
+        title = request.getParameter("title");
+        lprice = request.getParameter("lprice");
+        sprice = request.getParameter("sprice"); 
+        feature = request.getParameter("feature");
+        breif = request.getParameter("breif");
+        category = request.getParameter("category");
+        saler = request.getParameter("saler");
+        status = request.getParameter("status");
+        update = request.getParameter("update");
+        quan = request.getParameter("quan");
+        // If active radio button is selected
+        // Input stream of the upload file
+        InputStream inputStream = null;
+        // Obtains the upload file
+        // part in this multipart request
+        Part filePart = request.getPart("image");
+
+        if (filePart != null) {
+            System.out.println(filePart.getName());
+            System.out.println(filePart.getSize());
+            System.out.println(filePart.getContentType());
+            // Obtains input stream of the upload file
+            inputStream = filePart.getInputStream();
+
+        }
+
+        Product pro = null;
+        // Get session
+
+        try {
+            request.setAttribute("titleValue", title);
+            request.setAttribute("lpriceValue", lprice);
+            request.setAttribute("spriceValue", sprice);
+            request.setAttribute("featureValue", feature);
+            request.setAttribute("breifValue", breif);
+            request.setAttribute("categoryValue", category);
+            request.setAttribute("salerValue", saler);
+            request.setAttribute("statusValue", status);
+            request.setAttribute("updateValue", update);
+            request.setAttribute("quanValue", quan);
+             if (filePart.getSize() == 0) {
+                error = "Please choose an image !!!";
+                request.setAttribute("errorImage", error);
+                request.getRequestDispatcher("./admin/ProductDetails.jsp").forward(request, response);
+            } else {
+                // Insert into Account table with user entered email and default password is 123
+
+                int checkUpdatePro = proDAO.updateProduct(title, Double.parseDouble(lprice),Double.parseDouble(sprice), feature ,inputStream, Integer.parseInt(category),Integer.parseInt(saler),Integer.parseInt(status),Integer.parseInt(quan), breif, Date.valueOf(update),pid);
+                if (checkUpdatePro > 0) {
+//                   success = "Update Customer Succesfully ";
+                session.setAttribute("successEditMessage", success);
+                response.sendRedirect("proEdit?pid=" + pid);
+                } else {
+                error = "Unexcepted error occured. Please try again later !!!";
+                session.setAttribute("errorEditMessage", error);
+                response.sendRedirect("proEdit?pid=" + pid);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EditProductController.class.getName()).log(Level.SEVERE, null, ex);
+            request.getRequestDispatcher("./admin/Error.jsp").forward(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(EditProductController.class.getName()).log(Level.SEVERE, null, ex);
+            request.getRequestDispatcher("./admin/Error.jsp").forward(request, response);
+        }
     }
 
     /**

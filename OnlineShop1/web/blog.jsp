@@ -4,6 +4,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
         <meta name="description" content="">
         <meta name="author" content="">
         <title>Blog | E-Shopper</title>
@@ -42,24 +44,24 @@
                                     <div class="post-meta"> 
                                         <ul>
                                             <li><i class="fa fa-user"></i> ${o.postAuthor.fullname}</li>
-                                            <li><i class="fa fa-clock-o"></i> ${o.category}</li>
+                                            <li><i class='fas fa-tags'></i> ${o.category}</li>
                                             <li><i class="fa fa-calendar"></i> ${o.updateDate}</li>
                                         </ul>
                                     </div>
-                                    <a href="">
-                                        <img src="${o.thumbnail}" alt="">
+                                    <a href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">
+                                        <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="">
                                     </a>
                                     <p>${o.breifInformation}</p>
                                     <a  class="btn btn-primary" href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">Read More</a>
                                 </div>
                             </c:forEach>
-                           
+
                             <div class="pagination-area">
-                                 <c:set var="page" value="${requestScope.page}"/>
+                                <c:set var="page" value="${requestScope.page}"/>
                                 <ul class="pagination">
                                     <c:forEach begin="${1}" end="${requestScope.num}" var="i">
                                         <li><a class="${i==page?"active":""}" href="<%=request.getContextPath()%>/blog/bloglist?page=${i}">${i}</a></li>
-<!--                                        <li><a href="" class="active">1</a></li>-->
+                                        <!--                                        <li><a href="" class="active">1</a></li>-->
                                     </c:forEach>
                                     <li><a href=""><i class="fa fa-angle-double-right"></i></a></li>
                                 </ul>

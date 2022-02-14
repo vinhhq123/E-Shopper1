@@ -5,9 +5,9 @@
  */
 package controller.manager;
 
+import dal.ProductDAO;
 import dal.SettingDAO;
 import dal.UserDAO;
-import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class ProductListController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       int currentPage = 1;
+        int currentPage = 1;
         // Set total records per page is 5
         int recordsPerPage = 5;
 
@@ -78,6 +78,7 @@ public class ProductListController extends HttpServlet {
         SettingDAO settingDAO = new SettingDAO();
         UserDAO userDAO = new UserDAO();
         ProductDAO proDAO = new ProductDAO();
+        List<Setting> settingList = new ArrayList<>();
         List<Setting> statusList = new ArrayList<>();
         List<Setting> categoryList = new ArrayList<>();
         List<User> userList = new ArrayList<>();
@@ -87,6 +88,7 @@ public class ProductListController extends HttpServlet {
             statusList = settingDAO.getAllProStatus();
             categoryList = settingDAO.getAllProCategory();
             userList = userDAO.getSaler();
+            settingList = settingDAO.getAllSetting();
             proList = proDAO.getProByPage(currentPage, recordsPerPage);
             
             int rows = proDAO.getNumberOfRows();
@@ -95,18 +97,19 @@ public class ProductListController extends HttpServlet {
             if (rows % recordsPerPage > 0) {
                 numOfPage++;
             }
-            request.setAttribute("SettingList", statusList);
-            request.setAttribute("SettingList", categoryList);
+            request.setAttribute("SettingList", settingList);
+            request.setAttribute("StatusList", statusList);
+            request.setAttribute("CategoryList", categoryList);
             request.setAttribute("UserList", userList);
             request.setAttribute("ProList", proList);
             request.setAttribute("numOfPage", numOfPage);
             request.setAttribute("recordsPerPage", recordsPerPage);
             request.setAttribute("currentPage", currentPage);
-            request.getRequestDispatcher("./admin/ProductList.jsp").forward(request, response);
+            request.getRequestDispatcher("/admin/ProductList.jsp").forward(request, response);
             
         } catch (Exception ex) {
             Logger.getLogger(ProductListController.class.getName()).log(Level.SEVERE, null, ex);
-            request.getRequestDispatcher("./admin/Error.jsp").forward(request, response);
+            request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
         }
     }
 
