@@ -5,7 +5,7 @@
  */
 package dal;
 
-import com.mysql.cj.xdevapi.PreparableStatement;
+
 import dbcontext.DBContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

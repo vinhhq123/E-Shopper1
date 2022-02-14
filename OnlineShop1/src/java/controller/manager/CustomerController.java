@@ -300,12 +300,12 @@ public class CustomerController extends HttpServlet {
                 if (checkAddUser > 0) {
 //                            boolean checkEmail = accountDAO.sendEmailActivation(email, name);
 //                            if (checkEmail) {
-                    success = "Add new Customer successfuly .";
-                    String avatar = userDAO.getLastInsertedUser().getAvatar();
-                    session.setAttribute("messageAddSuccess", success);
-                    request.setAttribute("imageValue", avatar);
-                    request.getRequestDispatcher("/admin/Addnewcustomer.jsp").forward(request, response);
-
+//                    success = "Add new Customer successfuly .";
+//                    String avatar = userDAO.getLastInsertedUser().getAvatar();
+//                    session.setAttribute("messageAddSuccess", success);
+//                    request.setAttribute("imageValue", avatar);
+//                    request.getRequestDispatcher("/admin/Addnewcustomer.jsp").forward(request, response);
+                         response.sendRedirect("list");
                 }
             }
         } catch (SQLException ex) {
@@ -376,9 +376,9 @@ public class CustomerController extends HttpServlet {
             int checkUpdateUser = userDAO.updateUser(fullname, title, genderbit,
                     phone, address, inputImage, accountStaus, accountRole, uid);
             if (checkUpdateUser > 0) {
-                success = "Update Customer Succesfully ";
+//                success = "Update Customer Succesfully ";
                 session.setAttribute("successEditMessage", success);
-                response.sendRedirect("getcustomer?uid=" + uid);
+                response.sendRedirect("list");
             } else {
                 error = "Unexcepted error occured. Please try again later !!!";
                 session.setAttribute("errorEditMessage", error);

@@ -204,7 +204,7 @@
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-2 col-lg-10">
                                                         <button type="submit" class="btn btn-success">Save</button>
-                                                        <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/cusList'">Back</button>
+                                                        <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/customer/list'">Back</button>
                                                     </div>
                                                 </div>
                                             </form>

@@ -90,13 +90,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Email</label>
-                                                    <div class="col-lg-10">
-                                                        <input type="email" class="form-control" id="inputEmail1" placeholder="Email" readonly value="${currentUser.email}" name="email"> 
-                                                        <!--<p class="help-block">Example block-level help text here.</p>-->
-                                                    </div>
-                                                </div>
+                                                
                                                 <div class="form-group">
                                                     <label for="fullname" class="col-lg-2 col-sm-2 control-label">Fullname</label>
                                                     <div class="col-lg-10">
@@ -138,6 +132,13 @@
                                                         <input type="text" class="form-control" id="address" placeholder="Address" value="${currentUser.address}" name="address" required>
                                                     </div>
                                                 </div>
+                                                    <div class="form-group">
+                                                    <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Email</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="email" class="form-control" id="inputEmail1" placeholder="Email" readonly value="${currentUser.email}" name="email"> 
+                                                        <!--<p class="help-block">Example block-level help text here.</p>-->
+                                                    </div>
+                                                </div>
                                               <div  class="form-group">
                                                     <label  for="role" class="col-lg-2 col-sm-2 control-label">Role</label>
                                                     <div class="col-lg-10">
@@ -146,6 +147,7 @@
                                                             <option value="5" <%=request.getAttribute("currentUserRole").equals("5") ? "selected" : ""%>>Customer</option>
                                                         </select>
                                                     </div>
+                       
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Customer Status</label>
