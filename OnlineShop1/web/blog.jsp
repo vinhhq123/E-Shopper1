@@ -39,7 +39,7 @@
                                     <h3>${o.postTitle}</h3>
                                     <div class="post-meta"> 
                                         <ul>
-                                            <li><i class="fa fa-user"></i> Mac Doe</li>
+                                            <li><i class="fa fa-user"></i> ${o.postAuthor.fullname}</li>
                                             <li><i class="fa fa-clock-o"></i> ${o.category}</li>
                                             <li><i class="fa fa-calendar"></i> ${o.updateDate}</li>
                                         </ul>

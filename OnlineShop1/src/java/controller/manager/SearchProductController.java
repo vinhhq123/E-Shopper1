@@ -5,7 +5,6 @@
  */
 package controller.manager;
 
-import controller.admin.SearchUserController;
 import dal.ProductDAO;
 import dal.SettingDAO;
 import dal.UserDAO;
