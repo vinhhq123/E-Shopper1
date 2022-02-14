@@ -29,7 +29,10 @@ public class Setting {
         this.settingStatus = settingStatus;
     }
 
-
+    public Setting(int settingId, String settingValue) {
+        this.settingId = settingId;
+        this.settingValue = settingValue;
+    }
 
     public int getSettingId() {
         return settingId;

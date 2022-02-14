@@ -75,7 +75,7 @@
                                                     <br>
                                                 </c:if>
                                                 <div class="form-group">
-                                                    <label for="avatar" class="col-lg-2 col-sm-2 control-label">Avatar</label>
+                                                    <label for="avatar" class="col-lg-2 col-sm-2 control-label">Thumbnail</label>
                                                     <div class="col-lg-10">
                                                         <div class="profile-pic">
                                                             <label class="-label" for="file">
@@ -93,83 +93,10 @@
                                                 <div class="form-group">
                                                     <label for="title" class="col-lg-2 col-sm-2 control-label">Title</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="title" value="${currentPro.title}" name="title" required>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="lprice" class="col-lg-2 col-sm-2 control-label">List Price</label>
-                                                    <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="lprice" value="${currentPro.lprice}" name="lprice" required  >
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sprice" class="col-lg-2 col-sm-2 control-label">Sale Price</label>
-                                                    <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="sprice" value="${currentPro.sprice}"  name="sprice" required  >
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="feature" class="col-lg-2 col-sm-2 control-label">Feature</label>
-                                                    <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="feature" value="${currentPro.featured}"  name="feature"  required>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="breif" class="col-lg-2 col-sm-2 control-label">Breif</label>
-                                                    <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="breif" value="${currentPro.breif}" name="breif" required>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="quan" class="col-lg-2 col-sm-2 control-label">Quantity</label>
-                                                    <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="quan" value="${currentPro.quantity}" name="quan"  required >
+                                                        <input type="text" class="form-control" id="title" value="${currentPro.getTitle()}" name="title" required>
                                                     </div>
                                                 </div>
                                                 
-                                                <div class="form-group">
-                                                    <label for="role" class="col-lg-2 col-sm-2 control-label">Category</label>
-                                                    <div class="col-lg-10">
-                                                        <select class="form-control m-b-10" name="category">
-                                                            <option value="13" <%=request.getAttribute("Category").equals("13") ? "selected" : ""%>>Shoes</option>
-                                                            <option value="14" <%=request.getAttribute("Category").equals("14") ? "selected" : ""%>>Clothes</option>
-                                                            <option value="15" <%=request.getAttribute("Category").equals("15") ? "selected" : ""%>>Bags</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="saler" class="col-lg-2 col-sm-2 control-label">Saler</label>
-                                                    <div class="col-lg-10">
-                                                        <select class="form-control m-b-10" name="saler">
-                                                                <option value="4" <%=request.getAttribute("Saler").equals("4") ? "selected" : ""%>>Kylian Mbappe</option>
-                                                                <option value="5" <%=request.getAttribute("Saler").equals("5") ? "selected" : ""%>>Kendall Jenner</option>>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Product Status</label>
-                                                    <div class="col-lg-10">
-                                                        <div class="radio-inline">
-                                                            <label>
-                                                                <input type="radio" name="status" id="optionsRadios3" value="17" <%=request.getAttribute("currentStatus").equals("17") ? "checked" : ""%>>
-                                                                Stocking
-                                                            </label>
-                                                        </div>
-                                                        <div class="radio-inline">
-                                                            <label>
-                                                                <input type="radio" name="status" id="optionsRadios4" value="16" <%=request.getAttribute("currentStatus").equals("16") ? "checked" : ""%>>
-                                                                Empty
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="update" class="col-lg-2 col-sm-2 control-label">Update Date</label>
-                                                    <div class="col-lg-10">
-                                                        <input type="date" class="form-control" id="update" value="${currentPro.updatedDate}" name="update"  required>
-                                                    </div>
-                                                </div>
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-2 col-lg-10">
                                                         <button type="submit" class="btn btn-success">Update Product Information</button>

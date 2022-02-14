@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.PostList;
+import model.Setting;
 
 /**
  *
@@ -93,7 +94,7 @@ public class BlogController extends HttpServlet {
         //get data
         PostDAO dao = new PostDAO();
         List<PostList> listpage = dao.getBlogSortByDate();
-        List<PostList> listPostCate = dao.getBlogCategory();
+        List<Setting> listPostCate = dao.getBlogCategory();
         int page, numperpage = 3;
         int size = listpage.size();
         int num = (size % 3 == 0 ? (size / 3) : ((size / 3)) + 1);
@@ -121,7 +122,7 @@ public class BlogController extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("postId"));
         PostDAO dao = new PostDAO();
         PostList blog = dao.getBlogById(id);
-        List<model.PostList> listPostCate = dao.getBlogCategory();
+        List<Setting> listPostCate = dao.getBlogCategory();
         request.setAttribute("listPostCate", listPostCate);
         request.setAttribute("blog", blog);
         request.getRequestDispatcher("/blog-details.jsp").forward(request, response);
@@ -133,9 +134,21 @@ public class BlogController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String category = request.getParameter("id");
         PostDAO dao = new PostDAO();
-        //List<model.PostList> list = dao.getBlogSortByDate();
-        List<model.PostList> list = dao.getBlogByPostCategory(category);
-        List<model.PostList> listPostCate = dao.getBlogCategory();
+        List<PostList> listpage = dao.getBlogByPostCategory(category);
+        List<Setting> listPostCate = dao.getBlogCategory();
+        int page, numperpage = 3;
+        int size = listpage.size();
+        int num = (size % 3 == 0 ? (size / 3) : ((size / 3)) + 1);
+        String xpage = request.getParameter("page");
+        if (xpage == null) {
+            page = 1;
+        } else {
+            page = Integer.parseInt(xpage);
+        }
+        int start, end;
+        start = (page - 1) * numperpage;
+        end = Math.min(page * numperpage, size);
+        List<PostList> list = dao.getBlogByPage(listpage, start, end);
         request.setAttribute("listPostCate", listPostCate);
         request.setAttribute("listBlog", list);
         request.getRequestDispatcher("/blog.jsp").forward(request, response);
@@ -146,8 +159,8 @@ public class BlogController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String searchBlog = request.getParameter("search");
         PostDAO dao = new PostDAO();
-        List<model.PostList> list = dao.searchBlogByTitle(searchBlog);
-        List<model.PostList> listPostCate = dao.getBlogCategory();
+        List<PostList> list = dao.searchBlogByTitle(searchBlog);
+        List<Setting> listPostCate = dao.getBlogCategory();
         request.setAttribute("listPostCate", listPostCate);
         request.setAttribute("listBlog", list);
         request.getRequestDispatcher("/blog.jsp").forward(request, response);
