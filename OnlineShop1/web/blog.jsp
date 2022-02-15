@@ -44,7 +44,7 @@
                                     <div class="post-meta"> 
                                         <ul>
                                             <li><i class="fa fa-user"></i> ${o.postAuthor.fullname}</li>
-                                            <li><i class='fas fa-tags'></i> ${o.category}</li>
+                                            <li><i class='fas fa-tags'></i> ${o.category.settingValue}</li>
                                             <li><i class="fa fa-calendar"></i> ${o.updateDate}</li>
                                         </ul>
                                     </div>
@@ -63,7 +63,7 @@
                                         <li><a class="${i==page?"active":""}" href="<%=request.getContextPath()%>/blog/bloglist?page=${i}">${i}</a></li>
                                         <!--                                        <li><a href="" class="active">1</a></li>-->
                                     </c:forEach>
-                                    <li><a href=""><i class="fa fa-angle-double-right"></i></a></li>
+                                    <li><a class="${i==page?"active":""}" href="<%=request.getContextPath()%>/blog/bloglist?page=${page+1}"><i class="fa fa-angle-double-right"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                                 <div class="brands-name">
                                     <ul class="nav nav-pills nav-stacked">
                                         <c:forEach items="${listPostCate}" var="o">
-                                            <li><a href="<%=request.getContextPath()%>/blog/cate?id=${o.category}">${o.category}</a></li>
+                                            <li><a href="<%=request.getContextPath()%>/blog/cate?id=${o.settingId}">${o.settingValue}</a></li>
                                             </c:forEach>
                                     </ul>
                                 </div>
