@@ -136,7 +136,7 @@ public class PostDAO extends DBContext {
 
     public List<Setting> getBlogCategory() {
         List<Setting> listPostCate = new ArrayList<>();
-        String query = "select settingId, settingValue from setting where settingId = 8 or settingId = 9";
+        String query = "select settingId, settingValue from setting where settingType = 3";
         try {
             connection = new DBContext().getConnection();
             ps = connection.prepareStatement(query);
@@ -332,13 +332,13 @@ public class PostDAO extends DBContext {
         return postlist;
     }
 
-    public static void main(String[] args) {
-
-        PostDAO dao = new PostDAO();
-        PostList postList = dao.getBlogById(1);
-//        List<PostList> list = dao.getBlogByPostCategory("1");
-//        for (PostList postList : list) {
-            System.out.println(postList);
+//    public static void main(String[] args) {
+//
+//        PostDAO dao = new PostDAO();
+////        PostList postList = dao.getBlogById(1);
+//        List<Setting> list = dao.getBlogCategory();
+//        for (Setting postList : list) {
+//            System.out.println(postList);
 //        }
-    }
+//    }
 }
