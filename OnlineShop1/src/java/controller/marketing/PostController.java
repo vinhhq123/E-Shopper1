@@ -142,12 +142,11 @@ public class PostController extends HttpServlet {
             
             PostDAO pd = new PostDAO();
             String postIdRaw = request.getParameter("postId");
-            if(postIdRaw != null){
             int postId = Integer.parseInt(postIdRaw);
             PostList postUpdate = pd.getBlogById(postId);
             request.setAttribute("postUpdate", postUpdate);
             request.getRequestDispatcher("/post/PostUpdate.jsp").forward(request, response);
-            }
+            
         } catch (Exception ex) {
             Logger.getLogger(PostController.class.getName()).log(Level.SEVERE, null, ex);
         }

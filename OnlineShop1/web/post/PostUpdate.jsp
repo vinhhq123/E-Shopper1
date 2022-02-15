@@ -206,7 +206,7 @@
 						</td>
                                                 <td>
 						  <input
-							type="hidden"
+							type="text"
 							name="postId"
                                                         value="${requestScope.postUpdate.postId}"
 							placeholder="id"
