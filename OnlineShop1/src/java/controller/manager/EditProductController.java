@@ -74,12 +74,18 @@ public class EditProductController extends HttpServlet {
             throws ServletException, IOException {
          ProductDAO proDAO = new ProductDAO();
         Product currentPro = new Product();
+        String category = currentPro.getCategoryID() + "";
+        String proStatus = currentPro.getProductStatus() + "";
+        String SalerID = currentPro.getSalesId() + "";
         String pid = request.getParameter("pid");
         int productId = Integer.parseInt(pid);
 
         try {
             currentPro = proDAO.getProductById(productId); 
             request.setAttribute("currentPro", currentPro);
+            request.setAttribute("categoryValue", category);
+            request.setAttribute("statusValue", proStatus);
+            request.setAttribute("salerValue", SalerID);
             request.getRequestDispatcher("./admin/ProductDetails.jsp").forward(request, response);
         } catch (Exception ex) {
             Logger.getLogger(EditProductController.class.getName()).log(Level.SEVERE, null, ex);
@@ -164,8 +170,7 @@ public class EditProductController extends HttpServlet {
                 int checkUpdatePro = proDAO.updateProduct(title, Double.parseDouble(lprice),Double.parseDouble(sprice), feature ,inputStream, Integer.parseInt(category),Integer.parseInt(saler),Integer.parseInt(status),Integer.parseInt(quan), breif, Date.valueOf(update),pid);
                 if (checkUpdatePro > 0) {
 //                   success = "Update Customer Succesfully ";
-                session.setAttribute("successEditMessage", success);
-                response.sendRedirect("proEdit?pid=" + pid);
+                response.sendRedirect("proList");
                 } else {
                 error = "Unexcepted error occured. Please try again later !!!";
                 session.setAttribute("errorEditMessage", error);

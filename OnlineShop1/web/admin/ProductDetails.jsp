@@ -96,7 +96,96 @@
                                                         <input type="text" class="form-control" id="title" value="${currentPro.getTitle()}" name="title" required>
                                                     </div>
                                                 </div>
-                                                
+                                                <div class="form-group">
+                                                    <label for="title" class="col-lg-2 col-sm-2 control-label">List Price</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" id="title" value="${currentPro.getLprice()}" name="lprice" required>
+                                                    </div>
+                                                </div>
+                                                    <div class="form-group">
+                                                    <label for="title" class="col-lg-2 col-sm-2 control-label">Sale Price</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" id="title" value="${currentPro.getSprice()}" name="sprice" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="title" class="col-lg-2 col-sm-2 control-label">Featured</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" id="title" value="${currentPro.getFeatured()}" name="feature" required>
+                                                    </div>
+                                                </div>
+                                                    
+                                                <div class="form-group">
+                                                    <label for="breif" class="col-lg-2 col-sm-2 control-label">Breif Information</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" id="breif" name="breif" value="${currentPro.getBreif()}"required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="quan" class="col-lg-2 col-sm-2 control-label">Quantity</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" id="quan" name="quan" required value="${currentPro.getQuantity()}" required >
+                                                    </div>
+                                                </div>
+                                                    
+                                                <div class="form-group">
+                                                    <label for="role" class="col-lg-2 col-sm-2 control-label">Category</label>
+                                                    <div class="col-lg-10">
+                                                        <select class="form-control m-b-10" name="category">
+                                                            <c:if test="${empty categoryValue}">
+                                                                <option value="13" selected>Shoes</option>
+                                                                <option value="14">Clothes</option>
+                                                                <option value="15">Bags</option>
+                                                            </c:if>
+                                                            <c:if test="${not empty categoryValue}">
+                                                                <option value="13" <%=request.getAttribute("categoryValue").equals("13") ? "selected" : ""%>>Shoes</option>
+                                                                <option value="14" <%=request.getAttribute("categoryValue").equals("14") ? "selected" : ""%>>Clothes</option>
+                                                                <option value="15" <%=request.getAttribute("categoryValue").equals("15") ? "selected" : ""%>>Bags</option>
+                                                            </c:if>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="saler" class="col-lg-2 col-sm-2 control-label">Saler</label>
+                                                    <div class="col-lg-10">
+                                                        <select class="form-control m-b-10" name="saler">
+                                                            <c:if test="${empty salerValue}">
+                                                                <option value="4" selected>Kylian Mbappe</option>
+                                                                <option value="5">Kendall Jenner</option>
+                                                            </c:if>
+                                                            <c:if test="${not empty salerValue}">
+                                                                  <option value="4" <%=request.getAttribute("salerValue").equals("13") ? "selected" : ""%>>Kylian Mbappe</option>
+                                                                  <option value="5" <%=request.getAttribute("salerValue").equals("14") ? "selected" : ""%>>Kendall Jenner</option>
+                                                            </c:if>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="saler" class="col-lg-2 col-sm-2 control-label">Product Status</label>
+                                                    <div class="col-lg-10">
+                                                        <select class="form-control m-b-10" name="status">
+                                                            <c:if test="${empty salerValue}">
+                                                                <option value="16" selected>Empty</option>
+                                                                <option value="17">Stocking</option>
+                                                            </c:if>
+                                                            <c:if test="${not empty salerValue}">
+                                                                <option value="16" <%=request.getAttribute("statusValue").equals("16") ? "selected" : ""%>>Empty</option>
+                                                                <option value="17" <%=request.getAttribute("statusValue").equals("17") ? "selected" : ""%>>Stocking</option>
+                                                            </c:if>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="update" class="col-lg-2 col-sm-2 control-label">Update Date</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="date" class="form-control" id="update"  name="update" value="${currentPro.getUpdatedDate()}" required>
+                                                    </div>
+                                                </div>
+                                                    
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-2 col-lg-10">
                                                         <button type="submit" class="btn btn-success">Update Product Information</button>
