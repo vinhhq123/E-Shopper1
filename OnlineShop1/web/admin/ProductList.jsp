@@ -58,14 +58,14 @@
                                     <!-- </div> -->
                                     <div class="panel-body table-responsive">
                                         <div class="row">
-                                      
-                                        <div class="col-sm-1">
-                                            <button type="button" class="btn btn-success" style="float: right" onclick="window.location = '<%=request.getContextPath()%>/admin/ProductAdd.jsp'">Add New Product</button>
-<!--                                                <a href="<%=request.getContextPath()%>/addNewUser" style="float: right"> Add new</a>-->
-                                        </div>
                                         <div class="col-sm-8">
                                                 
                                         </div>
+                                        <div class="col-sm-4">
+                                            <button type="button" class="btn btn-success" style="float: right" onclick="window.location = '<%=request.getContextPath()%>/admin/ProductAdd.jsp'">Add New Product</button>
+<!--                                                <a href="<%=request.getContextPath()%>/addNewUser" style="float: right"> Add new</a>-->
+                                        </div>
+
                                     </div>
                                     <br>
                                     <table class="table table-striped" id="SettingListTable">
