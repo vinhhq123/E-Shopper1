@@ -62,7 +62,7 @@
                             <li><a href="${pageContext.request.contextPath}/index.jsp" class="active">Home</a></li>
                             <li><a href="#">Shop<i></i></a>
                             </li> 
-                            <li class="dropdown"><a href="#" class="active">Blog<i class="fa fa-angle-down"></i></a>
+                            <li class="dropdown"><a href="#" >Blog<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
                                             <li class=""><a href="<%=request.getContextPath()%>/blog/bloglist">Blog<i class=""></i></a>
                                             </li>

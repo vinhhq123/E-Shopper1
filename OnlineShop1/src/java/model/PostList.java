@@ -19,15 +19,17 @@ public class PostList {
     private String breifInformation;
     private String postContent;
     User postAuthor;
-    private String category;
+    Setting category;
     private String featured;
     private int satatusPL;
     private Date updateDate;
     private User user;
+    
+    
     public PostList() {
     }
 
-    public PostList(int postId, String thumbnail, String postTitle, String breifInformation, String postContent, User postAuthor, String category, String featured, int satatusPL, Date updateDate) {
+    public PostList(int postId, String thumbnail, String postTitle, String breifInformation, String postContent, User postAuthor, Setting category, String featured, int satatusPL, Date updateDate) {
         this.postId = postId;
         this.thumbnail = thumbnail;
         this.postTitle = postTitle;
@@ -40,7 +42,7 @@ public class PostList {
         this.updateDate = updateDate;
     }
 
-    public PostList(String category) {
+    public PostList(Setting category) {
         this.category = category;
     }
 
@@ -102,11 +104,11 @@ public class PostList {
         this.postAuthor = postAuthor;
     }
 
-    public String getCategory() {
+    public Setting getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Setting category) {
         this.category = category;
     }
 
