@@ -181,9 +181,9 @@
                             <c:forEach items="${postlist}" var="p">
                             <div class="single-blog-post">
                                 <h3>${p.getPostTitle()}</h3>
-                                <a style="float: right; " href="PostDetail.jsp"><button style="width:70px">Edit</button></a>
-                                <a style="float: right; margin: 0 10px;" href=""><button style="width:70px">Delete</button></a>
-                                <a style="float: right" href=""><button style="width:70px">View</button></a>
+                                <a style="float: right; " href="<%=request.getContextPath()%>/post/update?postId=${p.getPostId()}"><button style="width:70px">Edit</button></a>
+                                <a style="float: right; margin: 0 10px;" href="<%=request.getContextPath()%>/post/delete?postId=${p.getPostId()}"><button style="width:70px">Delete</button></a>
+                                <a style="float: right" href="<%=request.getContextPath()%>/blog/detail?postId=${p.getPostId()}"><button style="width:70px">View</button></a>
                                 <br><br>
                                 <div class="post-meta">
                                     <ul>

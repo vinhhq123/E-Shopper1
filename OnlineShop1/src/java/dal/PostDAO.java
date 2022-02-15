@@ -17,6 +17,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.PostList;
 import model.Setting;
 import model.User;
@@ -280,7 +282,7 @@ public class PostDAO extends DBContext {
     public ArrayList<PostList> getPostList() throws Exception {
         ArrayList<PostList> postlist = new ArrayList<>();
         try {
-            String sql = "select  p.thumbnail, p.postTitle, p.postContent, u.fullname from post as p\n"
+            String sql = "select  p.thumbnail, p.postTitle, p.postContent, u.fullname, p.postId from post as p\n"
                     + "Inner Join user as u ON u.uid = p.postAuthor";
             System.out.println(sql);
             String noImage = "";
@@ -290,6 +292,7 @@ public class PostDAO extends DBContext {
 
             while (result.next()) {
                 PostList post = new PostList();
+                post.setPostId(result.getInt("postId"));
                 post.setPostContent(result.getString("postContent"));
                 post.setPostTitle(result.getString("postTitle"));
                 User user = new User();
@@ -330,6 +333,36 @@ public class PostDAO extends DBContext {
             }
         }
         return postlist;
+    }
+    
+    public void delete(int postId) {
+        try {
+            String sql = "Delete from post where postId = ?";
+            connection = getConnection();
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, postId);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void updatePost(int postId, String postTitle, String postContent, InputStream thumbnail) {
+        try {
+            String sql = "UPDATE `onlineshop1`.`post` SET `thumbnail` = ?,"
+                    + " `postTitle` = ?,"
+                    + " `postContent` = ?"
+                    + " WHERE (`postId` = ?);";
+            connection = getConnection();
+            ps = connection.prepareStatement(sql);
+            ps.setBlob(1, thumbnail);
+            ps.setString(2, postTitle);
+            ps.setString(3, postContent);
+            ps.setInt(4, postId);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 //    public static void main(String[] args) {
