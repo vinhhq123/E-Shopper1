@@ -26,6 +26,8 @@
         <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
         <!-- Theme style -->
         <link href="${pageContext.request.contextPath}/admin/css/style.css" rel="stylesheet" type="text/css" />
+        <!-- Order Details CSS -->
+        <link href="${pageContext.request.contextPath}/admin/css/orderDetail.css" rel="stylesheet" type="text/css" />
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -56,92 +58,69 @@
                                     <!-- <h3 class="box-title">Responsive Hover Table</h3> -->
 
                                     <!-- </div> -->
-                                    <div class="row">
-                                        <div class="col-lg-9">
-                                            <div class="panel-body table-responsive">
-                                                <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/user/add" method="POST" name="addNewUser"  enctype="multipart/form-data">
-                                                <c:if test="${not empty messageAddSuccess}">
-                                                    <b><h4 class="help-block" style="color: green" id="successEditMessage">${messageAddSuccess}</h4></b>
-                                                        <c:remove var="messageAddSuccess"/>
-                                                    <br>
-                                                </c:if>
-                                                <div class="form-group">
-                                                    <label for="orderId" class="col-lg-2 col-sm-2 control-label">Order ID</label>
-                                                    <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="orderId" placeholder="OrderId" name="orderId" value="${emailValue}" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="customerName" class="col-lg-2 col-sm-2 control-label">Customer Name</label>
-                                                    <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="orderId" placeholder="Cutomer Name" name="customerName" value="${emailValue}" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Email</label>
-                                                    <div class="col-lg-10">
-                                                        <input type="email" class="form-control" id="inputEmail1" placeholder="Email" name="email" value="${emailValue}" readonly>
-                                                        <c:if test="${not empty error}">
-                                                            <p class="help-block" style="color: red" id="errorEmailMessage">${error}</p>
-                                                        </c:if>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="phone" class="col-lg-2 col-sm-2 control-label">Mobile</label>
-                                                    <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="phone" placeholder="Phone" name="phone" value="${phoneValue}" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="orderDate" class="col-lg-2 col-sm-2 control-label">Order Date</label>
-                                                    <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="address" placeholder="Order Date" name="orderDate" value="${addressValue}" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="saler" class="col-lg-2 col-sm-2 control-label">Assigned Sale</label>
-                                                    <div class="col-lg-10">
-                                                        <select class="form-control m-b-10" name="saler" disabled="">
-                                                            <option value="1">Saler 1</option>
-                                                            <option value="1" selected="">Saler 2</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="status" class="col-lg-2 col-sm-2 control-label">Status</label>
-                                                    <div class="col-lg-10">
-                                                        <select class="form-control m-b-10" name="status">
-                                                            <option value="1">Ordered</option>
-                                                            <option value="2">Transporting</option>
-                                                            <option value="3">Delivered</option>
-                                                            <option value="4">Canceled</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="totalCost" class="col-lg-2 col-sm-2 control-label">Total Cost</label>
-                                                    <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="totalCost" placeholder="Total Cost" name="totalCost" value="${addressValue}">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="saleNote" class="col-lg-2 col-sm-2 control-label">Sale Notes</label>
-                                                    <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="saleNote" placeholder="Sale Notes" name="saleNote" value="${addressValue}">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-lg-offset-9 col-lg-5">
-                                                        <button type="submit" class="btn btn-success">Save changes</button>
-                                                        <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>'">Back</button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div><!-- /.box-body -->
-                                    </div>
-                                    <div class="col-lg-3"></div>
-                                </div>
 
+                                    <div class="row">
+                                        <div class="col-lg-5" >
+                                            <h3><b>Customer Information</b></h3>
+                                            <ul class="ulclass">
+                                                <li>Order ID : ${orderInfo.customerName}</li>
+                                            <li>Customer Name: ${orderInfo.customerName}</li>
+                                            <li>Email: ${orderInfo.customerEmail}</li>
+                                            <li>Mobile: ${orderInfo.customerPhone}</li>
+                                            <li>Order Date: ${orderInfo.customerAddress}</li>
+                                        </ul>
+                                        <h3><b>Order Summary</b></h3>
+                                        <ul class="ulclass">
+                                            <li>Total:
+                                                <span class="total">
+                                                    <fmt:formatNumber value="123" type="currency"/>
+                                                </span></li>
+                                        </ul>
+                                                <br> 
+                                    </div>
+                                                <div class="col-lg-6" >
+                                                    <h3><b>Sales Information</b></h3><br>
+                                        <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/user/add" method="POST" name="addNewUser"  enctype="multipart/form-data">
+                                            <c:if test="${not empty messageAddSuccess}">
+                                                <b><h4 class="help-block" style="color: green" id="successEditMessage">${messageAddSuccess}</h4></b>
+                                                    <c:remove var="messageAddSuccess"/>
+                                                <br>
+                                            </c:if>
+                                            <div class="form-group">
+                                                <label for="saler" class="col-lg-2 col-sm-2 control-label">Assigned</label>
+                                                <div class="col-lg-10">
+                                                    <select class="form-control m-b-10" name="saler" disabled="">
+                                                        <option value="1">Saler 1</option>
+                                                        <option value="1" selected="">Saler 2</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="status" class="col-lg-2 col-sm-2 control-label">Status</label>
+                                                <div class="col-lg-10">
+                                                    <select class="form-control m-b-10" name="status">
+                                                        <option value="1">Ordered</option>
+                                                        <option value="2">Transporting</option>
+                                                        <option value="3">Delivered</option>
+                                                        <option value="4">Canceled</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="saleNote" class="col-lg-2 col-sm-2 control-label">Sale Notes</label>
+                                                <div class="col-lg-10">
+                                                    <input type="text" class="form-control" id="saleNote" placeholder="Sale Notes" name="saleNote" value="${addressValue}">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-2 col-lg-5">
+                                                    <button type="submit" class="btn btn-success">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <h3>This order includes the following products</h3>
                             </div><!-- /.box -->
                         </div>
                     </div>
