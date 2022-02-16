@@ -2,6 +2,7 @@
     Document   : OrderDetail
     Created on : 16-Feb-2022, 14:12:07
     Author     : VINH
+    SOURCE : https://o7planning.org/10605/create-a-java-shopping-cart-web-application-using-spring-mvc-and-hibernate
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -58,70 +59,164 @@
                                     <!-- <h3 class="box-title">Responsive Hover Table</h3> -->
 
                                     <!-- </div> -->
-
-                                    <div class="row">
-                                        <div class="col-lg-5" >
-                                            <h3><b>Customer Information</b></h3>
+                                    <div class="panel-body table-responsive">
+                                        <div class="row">
+                                            <div class="col-lg-5" >
+                                                <h3><b>Customer Information</b></h3>
+                                                <ul class="ulclass">
+                                                    <li>Order ID : ${orderInfo.customerName}</li>
+                                                <li>Customer Name: ${orderInfo.customerName}</li>
+                                                <li>Email: ${orderInfo.customerEmail}</li>
+                                                <li>Mobile: ${orderInfo.customerPhone}</li>
+                                                <li>Order Date: ${orderInfo.customerAddress}</li>
+                                            </ul>
+                                            <h3><b>Order Summary</b></h3>
                                             <ul class="ulclass">
-                                                <li>Order ID : ${orderInfo.customerName}</li>
-                                            <li>Customer Name: ${orderInfo.customerName}</li>
-                                            <li>Email: ${orderInfo.customerEmail}</li>
-                                            <li>Mobile: ${orderInfo.customerPhone}</li>
-                                            <li>Order Date: ${orderInfo.customerAddress}</li>
-                                        </ul>
-                                        <h3><b>Order Summary</b></h3>
-                                        <ul class="ulclass">
-                                            <li>Total:
-                                                <span class="total">
-                                                    <fmt:formatNumber value="123" type="currency"/>
-                                                </span></li>
-                                        </ul>
-                                                <br> 
+                                                <li>Total:
+                                                    <span class="total">
+                                                        <fmt:formatNumber value="123" type="currency"/>
+                                                    </span></li>
+                                            </ul>
+                                            <br> 
+                                        </div>
+                                        <!--  THIS IS FOR ASSIGNED SALES AND MANAGER ONLY -->
+                                        <div class="col-lg-6" >
+                                            <h3><b>Sales Information</b></h3><br>
+                                            <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/user/add" method="POST" name="addNewUser"  enctype="multipart/form-data">
+                                                <c:if test="${not empty messageAddSuccess}">
+                                                    <b><h4 class="help-block" style="color: green" id="successEditMessage">${messageAddSuccess}</h4></b>
+                                                        <c:remove var="messageAddSuccess"/>
+                                                    <br>
+                                                </c:if>
+                                                <div class="form-group">
+                                                    <label for="saler" class="col-lg-2 col-sm-2 control-label">Assigned</label>
+                                                    <div class="col-lg-10">
+                                                        <select class="form-control m-b-10" name="saler" disabled="">
+                                                            <option value="1">Saler 1</option>
+                                                            <option value="1" selected="">Saler 2</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="status" class="col-lg-2 col-sm-2 control-label">Status</label>
+                                                    <div class="col-lg-10">
+                                                        <select class="form-control m-b-10" name="status">
+                                                            <option value="1">Ordered</option>
+                                                            <option value="2">Transporting</option>
+                                                            <option value="3">Delivered</option>
+                                                            <option value="4">Canceled</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="saleNote" class="col-lg-2 col-sm-2 control-label">Sale Notes</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" id="saleNote" placeholder="Sale Notes" name="saleNote" value="${addressValue}">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-lg-offset-2 col-lg-5">
+                                                        <button type="submit" class="btn btn-success">Save changes</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
-                                                <div class="col-lg-6" >
-                                                    <h3><b>Sales Information</b></h3><br>
-                                        <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/user/add" method="POST" name="addNewUser"  enctype="multipart/form-data">
-                                            <c:if test="${not empty messageAddSuccess}">
-                                                <b><h4 class="help-block" style="color: green" id="successEditMessage">${messageAddSuccess}</h4></b>
-                                                    <c:remove var="messageAddSuccess"/>
-                                                <br>
-                                            </c:if>
-                                            <div class="form-group">
-                                                <label for="saler" class="col-lg-2 col-sm-2 control-label">Assigned</label>
-                                                <div class="col-lg-10">
-                                                    <select class="form-control m-b-10" name="saler" disabled="">
-                                                        <option value="1">Saler 1</option>
-                                                        <option value="1" selected="">Saler 2</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="status" class="col-lg-2 col-sm-2 control-label">Status</label>
-                                                <div class="col-lg-10">
-                                                    <select class="form-control m-b-10" name="status">
-                                                        <option value="1">Ordered</option>
-                                                        <option value="2">Transporting</option>
-                                                        <option value="3">Delivered</option>
-                                                        <option value="4">Canceled</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="saleNote" class="col-lg-2 col-sm-2 control-label">Sale Notes</label>
-                                                <div class="col-lg-10">
-                                                    <input type="text" class="form-control" id="saleNote" placeholder="Sale Notes" name="saleNote" value="${addressValue}">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-lg-offset-2 col-lg-5">
-                                                    <button type="submit" class="btn btn-success">Save changes</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                                <h3>This order includes the following products</h3>
-                            </div><!-- /.box -->
+
+                                    <h3>This order includes the following products</h3>
+
+                                    <!--  THIS TABLE IS FOR OTHER SALES ONLY-->
+                                    <table class="table table-striped" id="orderDetailTable">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Category</th>
+                                            <th>Unit Price</th>
+                                            <th>Quantity</th>
+                                            <th>Sub Total</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Product 1</td>
+                                            <td>Category 1</td>  
+                                            <td><span class="price">
+                                                    <fmt:formatNumber value="12323" type="currency"/>
+                                                </span></td>  
+                                            <td>2</td>  
+                                            <td><span class="subtotal">
+                                                    <fmt:formatNumber value="2356" type="currency"/>
+                                                </span></td>  
+                                        </tr>
+                                        <tr>
+                                            <td>Product 2</td>
+                                            <td>Category 2</td>  
+                                            <td><span class="price">
+                                                    <fmt:formatNumber value="123123" type="currency"/>
+                                                </span></td>  
+                                            <td>2</td>  
+                                            <td><span class="subtotal">
+                                                    <fmt:formatNumber value="12465" type="currency"/>
+                                                </span></td>  
+                                        </tr>
+                                        <tr>
+                                            <td>Product 3</td>
+                                            <td>Category 1</td>  
+                                            <td><span class="price">
+                                                    <fmt:formatNumber value="1234" type="currency"/>
+                                                </span></td>  
+                                            <td>4</td>  
+                                            <td><span class="subtotal">
+                                                    <fmt:formatNumber value="1235" type="currency"/>
+                                                </span></td>  
+                                        </tr>
+                                    </table>
+                                    <!--  THIS FORM IS FOR ASSIGNED SALES AND THE MANAGER-->
+                                    <form:form method="POST" action="${pageContext.request.contextPath}/shoppingCart">
+                                        <table class="table table-striped" id="orderDetailTableEdit">
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Category</th>
+                                                <th>Unit Price</th>
+                                                <th>Quantity</th>
+                                                <th>Sub Total</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            <tr>
+                                                <td>Product 1</td>
+                                                <td>Category 1</td>  
+                                                <td><span class="price">
+                                                        <fmt:formatNumber value="123" type="currency"/>
+                                                    </span></td>  
+                                                <td><input
+                                                        path="cartLines[${varStatus.index}].quantity" value="2"/></td>  
+                                                <td><span class="subtotal">
+                                                        <fmt:formatNumber value="123" type="currency"/>
+                                                    </span></td>  
+                                                <td><button type="button" class="btn-xs btn-danger" onclick="window.location = '<%=request.getContextPath()%>/user/getUser?uid=${con.getUid()}'">Remove</button></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Product 2</td>
+                                                <td>Category 2</td>  
+                                                <td><span class="price">
+                                                        <fmt:formatNumber value="123" type="currency"/>
+                                                    </span></td>  
+                                                <td><input
+                                                        path="cartLines[${varStatus.index}].quantity" value="2"/></td>  
+                                                <td><span class="subtotal">
+                                                        <fmt:formatNumber value="123" type="currency"/>
+                                                    </span></td>  
+                                                <td><button type="button" class="btn-xs btn-danger" onclick="window.location = '<%=request.getContextPath()%>/user/getUser?uid=${con.getUid()}'">Remove</button></td>
+                                            </tr>
+                                        </table>
+
+                                        <div class="col-lg-offset-9 ">
+                                            <button type="submit" class="btn btn-success">Update Quantity</button>
+                                            <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/user/list'">Back</button>
+                                        </div>
+                                    </form:form>
+
+
+                                </div><!-- /.box -->
+                            </div>
                         </div>
                     </div>
                 </section><!-- /.content -->
