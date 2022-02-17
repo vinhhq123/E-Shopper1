@@ -54,8 +54,8 @@
                 </li>
 
                 <li>
-                    <a href="basic_form.html">
-                        <i class="fa fa-square"></i> <span>Slider List</span>
+                    <a href="<%=request.getContextPath()%>/order/list">
+                        <i class="fa fa-square"></i> <span>Order List</span>
                     </a>
                 </li>
 

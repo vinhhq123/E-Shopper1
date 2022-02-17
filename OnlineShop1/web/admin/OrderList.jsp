@@ -26,6 +26,8 @@
         <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
         <!-- Theme style -->
         <link href="${pageContext.request.contextPath}/admin/css/style.css" rel="stylesheet" type="text/css" />
+        <!-- Order Details CSS -->
+        <link href="${pageContext.request.contextPath}/admin/css/orderDetail.css" rel="stylesheet" type="text/css" />
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -76,12 +78,13 @@
                                                 </div>
                                                 <div class="form-group" style="margin-right:8px;">
                                                     <select class="select" aria-label="Default select example" name="salename" style="height: 30px">
-                                                        <c:if test="${empty valueRole}">
-                                                            <option selected value="">All Sales</option>
-                                                            <option value="1">Sale 1</option>
-                                                            <option value="2">Sale 2</option>
+                                                        <c:if test="${empty valueSaleName}">
+                                                            <option value="" >All Sales Name</option>
+                                                            <c:forEach items="${Sales}" var="ss">
+                                                                <option value="<c:out value="${ss.getUid()}"/>" > ${ss.getFullname()}</option>
+                                                            </c:forEach>
                                                         </c:if>
-                                                        <c:if test="${not empty valueRole}">
+                                                        <c:if test="${not empty valueSaleName}">
                                                             <option value="">All Roles</option>
                                                             <option value="1" <%=request.getAttribute("valueRole").equals("1") ? "selected" : ""%>>Admin</option>
                                                             <option value="2" <%=request.getAttribute("valueRole").equals("2") ? "selected" : ""%>>Manager</option>
@@ -94,9 +97,10 @@
                                                 <div class="form-group" style="margin-right:8px;">
                                                     <select class="select" aria-label="Default select example" name="status" style="height: 30px">
                                                         <c:if test="${empty valueStatus}">
-                                                            <option value="" selected="">All Status</option>
-                                                            <option value="1">Active</option>
-                                                            <option value="0">Inactive</option>
+                                                            <option value="" >All Statuses</option>
+                                                            <c:forEach items="${OrderStatuses}" var="os">
+                                                                <option value="<c:out value="${os}" />"> ${os}</option>
+                                                            </c:forEach>
                                                         </c:if>
                                                         <c:if test="${not empty valueStatus}">                         
                                                             <option value="">All Statuses</option>
@@ -124,46 +128,45 @@
                                             <th onclick="sortTable(6)">Sale Names</th>
                                             <th onclick="sortTable(7)">Status</th>
                                         </tr>
-                                        <tr>
-                                            <td><b><a href="#">1</a></b></td>
-                                            <td>12/02/2022</td>
-                                            <td>Customer 1</td>
-                                            <td>Customer Email 1</td>  
-                                            <td>1234567890</td>  
-                                            <td>1234567890</td>  
-                                            <td>Sales 1</td>  
-                                            <td><span class="label label-danger">Canceled</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><b><a href="#">2</a></b></td>
-                                            <td>12/02/2022</td>
-                                            <td>Customer 1</td>
-                                            <td>Customer Email 1</td>  
-                                            <td>1234567890</td>  
-                                            <td>1234567890</td>  
-                                            <td>Sales 1</td>  
-                                            <td><span class="label label-success">Delivered</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><b><a href="#">3</a></b></td>
-                                            <td>12/01/2022</td>
-                                            <td>Customer 2</td>
-                                            <td>Customer Email 1</td>  
-                                            <td>1234567890</td>  
-                                            <td>1234567890</td>  
-                                            <td>Sales 4</td>  
-                                            <td><span class="label label-warning">Transporting</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><b><a href="#">4</a></b></td>
-                                            <td>12/09/2022</td>
-                                            <td>Customer 6</td>
-                                            <td>Customer Email 1</td>  
-                                            <td>1234567890</td>  
-                                            <td>1234567890</td>  
-                                            <td>Sales 5</td>  
-                                            <td><span class="label label-primary">Ordered</span></td>
-                                        </tr>
+                                        <c:forEach items="${Orders}" var="order">
+                                            <tr>
+                                                <td><b><a href="#">${order.getOrderId()}</a></b></td>
+                                                <td><fmt:formatDate value="${order.getOrderDate()}" pattern="dd-MM-yyyy" /></td>
+                                                <c:forEach items="${Customers}" var="cus">
+                                                    <c:choose>
+                                                        <c:when test="${cus.getUid() == order.getCustomerId()}">
+                                                            <td>${cus.getFullname()}</td>
+                                                            <td>${cus.getEmail()}</td>
+                                                            <td>${cus.getPhone()}</td>
+                                                        </c:when>
+                                                    </c:choose>
+                                                </c:forEach>
+                                                <td><span class="subtotal">
+                                                    <fmt:formatNumber value="${order.getTotalCost()}"/>
+                                                </span></td>  
+                                                <c:forEach items="${Sales}" var="sa">
+                                                    <c:choose>
+                                                        <c:when test="${sa.getUid() == order.getSalesId()}">
+                                                            <td>${sa.getFullname()}</td>
+                                                        </c:when>
+                                                    </c:choose>
+                                                </c:forEach>
+                                                <td>
+                                                    <c:if test="${order.getOrderStatus() == 25}">
+                                                        <span class="label label-primary">Ordered</span>
+                                                    </c:if>
+                                                    <c:if test="${order.getOrderStatus() == 20}">
+                                                        <span class="label label-success">Delivered</span>
+                                                    </c:if>
+                                                    <c:if test="${order.getOrderStatus() == 21}">
+                                                        <span class="label label-warning">Transporting</span>
+                                                    </c:if>
+                                                    <c:if test="${order.getOrderStatus() == 22}">
+                                                        <span class="label label-danger">Canceled</span>
+                                                    </c:if>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
                                     </table>
 
                                     <br>
@@ -175,7 +178,7 @@
                                         <ul class="pagination pagination-sm no-margin pull-right">
                                             <c:if test="${currentPage != 1}">
                                                 <li><a
-                                                        href="<%=request.getContextPath()%>/user/list?currentPage=${currentPage-1}">Previous</a>
+                                                        href="<%=request.getContextPath()%>/order/list?currentPage=${currentPage-1}">Previous</a>
                                                 </li>
                                             </c:if>
 
@@ -188,7 +191,7 @@
                                                     </c:when>
                                                     <c:otherwise>
                                                         <li><a
-                                                                href="<%=request.getContextPath()%>/user/list?currentPage=${i}">${i}</a>
+                                                                href="<%=request.getContextPath()%>/order/list?currentPage=${i}">${i}</a>
                                                         </li>
                                                     </c:otherwise>
                                                 </c:choose>
@@ -196,7 +199,7 @@
 
                                             <c:if test="${currentPage lt numOfPage}">
                                                 <li><a
-                                                        href="<%=request.getContextPath()%>/user/list?currentPage=${currentPage+1}">Next</a>
+                                                        href="<%=request.getContextPath()%>/order/list?currentPage=${currentPage+1}">Next</a>
                                                 </li>
                                             </c:if>
                                         </ul>
