@@ -61,36 +61,34 @@
                                     <div class="panel-body table-responsive">
                                         <div class="row">
                                             <div class="col-sm-11">
-                                                <form class="form-inline" role="form" action="<%=request.getContextPath()%>">
+                                                <form class="form-inline" role="form" action="<%=request.getContextPath()%>/order/search" method="POST">
                                                 <div class="form-group" style="margin-right:12px;">
                                                     <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                                                    <input type="text" name="table_search" class="form-control" id="exampleInputEmail2" placeholder="ID , Customer Name" value="${requestScope.searchValue}" onblur="this.value = removeSpaces(this.value);">
+                                                    <input type="text" name="table_search" class="form-control" id="exampleInputEmail2" placeholder="ID , Customer Name" value="${requestScope.valueSearch}" onblur="this.value = removeSpaces(this.value);">
                                                 </div>
                                                 <div class="form-group" style="margin-right:12px;">
                                                     <label for="from" class="sr-only"><b>From </b></label>
                                                     <input type="text" class="form-control" id="from" name="from" 
-                                                           placeholder="From" onfocus="(this.type = 'date')">
+                                                           placeholder="From" onfocus="(this.type = 'date')" value="${requestScope.valueFrom}" >
                                                 </div>
                                                 <div class="form-group" style="margin-right:12px;">
                                                     <label for="to" class="sr-only"><b>To </b></label>
                                                     <input type="text" class="form-control" id="to" name="to"
-                                                           placeholder="To" onfocus="(this.type = 'date')">
+                                                           placeholder="To" onfocus="(this.type = 'date')" value="${requestScope.valueTo}">
                                                 </div>
                                                 <div class="form-group" style="margin-right:8px;">
                                                     <select class="select" aria-label="Default select example" name="salename" style="height: 30px">
-                                                        <c:if test="${empty valueSaleName}">
-                                                            <option value="" >All Sales Name</option>
+                                                        <c:if test="${empty valueSalesId}">
+                                                            <option value="0" >All Sales Name</option>
                                                             <c:forEach items="${Sales}" var="ss">
                                                                 <option value="<c:out value="${ss.getUid()}"/>" > ${ss.getFullname()}</option>
                                                             </c:forEach>
                                                         </c:if>
-                                                        <c:if test="${not empty valueSaleName}">
-                                                            <option value="">All Roles</option>
-                                                            <option value="1" <%=request.getAttribute("valueRole").equals("1") ? "selected" : ""%>>Admin</option>
-                                                            <option value="2" <%=request.getAttribute("valueRole").equals("2") ? "selected" : ""%>>Manager</option>
-                                                            <option value="3" <%=request.getAttribute("valueRole").equals("3") ? "selected" : ""%>>Sales</option>
-                                                            <option value="4" <%=request.getAttribute("valueRole").equals("4") ? "selected" : ""%>>Marketing</option>
-                                                            <option value="5" <%=request.getAttribute("valueRole").equals("5") ? "selected" : ""%>>Customer</option>
+                                                        <c:if test="${not empty valueSalesId}">
+                                                            <option value="0" >All Sales Name</option>
+                                                            <c:forEach items="${Sales}" var="ss">
+                                                                <option value="<c:out value="${ss.getUid()}"/>" <c:if test="${ss.getUid() == valueSalesId}">selected</c:if>> ${ss.getFullname()}</option>
+                                                            </c:forEach>
                                                         </c:if>
                                                     </select>
                                                 </div>
@@ -102,10 +100,11 @@
                                                                 <option value="<c:out value="${os}" />"> ${os}</option>
                                                             </c:forEach>
                                                         </c:if>
-                                                        <c:if test="${not empty valueStatus}">                         
-                                                            <option value="">All Statuses</option>
-                                                            <option value="1" <%=request.getAttribute("valueStatus").equals("1") ? "selected" : ""%>>Active</option>
-                                                            <option value="0" <%=request.getAttribute("valueStatus").equals("0") ? "selected" : ""%>>Inactive</option>
+                                                        <c:if test="${not empty valueStatus}"> 
+                                                            <option value="" >All Statuses</option>
+                                                            <c:forEach items="${OrderStatuses}" var="os">
+                                                                <option value="<c:out value="${os}" />" <c:if test="${os eq valueStatus}">selected</c:if>> ${os}</option>
+                                                            </c:forEach>
                                                         </c:if>
                                                     </select>
                                                 </div>
@@ -142,11 +141,11 @@
                                                     </c:choose>
                                                 </c:forEach>
                                                 <td><span class="subtotal">
-                                                    <fmt:formatNumber value="${order.getTotalCost()}"/>
-                                                </span></td>  
-                                                <c:forEach items="${Sales}" var="sa">
-                                                    <c:choose>
-                                                        <c:when test="${sa.getUid() == order.getSalesId()}">
+                                                        <fmt:formatNumber value="${order.getTotalCost()}"/>
+                                                    </span></td>  
+                                                    <c:forEach items="${Sales}" var="sa">
+                                                        <c:choose>
+                                                            <c:when test="${sa.getUid() == order.getSalesId()}">
                                                             <td>${sa.getFullname()}</td>
                                                         </c:when>
                                                     </c:choose>
@@ -170,9 +169,9 @@
                                     </table>
 
                                     <br>
-                                    <!-- message no
-                                    
-                                    order found-->
+                                    <c:if test="${requestScope.Orders.isEmpty()}">
+                                        <p style="text-align: center">No matching Orders found </p>
+                                    </c:if> 
                                     <br>
                                     <div class="table-foot">
                                         <ul class="pagination pagination-sm no-margin pull-right">

@@ -10,6 +10,7 @@ import dal.SettingDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -24,7 +25,7 @@ import model.User;
  *
  * @author VINH
  */
-@WebServlet(name = "OrderController", urlPatterns = {"/order/list"})
+@WebServlet(name = "OrderController", urlPatterns = {"/order/list", "/order/search"})
 public class OrderController extends HttpServlet {
 
     /**
@@ -65,12 +66,15 @@ public class OrderController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                String action = request.getServletPath();
+        String action = request.getServletPath();
         System.out.println(action);
 
         switch (action) {
             case "/order/list":
                 getListOrders(request, response);
+                break;
+            case "/order/search":
+                searchOrder(request, response);
                 break;
 
         }
@@ -121,7 +125,6 @@ public class OrderController extends HttpServlet {
         List<String> orderStatuses = new ArrayList<>();
         try {
 
-            
             customers = userDAO.getAllUserByRole(5);
             sales = userDAO.getAllUserByRole(3);
             orders = orderDAO.getOrderByPage(currentPage, recordsPerPage);
@@ -147,5 +150,87 @@ public class OrderController extends HttpServlet {
             request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
         }
 
+    }
+
+    protected void searchOrder(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        int salesId = 0;
+        int orderStatus = 0;
+        int orderId = 0;
+
+        String salesName = "";
+        String status = "";
+        String dateFrom = "";
+        String dateTo = "";
+        String searchField = request.getParameter("table_search").trim();
+
+        try {
+            orderId = Integer.parseInt(searchField);
+        } catch (NumberFormatException ex) {
+            orderId = 0;
+        }
+        System.out.println(orderId);
+
+        if (request.getParameter("status") != null) {
+            status = request.getParameter("status");
+            switch (status) {
+                case "Ordered":
+                    orderStatus = 25;
+                    break;
+                case "Delivered":
+                    orderStatus = 20;
+                    break;
+                case "Transporting":
+                    orderStatus = 21;
+                    break;
+                case "Canceled":
+                    orderStatus = 22;
+                    break;
+            }
+        }
+
+        salesId = Integer.parseInt(request.getParameter("salename"));
+        if (request.getParameter("from") != null) {
+            dateFrom = request.getParameter("from");
+        }
+        if (request.getParameter("to") != null) {
+            dateTo = request.getParameter("to");
+        }
+
+        System.out.println("date From " + dateFrom);
+        System.out.println("date To" + dateTo);
+
+        UserDAO userDAO = new UserDAO();
+        OrderDAO orderDAO = new OrderDAO();
+        SettingDAO settingDAO = new SettingDAO();
+        List<Order> orders = new ArrayList<>();
+        List<User> customers = new ArrayList<>();
+        List<User> sales = new ArrayList<>();
+        List<String> orderStatuses = new ArrayList<>();
+
+        try {
+            customers = userDAO.getAllUserByRole(5);
+            sales = userDAO.getAllUserByRole(3);
+            orderStatuses = settingDAO.getSettingOrderValue();
+            orders = orderDAO.searchOrder(searchField, dateFrom, dateTo, salesId, orderStatus, orderId);
+
+            request.setAttribute("Orders", orders);
+            request.setAttribute("Customers", customers);
+            request.setAttribute("Sales", sales);
+            request.setAttribute("OrderStatuses", orderStatuses);
+            request.setAttribute("valueStatus", status);
+            request.setAttribute("valueSalesId", salesId);
+            request.setAttribute("valueSearch", searchField);
+//                SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
+//                request.setAttribute("valueFrom", sdf.parse(dateFrom));
+//                request.setAttribute("valueTo", sdf.parse(dateTo));
+            request.setAttribute("valueFrom", dateFrom);
+            request.setAttribute("valueTo", dateTo);
+            request.getRequestDispatcher("/admin/OrderList.jsp").forward(request, response);
+        } catch (Exception ex) {
+            System.out.println("Exception getListOrders ===== " + ex);
+            request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
+        }
     }
 }

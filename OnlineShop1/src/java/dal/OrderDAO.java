@@ -89,20 +89,26 @@ public class OrderDAO extends DBContext {
         return orders;
     }
 
-    public List<Order> searchOrder(String key, String from, String to, int salesId, int status) throws Exception {
+    public List<Order> searchOrder(String key, String from, String to, int salesId, int status, int orderId) throws Exception {
         List<Order> orders = new ArrayList<>();
         String sql = "select o.orderId,o.orderDate,o.customerId,o.totalCost,o.salesId,o.orderStatus ,u.fullname\n"
-                + "from Orders o join User u on u.uid = o.customerId "
-                + "where (o.orderId = " + key + " or u.fullname like '%" + key + "%') ";
+                + "from Orders o join User u on u.uid = o.customerId where ";
+        if (orderId != 0) {
+            sql += "o.orderId = " + orderId;
+        } else {
+            sql += "u.fullname like '%" + key + "%' ";
+        }
         if (salesId != 0) {
-            sql += "and o.salesId = " + salesId;
+            sql += " and o.salesId = " + salesId;
         }
         if (status != 0) {
-            sql += "and o.orderStatus = " + status;
+            sql +=  " and o.orderStatus = " + status;
         }
-        if (from != "" && to != "") {
-            sql += "and (o.orderDate between '" + from + "' and '" + to + "');";
+        if (!from.isEmpty() && !to.isEmpty()) {
+            sql += " and (o.orderDate between '" + from + "' and '" + to + "');";
         }
+        
+        System.out.println(sql);
         Order order = null;
         try {
             connection = getConnection();
