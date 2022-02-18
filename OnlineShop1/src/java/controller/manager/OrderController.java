@@ -13,6 +13,8 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,7 +27,7 @@ import model.User;
  *
  * @author VINH
  */
-@WebServlet(name = "OrderController", urlPatterns = {"/order/list", "/order/search"})
+@WebServlet(name = "OrderController", urlPatterns = {"/order/list", "/order/search", "/order/getOrder"})
 public class OrderController extends HttpServlet {
 
     /**
@@ -75,6 +77,9 @@ public class OrderController extends HttpServlet {
                 break;
             case "/order/search":
                 searchOrder(request, response);
+                break;
+            case "/order/getOrder":
+                getOrderByOrderId(request, response);
                 break;
 
         }
@@ -231,6 +236,54 @@ public class OrderController extends HttpServlet {
         } catch (Exception ex) {
             System.out.println("Exception getListOrders ===== " + ex);
             request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
+        }
+    }
+
+    protected void getOrderByOrderId(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        int orderId = Integer.parseInt(request.getParameter("orderId"));
+        String orderStatus = "";
+
+        UserDAO userDAO = new UserDAO();
+        OrderDAO orderDAO = new OrderDAO();
+        SettingDAO settingDAO = new SettingDAO();
+        List<User> sales = new ArrayList<>();
+        List<String> orderStatuses = new ArrayList<>();
+        Order order = new Order();
+        User currentCustomer = new User();
+        User currentSale = new User();
+
+        try {
+            order = orderDAO.getOrderByOrderId(orderId);
+            currentCustomer = userDAO.getUserByUserId(order.getCustomerId());
+            currentSale = userDAO.getUserByUserId(order.getSalesId());
+            orderStatuses = settingDAO.getSettingOrderValue();
+            sales = userDAO.getAllUserByRole(3);
+            switch (order.getOrderStatus()) {
+                case 20:
+                    orderStatus = "Delivered";
+                    break;
+                case 21:
+                    orderStatus = "Transporting";
+                    break;
+                case 22:
+                    orderStatus = "Canceled";
+                    break;
+                case 25:
+                    orderStatus = "Ordered";
+                    break;
+            }
+
+            request.setAttribute("CurrentOrder", order);
+            request.setAttribute("CurrentCustomer", currentCustomer);
+            request.setAttribute("CurrentSale", currentSale);
+            request.setAttribute("OrderStatuses", orderStatuses);
+            request.setAttribute("Sales", sales);
+            request.setAttribute("CurrentOrderStatus", orderStatus);
+            request.getRequestDispatcher("/admin/OrderDetail.jsp").forward(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

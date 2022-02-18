@@ -129,7 +129,7 @@
                                         </tr>
                                         <c:forEach items="${Orders}" var="order">
                                             <tr>
-                                                <td><b><a href="#">${order.getOrderId()}</a></b></td>
+                                                <td><b><a href="<%=request.getContextPath()%>/order/getOrder?orderId=<c:out value="${order.getOrderId()}"/>">${order.getOrderId()}</a></b></td>
                                                 <td><fmt:formatDate value="${order.getOrderDate()}" pattern="dd-MM-yyyy" /></td>
                                                 <c:forEach items="${Customers}" var="cus">
                                                     <c:choose>

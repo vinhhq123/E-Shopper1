@@ -64,17 +64,17 @@
                                             <div class="col-lg-5" >
                                                 <h3><b>Customer Information</b></h3>
                                                 <ul class="ulclass">
-                                                    <li>Order ID : ${orderInfo.customerName}</li>
-                                                <li>Customer Name: ${orderInfo.customerName}</li>
-                                                <li>Email: ${orderInfo.customerEmail}</li>
-                                                <li>Mobile: ${orderInfo.customerPhone}</li>
-                                                <li>Order Date: ${orderInfo.customerAddress}</li>
+                                                    <li>Order ID :  <b><i>${CurrentOrder.getOrderId()}</i></b></li>
+                                                <li>Customer Name : <b><i>${CurrentCustomer.getFullname()}</i></b></li>
+                                                <li>Email :  <b><i>${CurrentCustomer.getEmail()}</i></b></li>
+                                                <li>Mobile : <b><i>${CurrentCustomer.getPhone()}</i></b></li>
+                                                <li>Order Date : <b><i><fmt:formatDate value="${CurrentOrder.getOrderDate()}" pattern="dd-MM-yyyy" /></i></b></li>
                                             </ul>
                                             <h3><b>Order Summary</b></h3>
                                             <ul class="ulclass">
-                                                <li>Total:
+                                                <li>Total : 
                                                     <span class="total">
-                                                        <fmt:formatNumber value="123" type="currency"/>
+                                                        <fmt:formatNumber value="${CurrentOrder.getTotalCost()}" type="currency"/>
                                                     </span></li>
                                             </ul>
                                             <br> 
@@ -91,9 +91,10 @@
                                                 <div class="form-group">
                                                     <label for="saler" class="col-lg-2 col-sm-2 control-label">Assigned</label>
                                                     <div class="col-lg-10">
-                                                        <select class="form-control m-b-10" name="saler" disabled="">
-                                                            <option value="1">Saler 1</option>
-                                                            <option value="1" selected="">Saler 2</option>
+                                                        <select class="form-control m-b-10" name="saler" disabled>
+                                                            <c:forEach items="${Sales}" var="sal">
+                                                                <option value="<c:out value="${sal.getUid()}"/>" <c:if test="${sal.getUid() == CurrentSale.getUid()}">selected</c:if>>${sal.getFullname()}</option>
+                                                            </c:forEach>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -101,10 +102,9 @@
                                                     <label for="status" class="col-lg-2 col-sm-2 control-label">Status</label>
                                                     <div class="col-lg-10">
                                                         <select class="form-control m-b-10" name="status">
-                                                            <option value="1">Ordered</option>
-                                                            <option value="2">Transporting</option>
-                                                            <option value="3">Delivered</option>
-                                                            <option value="4">Canceled</option>
+                                                            <c:forEach items="${OrderStatuses}" var="oss">
+                                                                <option value="<c:out value="${oss}"/>" <c:if test="${oss eq CurrentOrderStatus}">selected</c:if>>${oss}</option>
+                                                            </c:forEach>
                                                         </select>
                                                     </div>
                                                 </div>

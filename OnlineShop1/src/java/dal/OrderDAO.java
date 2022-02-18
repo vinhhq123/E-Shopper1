@@ -6,9 +6,11 @@
 package dal;
 
 import dbcontext.DBContext;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Order;
@@ -102,12 +104,12 @@ public class OrderDAO extends DBContext {
             sql += " and o.salesId = " + salesId;
         }
         if (status != 0) {
-            sql +=  " and o.orderStatus = " + status;
+            sql += " and o.orderStatus = " + status;
         }
         if (!from.isEmpty() && !to.isEmpty()) {
             sql += " and (o.orderDate between '" + from + "' and '" + to + "');";
         }
-        
+
         System.out.println(sql);
         Order order = null;
         try {
@@ -138,6 +140,41 @@ public class OrderDAO extends DBContext {
             }
         }
         return orders;
+    }
+
+    public Order getOrderByOrderId(int orderId) throws Exception {
+
+        String sql = "select * from orders where orderId = " + orderId;
+        System.out.println(sql);
+        Order order = null;
+
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                order = new Order();
+                order.setOrderId(results.getInt("orderId"));
+                order.setCustomerId(results.getInt("customerId"));
+                order.setTotalCost(results.getFloat("totalCost"));
+                order.setSalesId(results.getInt("salesId"));
+                order.setOrderStatus(results.getInt("orderStatus"));
+                order.setOrderDate(results.getDate("orderDate"));
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (SQLException | IOException ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return order;
     }
 
 }
