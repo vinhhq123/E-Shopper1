@@ -39,7 +39,7 @@ import resources.SendEmail;
  */
 @MultipartConfig(maxFileSize = 16177215)
 @WebServlet(name = "UserController", urlPatterns = {"/user/list", "/user/search",
-    "/user/getUser", "/user/update", "/user/add"})
+    "/user/getUser", "/user/update", "/user/add", "/user/toadd"})
 public class UserController extends HttpServlet {
 
     /**
@@ -86,7 +86,10 @@ public class UserController extends HttpServlet {
             case "/user/list":
                 userList(request, response);
                 break;
-            
+            case "/user/toadd":
+                toAdd(request, response);
+                break;
+
         }
 
     }
@@ -199,19 +202,39 @@ public class UserController extends HttpServlet {
         String uid = request.getParameter("uid");
         int userId = Integer.parseInt(uid);
         String userGender = "1";
+        String userRole = "";
 
         UserDAO userDAO = new UserDAO();
         User currentUser = new User();
+        List<String> roles = new ArrayList<>();
 
         try {
             currentUser = userDAO.getUserByUserId(userId);
             if (!currentUser.isGender()) {
                 userGender = "0";
             }
+            switch (currentUser.getRole()) {
+                case 1:
+                    userRole = "admin";
+                    break;
+                case 2:
+                    userRole = "manager";
+                    break;
+                case 3:
+                    userRole = "sales";
+                    break;
+                case 4:
+                    userRole = "marketing";
+                    break;
+                case 5:
+                    userRole = "customer";
+                    break;
+            }
 
-            String userRole = currentUser.getRole() + "";
             String accountStatus = currentUser.getAccountStatus() + "";
+            roles = userDAO.getSystemRole();
 
+            request.setAttribute("roles", roles);
             request.setAttribute("currentUser", currentUser);
             request.setAttribute("userGender", userGender);
             request.setAttribute("currentUserRole", userRole);
@@ -236,6 +259,7 @@ public class UserController extends HttpServlet {
         boolean genderbit = true;
         int accountStaus = 0;
         int accountId = 0;
+        int accountRole = 0;
 
         phone = request.getParameter("phone");
         name = request.getParameter("name").trim();
@@ -279,12 +303,32 @@ public class UserController extends HttpServlet {
         }
 
         UserDAO userDAO = new UserDAO();
+        List<String> roles = new ArrayList<>();
         // Get session
         HttpSession session = request.getSession();
-        int accountRole = Integer.parseInt(role);
+
+        switch (role) {
+            case "admin":
+                accountRole = 1;
+                break;
+            case "manager":
+                accountRole = 2;
+                break;
+            case "sales":
+                accountRole = 3;
+                break;
+            case "marketing":
+                accountRole = 4;
+                break;
+            case "customer":
+                accountRole = 5;
+                break;
+        }
         try {
+            roles = userDAO.getSystemRole();
             int checkUpdateUser = userDAO.updateUser(name, title, genderbit,
                     phone, address, inputStream, accountStaus, accountRole, uid);
+            request.setAttribute("roles", roles);
             if (checkUpdateUser > 0) {
                 successMessage = "Update user succesfully ";
                 session.setAttribute("successEditMessage", successMessage);
@@ -317,6 +361,7 @@ public class UserController extends HttpServlet {
         String base64Image = "";
         boolean genderbit = true;
         int accountStaus = 0;
+        int convertedRole = 0;
 
         email = request.getParameter("email").trim();
         phone = request.getParameter("phone");
@@ -364,11 +409,32 @@ public class UserController extends HttpServlet {
         User user = null;
         SendEmail se = new SendEmail();
         PasswordEncrypt passwordEncrypt = new PasswordEncrypt();
+        List<String> roles = new ArrayList<>();
+        
+                switch (role) {
+            case "admin":
+                convertedRole = 1;
+                break;
+            case "manager":
+                convertedRole = 2;
+                break;
+            case "sales":
+                convertedRole = 3;
+                break;
+            case "marketing":
+                convertedRole = 4;
+                break;
+            case "customer":
+                convertedRole = 5;
+                break;
+        }
+                
         // Get session
         HttpSession session = request.getSession();
 
         try {
             User checkUserExisted = userDAO.checkAccountExist(email);
+            roles = userDAO.getSystemRole();
             request.setAttribute("emailValue", email);
             request.setAttribute("phoneValue", phone);
             request.setAttribute("nameValue", name);
@@ -377,6 +443,7 @@ public class UserController extends HttpServlet {
             request.setAttribute("roleValue", role);
             request.setAttribute("genderValue", gender);
             request.setAttribute("statusValue", status);
+            request.setAttribute("roles", roles);
             if (checkUserExisted != null) {
                 // Get image to display in string
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -402,10 +469,10 @@ public class UserController extends HttpServlet {
                 request.getRequestDispatcher("/admin/AddNewUser.jsp").forward(request, response);
             } else {
                 // Insert into Account table with user entered email and default password is 123
-                int convertedRole = Integer.parseInt(role);
+                
                 String password = passwordEncrypt.generateEncryptedPassword("123");
                 int checkAddUser = userDAO.addNewUserWithImage(email, name, title,
-                        genderbit, phone, address, inputStream, convertedRole, accountStaus,password);
+                        genderbit, phone, address, inputStream, convertedRole, accountStaus, password);
                 if (checkAddUser > 0) {
                     boolean checkEmail = se.sendEmailActivation(email, name);
                     if (checkEmail) {
@@ -428,5 +495,16 @@ public class UserController extends HttpServlet {
         }
 
     }
-    
+
+    protected void toAdd(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        List<String> roles = new ArrayList<>();
+        UserDAO userDAO = new UserDAO();
+        roles = userDAO.getSystemRole();
+        request.setAttribute("roles", roles);
+        request.getRequestDispatcher("/admin/AddNewUser.jsp").forward(request, response);
+
+    }
+
 }
