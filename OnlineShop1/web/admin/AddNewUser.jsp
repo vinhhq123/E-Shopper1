@@ -157,20 +157,16 @@
                                                 <div class="form-group">
                                                     <label for="role" class="col-lg-2 col-sm-2 control-label">Role</label>
                                                     <div class="col-lg-10">
-                                                        <select class="form-control m-b-10" name="role">
+                                                        <select class="form-control m-b-10" name="role" required>
                                                             <c:if test="${empty roleValue}">
-                                                                <option value="1" selected>Admin</option>
-                                                                <option value="2">Manager</option>
-                                                                <option value="3">Sales</option>
-                                                                <option value="4">Marketing</option>
-                                                                <option value="5">Customer</option>
-                                                            </c:if>
-                                                            <c:if test="${not empty roleValue}">
-                                                                <option value="1" <%=request.getAttribute("roleValue").equals("1") ? "selected" : ""%>>Admin</option>
-                                                                <option value="2" <%=request.getAttribute("roleValue").equals("2") ? "selected" : ""%>>Manager</option>
-                                                                <option value="3" <%=request.getAttribute("roleValue").equals("3") ? "selected" : ""%>>Sales</option>
-                                                                <option value="4" <%=request.getAttribute("roleValue").equals("4") ? "selected" : ""%>>Marketing</option>
-                                                                <option value="5" <%=request.getAttribute("roleValue").equals("5") ? "selected" : ""%>>Customer</option>
+                                                                <c:forEach items="${roles}" var="r">
+                                                                    <option value="<c:out value="${r}"/>">${r}</option>
+                                                                    </c:forEach>
+                                                                </c:if>
+                                                                <c:if test="${not empty roleValue}">
+                                                                    <c:forEach items="${roles}" var="role">
+                                                                        <option value="<c:out value="${role}"/>" <c:if test="${role eq roleValue}">selected</c:if>>${role}</option>
+                                                                </c:forEach>
                                                             </c:if>
                                                         </select>
                                                     </div>

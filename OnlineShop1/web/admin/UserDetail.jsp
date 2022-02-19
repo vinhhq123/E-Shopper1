@@ -39,31 +39,31 @@
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
         <jsp:include page="HeaderAdmin.jsp"></jsp:include>
-        <div class="wrapper row-offcanvas row-offcanvas-left">
-            <!-- Left side column. contains the logo and sidebar -->
+            <div class="wrapper row-offcanvas row-offcanvas-left">
+                <!-- Left side column. contains the logo and sidebar -->
             <jsp:include page="SideBarAdmin.jsp"></jsp:include>
 
-            <!-- Right side column. Contains the navbar and content of the page -->
-            <aside class="right-side">
+                <!-- Right side column. Contains the navbar and content of the page -->
+                <aside class="right-side">
 
-                <!-- Main content -->
-                <section class="content">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="panel">
-                                <header class="panel-heading">
-                                    <b>User Details</b>
+                    <!-- Main content -->
+                    <section class="content">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="panel">
+                                    <header class="panel-heading">
+                                        <b>User Details</b>
 
-                                </header>
-                                <!-- <div class="box-header"> -->
-                                <!-- <h3 class="box-title">Responsive Hover Table</h3> -->
+                                    </header>
+                                    <!-- <div class="box-header"> -->
+                                    <!-- <h3 class="box-title">Responsive Hover Table</h3> -->
 
-                                <!-- </div> -->
-                                <div class="row">
-                                    <div class="col-lg-1"></div>
-                                    <div class="col-lg-7">
-                                        <div class="panel-body table-responsive">
-                                            <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/user/update?uid=<c:out value="${currentUser.uid}"/>" method="POST" name="editUser"  enctype="multipart/form-data">
+                                    <!-- </div> -->
+                                    <div class="row">
+                                        <div class="col-lg-1"></div>
+                                        <div class="col-lg-7">
+                                            <div class="panel-body table-responsive">
+                                                <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/user/update?uid=<c:out value="${currentUser.uid}"/>" method="POST" name="editUser"  enctype="multipart/form-data">
                                                 <c:if test="${not empty successEditMessage}">
                                                     <h4 class="help-block" style="color: green" id="successEditMessage">${successEditMessage}</h4>
                                                     <c:remove var="successEditMessage"/>
@@ -141,12 +141,12 @@
                                                 <div class="form-group">
                                                     <label for="role" class="col-lg-2 col-sm-2 control-label">Role</label>
                                                     <div class="col-lg-10">
-                                                        <select class="form-control m-b-10" name="role">
-                                                            <option value="1" <%=request.getAttribute("currentUserRole").equals("1") ? "selected" : ""%>>Admin</option>
-                                                            <option value="2" <%=request.getAttribute("currentUserRole").equals("2") ? "selected" : ""%>>Manager</option>
-                                                            <option value="3" <%=request.getAttribute("currentUserRole").equals("3") ? "selected" : ""%>>Sales</option>
-                                                            <option value="4" <%=request.getAttribute("currentUserRole").equals("4") ? "selected" : ""%>>Marketing</option>
-                                                            <option value="5" <%=request.getAttribute("currentUserRole").equals("5") ? "selected" : ""%>>Customer</option>
+                                                        <select class="form-control m-b-10" name="role" required>
+                                                            <c:if test="${not empty currentUserRole}">
+                                                                <c:forEach items="${roles}" var="r">
+                                                                    <option value="<c:out value="${r}"/>" <c:if test="${r eq currentUserRole}">selected</c:if>>${r}</option>
+                                                                </c:forEach>
+                                                            </c:if>
                                                         </select>
                                                     </div>
                                                 </div>

@@ -3,54 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/marketing/PostController.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/manager/EditProductController.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/colorlib-regform-4/form_add.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/Addnewcustomer.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/manager/AddProductController.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/manager/SearchProductController.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/js/UserList.js</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/admin/SettingController.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/css/UserDetail.css</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/AddNewUser.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/dal/UserDAO.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/colorlib-regform-4/form_edit.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/manager/ProductsController.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/marketing/BlogController.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/nbproject/build-impl.xml</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/js/UserDetail.js</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/js/AddNewUser.js</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/UserDetail.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/manager/CustomerController.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/user/RegisterController.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/dal/PostDAO.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/dbcontext/DBContext.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/model/PostList.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/resources/setting.properties</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/dal/ProductDAO.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/SettingList.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/SideBarManager.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/CusList.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/model/Product.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/ProductAdd.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/manager/ProductListController.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/header.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/blog-details.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/model/User.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/SideBarAdmin.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/SettingAdd.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/ProductDetails.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/UserList.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/HeaderAdmin.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/user/LoginController.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/controller/admin/UserController.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/user/Register.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/index.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/ProductList.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/src/java/dal/SettingDAO.java</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/CusDetail.jsp</file>
-            <file>file:/C:/Users/HL2020/Desktop/g6/g6/OnlineShop1/web/admin/SettingEdit.jsp</file>
+            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/dal/OrderDAO.java</file>
+            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/controller/manager/OrderController.java</file>
+            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/controller/admin/UserController.java</file>
+            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/web/admin/OrderList.jsp</file>
+            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/web/admin/OrderDetail.jsp</file>
+            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/web/admin/css/orderDetail.css</file>
         </group>
     </open-files>
 </project-private>

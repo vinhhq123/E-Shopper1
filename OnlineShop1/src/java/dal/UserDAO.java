@@ -303,7 +303,7 @@ public class UserDAO extends DBContext {
                 user.setGender(results.getBoolean("gender"));
                 user.setPhone(results.getString("phone"));
                 user.setAddress(results.getString("address"));
-                
+
                 Blob blob = results.getBlob("avatar");
                 if (blob != null) {
 
@@ -643,7 +643,8 @@ public class UserDAO extends DBContext {
         }
         return users;
     }
-     public int updateCus(String fullname, String title, boolean gender,
+
+    public int updateCus(String fullname, String title, boolean gender,
             String phone, String address, InputStream avatar, int accountStatus,
             int uid) throws SQLException {
         String sql = "UPDATE onlineshop1.user\n"
@@ -663,7 +664,7 @@ public class UserDAO extends DBContext {
             preparedStatement.setString(4, phone);
             preparedStatement.setString(5, address);
             preparedStatement.setInt(6, accountStatus);
-            
+
             if (avatar != null) {
                 preparedStatement.setBlob(7, avatar);
                 preparedStatement.setInt(8, uid);
@@ -685,7 +686,8 @@ public class UserDAO extends DBContext {
         }
         return row;
     }
-     public User getCusByUserId(int uid) throws Exception {
+
+    public User getCusByUserId(int uid) throws Exception {
 
         String sql = "select u.*,s.settingStatus from user as u join setting as s "
                 + " on u.accountStatus = s.settingId where u.role=5 and where u.uid =  " + uid;
@@ -746,6 +748,69 @@ public class UserDAO extends DBContext {
             }
         }
         return user;
+    }
+
+    public List<String> getSystemRole() {
+        List<String> roles = new ArrayList<>();
+        String role = null;
+        String sql = "select distinct settingValue from setting where settingType = 1;";
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                role = new String();
+                role = results.getString(1);
+                roles.add(role);
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return roles;
+    }
+
+    public List<User> getAllUserByRole(int role) {
+
+        List<User> users = new ArrayList<>();
+        User user = null;
+
+        try {
+            String sql = "select * from User where role = " + role;
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                user = new User();
+                user.setUid(results.getInt("uid"));
+                user.setEmail(results.getString("email"));
+                user.setFullname(results.getString("fullname"));
+                user.setPhone(results.getString("phone"));
+                users.add(user);
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return users;
     }
 
 }
