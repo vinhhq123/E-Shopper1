@@ -64,15 +64,15 @@
                                             <div class="col-lg-5" >
                                                 <h3><b>Customer Information</b></h3>
                                                 <ul class="ulclass">
-                                                    <li>Order ID :  <b><i>${CurrentOrder.getOrderId()}</i></b></li>
-                                                <li>Customer Name : <b><i>${CurrentCustomer.getFullname()}</i></b></li>
-                                                <li>Email :  <b><i>${CurrentCustomer.getEmail()}</i></b></li>
-                                                <li>Mobile : <b><i>${CurrentCustomer.getPhone()}</i></b></li>
-                                                <li>Order Date : <b><i><fmt:formatDate value="${CurrentOrder.getOrderDate()}" pattern="dd-MM-yyyy" /></i></b></li>
+                                                    <li class="lii">Order ID :  <b><i>${CurrentOrder.getOrderId()}</i></b></li>
+                                                <li class="lii">Customer Name : <b><i>${CurrentCustomer.getFullname()}</i></b></li>
+                                                <li class="lii">Email :  <b><i>${CurrentCustomer.getEmail()}</i></b></li>
+                                                <li class="lii">Mobile : <b><i>${CurrentCustomer.getPhone()}</i></b></li>
+                                                <li class="lii">Order Date : <b><i><fmt:formatDate value="${CurrentOrder.getOrderDate()}" pattern="dd-MM-yyyy" /></i></b></li>
                                             </ul>
                                             <h3><b>Order Summary</b></h3>
                                             <ul class="ulclass">
-                                                <li>Total : 
+                                                <li class="lii">Total : 
                                                     <span class="total">
                                                         <fmt:formatNumber value="${CurrentOrder.getTotalCost()}" type="currency"/>
                                                     </span></li>
@@ -109,9 +109,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="saleNote" class="col-lg-2 col-sm-2 control-label">Sale Notes</label>
+                                                    <label for="saleNote" class="col-lg-2 col-sm-2 control-label">Notes</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="saleNote" placeholder="Sale Notes" name="saleNote" value="${addressValue}">
+                                                        <textarea id="saleNote" placeholder="Sale Notes" name="saleNote" style="width: 430px;">${CurrentOrder.getSalesNote()}</textarea>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">

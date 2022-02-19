@@ -74,6 +74,7 @@ public class OrderDAO extends DBContext {
                 order.setSalesId(results.getInt("salesId"));
                 order.setOrderStatus(results.getInt("orderStatus"));
                 order.setOrderDate(results.getDate("orderDate"));
+                order.setSalesNote(results.getString("salesNote"));
                 orders.add(order);
             }
         } catch (Exception ex) {
@@ -161,6 +162,7 @@ public class OrderDAO extends DBContext {
                 order.setSalesId(results.getInt("salesId"));
                 order.setOrderStatus(results.getInt("orderStatus"));
                 order.setOrderDate(results.getDate("orderDate"));
+                order.setSalesNote(results.getString("salesNote"));
             }
         } catch (Exception ex) {
             System.out.println("Exception ==== " + ex);

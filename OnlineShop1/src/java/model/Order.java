@@ -19,18 +19,22 @@ public class Order {
     private int salesId;
     private int orderStatus;
     private Date orderDate;
+    private String salesNote;
 
     public Order() {
     }
 
-    public Order(int orderId, int customerId, float totalCost, int salesId, int orderStatus, Date orderDate) {
+    public Order(int orderId, int customerId, float totalCost, int salesId, int orderStatus, Date orderDate, String salesNote) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.totalCost = totalCost;
         this.salesId = salesId;
         this.orderStatus = orderStatus;
         this.orderDate = orderDate;
+        this.salesNote = salesNote;
     }
+
+
 
     public int getOrderId() {
         return orderId;
@@ -79,5 +83,15 @@ public class Order {
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
     }
+
+    public String getSalesNote() {
+        return salesNote;
+    }
+
+    public void setSalesNote(String salesNote) {
+        this.salesNote = salesNote;
+    }
+    
+    
 
 }
