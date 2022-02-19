@@ -1,0 +1,19 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 19-Feb-2022, 17:30:37
+    Author     : VINH
+*/
+
+.total {
+    color: red;
+    font-weight: bold;
+    font-size: 150%;
+}
+.subtotal {
+    color: red;
+    font-weight: bold;
+}

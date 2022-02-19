@@ -26,8 +26,8 @@
         <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
         <!-- Theme style -->
         <link href="${pageContext.request.contextPath}/admin/css/style.css" rel="stylesheet" type="text/css" />
-        <!-- Order Details CSS -->
-        <link href="${pageContext.request.contextPath}/admin/css/orderDetail.css" rel="stylesheet" type="text/css" />
+        <!-- Order List CSS -->
+        <link href="${pageContext.request.contextPath}/admin/css/orderList.css" rel="stylesheet" type="text/css" />
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -61,7 +61,7 @@
                                     <div class="panel-body table-responsive">
                                         <div class="row">
                                             <div class="col-sm-11">
-                                                <form class="form-inline" role="form" action="<%=request.getContextPath()%>/order/search" method="POST">
+                                                <form class="form-inline" role="form" action="<%=request.getContextPath()%>/order/search">
                                                 <div class="form-group" style="margin-right:12px;">
                                                     <label class="sr-only" for="exampleInputEmail2">Email address</label>
                                                     <input type="text" name="table_search" class="form-control" id="exampleInputEmail2" placeholder="ID , Customer Name" value="${requestScope.valueSearch}" onblur="this.value = removeSpaces(this.value);">

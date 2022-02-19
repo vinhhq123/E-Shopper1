@@ -28,7 +28,7 @@
         <!-- Theme style -->
         <link href="${pageContext.request.contextPath}/admin/css/style.css" rel="stylesheet" type="text/css" />
         <!-- Order Details CSS -->
-        <link href="${pageContext.request.contextPath}/admin/css/orderDetail.css" rel="stylesheet" type="text/css" />
+        <link href="<%=request.getContextPath()%>/admin/css/orderdetails.css" rel="stylesheet" type="text/css" />
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -210,7 +210,7 @@
 
                                         <div class="col-lg-offset-9 ">
                                             <button type="submit" class="btn btn-success">Update Quantity</button>
-                                            <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/user/list'">Back</button>
+                                            <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/order/list'">Back</button>
                                         </div>
                                     </form:form>
 
