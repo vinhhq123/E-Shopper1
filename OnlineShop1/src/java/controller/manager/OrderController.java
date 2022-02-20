@@ -10,16 +10,19 @@ import dal.SettingDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Order;
 import model.User;
 
@@ -27,7 +30,8 @@ import model.User;
  *
  * @author VINH
  */
-@WebServlet(name = "OrderController", urlPatterns = {"/order/list", "/order/search", "/order/getOrder"})
+@WebServlet(name = "OrderController", urlPatterns = {"/order/list", "/order/search",
+    "/order/getOrder", "/order/updateSaleInfor"})
 public class OrderController extends HttpServlet {
 
     /**
@@ -80,6 +84,9 @@ public class OrderController extends HttpServlet {
                 break;
             case "/order/getOrder":
                 getOrderByOrderId(request, response);
+                break;
+            case "/order/updateSaleInfor":
+                updateOrderSalerInfor(request, response);
                 break;
 
         }
@@ -283,7 +290,54 @@ public class OrderController extends HttpServlet {
             request.setAttribute("CurrentOrderStatus", orderStatus);
             request.getRequestDispatcher("/admin/OrderDetail.jsp").forward(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Exception getOrderByOrderId ===== " + ex);
+            request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
+        }
+    }
+
+    protected void updateOrderSalerInfor(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        int status = 0;
+        String salesNote = "";
+        // GET CHOSEN SALER ID
+        String saler = request.getParameter("saler");
+        String orderStatus = request.getParameter("status");
+        salesNote = request.getParameter("note");
+        int salerId = Integer.parseInt(saler);
+        int orderId = Integer.parseInt(request.getParameter("orderId"));
+        switch (orderStatus) {
+            case "Ordered":
+                status = 25;
+                break;
+            case "Delivered":
+                status = 20;
+                break;
+            case "Transporting":
+                status = 21;
+                break;
+            case "Canceled":
+                status = 22;
+                break;
+        }
+
+        OrderDAO orderDAO = new OrderDAO();
+                // Get session
+        HttpSession session = request.getSession();
+        try {
+            int check = orderDAO.updateOrderSaleInfor(salerId, status, salesNote, orderId);
+            if (check > 0) {
+                String message = "Update saler successfully.";
+                session.setAttribute("messageUpdateSaleInfor", message);
+                response.sendRedirect("getOrder?orderId=" + orderId);
+            } else {
+                String messageFail = "Unexpected error occurs.";
+                session.setAttribute("messageUpdateSaleInforFail", messageFail);
+                response.sendRedirect("getOrder?orderId=" + orderId);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Exception updateOrderSalerInfor ===== " + ex);
+            request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
         }
     }
 }

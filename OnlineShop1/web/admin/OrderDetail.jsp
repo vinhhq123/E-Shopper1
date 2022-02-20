@@ -82,16 +82,21 @@
                                         <!--  THIS IS FOR ASSIGNED SALES AND MANAGER ONLY -->
                                         <div class="col-lg-6" >
                                             <h3><b>Sales Information</b></h3><br>
-                                            <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/user/add" method="POST" name="addNewUser"  enctype="multipart/form-data">
-                                                <c:if test="${not empty messageAddSuccess}">
-                                                    <b><h4 class="help-block" style="color: green" id="successEditMessage">${messageAddSuccess}</h4></b>
-                                                        <c:remove var="messageAddSuccess"/>
+                                            <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/order/updateSaleInfor?orderId=<c:out value="${CurrentOrder.getOrderId()}" />" method="POST">
+                                                <c:if test="${not empty messageUpdateSaleInfor}">
+                                                    <b><h4 class="help-block" style="color: green" id="successEditMessage">${messageUpdateSaleInfor}</h4></b>
+                                                        <c:remove var="messageUpdateSaleInfor"/>
+                                                    <br>
+                                                </c:if>
+                                                <c:if test="${not empty messageUpdateSaleInforFail}">
+                                                    <b><h4 class="help-block" style="color: red" id="successEditMessage">${messageUpdateSaleInforFail}</h4></b>
+                                                        <c:remove var="messageUpdateSaleInforFail"/>
                                                     <br>
                                                 </c:if>
                                                 <div class="form-group">
                                                     <label for="saler" class="col-lg-2 col-sm-2 control-label">Assigned</label>
                                                     <div class="col-lg-10">
-                                                        <select class="form-control m-b-10" name="saler" disabled>
+                                                        <select class="form-control m-b-10" name="saler">
                                                             <c:forEach items="${Sales}" var="sal">
                                                                 <option value="<c:out value="${sal.getUid()}"/>" <c:if test="${sal.getUid() == CurrentSale.getUid()}">selected</c:if>>${sal.getFullname()}</option>
                                                             </c:forEach>
@@ -109,9 +114,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="saleNote" class="col-lg-2 col-sm-2 control-label">Notes</label>
+                                                    <label for="note" class="col-lg-2 col-sm-2 control-label">Notes</label>
                                                     <div class="col-lg-10">
-                                                        <textarea id="saleNote" placeholder="Sale Notes" name="saleNote" style="width: 430px;">${CurrentOrder.getSalesNote()}</textarea>
+                                                        <textarea id="note" placeholder="Sale Notes" name="note" style="width: 430px;"  rows="3" cols="30" >${CurrentOrder.getSalesNote()}</textarea>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
