@@ -165,7 +165,18 @@
                                     </table>
 
                                     <!--  THIS FORM IS FOR ASSIGNED SALES AND THE MANAGER-->
-                                    <form:form method="POST" action="${pageContext.request.contextPath}/shoppingCart">
+                                    <c:if test="${not empty messageUpdateSuccess}">
+                                        <b><h4 class="help-block" style="color: green" id="editQuantity">${messageUpdateSuccess}</h4></b>
+                                            <c:remove var="messageUpdateSuccess"/>
+                                        <br>
+                                    </c:if>
+                                    <c:if test="${not empty messageUpdateFail}">
+                                        <b><h4 class="help-block" style="color: red" id="editQuantity">${messageUpdateFail}</h4></b>
+                                            <c:remove var="messageUpdateFail"/>
+                                        <br>
+                                    </c:if>
+                                    <form method="POST" action="${pageContext.request.contextPath}/order/updateOrderQuantity">
+                                        <input type="hidden" name="currentOrderId" value="${CurrentOrder.getOrderId()}">
                                         <table class="table table-striped" id="orderDetailTableEdit">
                                             <tr>
                                                 <th>Name</th>
@@ -188,25 +199,28 @@
                                                                     <td><span class="price">
                                                                         <fmt:formatNumber value="${p.getSprice()}" type="currency"/>
                                                                     </span></td>
-                                                                </c:when>
-                                                            </c:choose>
-                                                        </c:forEach>
+                                                            <input type="hidden" value="${p.getSprice()}" name="productPrice">
+                                                        </c:when>
+                                                    </c:choose>
+                                                </c:forEach>
 
-                                                    <td><input path="cartLines[${varStatus.index}].quantity" value="${ods.getQuantity()}"/></td>  
-                                                    <td><span class="subtotal">
-                                                            <fmt:formatNumber value="${ods.getSubCost()}" type="currency"/>
-                                                        </span></td>
+                                                <td><input name="quantity" value="${ods.getQuantity()}" pattern="[0-9]" required/></td>  
+                                                <td><span class="subtotal">
+                                                        <fmt:formatNumber value="${ods.getSubCost()}" type="currency"/>
+                                                    </span></td>
 <!--                                                        <input path="cartLines[${varStatus.index}].quantity" value="2"/>-->
-                                                    <td><button type="button" class="btn-xs btn-danger" onclick="window.location = '<%=request.getContextPath()%>/user/getUser?uid=${con.getUid()}'">Remove</button></td>
+                                                <td><input type="hidden" value="${ods.getProductId()}" name="productToUpdate">
+                                                    <input type="hidden" value="${ods.getOrderDetailId()}" name="orderDetailToUpdate">
+                                                    <button type="button" class="btn-xs btn-danger" onclick="window.location = '<%=request.getContextPath()%>/order/removeProduct?odid=${ods.getOrderDetailId()}&orderId=${CurrentOrder.getOrderId()}'">Remove</button></td>
                                                 </tr>
                                             </c:forEach>
                                         </table>
 
-                                        <div class="col-lg-offset-9 ">
+                                        <div class="col-lg-offset-9">
                                             <button type="submit" class="btn btn-success">Update Quantity</button>
                                             <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/order/list'">Back</button>
                                         </div>
-                                    </form:form>
+                                    </form>
 
 
                                 </div><!-- /.box -->

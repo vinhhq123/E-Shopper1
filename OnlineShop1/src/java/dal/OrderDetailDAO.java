@@ -9,6 +9,7 @@ import dbcontext.DBContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import model.OrderDetail;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +58,33 @@ public class OrderDetailDAO extends DBContext {
         }
         return orderDetails;
 
+    }
+
+    public int updateProductOrderQuantity(int orderDetailId, int quantity, float subTotal)
+            throws SQLException {
+        String sql = "UPDATE `onlineshop1`.`orderdetails`\n"
+                + "SET `quantity` = ? ,`subCost` = ?,`lastUpdated` = CURRENT_DATE() WHERE `orderDetailId` = ?;";
+        int row = 0;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, quantity);
+            preparedStatement.setFloat(2, subTotal);
+            preparedStatement.setInt(3, orderDetailId);
+            row = preparedStatement.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return row;
     }
 
 }
