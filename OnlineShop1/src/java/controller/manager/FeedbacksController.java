@@ -81,7 +81,7 @@ public class FeedbacksController extends HttpServlet {
                // searchOrder(request, response);
                 break;
             case "/feedback/search":
-                //getOrderByOrderId(request, response);
+                FeedbacksSearch(request, response);
                 break;
 
         }
@@ -115,13 +115,13 @@ public class FeedbacksController extends HttpServlet {
             throws ServletException, IOException {
           int currentPage = 1;
         // Set total records per page is 5
-        int recordsPerPage = 2;
+        int recordsPerPage = 3;
 
         // Get the current page from request if there any
         if (request.getParameter("currentPage") != null) {
             currentPage = Integer.parseInt(request.getParameter("currentPage"));
         }
-
+         List<String> feedsStatus = new ArrayList<>();
         UserDAO userDAO = new UserDAO();
         OrderDAO orderDAO = new OrderDAO();
         SettingDAO settingDAO = new SettingDAO();
@@ -134,6 +134,7 @@ public class FeedbacksController extends HttpServlet {
         List<Product> product = new ArrayList<>();
         List<Setting> statusList = new ArrayList<>();
         try {
+            feedsStatus = settingDAO.getSettingFeedbackValue();
             statusList = settingDAO.getAllFeedStatus();
             settingList = settingDAO.getAllSetting();
             customers = userDAO.getAllUserByRole(5);
@@ -145,6 +146,7 @@ public class FeedbacksController extends HttpServlet {
             if (rows % recordsPerPage > 0) {
                 numOfPage++;
             }    
+            request.setAttribute("FeedStatuses", feedsStatus);
             request.setAttribute("StatusList", statusList);
             request.setAttribute("Customers", customers);
             request.setAttribute("Product", product);
@@ -161,5 +163,66 @@ public class FeedbacksController extends HttpServlet {
             request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
         }
      }
+      protected void FeedbacksSearch(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String ratestar = request.getParameter("role");
+        int feedStatus = 0;
+        int feedId = 0;
+        //int ratestar = 0;
+        String status = "";
+    
+         String searchField = request.getParameter("table_search").trim();
+         try {
+            feedId = Integer.parseInt(searchField);
+        } catch (NumberFormatException ex) {
+            feedId = 0;
+        }
+        System.out.println(feedId);
+
+        if (request.getParameter("status") != null) {
+            status = request.getParameter("status");
+            switch (status) {
+                case "Published":
+                    feedStatus = 18;
+                    break;
+                case "Hidden":
+                    feedStatus = 19;
+                    break;
+              
+            }
+        }
+         List<Setting> settingList = new ArrayList<>();
+         List<Product> product = new ArrayList<>();
+        UserDAO userDAO = new UserDAO();
+        SettingDAO settingDAO = new SettingDAO();
+        FeedbackDAO feedbackDAO = new FeedbackDAO();
+        List<User> customers = new ArrayList<>();
+        List<User> sales = new ArrayList<>();
+        List<String> feedsStatus = new ArrayList<>();
+          List<Feedback> feedback = new ArrayList<>();   
+           List<Setting> statusList = new ArrayList<>();
+        try {
+             settingList = settingDAO.getAllSetting();
+             statusList = settingDAO.getAllFeedStatus();
+            product = feedbackDAO.getAllProduct();
+            customers = userDAO.getAllUserByRole(5);           
+            feedsStatus = settingDAO.getSettingFeedbackValue();
+            feedback = feedbackDAO.searchFeedback(searchField, ratestar, feedStatus, feedId);
+            request.setAttribute("valueRole", ratestar);
+            request.setAttribute("StatusList", statusList);
+            request.setAttribute("Product", product);
+            request.setAttribute("Feedback", feedback);  
+            request.setAttribute("Customers", customers);         
+            request.setAttribute("FeedStatuses", feedsStatus);
+            request.setAttribute("valueStatus", status);
+            //request.setAttribute("Ratestar", ratestar); 
+            request.setAttribute("valueSearch", searchField);
+            request.setAttribute("SettingList", settingList);
+            request.getRequestDispatcher("/admin/FeedbackList.jsp").forward(request, response);
+        } catch (Exception ex) {
+            System.out.println("Exception get ===== " + ex);
+            request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
+        }
+      }
     
 }

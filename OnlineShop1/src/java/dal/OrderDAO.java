@@ -115,7 +115,7 @@ public class OrderDAO extends DBContext {
         try {
             connection = getConnection();
             preparedStatement = connection.prepareStatement(sql);
-            results = preparedStatement.executeQuery();
+            results = preparedStatement.executeQuery(); 
 
             while (results.next()) {
                 order = new Order();

@@ -32,7 +32,7 @@ public class FeedbackDAO extends DBContext{
         Feedback feed = null;
 
         try {
-            String sql = "select * from feedback LIMIT " + start + " ," + recordsPerPage;
+            String sql = "select * from feedback order by updatedDate desc  LIMIT " + start + " ," + recordsPerPage;
             connection = getConnection();
             preparedStatement = connection.prepareStatement(sql);
             results = preparedStatement.executeQuery();
@@ -129,6 +129,53 @@ public class FeedbackDAO extends DBContext{
             }
         }
         return product;
+    }
+        public List<Feedback> searchFeedback(String key, String ratestart, int status, int feedbackId) throws Exception {
+        List<Feedback> feeds = new ArrayList<>();
+        String sql = "SELECT a.feedbackId,a.customerId,a.ratedStar,a.productId,a.feedbackStatus,s.fullname\n" +
+            "from feedback a join User s on s.uid=a.customerId where ";
+        if (feedbackId != 0) {
+            sql += "a.feedbackId = " + feedbackId;
+        } else {
+            sql += "s.fullname like '%" + key + "%' ";
+        }
+        if (ratestart != "") {
+            sql += " and a.ratedStar = " + ratestart;
+        }
+        if (status != 0) {
+            sql += " and a.feedbackStatus = " + status;
+        }
+       
+
+        System.out.println(sql);
+        Feedback feed = null;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                feed = new Feedback();
+                feed.setFeedbackId(results.getInt("feedbackId"));
+                feed.setCustomerId(results.getInt("customerId"));
+                feed.setRatedStart(results.getInt("ratedStar"));  
+                feed.setProductID(results.getInt("productId"));
+                feed.setFeedbackStatus(results.getInt("feedbackStatus"));
+                feeds.add(feed);
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return feeds;
     }
 }
 

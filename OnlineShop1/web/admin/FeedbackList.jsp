@@ -59,7 +59,51 @@
                                     <!-- </div> -->
                                     <div class="panel-body table-responsive">
                                         <div class="row">
-                                           
+                                          <div class="col-sm-11">
+                                                <form class="form-inline" role="form" action="<%=request.getContextPath()%>/feedback/search">
+                                                <div class="form-group" style="margin-right:12px;">
+                                                    <label class="sr-only" for="exampleInputEmail2">Email address</label>
+                                                    <input type="text" name="table_search" class="form-control" id="exampleInputEmail2" placeholder="Customer Name" value="${requestScope.valueSearch}" onblur="this.value = removeSpaces(this.value);">
+                                                </div>
+                                                <div class="form-group" style="margin-right:12px;">
+                                                <select class="select" aria-label="Default select example" name="role" style="height: 30px">
+                                                        <c:if test="${empty valueRole}">
+                                                            <option selected value="">Rate Star</option>
+                                                            <option value="1">1 Star</option>
+                                                            <option value="2">2 Star</option>
+                                                            <option value="3">3 Star</option>
+                                                            <option value="4">4 Star</option>
+                                                            <option value="5">5 Star</option>
+                                                        </c:if>
+                                                        <c:if test="${not empty valueRole}">
+                                                            <option value="">Rate Star</option>
+                                                            <option value="1" <%=request.getAttribute("valueRole").equals("1") ? "selected" : ""%>>1 Star</option>
+                                                            <option value="2" <%=request.getAttribute("valueRole").equals("2") ? "selected" : ""%>>2 Star</option>
+                                                            <option value="3" <%=request.getAttribute("valueRole").equals("3") ? "selected" : ""%>>3 Star</option>
+                                                            <option value="4" <%=request.getAttribute("valueRole").equals("4") ? "selected" : ""%>>4 Star</option>
+                                                            <option value="5" <%=request.getAttribute("valueRole").equals("5") ? "selected" : ""%>>5 Star</option>
+                                                        </c:if>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group" style="margin-right:8px;">
+                                                    <select class="select" aria-label="Default select example" name="status" style="height: 30px">
+                                                        <c:if test="${empty valueStatus}">
+                                                            <option value="" >All Statuses</option>
+                                                            <c:forEach items="${FeedStatuses}" var="os">
+                                                                <option value="<c:out value="${os}" />"> ${os}</option>
+                                                            </c:forEach>
+                                                        </c:if>
+                                                        <c:if test="${not empty valueStatus}"> 
+                                                            <option value="" >All Statuses</option>
+                                                            <c:forEach items="${FeedStatuses}" var="os">
+                                                                <option value="<c:out value="${os}" />" <c:if test="${os eq valueStatus}">selected</c:if>> ${os}</option>
+                                                            </c:forEach>
+                                                        </c:if>
+                                                    </select>
+                                                </div>
+                                                <button type="submit" class="btn btn-success">Search</button>
+                                            </form>
+                                        </div> 
 
                                     </div>
                                     <br>
@@ -94,9 +138,9 @@
                                                             
                                                         </c:when>
                                                     </c:choose> 
-                                                
+                                                 
                                                 </c:forEach>
-                                                 <td>${feed.getRatedStart()}</td>      
+                                                 <td>${feed.getRatedStart()}    <img src="${pageContext.request.contextPath}/admin/img/star-icon.png" alt=""/></td>      
                                                   <c:forEach items="${StatusList}" var="sta">
                                                     <c:if test="${sta.getSettingId() eq feed.getFeedbackStatus()}">
                                                         <td>${sta.getSettingValue()}</td>
