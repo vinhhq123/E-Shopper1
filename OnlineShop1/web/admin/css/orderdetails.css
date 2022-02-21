@@ -43,6 +43,6 @@ h3{
     color: red;
     font-weight: bold;
 }
-/*li{
-    margin: 7px;
-}*/
+.lii{
+    margin: 7px 0;
+}

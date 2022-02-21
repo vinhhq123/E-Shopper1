@@ -64,15 +64,15 @@
                                             <div class="col-lg-5" >
                                                 <h3><b>Customer Information</b></h3>
                                                 <ul class="ulclass">
-                                                    <li>Order ID :  <b><i>${CurrentOrder.getOrderId()}</i></b></li>
-                                                <li>Customer Name : <b><i>${CurrentCustomer.getFullname()}</i></b></li>
-                                                <li>Email :  <b><i>${CurrentCustomer.getEmail()}</i></b></li>
-                                                <li>Mobile : <b><i>${CurrentCustomer.getPhone()}</i></b></li>
-                                                <li>Order Date : <b><i><fmt:formatDate value="${CurrentOrder.getOrderDate()}" pattern="dd-MM-yyyy" /></i></b></li>
+                                                    <li class="lii">Order ID :  <b><i>${CurrentOrder.getOrderId()}</i></b></li>
+                                                <li class="lii">Customer Name : <b><i>${CurrentCustomer.getFullname()}</i></b></li>
+                                                <li class="lii">Email :  <b><i>${CurrentCustomer.getEmail()}</i></b></li>
+                                                <li class="lii">Mobile : <b><i>${CurrentCustomer.getPhone()}</i></b></li>
+                                                <li class="lii">Order Date : <b><i><fmt:formatDate value="${CurrentOrder.getOrderDate()}" pattern="dd-MM-yyyy" /></i></b></li>
                                             </ul>
                                             <h3><b>Order Summary</b></h3>
                                             <ul class="ulclass">
-                                                <li>Total : 
+                                                <li class="lii">Total : 
                                                     <span class="total">
                                                         <fmt:formatNumber value="${CurrentOrder.getTotalCost()}" type="currency"/>
                                                     </span></li>
@@ -82,16 +82,21 @@
                                         <!--  THIS IS FOR ASSIGNED SALES AND MANAGER ONLY -->
                                         <div class="col-lg-6" >
                                             <h3><b>Sales Information</b></h3><br>
-                                            <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/user/add" method="POST" name="addNewUser"  enctype="multipart/form-data">
-                                                <c:if test="${not empty messageAddSuccess}">
-                                                    <b><h4 class="help-block" style="color: green" id="successEditMessage">${messageAddSuccess}</h4></b>
-                                                        <c:remove var="messageAddSuccess"/>
+                                            <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/order/updateSaleInfor?orderId=<c:out value="${CurrentOrder.getOrderId()}" />" method="POST">
+                                                <c:if test="${not empty messageUpdateSaleInfor}">
+                                                    <b><h4 class="help-block" style="color: green" id="successEditMessage">${messageUpdateSaleInfor}</h4></b>
+                                                        <c:remove var="messageUpdateSaleInfor"/>
+                                                    <br>
+                                                </c:if>
+                                                <c:if test="${not empty messageUpdateSaleInforFail}">
+                                                    <b><h4 class="help-block" style="color: red" id="successEditMessage">${messageUpdateSaleInforFail}</h4></b>
+                                                        <c:remove var="messageUpdateSaleInforFail"/>
                                                     <br>
                                                 </c:if>
                                                 <div class="form-group">
                                                     <label for="saler" class="col-lg-2 col-sm-2 control-label">Assigned</label>
                                                     <div class="col-lg-10">
-                                                        <select class="form-control m-b-10" name="saler" disabled>
+                                                        <select class="form-control m-b-10" name="saler">
                                                             <c:forEach items="${Sales}" var="sal">
                                                                 <option value="<c:out value="${sal.getUid()}"/>" <c:if test="${sal.getUid() == CurrentSale.getUid()}">selected</c:if>>${sal.getFullname()}</option>
                                                             </c:forEach>
@@ -109,9 +114,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="saleNote" class="col-lg-2 col-sm-2 control-label">Sale Notes</label>
+                                                    <label for="note" class="col-lg-2 col-sm-2 control-label">Notes</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="saleNote" placeholder="Sale Notes" name="saleNote" value="${addressValue}">
+                                                        <textarea id="note" placeholder="Sale Notes" name="note" style="width: 430px;"  rows="3" cols="30" >${CurrentOrder.getSalesNote()}</textarea>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -134,40 +139,31 @@
                                             <th>Quantity</th>
                                             <th>Sub Total</th>
                                         </tr>
-                                        <tr>
-                                            <td>Product 1</td>
-                                            <td>Category 1</td>  
-                                            <td><span class="price">
-                                                    <fmt:formatNumber value="12323" type="currency"/>
-                                                </span></td>  
-                                            <td>2</td>  
-                                            <td><span class="subtotal">
-                                                    <fmt:formatNumber value="2356" type="currency"/>
-                                                </span></td>  
-                                        </tr>
-                                        <tr>
-                                            <td>Product 2</td>
-                                            <td>Category 2</td>  
-                                            <td><span class="price">
-                                                    <fmt:formatNumber value="123123" type="currency"/>
-                                                </span></td>  
-                                            <td>2</td>  
-                                            <td><span class="subtotal">
-                                                    <fmt:formatNumber value="12465" type="currency"/>
-                                                </span></td>  
-                                        </tr>
-                                        <tr>
-                                            <td>Product 3</td>
-                                            <td>Category 1</td>  
-                                            <td><span class="price">
-                                                    <fmt:formatNumber value="1234" type="currency"/>
-                                                </span></td>  
-                                            <td>4</td>  
-                                            <td><span class="subtotal">
-                                                    <fmt:formatNumber value="1235" type="currency"/>
-                                                </span></td>  
-                                        </tr>
+                                        <c:forEach items="${OrderDetails}" var="ods">
+                                            <tr>
+                                                <c:forEach items="${Products}" var="p">
+                                                    <c:choose>
+                                                        <c:when test="${p.getPid() == ods.getProductId() }">
+                                                            <td>${p.getTitle()}</td>
+                                                            <td><c:if test="${p.getCategoryID() == 13}">Shoes</c:if>
+                                                                <c:if test="${p.getCategoryID() == 14}">Clothes</c:if>
+                                                                <c:if test="${p.getCategoryID() == 15}">Bags</c:if>
+                                                                </td>
+                                                                <td><span class="price">
+                                                                    <fmt:formatNumber value="${p.getSprice()}" type="currency"/>
+                                                                </span></td>
+                                                            </c:when>
+                                                        </c:choose>
+                                                    </c:forEach>
+
+                                                <td><b>${ods.getQuantity()}</b></td>  
+                                                <td><span class="subtotal">
+                                                        <fmt:formatNumber value="${ods.getSubCost()}" type="currency"/>
+                                                    </span></td>
+                                            </tr>
+                                        </c:forEach>
                                     </table>
+
                                     <!--  THIS FORM IS FOR ASSIGNED SALES AND THE MANAGER-->
                                     <form:form method="POST" action="${pageContext.request.contextPath}/shoppingCart">
                                         <table class="table table-striped" id="orderDetailTableEdit">
@@ -179,33 +175,31 @@
                                                 <th>Sub Total</th>
                                                 <th>Action</th>
                                             </tr>
-                                            <tr>
-                                                <td>Product 1</td>
-                                                <td>Category 1</td>  
-                                                <td><span class="price">
-                                                        <fmt:formatNumber value="123" type="currency"/>
-                                                    </span></td>  
-                                                <td><input
-                                                        path="cartLines[${varStatus.index}].quantity" value="2"/></td>  
-                                                <td><span class="subtotal">
-                                                        <fmt:formatNumber value="123" type="currency"/>
-                                                    </span></td>  
-                                                <td><button type="button" class="btn-xs btn-danger" onclick="window.location = '<%=request.getContextPath()%>/user/getUser?uid=${con.getUid()}'">Remove</button></td>
-                                            </tr>
+                                            <c:forEach items="${OrderDetails}" var="ods">
+                                                <tr>
+                                                    <c:forEach items="${Products}" var="p">
+                                                        <c:choose>
+                                                            <c:when test="${p.getPid() == ods.getProductId() }">
+                                                                <td>${p.getTitle()}</td>
+                                                                <td><c:if test="${p.getCategoryID() == 13}">Shoes</c:if>
+                                                                    <c:if test="${p.getCategoryID() == 14}">Clothes</c:if>
+                                                                    <c:if test="${p.getCategoryID() == 15}">Bags</c:if>
+                                                                    </td>
+                                                                    <td><span class="price">
+                                                                        <fmt:formatNumber value="${p.getSprice()}" type="currency"/>
+                                                                    </span></td>
+                                                                </c:when>
+                                                            </c:choose>
+                                                        </c:forEach>
 
-                                            <tr>
-                                                <td>Product 2</td>
-                                                <td>Category 2</td>  
-                                                <td><span class="price">
-                                                        <fmt:formatNumber value="123" type="currency"/>
-                                                    </span></td>  
-                                                <td><input
-                                                        path="cartLines[${varStatus.index}].quantity" value="2"/></td>  
-                                                <td><span class="subtotal">
-                                                        <fmt:formatNumber value="123" type="currency"/>
-                                                    </span></td>  
-                                                <td><button type="button" class="btn-xs btn-danger" onclick="window.location = '<%=request.getContextPath()%>/user/getUser?uid=${con.getUid()}'">Remove</button></td>
-                                            </tr>
+                                                    <td><input path="cartLines[${varStatus.index}].quantity" value="${ods.getQuantity()}"/></td>  
+                                                    <td><span class="subtotal">
+                                                            <fmt:formatNumber value="${ods.getSubCost()}" type="currency"/>
+                                                        </span></td>
+<!--                                                        <input path="cartLines[${varStatus.index}].quantity" value="2"/>-->
+                                                    <td><button type="button" class="btn-xs btn-danger" onclick="window.location = '<%=request.getContextPath()%>/user/getUser?uid=${con.getUid()}'">Remove</button></td>
+                                                </tr>
+                                            </c:forEach>
                                         </table>
 
                                         <div class="col-lg-offset-9 ">

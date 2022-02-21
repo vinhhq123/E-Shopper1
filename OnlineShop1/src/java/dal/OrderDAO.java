@@ -74,6 +74,7 @@ public class OrderDAO extends DBContext {
                 order.setSalesId(results.getInt("salesId"));
                 order.setOrderStatus(results.getInt("orderStatus"));
                 order.setOrderDate(results.getDate("orderDate"));
+                order.setSalesNote(results.getString("salesNote"));
                 orders.add(order);
             }
         } catch (Exception ex) {
@@ -161,6 +162,7 @@ public class OrderDAO extends DBContext {
                 order.setSalesId(results.getInt("salesId"));
                 order.setOrderStatus(results.getInt("orderStatus"));
                 order.setOrderDate(results.getDate("orderDate"));
+                order.setSalesNote(results.getString("salesNote"));
             }
         } catch (Exception ex) {
             System.out.println("Exception ==== " + ex);
@@ -175,6 +177,35 @@ public class OrderDAO extends DBContext {
             }
         }
         return order;
+    }
+
+    public int updateOrderSaleInfor(int saleId, int orderStatus, String salesNote,
+            int orderId) throws SQLException {
+        String sql = "UPDATE `onlineshop1`.`orders`\n"
+                + "SET `salesId` = ?,`orderStatus` = ?,`salesNote` = ?\n"
+                + "WHERE `orderId` = ? ;";
+        int row = 0;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, saleId);
+            preparedStatement.setInt(2, orderStatus);
+            preparedStatement.setString(3, salesNote);
+            preparedStatement.setInt(4, orderId);
+            row = preparedStatement.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return row;
     }
 
 }
