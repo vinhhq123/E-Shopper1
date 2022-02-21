@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/dal/UserDAO.java</file>
-            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/web/admin/UserDetail.jsp</file>
             <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/dal/OrderDAO.java</file>
             <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/controller/manager/OrderController.java</file>
-            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/controller/admin/UserController.java</file>
+            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/dal/OrderDetailDAO.java</file>
+            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/web/admin/css/orderdetails.css</file>
             <file>file:/D:/SWP/Iter2/g6/OnlineShop1/web/admin/OrderDetail.jsp</file>
         </group>
     </open-files>

@@ -211,7 +211,7 @@
 <!--                                                        <input path="cartLines[${varStatus.index}].quantity" value="2"/>-->
                                                 <td><input type="hidden" value="${ods.getProductId()}" name="productToUpdate">
                                                     <input type="hidden" value="${ods.getOrderDetailId()}" name="orderDetailToUpdate">
-                                                    <button type="button" class="btn-xs btn-danger" onclick="window.location = '<%=request.getContextPath()%>/order/removeProduct?odid=${ods.getOrderDetailId()}&orderId=${CurrentOrder.getOrderId()}'">Remove</button></td>
+                                                    <button type="button" class="btn-xs btn-danger" onclick="if (confirm('Do you want to delete this product from this order?'))  window.location = '<%=request.getContextPath()%>/order/removeProduct?odid=${ods.getOrderDetailId()}&orderId=${CurrentOrder.getOrderId()}'">Remove</button></td>
                                                 </tr>
                                             </c:forEach>
                                         </table>
