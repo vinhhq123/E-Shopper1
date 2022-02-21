@@ -56,26 +56,27 @@ public class PostDAO extends DBContext {
                 p.setFeatured(result.getString("featured"));
                 p.setSatatusPL(result.getInt("status"));
                 p.setUpdateDate(result.getDate("postdDate"));
-                Blob blob = result.getBlob("thumbnail");
-                if (blob != null) {
-                    InputStream inputStream = blob.getBinaryStream();
-                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                    byte[] buffer = new byte[4096];
-                    int bytesRead = -1;
-
-                    while ((bytesRead = inputStream.read(buffer)) != -1) {
-                        outputStream.write(buffer, 0, bytesRead);
-                    }
-
-                    byte[] imageBytes = outputStream.toByteArray();
-                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-
-                    inputStream.close();
-                    outputStream.close();
-                    p.setThumbnail(base64Image);
-                } else {
-                    p.setThumbnail("");
-                }
+                p.setThumbnail(result.getString("thumbnail"));
+//                Blob blob = result.getBlob("thumbnail");
+//                if (blob != null) {
+//                    InputStream inputStream = blob.getBinaryStream();
+//                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//                    byte[] buffer = new byte[4096];
+//                    int bytesRead = -1;
+//
+//                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+//                        outputStream.write(buffer, 0, bytesRead);
+//                    }
+//
+//                    byte[] imageBytes = outputStream.toByteArray();
+//                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+//
+//                    inputStream.close();
+//                    outputStream.close();
+//                    p.setThumbnail(base64Image);
+//                } else {
+//                    p.setThumbnail("");
+//                }
                 list.add(p);
             }
         } catch (Exception e) {
@@ -108,26 +109,27 @@ public class PostDAO extends DBContext {
                 p.setFeatured(result.getString("featured"));
                 p.setSatatusPL(result.getInt("status"));
                 p.setUpdateDate(result.getDate("postdDate"));
-                Blob blob = result.getBlob("thumbnail");
-                if (blob != null) {
-                    InputStream inputStream = blob.getBinaryStream();
-                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                    byte[] buffer = new byte[4096];
-                    int bytesRead = -1;
-
-                    while ((bytesRead = inputStream.read(buffer)) != -1) {
-                        outputStream.write(buffer, 0, bytesRead);
-                    }
-
-                    byte[] imageBytes = outputStream.toByteArray();
-                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-
-                    inputStream.close();
-                    outputStream.close();
-                    p.setThumbnail(base64Image);
-                } else {
-                    p.setThumbnail("");
-                }
+                p.setThumbnail(result.getString("thumbnail"));
+//               Blob blob = result.getBlob("thumbnail");
+//                if (blob != null) {
+//                    InputStream inputStream = blob.getBinaryStream();
+//                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//                    byte[] buffer = new byte[4096];
+//                    int bytesRead = -1;
+//
+//                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+//                        outputStream.write(buffer, 0, bytesRead);
+//                    }
+//
+//                    byte[] imageBytes = outputStream.toByteArray();
+//                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+//
+//                    inputStream.close();
+//                    outputStream.close();
+//                    p.setThumbnail(base64Image);
+//                } else {
+//                    p.setThumbnail("");
+//                }
                 return p;
             }
         } catch (Exception e) {
@@ -138,7 +140,7 @@ public class PostDAO extends DBContext {
 
     public List<Setting> getBlogCategory() {
         List<Setting> listPostCate = new ArrayList<>();
-        String query = "select settingId, settingValue from setting where settingId = 8 or settingId = 9";
+        String query = "select settingId, settingValue from setting where settingType = 3";
         try {
             connection = new DBContext().getConnection();
             ps = connection.prepareStatement(query);
@@ -215,26 +217,27 @@ public class PostDAO extends DBContext {
                 p.setFeatured(result.getString("featured"));
                 p.setSatatusPL(result.getInt("status"));
                 p.setUpdateDate(result.getDate("postdDate"));
-                Blob blob = result.getBlob("thumbnail");
-                if (blob != null) {
-                    InputStream inputStream = blob.getBinaryStream();
-                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                    byte[] buffer = new byte[4096];
-                    int bytesRead = -1;
-
-                    while ((bytesRead = inputStream.read(buffer)) != -1) {
-                        outputStream.write(buffer, 0, bytesRead);
-                    }
-
-                    byte[] imageBytes = outputStream.toByteArray();
-                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-
-                    inputStream.close();
-                    outputStream.close();
-                    p.setThumbnail(base64Image);
-                } else {
-                    p.setThumbnail("");
-                }
+                p.setThumbnail(result.getString("thumbnail"));
+//                Blob blob = result.getBlob("thumbnail");
+//                if (blob != null) {
+//                    InputStream inputStream = blob.getBinaryStream();
+//                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//                    byte[] buffer = new byte[4096];
+//                    int bytesRead = -1;
+//
+//                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+//                        outputStream.write(buffer, 0, bytesRead);
+//                    }
+//
+//                    byte[] imageBytes = outputStream.toByteArray();
+//                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+//
+//                    inputStream.close();
+//                    outputStream.close();
+//                    p.setThumbnail(base64Image);
+//                } else {
+//                    p.setThumbnail("");
+//                }
                 list.add(p);
             }
         } catch (Exception e) {
@@ -368,10 +371,10 @@ public class PostDAO extends DBContext {
     public static void main(String[] args) {
 
         PostDAO dao = new PostDAO();
-        PostList postList = dao.getBlogById(1);
-//        List<PostList> list = dao.getBlogByPostCategory("1");
-//        for (PostList postList : list) {
+//        PostList postList = dao.getBlogById(1);
+        List<PostList> list = dao.getBlogSortByDate();
+        for (PostList postList : list) {
             System.out.println(postList);
-//        }
+        }
     }
 }
