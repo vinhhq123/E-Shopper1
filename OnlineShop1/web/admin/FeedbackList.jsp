@@ -63,7 +63,7 @@
                                                 <form class="form-inline" role="form" action="<%=request.getContextPath()%>/feedback/search">
                                                 <div class="form-group" style="margin-right:12px;">
                                                     <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                                                    <input type="text" name="table_search" class="form-control" id="exampleInputEmail2" placeholder="Customer Name" value="${requestScope.valueSearch}" onblur="this.value = removeSpaces(this.value);">
+                                                    <input type="text" name="table_search" class="form-control" id="exampleInputEmail2" placeholder="Enter Fullname" value="${requestScope.valueSearch}" onblur="this.value = removeSpaces(this.value);">
                                                 </div>
                                                 <div class="form-group" style="margin-right:12px;">
                                                 <select class="select" aria-label="Default select example" name="role" style="height: 30px">
