@@ -113,11 +113,10 @@ public class FeedbacksController extends HttpServlet {
 
      protected void FeedbacksList(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          int currentPage = 1;
-        // Set total records per page is 5
+        int currentPage = 1;
         int recordsPerPage = 3;
 
-        // Get the current page from request if there any
+        
         if (request.getParameter("currentPage") != null) {
             currentPage = Integer.parseInt(request.getParameter("currentPage"));
         }
@@ -127,7 +126,6 @@ public class FeedbacksController extends HttpServlet {
         SettingDAO settingDAO = new SettingDAO();
         FeedbackDAO feedbackDAO = new FeedbackDAO();        
         List<User> customers = new ArrayList<>();
-       // List<User> sales = new ArrayList<>();
         List<String> orderStatuses = new ArrayList<>();
         List<Feedback> feedback = new ArrayList<>();
         List<Setting> settingList = new ArrayList<>();
@@ -141,7 +139,6 @@ public class FeedbacksController extends HttpServlet {
             feedback = feedbackDAO.getFeedbackByPage(currentPage, recordsPerPage);
             product = feedbackDAO.getAllProduct();
             int rows = feedbackDAO.getNumberOfRows();
-            // Count total number of page
             int numOfPage = rows / recordsPerPage;
             if (rows % recordsPerPage > 0) {
                 numOfPage++;
@@ -215,7 +212,6 @@ public class FeedbacksController extends HttpServlet {
             request.setAttribute("Customers", customers);         
             request.setAttribute("FeedStatuses", feedsStatus);
             request.setAttribute("valueStatus", status);
-            //request.setAttribute("Ratestar", ratestar); 
             request.setAttribute("valueSearch", searchField);
             request.setAttribute("SettingList", settingList);
             request.getRequestDispatcher("/admin/FeedbackList.jsp").forward(request, response);
