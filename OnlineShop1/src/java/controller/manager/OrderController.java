@@ -6,6 +6,8 @@
 package controller.manager;
 
 import dal.OrderDAO;
+import dal.OrderDetailDAO;
+import dal.ProductDAO;
 import dal.SettingDAO;
 import dal.UserDAO;
 import java.io.IOException;
@@ -24,6 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Order;
+import model.OrderDetail;
+import model.Product;
 import model.User;
 
 /**
@@ -255,8 +259,12 @@ public class OrderController extends HttpServlet {
         UserDAO userDAO = new UserDAO();
         OrderDAO orderDAO = new OrderDAO();
         SettingDAO settingDAO = new SettingDAO();
+        ProductDAO productDAO = new ProductDAO();
+        OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
+        List<OrderDetail> orderDetails = new ArrayList<>();
         List<User> sales = new ArrayList<>();
         List<String> orderStatuses = new ArrayList<>();
+        List<Product> products = new ArrayList<>();
         Order order = new Order();
         User currentCustomer = new User();
         User currentSale = new User();
@@ -267,6 +275,10 @@ public class OrderController extends HttpServlet {
             currentSale = userDAO.getUserByUserId(order.getSalesId());
             orderStatuses = settingDAO.getSettingOrderValue();
             sales = userDAO.getAllUserByRole(3);
+
+            orderDetails = orderDetailDAO.getOrderDetailsByOrderId(orderId);
+            products = productDAO.getAllProducts();
+
             switch (order.getOrderStatus()) {
                 case 20:
                     orderStatus = "Delivered";
@@ -288,6 +300,8 @@ public class OrderController extends HttpServlet {
             request.setAttribute("OrderStatuses", orderStatuses);
             request.setAttribute("Sales", sales);
             request.setAttribute("CurrentOrderStatus", orderStatus);
+            request.setAttribute("Products", products);
+            request.setAttribute("OrderDetails", orderDetails);
             request.getRequestDispatcher("/admin/OrderDetail.jsp").forward(request, response);
         } catch (Exception ex) {
             System.out.println("Exception getOrderByOrderId ===== " + ex);
@@ -322,7 +336,7 @@ public class OrderController extends HttpServlet {
         }
 
         OrderDAO orderDAO = new OrderDAO();
-                // Get session
+        // Get session
         HttpSession session = request.getSession();
         try {
             int check = orderDAO.updateOrderSaleInfor(salerId, status, salesNote, orderId);

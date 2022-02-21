@@ -139,40 +139,31 @@
                                             <th>Quantity</th>
                                             <th>Sub Total</th>
                                         </tr>
-                                        <tr>
-                                            <td>Product 1</td>
-                                            <td>Category 1</td>  
-                                            <td><span class="price">
-                                                    <fmt:formatNumber value="12323" type="currency"/>
-                                                </span></td>  
-                                            <td>2</td>  
-                                            <td><span class="subtotal">
-                                                    <fmt:formatNumber value="2356" type="currency"/>
-                                                </span></td>  
-                                        </tr>
-                                        <tr>
-                                            <td>Product 2</td>
-                                            <td>Category 2</td>  
-                                            <td><span class="price">
-                                                    <fmt:formatNumber value="123123" type="currency"/>
-                                                </span></td>  
-                                            <td>2</td>  
-                                            <td><span class="subtotal">
-                                                    <fmt:formatNumber value="12465" type="currency"/>
-                                                </span></td>  
-                                        </tr>
-                                        <tr>
-                                            <td>Product 3</td>
-                                            <td>Category 1</td>  
-                                            <td><span class="price">
-                                                    <fmt:formatNumber value="1234" type="currency"/>
-                                                </span></td>  
-                                            <td>4</td>  
-                                            <td><span class="subtotal">
-                                                    <fmt:formatNumber value="1235" type="currency"/>
-                                                </span></td>  
-                                        </tr>
+                                        <c:forEach items="${OrderDetails}" var="ods">
+                                            <tr>
+                                                <c:forEach items="${Products}" var="p">
+                                                    <c:choose>
+                                                        <c:when test="${p.getPid() == ods.getProductId() }">
+                                                            <td>${p.getTitle()}</td>
+                                                            <td><c:if test="${p.getCategoryID() == 13}">Shoes</c:if>
+                                                                <c:if test="${p.getCategoryID() == 14}">Clothes</c:if>
+                                                                <c:if test="${p.getCategoryID() == 15}">Bags</c:if>
+                                                                </td>
+                                                                <td><span class="price">
+                                                                    <fmt:formatNumber value="${p.getSprice()}" type="currency"/>
+                                                                </span></td>
+                                                            </c:when>
+                                                        </c:choose>
+                                                    </c:forEach>
+
+                                                <td><b>${ods.getQuantity()}</b></td>  
+                                                <td><span class="subtotal">
+                                                        <fmt:formatNumber value="${ods.getSubCost()}" type="currency"/>
+                                                    </span></td>
+                                            </tr>
+                                        </c:forEach>
                                     </table>
+
                                     <!--  THIS FORM IS FOR ASSIGNED SALES AND THE MANAGER-->
                                     <form:form method="POST" action="${pageContext.request.contextPath}/shoppingCart">
                                         <table class="table table-striped" id="orderDetailTableEdit">
@@ -184,33 +175,31 @@
                                                 <th>Sub Total</th>
                                                 <th>Action</th>
                                             </tr>
-                                            <tr>
-                                                <td>Product 1</td>
-                                                <td>Category 1</td>  
-                                                <td><span class="price">
-                                                        <fmt:formatNumber value="123" type="currency"/>
-                                                    </span></td>  
-                                                <td><input
-                                                        path="cartLines[${varStatus.index}].quantity" value="2"/></td>  
-                                                <td><span class="subtotal">
-                                                        <fmt:formatNumber value="123" type="currency"/>
-                                                    </span></td>  
-                                                <td><button type="button" class="btn-xs btn-danger" onclick="window.location = '<%=request.getContextPath()%>/user/getUser?uid=${con.getUid()}'">Remove</button></td>
-                                            </tr>
+                                            <c:forEach items="${OrderDetails}" var="ods">
+                                                <tr>
+                                                    <c:forEach items="${Products}" var="p">
+                                                        <c:choose>
+                                                            <c:when test="${p.getPid() == ods.getProductId() }">
+                                                                <td>${p.getTitle()}</td>
+                                                                <td><c:if test="${p.getCategoryID() == 13}">Shoes</c:if>
+                                                                    <c:if test="${p.getCategoryID() == 14}">Clothes</c:if>
+                                                                    <c:if test="${p.getCategoryID() == 15}">Bags</c:if>
+                                                                    </td>
+                                                                    <td><span class="price">
+                                                                        <fmt:formatNumber value="${p.getSprice()}" type="currency"/>
+                                                                    </span></td>
+                                                                </c:when>
+                                                            </c:choose>
+                                                        </c:forEach>
 
-                                            <tr>
-                                                <td>Product 2</td>
-                                                <td>Category 2</td>  
-                                                <td><span class="price">
-                                                        <fmt:formatNumber value="123" type="currency"/>
-                                                    </span></td>  
-                                                <td><input
-                                                        path="cartLines[${varStatus.index}].quantity" value="2"/></td>  
-                                                <td><span class="subtotal">
-                                                        <fmt:formatNumber value="123" type="currency"/>
-                                                    </span></td>  
-                                                <td><button type="button" class="btn-xs btn-danger" onclick="window.location = '<%=request.getContextPath()%>/user/getUser?uid=${con.getUid()}'">Remove</button></td>
-                                            </tr>
+                                                    <td><input path="cartLines[${varStatus.index}].quantity" value="${ods.getQuantity()}"/></td>  
+                                                    <td><span class="subtotal">
+                                                            <fmt:formatNumber value="${ods.getSubCost()}" type="currency"/>
+                                                        </span></td>
+<!--                                                        <input path="cartLines[${varStatus.index}].quantity" value="2"/>-->
+                                                    <td><button type="button" class="btn-xs btn-danger" onclick="window.location = '<%=request.getContextPath()%>/user/getUser?uid=${con.getUid()}'">Remove</button></td>
+                                                </tr>
+                                            </c:forEach>
                                         </table>
 
                                         <div class="col-lg-offset-9 ">

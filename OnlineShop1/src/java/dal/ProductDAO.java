@@ -25,11 +25,12 @@ import model.User;
  *
  * @author Edwars
  */
-public class ProductDAO extends DBContext{
+public class ProductDAO extends DBContext {
+
     private Connection connection = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet results = null;
-    
+
     public int getNumberOfRows() throws Exception {
 
         int rows = 0;
@@ -100,14 +101,14 @@ public class ProductDAO extends DBContext{
         }
         return products;
     }
-    
-     public List<Product> searchPro(String key, String cat, String status, String sale) throws Exception {
+
+    public List<Product> searchPro(String key, String cat, String status, String sale) throws Exception {
 
         List<Product> products = new ArrayList<>();
-        String sql = "SELECT productId,title,list_price,sale_price,featured,categoryId,u.uid as salesID, s.settingStatus as productStatus,quantity,updatedDate \n" +
-                     "FROM product as p join setting as s on p.productStatus = s.settingstatus join user as u on p.salesId = u.uid  "
-                     + "where (title like '%" + key + "%' "
-                     + "or feature like '%" + key + "%' ";
+        String sql = "SELECT productId,title,list_price,sale_price,featured,categoryId,u.uid as salesID, s.settingStatus as productStatus,quantity,updatedDate \n"
+                + "FROM product as p join setting as s on p.productStatus = s.settingstatus join user as u on p.salesId = u.uid  "
+                + "where (title like '%" + key + "%' "
+                + "or feature like '%" + key + "%' ";
         Product product = null;
         if (cat != "") {
             sql += " and p.categoryId = " + cat;
@@ -152,11 +153,11 @@ public class ProductDAO extends DBContext{
         }
         return products;
     }
-     
-     public Product getProductById(int pid) throws Exception {
 
-        String sql = "SELECT productid, thumbnail, title, list_price, sale_price, featured, productStatus, categoryId, breif_information, quantity, updatedDate, salesId FROM product \n"+    
-                     " where productid = " + pid;
+    public Product getProductById(int pid) throws Exception {
+
+        String sql = "SELECT productid, thumbnail, title, list_price, sale_price, featured, productStatus, categoryId, breif_information, quantity, updatedDate, salesId FROM product \n"
+                + " where productid = " + pid;
         System.out.println(sql);
         Product product = null;
         String noImage = "";
@@ -216,8 +217,8 @@ public class ProductDAO extends DBContext{
         }
         return product;
     }
-     
-     public int updateProduct(String title, Double lprice, Double sprice, String feature, InputStream thumbnail,int category, int saleid, int status,int quantity,String breif ,Date update, int pid) throws SQLException {
+
+    public int updateProduct(String title, Double lprice, Double sprice, String feature, InputStream thumbnail, int category, int saleid, int status, int quantity, String breif, Date update, int pid) throws SQLException {
         String sql = "UPDATE product\n"
                 + "SET title = ?,list_price = ?,sale_price = ?,featured = ?,categoryId =?, salesId = ?, productStatus = ?,quantity =?,breif_information=?,updatedDate= ?";
         int row = 0;
@@ -262,17 +263,17 @@ public class ProductDAO extends DBContext{
         return row;
     }
 
-    public int addProduct(String title, Double lprice, Double sprice, String feature, InputStream thumbnail,int category, int saleid, int status,int quantity,String breif ,Date update) throws SQLException {
-        String sql = "INSERT INTO product\n" +
-                     "(thumbnail,title,list_price,sale_price,featured,productStatus,categoryId,breif_information,quantity,updatedDate,salesId)\n" +
-                     "VALUES\n" +
-                     "(?,?,?,?,?,?,?,?,?,?,?);";
+    public int addProduct(String title, Double lprice, Double sprice, String feature, InputStream thumbnail, int category, int saleid, int status, int quantity, String breif, Date update) throws SQLException {
+        String sql = "INSERT INTO product\n"
+                + "(thumbnail,title,list_price,sale_price,featured,productStatus,categoryId,breif_information,quantity,updatedDate,salesId)\n"
+                + "VALUES\n"
+                + "(?,?,?,?,?,?,?,?,?,?,?);";
         int row = 0;
         try {
             connection = getConnection();
             preparedStatement = connection.prepareStatement(sql);
             if (thumbnail != null) {
-            preparedStatement.setBlob(1, thumbnail);
+                preparedStatement.setBlob(1, thumbnail);
             }
             preparedStatement.setString(2, title);
             preparedStatement.setDouble(3, lprice);
@@ -299,8 +300,8 @@ public class ProductDAO extends DBContext{
         }
         return row;
     }
-    
-        public Product getLastInsertedProduct() throws Exception {
+
+    public Product getLastInsertedProduct() throws Exception {
 
         String sql = "SELECT * FROM product ORDER BY productid DESC LIMIT 1; ";
         System.out.println(sql);
@@ -361,5 +362,43 @@ public class ProductDAO extends DBContext{
             }
         }
         return pro;
+    }
+
+    public List<Product> getAllProducts() {
+
+        List<Product> products = new ArrayList<>();
+        Product product = null;
+
+        try {
+            String sql = "select * from product ";
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                product = new Product();
+                product.setPid(results.getInt("productId"));
+                product.setTitle(results.getString("title"));
+                product.setSprice(results.getDouble("sale_price"));
+                product.setProductStatus(results.getInt("productStatus"));
+                product.setCategoryID(results.getInt("categoryId"));
+                product.setSalesId(results.getInt("salesId"));
+                product.setQuantity(results.getInt("quantity"));
+                product.setUpdatedDate(results.getDate("updatedDate"));
+                products.add(product);
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return products;
     }
 }
