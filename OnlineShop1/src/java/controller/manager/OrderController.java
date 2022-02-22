@@ -272,6 +272,11 @@ public class OrderController extends HttpServlet {
         Order order = new Order();
         User currentCustomer = new User();
         User currentSale = new User();
+        User currentLogedInUser = new User();
+        // Get session
+        HttpSession session = request.getSession();
+        // get account saved in session 
+        currentLogedInUser = (User) session.getAttribute("account");
 
         try {
             order = orderDAO.getOrderByOrderId(orderId);
@@ -298,6 +303,12 @@ public class OrderController extends HttpServlet {
                     break;
             }
 
+            int currentSaleId = order.getSalesId();
+            int currentUserRole = currentLogedInUser.getRole();
+            int currentUserId = currentLogedInUser.getUid();
+
+            System.out.println(currentSaleId + " " + currentUserRole + " " + currentUserId);
+
             request.setAttribute("CurrentOrder", order);
             request.setAttribute("CurrentCustomer", currentCustomer);
             request.setAttribute("CurrentSale", currentSale);
@@ -306,6 +317,9 @@ public class OrderController extends HttpServlet {
             request.setAttribute("CurrentOrderStatus", orderStatus);
             request.setAttribute("Products", products);
             request.setAttribute("OrderDetails", orderDetails);
+            session.setAttribute("CurrentUserRole", currentUserRole);
+            session.setAttribute("CurrentOrderSalerId", currentSaleId);
+            session.setAttribute("CurrentLogedInUserId", currentUserId);
             request.getRequestDispatcher("/admin/OrderDetail.jsp").forward(request, response);
         } catch (Exception ex) {
             System.out.println("Exception getOrderByOrderId ===== " + ex);
@@ -318,12 +332,15 @@ public class OrderController extends HttpServlet {
 
         int status = 0;
         String salesNote = "";
+        int salerId = 0;
         // GET CHOSEN SALER ID
         String saler = request.getParameter("saler");
         String orderStatus = request.getParameter("status");
         salesNote = request.getParameter("note");
-        int salerId = Integer.parseInt(saler);
         int orderId = Integer.parseInt(request.getParameter("orderId"));
+        if (saler != null) {
+            salerId = Integer.parseInt(saler);
+        }
         switch (orderStatus) {
             case "Ordered":
                 status = 25;

@@ -116,7 +116,7 @@ public class OrderDAO extends DBContext {
         try {
             connection = getConnection();
             preparedStatement = connection.prepareStatement(sql);
-            results = preparedStatement.executeQuery(); 
+            results = preparedStatement.executeQuery();
 
             while (results.next()) {
                 order = new Order();
@@ -181,17 +181,32 @@ public class OrderDAO extends DBContext {
 
     public int updateOrderSaleInfor(int saleId, int orderStatus, String salesNote,
             int orderId) throws SQLException {
-        String sql = "UPDATE `onlineshop1`.`orders`\n"
-                + "SET `salesId` = ?,`orderStatus` = ?,`salesNote` = ?\n"
-                + "WHERE `orderId` = ? ;";
+
+        String sql = "";
+        if (saleId != 0) {
+            sql = "UPDATE `onlineshop1`.`orders`\n"
+                    + "SET `salesId` = ?,`orderStatus` = ?,`salesNote` = ?\n"
+                    + "WHERE `orderId` = ? ;";
+        } else {
+            sql = "UPDATE `onlineshop1`.`orders`\n"
+                    + "SET `orderStatus` = ?,`salesNote` = ?\n"
+                    + "WHERE `orderId` = ? ;";
+        }
         int row = 0;
         try {
             connection = getConnection();
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, saleId);
-            preparedStatement.setInt(2, orderStatus);
-            preparedStatement.setString(3, salesNote);
-            preparedStatement.setInt(4, orderId);
+            if (saleId != 0) {
+                preparedStatement.setInt(1, saleId);
+                preparedStatement.setInt(2, orderStatus);
+                preparedStatement.setString(3, salesNote);
+                preparedStatement.setInt(4, orderId);
+
+            } else {
+                preparedStatement.setInt(1, orderStatus);
+                preparedStatement.setString(2, salesNote);
+                preparedStatement.setInt(3, orderId);
+            }
             row = preparedStatement.executeUpdate();
         } catch (Exception ex) {
             System.out.println("Exception ==== " + ex);

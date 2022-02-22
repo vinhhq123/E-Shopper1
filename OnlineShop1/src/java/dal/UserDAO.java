@@ -139,7 +139,7 @@ public class UserDAO extends DBContext {
 
     public User getAccount(String email, String password) {
         try {
-            String sql = "SELECT email, password ,fullname,uid FROM user WHERE email = ? and password = ?";
+            String sql = "SELECT role,email, password ,fullname,uid FROM user WHERE email = ? and password = ?";
             connection = getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, email);
@@ -151,6 +151,7 @@ public class UserDAO extends DBContext {
                 user.setPassword(password);
                 user.setFullname(results.getString("fullname"));
                 user.setUid(results.getInt("uid"));
+                user.setRole(results.getInt("role"));
                 return user;
             }
 
