@@ -1,4 +1,4 @@
-<%-- 
+po<%-- 
     Document   : SideBar
     Created on : 09-Feb-2022, 18:05:47
     Author     : VINH
@@ -60,8 +60,14 @@
                 </li>
 
                 <li>
-                    <a href="basic_form.html">
+                    <a href="<%=request.getContextPath()%>/post/list">
                         <i class="fa fa-paperclip"></i> <span>Post List</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="<%=request.getContextPath()%>/post/PostDetail.jsp">
+                        <i class="fa fa-paperclip"></i> <span>Post Detail</span>
                     </a>
                 </li>
 
