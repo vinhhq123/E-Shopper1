@@ -208,4 +208,29 @@ public class OrderDAO extends DBContext {
         return row;
     }
 
+    public int updateTotalCost(int orderId, float totalCost) throws SQLException {
+        String sql = "UPDATE `onlineshop1`.`orders`\n"
+                + "SET `totalCost` = ? WHERE `orderId` = ? ;";
+        int row = 0;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setFloat(1, totalCost);
+            preparedStatement.setInt(2, orderId);
+            row = preparedStatement.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return row;
+    }
+
 }

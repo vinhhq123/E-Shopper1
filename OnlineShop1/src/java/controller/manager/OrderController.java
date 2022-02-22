@@ -11,15 +11,12 @@ import dal.ProductDAO;
 import dal.SettingDAO;
 import dal.UserDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +32,8 @@ import model.User;
  * @author VINH
  */
 @WebServlet(name = "OrderController", urlPatterns = {"/order/list", "/order/search",
-    "/order/getOrder", "/order/updateSaleInfor"})
+    "/order/getOrder", "/order/updateSaleInfor", "/order/updateOrderQuantity",
+    "/order/removeProduct"})
 public class OrderController extends HttpServlet {
 
     /**
@@ -91,6 +89,12 @@ public class OrderController extends HttpServlet {
                 break;
             case "/order/updateSaleInfor":
                 updateOrderSalerInfor(request, response);
+                break;
+            case "/order/updateOrderQuantity":
+                updateProductOrderQuantity(request, response);
+                break;
+            case "/order/removeProduct":
+                removeProductFromOrder(request, response);
                 break;
 
         }
@@ -353,5 +357,118 @@ public class OrderController extends HttpServlet {
             System.out.println("Exception updateOrderSalerInfor ===== " + ex);
             request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
         }
+    }
+
+    protected void updateProductOrderQuantity(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        float totalCost = 0;
+        boolean checkUpdateQuan = false;
+        // Get session
+        HttpSession session = request.getSession();
+
+        int currentOrderId = Integer.parseInt(request.getParameter("currentOrderId"));
+        String[] productIds = request.getParameterValues("productToUpdate");
+        String[] currentOrderDetailIds = request.getParameterValues("orderDetailToUpdate");
+
+        String[] quantities = request.getParameterValues("quantity");
+        String[] productPrices = request.getParameterValues("productPrice");
+
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
+        OrderDAO orderDAO = new OrderDAO();
+        OrderDetail orderDetail = null;
+
+        for (int i = 0; i < productIds.length; i++) {
+            orderDetail = new OrderDetail();
+
+            int orderDetailId = Integer.parseInt(currentOrderDetailIds[i]);
+            orderDetail.setOrderDetailId(orderDetailId);
+            int quantity = Integer.parseInt(quantities[i]);
+            orderDetail.setQuantity(quantity);
+            float price = Float.parseFloat(productPrices[i]);
+            float subCost = price * quantity;
+            orderDetail.setSubCost(subCost);
+            totalCost += subCost;
+
+            try {
+                int checkUpdateQuantity = orderDetailDAO.updateProductOrderQuantity(orderDetailId, quantity, subCost);
+                if (checkUpdateQuantity > 0) {
+                    checkUpdateQuan = true;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Exception ===== " + ex);
+            }
+
+        }
+
+        if (checkUpdateQuan) {
+            try {
+                int check = orderDAO.updateTotalCost(currentOrderId, totalCost);
+                if (check > 0) {
+                    String message = "Update product succesfully.";
+                    session.setAttribute("messageUpdateSuccess", message);
+                    response.sendRedirect("getOrder?orderId=" + currentOrderId);
+                } else {
+                    String message = "Unexpected error occurs.Please try again later !!!";
+                    session.setAttribute("messageUpdateFail", message);
+                    response.sendRedirect("getOrder?orderId=" + currentOrderId);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Exception ===== " + ex);
+            }
+        }
+
+    }
+
+    protected void removeProductFromOrder(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        int orderDetailId = Integer.parseInt(request.getParameter("odid"));
+        int orderId = Integer.parseInt(request.getParameter("orderId"));
+
+        System.out.println("OrderDetail ID === " + orderDetailId);
+
+        OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
+        OrderDAO orderDAO = new OrderDAO();
+        OrderDetail orderDetail = new OrderDetail();
+        Order order = new Order();
+        // Get session
+        HttpSession session = request.getSession();
+
+        try {
+
+            order = orderDAO.getOrderByOrderId(orderId);
+            orderDetail = orderDetailDAO.getOrderDetailsByOrderDetailId(orderDetailId);
+            if (orderDetail != null) {
+                float subTotaltoMinus = orderDetail.getSubCost();
+                float newTotal = order.getTotalCost() - subTotaltoMinus;
+
+                int check = orderDAO.updateTotalCost(orderId, newTotal);
+                if (check > 0) {
+                    int checkDelete = orderDetailDAO.deleteOrderDetail(orderDetailId);
+                    if (checkDelete > 0) {
+                        String message = "Remove product succesfully.";
+                        session.setAttribute("messageUpdateSuccess", message);
+                        response.sendRedirect("getOrder?orderId=" + orderId);
+                    } else {
+                        String message = "Unexpected error occurs.Please try again later !!!";
+                        session.setAttribute("messageUpdateFail", message);
+                        response.sendRedirect("getOrder?orderId=" + orderId);
+                    }
+                } else {
+                    String message = "Unexpected error occurs.Please try again later !!!";
+                    session.setAttribute("messageUpdateFail", message);
+                    response.sendRedirect("getOrder?orderId=" + orderId);
+                }
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Exception ===== " + ex);
+        }
+
     }
 }
