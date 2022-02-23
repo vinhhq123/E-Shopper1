@@ -476,6 +476,7 @@ public class OrderController extends HttpServlet {
                     // PRODUCT QUANTITY IN ORDER DETAILS NOT CHANGED
                     float subCost = orderDetailDAO.getOrderDetailsByOrderDetailId(orderDetailId).getSubCost();
                     totalCost += subCost;
+                    checkUpdateQuan = true;
                 }
 
             } catch (Exception ex) {
