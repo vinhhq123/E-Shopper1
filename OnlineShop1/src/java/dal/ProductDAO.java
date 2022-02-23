@@ -425,4 +425,37 @@ public class ProductDAO extends DBContext {
         }
         return row;
     }
+     public Product getTitlebyproId(int pid) throws Exception {
+
+        String sql = "SELECT productId,title from product where productId= " + pid;
+        System.out.println(sql);
+        Product user = null;
+        String noImage = "";
+
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                user = new Product();
+                user.setPid(results.getInt("productId"));
+                user.setTitle(results.getString("title"));
+
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (SQLException | IOException ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return user;
+    }
+
 }
