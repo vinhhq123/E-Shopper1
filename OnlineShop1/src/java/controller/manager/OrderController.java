@@ -272,6 +272,11 @@ public class OrderController extends HttpServlet {
         Order order = new Order();
         User currentCustomer = new User();
         User currentSale = new User();
+        User currentLogedInUser = new User();
+        // Get session
+        HttpSession session = request.getSession();
+        // get account saved in session 
+        currentLogedInUser = (User) session.getAttribute("account");
 
         try {
             order = orderDAO.getOrderByOrderId(orderId);
@@ -298,6 +303,12 @@ public class OrderController extends HttpServlet {
                     break;
             }
 
+            int currentSaleId = order.getSalesId();
+            int currentUserRole = currentLogedInUser.getRole();
+            int currentUserId = currentLogedInUser.getUid();
+
+            System.out.println(currentSaleId + " " + currentUserRole + " " + currentUserId);
+
             request.setAttribute("CurrentOrder", order);
             request.setAttribute("CurrentCustomer", currentCustomer);
             request.setAttribute("CurrentSale", currentSale);
@@ -306,6 +317,9 @@ public class OrderController extends HttpServlet {
             request.setAttribute("CurrentOrderStatus", orderStatus);
             request.setAttribute("Products", products);
             request.setAttribute("OrderDetails", orderDetails);
+            session.setAttribute("CurrentUserRole", currentUserRole);
+            session.setAttribute("CurrentOrderSalerId", currentSaleId);
+            session.setAttribute("CurrentLogedInUserId", currentUserId);
             request.getRequestDispatcher("/admin/OrderDetail.jsp").forward(request, response);
         } catch (Exception ex) {
             System.out.println("Exception getOrderByOrderId ===== " + ex);
@@ -318,12 +332,15 @@ public class OrderController extends HttpServlet {
 
         int status = 0;
         String salesNote = "";
+        int salerId = 0;
         // GET CHOSEN SALER ID
         String saler = request.getParameter("saler");
         String orderStatus = request.getParameter("status");
         salesNote = request.getParameter("note");
-        int salerId = Integer.parseInt(saler);
         int orderId = Integer.parseInt(request.getParameter("orderId"));
+        if (saler != null) {
+            salerId = Integer.parseInt(saler);
+        }
         switch (orderStatus) {
             case "Ordered":
                 status = 25;
@@ -378,27 +395,92 @@ public class OrderController extends HttpServlet {
         OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
         OrderDAO orderDAO = new OrderDAO();
         OrderDetail orderDetail = null;
+        ProductDAO productDAO = new ProductDAO();
 
         for (int i = 0; i < productIds.length; i++) {
             orderDetail = new OrderDetail();
 
             int orderDetailId = Integer.parseInt(currentOrderDetailIds[i]);
             orderDetail.setOrderDetailId(orderDetailId);
-            int quantity = Integer.parseInt(quantities[i]);
-            orderDetail.setQuantity(quantity);
-            float price = Float.parseFloat(productPrices[i]);
-            float subCost = price * quantity;
-            orderDetail.setSubCost(subCost);
-            totalCost += subCost;
-
             try {
-                int checkUpdateQuantity = orderDetailDAO.updateProductOrderQuantity(orderDetailId, quantity, subCost);
-                if (checkUpdateQuantity > 0) {
+                // GET CURRENT ORDER DETAIL BEFORE CHANGE QUANTITY
+                OrderDetail orderDetailBeforeChanged = orderDetailDAO.getOrderDetailsByOrderDetailId(orderDetailId);
+                // QUANTITY OF THIS ORDER DETAIL BEFORE UPDATE
+                int quantityBeforeUpdate = orderDetailBeforeChanged.getQuantity();
+                // NEW QUANTIY TO UPDATE
+                int newQuantity = Integer.parseInt(quantities[i]);
+                // CHECK IF QUANTITY IS INCREASE OR DECREASE
+                int quantityToUpdateDatabase = quantityBeforeUpdate - newQuantity;
+                // CASE INCREASE QUANTITY
+                if (quantityToUpdateDatabase < 0) {
+                    // product increase their quantity
+                    int newQuantityToUpdate = quantityToUpdateDatabase * (-1);
+                    int currentProductId = Integer.parseInt(productIds[i]);
+                    // update product quantity in product table
+                    Product productToUpdateQuantity = productDAO.getProductById(currentProductId);
+                    int newUpdateProductTableQuantity = productToUpdateQuantity.getQuantity() - newQuantityToUpdate;
+                    // CHECK IF PRODUCT IS STOCKING
+                    if (newUpdateProductTableQuantity >= 0) {
+                        // Update product table quantity
+                        int row = productDAO.updateProductQuantity(newUpdateProductTableQuantity, currentProductId);
+                        if (row > 0) {
+                            // Update product table success
+                            orderDetail.setQuantity(newQuantity);
+                            float price = Float.parseFloat(productPrices[i]);
+                            float subCost = price * newQuantity;
+                            orderDetail.setSubCost(subCost);
+                            totalCost += subCost;
+
+                            try {
+                                int checkUpdateQuantity = orderDetailDAO.updateProductOrderQuantity(orderDetailId, newQuantity, subCost);
+                                if (checkUpdateQuantity > 0) {
+                                    checkUpdateQuan = true;
+                                }
+                            } catch (SQLException ex) {
+                                Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
+                                System.out.println("Exception ===== " + ex);
+                            }
+                        }
+                    } else {
+                        // ERROR CAUSE NO MORE PRODUCT IN PRODUCT TABLE
+                        String message = "Product " + productToUpdateQuantity.getTitle() + " is out of stock !!!";
+                        session.setAttribute("messageUpdateFail", message);
+                        response.sendRedirect("getOrder?orderId=" + currentOrderId);
+                    }
+                } else if (quantityToUpdateDatabase > 0) {
+                    // NEW QUANTITY IS DECREASE
+                    int currentProductId = Integer.parseInt(productIds[i]);
+                    Product productToUpdateQuantity = productDAO.getProductById(currentProductId);
+                    int newUpdateProductTableQuantity = productToUpdateQuantity.getQuantity() + quantityToUpdateDatabase;
+                    // Update product table quantity
+                    int row = productDAO.updateProductQuantity(newUpdateProductTableQuantity, currentProductId);
+                    if (row > 0) {
+                        // Update product table success
+                        orderDetail.setQuantity(newQuantity);
+                        float price = Float.parseFloat(productPrices[i]);
+                        float subCost = price * newQuantity;
+                        orderDetail.setSubCost(subCost);
+                        totalCost += subCost;
+
+                        try {
+                            int checkUpdateQuantity = orderDetailDAO.updateProductOrderQuantity(orderDetailId, newQuantity, subCost);
+                            if (checkUpdateQuantity > 0) {
+                                checkUpdateQuan = true;
+                            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
+                            System.out.println("Exception ===== " + ex);
+                        }
+                    }
+                } else {
+                    // PRODUCT QUANTITY IN ORDER DETAILS NOT CHANGED
+                    float subCost = orderDetailDAO.getOrderDetailsByOrderDetailId(orderDetailId).getSubCost();
+                    totalCost += subCost;
                     checkUpdateQuan = true;
                 }
-            } catch (SQLException ex) {
+
+            } catch (Exception ex) {
                 Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("Exception ===== " + ex);
             }
 
         }

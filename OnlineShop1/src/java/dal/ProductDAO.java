@@ -401,24 +401,16 @@ public class ProductDAO extends DBContext {
         }
         return products;
     }
-     public Product getTitlebyproId(int pid) throws Exception {
 
-        String sql = "SELECT productId,title from product where productId= " + pid;
-        System.out.println(sql);
-        Product user = null;
-        String noImage = "";
-
+    public int updateProductQuantity(int quantity, int pid) throws SQLException {
+        String sql = "UPDATE product SET quantity = ? WHERE productId = ?;";
+        int row = 0;
         try {
             connection = getConnection();
             preparedStatement = connection.prepareStatement(sql);
-            results = preparedStatement.executeQuery();
-
-            while (results.next()) {
-                user = new Product();
-                user.setPid(results.getInt("productId"));
-                user.setTitle(results.getString("title"));
-
-            }
+            preparedStatement.setInt(1, quantity);
+            preparedStatement.setInt(2, pid);
+            row = preparedStatement.executeUpdate();
         } catch (Exception ex) {
             System.out.println("Exception ==== " + ex);
         } finally {
@@ -427,10 +419,10 @@ public class ProductDAO extends DBContext {
                 closePrepareStatement(preparedStatement);
                 //closeResultSet(results);
 
-            } catch (SQLException | IOException ex) {
+            } catch (Exception ex) {
                 System.out.println("Exception ==== " + ex);
             }
         }
-        return user;
+        return row;
     }
 }

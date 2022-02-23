@@ -80,111 +80,70 @@
                                             <br> 
                                         </div>
                                         <!--  THIS IS FOR ASSIGNED SALES AND MANAGER ONLY -->
-                                        <div class="col-lg-6" >
-                                            <h3><b>Sales Information</b></h3><br>
-                                            <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/order/updateSaleInfor?orderId=<c:out value="${CurrentOrder.getOrderId()}" />" method="POST">
-                                                <c:if test="${not empty messageUpdateSaleInfor}">
-                                                    <b><h4 class="help-block" style="color: green" id="successEditMessage">${messageUpdateSaleInfor}</h4></b>
-                                                        <c:remove var="messageUpdateSaleInfor"/>
-                                                    <br>
-                                                </c:if>
-                                                <c:if test="${not empty messageUpdateSaleInforFail}">
-                                                    <b><h4 class="help-block" style="color: red" id="successEditMessage">${messageUpdateSaleInforFail}</h4></b>
-                                                        <c:remove var="messageUpdateSaleInforFail"/>
-                                                    <br>
-                                                </c:if>
-                                                <div class="form-group">
-                                                    <label for="saler" class="col-lg-2 col-sm-2 control-label">Assigned</label>
-                                                    <div class="col-lg-10">
-                                                        <select class="form-control m-b-10" name="saler">
-                                                            <c:forEach items="${Sales}" var="sal">
-                                                                <option value="<c:out value="${sal.getUid()}"/>" <c:if test="${sal.getUid() == CurrentSale.getUid()}">selected</c:if>>${sal.getFullname()}</option>
-                                                            </c:forEach>
-                                                        </select>
+                                        <c:if test="${CurrentUserRole == 1 || CurrentUserRole == 2 || CurrentUserRole == 3 && CurrentOrderSalerId == CurrentLogedInUserId}">
+                                            <div class="col-lg-6" >
+                                                <h3><b>Sales Information</b></h3><br>
+                                                <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/order/updateSaleInfor?orderId=<c:out value="${CurrentOrder.getOrderId()}" />" method="POST">
+                                                    <c:if test="${not empty messageUpdateSaleInfor}">
+                                                        <b><h4 class="help-block" style="color: green" id="successEditMessage">${messageUpdateSaleInfor}</h4></b>
+                                                            <c:remove var="messageUpdateSaleInfor"/>
+                                                        <br>
+                                                    </c:if>
+                                                    <c:if test="${not empty messageUpdateSaleInforFail}">
+                                                        <b><h4 class="help-block" style="color: red" id="successEditMessage">${messageUpdateSaleInforFail}</h4></b>
+                                                            <c:remove var="messageUpdateSaleInforFail"/>
+                                                        <br>
+                                                    </c:if>
+                                                    <div class="form-group">
+                                                        <label for="saler" class="col-lg-2 col-sm-2 control-label">Assigned</label>
+                                                        <div class="col-lg-10">
+                                                            <select class="form-control m-b-10" name="saler" <c:if test="${!(CurrentUserRole == 1 || CurrentUserRole == 2)}">disabled</c:if> >
+                                                                <c:forEach items="${Sales}" var="sal">
+                                                                    <option value="<c:out value="${sal.getUid()}"/>" <c:if test="${sal.getUid() == CurrentSale.getUid()}">selected="true"</c:if>>${sal.getFullname()}</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="status" class="col-lg-2 col-sm-2 control-label">Status</label>
-                                                    <div class="col-lg-10">
-                                                        <select class="form-control m-b-10" name="status">
-                                                            <c:forEach items="${OrderStatuses}" var="oss">
-                                                                <option value="<c:out value="${oss}"/>" <c:if test="${oss eq CurrentOrderStatus}">selected</c:if>>${oss}</option>
-                                                            </c:forEach>
-                                                        </select>
+                                                    <div class="form-group">
+                                                        <label for="status" class="col-lg-2 col-sm-2 control-label">Status</label>
+                                                        <div class="col-lg-10">
+                                                            <select class="form-control m-b-10" name="status">
+                                                                <c:forEach items="${OrderStatuses}" var="oss">
+                                                                    <option value="<c:out value="${oss}"/>" <c:if test="${oss eq CurrentOrderStatus}">selected</c:if>>${oss}</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="note" class="col-lg-2 col-sm-2 control-label">Notes</label>
-                                                    <div class="col-lg-10">
-                                                        <textarea id="note" placeholder="Sale Notes" name="note" style="width: 430px;"  rows="3" cols="30" >${CurrentOrder.getSalesNote()}</textarea>
+                                                    <div class="form-group">
+                                                        <label for="note" class="col-lg-2 col-sm-2 control-label">Notes</label>
+                                                        <div class="col-lg-10">
+                                                            <textarea id="note" placeholder="Sale Notes" name="note" style="width: 430px;"  rows="3" cols="30" >${CurrentOrder.getSalesNote()}</textarea>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-lg-offset-2 col-lg-5">
-                                                        <button type="submit" class="btn btn-success">Save changes</button>
+                                                    <div class="form-group">
+                                                        <div class="col-lg-offset-2 col-lg-5">
+                                                            <button type="submit" class="btn btn-success">Save changes</button>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </form>
-                                        </div>
+                                                </form>
+                                            </div>
+                                        </c:if>
                                     </div>
 
                                     <h3>This order includes the following products</h3>
+                                    <br>
 
                                     <!--  THIS TABLE IS FOR OTHER SALES ONLY-->
-                                    <table class="table table-striped" id="orderDetailTable">
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Category</th>
-                                            <th>Unit Price</th>
-                                            <th>Quantity</th>
-                                            <th>Sub Total</th>
-                                        </tr>
-                                        <c:forEach items="${OrderDetails}" var="ods">
-                                            <tr>
-                                                <c:forEach items="${Products}" var="p">
-                                                    <c:choose>
-                                                        <c:when test="${p.getPid() == ods.getProductId() }">
-                                                            <td>${p.getTitle()}</td>
-                                                            <td><c:if test="${p.getCategoryID() == 13}">Shoes</c:if>
-                                                                <c:if test="${p.getCategoryID() == 14}">Clothes</c:if>
-                                                                <c:if test="${p.getCategoryID() == 15}">Bags</c:if>
-                                                                </td>
-                                                                <td><span class="price">
-                                                                    <fmt:formatNumber value="${p.getSprice()}" type="currency"/>
-                                                                </span></td>
-                                                            </c:when>
-                                                        </c:choose>
-                                                    </c:forEach>
+                                    <c:if test="${!(CurrentOrderSalerId eq CurrentLogedInUserId || CurrentUserRole == 1 || CurrentUserRole == 2)}">
 
-                                                <td><b>${ods.getQuantity()}</b></td>  
-                                                <td><span class="subtotal">
-                                                        <fmt:formatNumber value="${ods.getSubCost()}" type="currency"/>
-                                                    </span></td>
-                                            </tr>
-                                        </c:forEach>
-                                    </table>
 
-                                    <!--  THIS FORM IS FOR ASSIGNED SALES AND THE MANAGER-->
-                                    <c:if test="${not empty messageUpdateSuccess}">
-                                        <b><h4 class="help-block" style="color: green" id="editQuantity">${messageUpdateSuccess}</h4></b>
-                                            <c:remove var="messageUpdateSuccess"/>
-                                        <br>
-                                    </c:if>
-                                    <c:if test="${not empty messageUpdateFail}">
-                                        <b><h4 class="help-block" style="color: red" id="editQuantity">${messageUpdateFail}</h4></b>
-                                            <c:remove var="messageUpdateFail"/>
-                                        <br>
-                                    </c:if>
-                                    <form method="POST" action="${pageContext.request.contextPath}/order/updateOrderQuantity">
-                                        <input type="hidden" name="currentOrderId" value="${CurrentOrder.getOrderId()}">
-                                        <table class="table table-striped" id="orderDetailTableEdit">
+                                        <table class="table table-striped" id="orderDetailTable">
                                             <tr>
                                                 <th>Name</th>
                                                 <th>Category</th>
                                                 <th>Unit Price</th>
                                                 <th>Quantity</th>
                                                 <th>Sub Total</th>
-                                                <th>Action</th>
                                             </tr>
                                             <c:forEach items="${OrderDetails}" var="ods">
                                                 <tr>
@@ -199,29 +158,87 @@
                                                                     <td><span class="price">
                                                                         <fmt:formatNumber value="${p.getSprice()}" type="currency"/>
                                                                     </span></td>
-                                                            <input type="hidden" value="${p.getSprice()}" name="productPrice">
-                                                        </c:when>
-                                                    </c:choose>
-                                                </c:forEach>
+                                                                </c:when>
+                                                            </c:choose>
+                                                        </c:forEach>
 
-                                                <td><input name="quantity" value="${ods.getQuantity()}" pattern="[0-9]" required/></td>  
-                                                <td><span class="subtotal">
-                                                        <fmt:formatNumber value="${ods.getSubCost()}" type="currency"/>
-                                                    </span></td>
-<!--                                                        <input path="cartLines[${varStatus.index}].quantity" value="2"/>-->
-                                                <td><input type="hidden" value="${ods.getProductId()}" name="productToUpdate">
-                                                    <input type="hidden" value="${ods.getOrderDetailId()}" name="orderDetailToUpdate">
-                                                    <button type="button" class="btn-xs btn-danger" onclick="if (confirm('Do you want to delete this product from this order?'))  window.location = '<%=request.getContextPath()%>/order/removeProduct?odid=${ods.getOrderDetailId()}&orderId=${CurrentOrder.getOrderId()}'">Remove</button></td>
+                                                    <td><b>${ods.getQuantity()}</b></td>  
+                                                    <td><span class="subtotal">
+                                                            <fmt:formatNumber value="${ods.getSubCost()}" type="currency"/>
+                                                        </span></td>
                                                 </tr>
                                             </c:forEach>
                                         </table>
+                                    </c:if>
 
-                                        <div class="col-lg-offset-9">
-                                            <button type="submit" class="btn btn-success">Update Quantity</button>
+                                    <!--  THIS FORM IS FOR ASSIGNED SALES AND THE MANAGER-->
+                                    <c:if test="${CurrentUserRole == 1 || CurrentUserRole == 2 || CurrentUserRole == 3 && CurrentOrderSalerId == CurrentLogedInUserId}">
+
+                                        <c:if test="${not empty messageUpdateSuccess}">
+                                            <b><h4 class="help-block" style="color: green" id="editQuantity">${messageUpdateSuccess}</h4></b>
+                                                <c:remove var="messageUpdateSuccess"/>
+                                            <br>
+                                        </c:if>
+                                        <c:if test="${not empty messageUpdateFail}">
+                                            <b><h4 class="help-block" style="color: red" id="editQuantity">${messageUpdateFail}</h4></b>
+                                                <c:remove var="messageUpdateFail"/>
+                                            <br>
+                                        </c:if>
+                                        <form method="POST" action="${pageContext.request.contextPath}/order/updateOrderQuantity">
+                                            <input type="hidden" name="currentOrderId" value="${CurrentOrder.getOrderId()}">
+                                            <table class="table table-striped" id="orderDetailTableEdit">
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Category</th>
+                                                    <th>Unit Price</th>
+                                                    <th>Quantity</th>
+                                                    <th>Sub Total</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                <c:forEach items="${OrderDetails}" var="ods">
+                                                    <tr>
+                                                        <c:forEach items="${Products}" var="p">
+                                                            <c:choose>
+                                                                <c:when test="${p.getPid() == ods.getProductId() }">
+                                                                    <td>${p.getTitle()}</td>
+                                                                    <td><c:if test="${p.getCategoryID() == 13}">Shoes</c:if>
+                                                                        <c:if test="${p.getCategoryID() == 14}">Clothes</c:if>
+                                                                        <c:if test="${p.getCategoryID() == 15}">Bags</c:if>
+                                                                        </td>
+                                                                        <td><span class="price">
+                                                                            <fmt:formatNumber value="${p.getSprice()}" type="currency"/>
+                                                                        </span></td>
+                                                                <input type="hidden" value="${p.getSprice()}" name="productPrice">
+                                                            </c:when>
+                                                        </c:choose>
+                                                    </c:forEach>
+
+                                                    <td><input name="quantity" value="${ods.getQuantity()}" pattern="[0-9]" required/></td>  
+                                                    <td><span class="subtotal">
+                                                            <fmt:formatNumber value="${ods.getSubCost()}" type="currency"/>
+                                                        </span></td>
+    <!--                                                        <input path="cartLines[${varStatus.index}].quantity" value="2"/>-->
+                                                    <td><input type="hidden" value="${ods.getProductId()}" name="productToUpdate">
+                                                        <input type="hidden" value="${ods.getOrderDetailId()}" name="orderDetailToUpdate">
+                                                        <button type="button" class="btn-xs btn-danger" onclick="if (confirm('Do you want to delete this product from this order?'))
+                                                                    window.location = '<%=request.getContextPath()%>/order/removeProduct?odid=${ods.getOrderDetailId()}&orderId=${CurrentOrder.getOrderId()}'">Remove</button></td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </table>
+
+                                            <div class="col-lg-offset-9">
+                                                <button type="submit" class="btn btn-success">Update Quantity</button>
+                                                <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/order/list'">Back</button>
+                                            </div>
+                                        </form>
+
+                                    </c:if>
+                                    <br>
+                                    <c:if test="${!(CurrentUserRole == 1 || CurrentUserRole == 2 || CurrentUserRole == 3 && CurrentOrderSalerId == CurrentLogedInUserId)}">
+                                        <div class="col-lg-offset-10">
                                             <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/order/list'">Back</button>
                                         </div>
-                                    </form>
-
+                                    </c:if>
 
                                 </div><!-- /.box -->
                             </div>
