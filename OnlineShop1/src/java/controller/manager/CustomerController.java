@@ -190,7 +190,7 @@ public class CustomerController extends HttpServlet {
                 CustomerGender = "0";
             }
             
-            String userRole = currentCustomer.getRole()+"";
+            String userRole = currentCustomer.getRole()+ "";
             String Status = currentCustomer.getAccountStatus() + "";           
             request.setAttribute("currentUser", currentCustomer);
             request.setAttribute("userGender", CustomerGender);

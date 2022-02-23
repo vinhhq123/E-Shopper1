@@ -5,6 +5,10 @@
  */
 package dal;
 import dbcontext.DBContext;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +17,7 @@ import java.util.List;
 import model.Feedback;
 import model.Order;
 import java.sql.SQLException;
+import java.util.Base64;
 import model.Product;
 import model.User;
 
@@ -176,6 +181,110 @@ public class FeedbackDAO extends DBContext{
             }
         }
         return feeds;
+    }
+         public Feedback getFeedbackid(int fid) throws Exception {
+
+        String sql = "SELECT f.*,s.settingStatus from feedback as f join setting as s\n" +
+                        "on f.feedbackStatus=s.settingId where feedbackId =  " + fid;
+        System.out.println(sql);
+        Feedback user = null;
+        String noImage = "";
+
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                user = new Feedback();
+                user.setFeedbackId(results.getInt("feedbackId"));
+                user.setCustomerId(results.getInt("customerId"));
+                user.setRatedStart(results.getInt("ratedStar"));
+                user.setTitle(results.getString("title"));
+                user.setProductID(results.getInt("productId"));
+                user.setFeedbackContent(results.getString("feedbackContent"));
+                user.setNote(results.getString("note"));
+
+                Blob blob = results.getBlob("image");
+                if (blob != null) {
+
+                    InputStream inputStream = blob.getBinaryStream();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                    inputStream.close();
+                    outputStream.close();
+                    user.setImage(base64Image);
+                } else {
+                    user.setImage(noImage);
+                }
+
+                user.setFeedbackStatus(results.getInt("settingStatus"));
+                user.setUpdatedDate(results.getDate("updatedDate"));
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (SQLException | IOException ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return user;
+    }
+         public int updateFeedback(String fullname, String title, boolean gender,
+            String phone, String address, InputStream avatar, int accountStatus,
+            int role, int uid) throws SQLException {
+        String sql = "UPDATE onlineshop1.user\n"
+                + "SET fullname = ?,title = ?,gender = ?,phone = ?,address = ? ,accountStatus = ?,role = ?";
+        int row = 0;
+        if (avatar != null) {
+            sql += " ,avatar = ? WHERE uid = ?;";
+        } else {
+            sql += " WHERE uid = ?;";
+        }
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, fullname);
+            preparedStatement.setString(2, title);
+            preparedStatement.setBoolean(3, gender);
+            preparedStatement.setString(4, phone);
+            preparedStatement.setString(5, address);
+            preparedStatement.setInt(6, accountStatus);
+            preparedStatement.setInt(7, role);
+            if (avatar != null) {
+                preparedStatement.setBlob(8, avatar);
+                preparedStatement.setInt(9, uid);
+            } else {
+                preparedStatement.setInt(8, uid);
+            }
+            row = preparedStatement.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return row;
     }
 }
 

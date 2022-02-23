@@ -7,6 +7,8 @@ package controller.manager;
 
 import dal.FeedbackDAO;
 import dal.OrderDAO;
+import dal.OrderDetailDAO;
+import dal.ProductDAO;
 import dal.SettingDAO;
 import dal.UserDAO;
 import java.io.IOException;
@@ -14,12 +16,14 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Feedback;
 import model.Order;
+import model.OrderDetail;
 import model.Product;
 import model.Setting;
 import model.User;
@@ -28,7 +32,8 @@ import model.User;
  *
  * @author HL2020
  */
-@WebServlet(name = "FeedbacksController", urlPatterns = {"/feedback/list","/feedback/detail","/feedback/getFeedback",
+@MultipartConfig(maxFileSize = 16177215)
+@WebServlet(name = "FeedbacksController", urlPatterns = {"/feedback/list","/feedback/edit","/feedback/getFeedback",
 "/feedback/search"})
 public class FeedbacksController extends HttpServlet {
 
@@ -77,13 +82,15 @@ public class FeedbacksController extends HttpServlet {
             case "/feedback/list":
                 FeedbacksList(request, response);
                 break;
-            case "/feedback/detail":
+            case "/feedback/edit":
                // searchOrder(request, response);
                 break;
             case "/feedback/search":
                 FeedbacksSearch(request, response);
                 break;
-
+            case "/feedback/getFeedback":
+                GetFeedbackID(request, response);
+                break;
         }
     }
 
@@ -114,7 +121,7 @@ public class FeedbacksController extends HttpServlet {
      protected void FeedbacksList(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int currentPage = 1;
-        int recordsPerPage = 3;
+        int recordsPerPage = 5;
 
         
         if (request.getParameter("currentPage") != null) {
@@ -220,5 +227,43 @@ public class FeedbacksController extends HttpServlet {
             request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
         }
       }
+       protected void GetFeedbackID(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int feedId = Integer.parseInt(request.getParameter("feedbackId"));
+       
+
+        UserDAO userDAO = new UserDAO();
+        FeedbackDAO feedbackDAO = new FeedbackDAO();               
+        SettingDAO settingDAO = new SettingDAO();
+        ProductDAO productDAO = new ProductDAO();
+        List<Feedback> feed = new ArrayList<>();
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        List<User> cus = new ArrayList<>();
+        //List<Product> products = new ArrayList<>();
+        User currentCustomer = new User();
+        Feedback feedback = new Feedback();
+        Product products = new Product();
+         try {
+            feedback = feedbackDAO.getFeedbackid(feedId); 
+           currentCustomer = userDAO.getUserByUserId(feedback.getCustomerId());
+           String Status = feedback.getFeedbackStatus() + "";
+              
+           products = productDAO.getTitlebyproId(feedback.getProductID());
+           request.setAttribute("CurrentCustomer", currentCustomer);
+            request.setAttribute("Feedback", feedback);
+            request.setAttribute("Products", products);
+           request.setAttribute("currentUserStatus",Status );
+            request.getRequestDispatcher("/admin/FeedbackDetails.jsp").forward(request, response);
+        } catch (Exception ex) {
+            System.out.println("Exception ===== " + ex);
+            request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
+        }
+    }
+      protected void UpdateFeedback(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+      } 
+       
+       
+       }
     
-}
+
