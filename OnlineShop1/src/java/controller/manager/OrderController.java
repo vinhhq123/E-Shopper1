@@ -395,27 +395,91 @@ public class OrderController extends HttpServlet {
         OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
         OrderDAO orderDAO = new OrderDAO();
         OrderDetail orderDetail = null;
+        ProductDAO productDAO = new ProductDAO();
 
         for (int i = 0; i < productIds.length; i++) {
             orderDetail = new OrderDetail();
 
             int orderDetailId = Integer.parseInt(currentOrderDetailIds[i]);
             orderDetail.setOrderDetailId(orderDetailId);
-            int quantity = Integer.parseInt(quantities[i]);
-            orderDetail.setQuantity(quantity);
-            float price = Float.parseFloat(productPrices[i]);
-            float subCost = price * quantity;
-            orderDetail.setSubCost(subCost);
-            totalCost += subCost;
-
             try {
-                int checkUpdateQuantity = orderDetailDAO.updateProductOrderQuantity(orderDetailId, quantity, subCost);
-                if (checkUpdateQuantity > 0) {
-                    checkUpdateQuan = true;
+                // GET CURRENT ORDER DETAIL BEFORE CHANGE QUANTITY
+                OrderDetail orderDetailBeforeChanged = orderDetailDAO.getOrderDetailsByOrderDetailId(orderDetailId);
+                // QUANTITY OF THIS ORDER DETAIL BEFORE UPDATE
+                int quantityBeforeUpdate = orderDetailBeforeChanged.getQuantity();
+                // NEW QUANTIY TO UPDATE
+                int newQuantity = Integer.parseInt(quantities[i]);
+                // CHECK IF QUANTITY IS INCREASE OR DECREASE
+                int quantityToUpdateDatabase = quantityBeforeUpdate - newQuantity;
+                // CASE INCREASE QUANTITY
+                if (quantityToUpdateDatabase < 0) {
+                    // product increase their quantity
+                    int newQuantityToUpdate = quantityToUpdateDatabase * (-1);
+                    int currentProductId = Integer.parseInt(productIds[i]);
+                    // update product quantity in product table
+                    Product productToUpdateQuantity = productDAO.getProductById(currentProductId);
+                    int newUpdateProductTableQuantity = productToUpdateQuantity.getQuantity() - newQuantityToUpdate;
+                    // CHECK IF PRODUCT IS STOCKING
+                    if (newUpdateProductTableQuantity >= 0) {
+                        // Update product table quantity
+                        int row = productDAO.updateProductQuantity(newUpdateProductTableQuantity, currentProductId);
+                        if (row > 0) {
+                            // Update product table success
+                            orderDetail.setQuantity(newQuantity);
+                            float price = Float.parseFloat(productPrices[i]);
+                            float subCost = price * newQuantity;
+                            orderDetail.setSubCost(subCost);
+                            totalCost += subCost;
+
+                            try {
+                                int checkUpdateQuantity = orderDetailDAO.updateProductOrderQuantity(orderDetailId, newQuantity, subCost);
+                                if (checkUpdateQuantity > 0) {
+                                    checkUpdateQuan = true;
+                                }
+                            } catch (SQLException ex) {
+                                Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
+                                System.out.println("Exception ===== " + ex);
+                            }
+                        }
+                    } else {
+                        // ERROR CAUSE NO MORE PRODUCT IN PRODUCT TABLE
+                        String message = "Product " + productToUpdateQuantity.getTitle() + " is out of stock !!!";
+                        session.setAttribute("messageUpdateFail", message);
+                        response.sendRedirect("getOrder?orderId=" + currentOrderId);
+                    }
+                } else if (quantityToUpdateDatabase > 0) {
+                    // NEW QUANTITY IS DECREASE
+                    int currentProductId = Integer.parseInt(productIds[i]);
+                    Product productToUpdateQuantity = productDAO.getProductById(currentProductId);
+                    int newUpdateProductTableQuantity = productToUpdateQuantity.getQuantity() + quantityToUpdateDatabase;
+                    // Update product table quantity
+                    int row = productDAO.updateProductQuantity(newUpdateProductTableQuantity, currentProductId);
+                    if (row > 0) {
+                        // Update product table success
+                        orderDetail.setQuantity(newQuantity);
+                        float price = Float.parseFloat(productPrices[i]);
+                        float subCost = price * newQuantity;
+                        orderDetail.setSubCost(subCost);
+                        totalCost += subCost;
+
+                        try {
+                            int checkUpdateQuantity = orderDetailDAO.updateProductOrderQuantity(orderDetailId, newQuantity, subCost);
+                            if (checkUpdateQuantity > 0) {
+                                checkUpdateQuan = true;
+                            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
+                            System.out.println("Exception ===== " + ex);
+                        }
+                    }
+                } else {
+                    // PRODUCT QUANTITY IN ORDER DETAILS NOT CHANGED
+                    float subCost = orderDetailDAO.getOrderDetailsByOrderDetailId(orderDetailId).getSubCost();
+                    totalCost += subCost;
                 }
-            } catch (SQLException ex) {
+
+            } catch (Exception ex) {
                 Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("Exception ===== " + ex);
             }
 
         }

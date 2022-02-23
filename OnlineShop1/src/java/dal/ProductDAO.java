@@ -401,4 +401,28 @@ public class ProductDAO extends DBContext {
         }
         return products;
     }
+
+    public int updateProductQuantity(int quantity, int pid) throws SQLException {
+        String sql = "UPDATE product SET quantity = ? WHERE productId = ?;";
+        int row = 0;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, quantity);
+            preparedStatement.setInt(2, pid);
+            row = preparedStatement.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return row;
+    }
 }
