@@ -13,14 +13,18 @@ import dal.SettingDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Feedback;
 import model.Order;
 import model.OrderDetail;
@@ -83,7 +87,7 @@ public class FeedbacksController extends HttpServlet {
                 FeedbacksList(request, response);
                 break;
             case "/feedback/edit":
-               // searchOrder(request, response);
+               UpdateFeedback(request, response);
                 break;
             case "/feedback/search":
                 FeedbacksSearch(request, response);
@@ -261,6 +265,33 @@ public class FeedbacksController extends HttpServlet {
     }
       protected void UpdateFeedback(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+      FeedbackDAO feedDao= new FeedbackDAO();
+      int feedid=0;
+      int feedStatus = 0;
+      String note = "";
+      String error = "";
+      note = request.getParameter("note").trim();
+      feedid = Integer.parseInt(request.getParameter("feedbackId"));
+       HttpSession session = request.getSession();
+        if (request.getParameter("status").equals("1")) {
+            feedStatus = 18;
+        } else {
+            feedStatus = 19;
+        }
+         try {
+            int checkUpdateUser = feedDao.updateFeedback(note, feedStatus, feedid);
+            if (checkUpdateUser > 0) {
+                response.sendRedirect("list");
+            } else {
+                error = "Unexcepted error occured. Please try again later !!!";
+                session.setAttribute("errorEditMessage", error);
+                response.sendRedirect("getFeedback?feedbackId=" + feedid);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
+        }
       } 
        
        

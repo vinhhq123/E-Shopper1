@@ -64,7 +64,7 @@
                                     <div class="col-lg-1"></div>
                                     <div class="col-lg-7">
                                         <div class="panel-body table-responsive">
-                                        <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/customer/update?uid=<c:out value="${currentUser.uid}"/>" method="POST" name="/customer/update"  enctype="multipart/form-data">    
+                                        <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/feedback/edit?feedbackId=<c:out value="${Feedback.getFeedbackId()}"/>" method="POST" name="/feedback/edit"  enctype="multipart/form-data">    
                                                 <c:if test="${not empty successEditMessage}">
                                                     <h4 class="help-block" style="color: green" id="successEditMessage">${successEditMessage}</h4>
                                                     <c:remove var="successEditMessage"/>
@@ -76,7 +76,7 @@
                                                     <br>
                                                 </c:if>
                                                
-                                                <input type="hidden" value="${Feedback.getFeedbackId()}" name="FeedbackId"> 
+                                                <input type="hidden" value="${Feedback.getFeedbackId()}" name="feedbackId"> 
                                                 <div class="form-group">
                                                     <label for="fullname" class="col-lg-2 col-sm-5 control-label">Fullname</label>
                                                     <div class="col-lg-10">
@@ -162,7 +162,7 @@
                                                <div class="form-group">
                                                     <label for="fullname" class="col-lg-2 col-sm-5 control-label">Note</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="fullname" placeholder="Note" value="${Feedback.getNote()}" name="name" required>
+                                                        <input type="text" class="form-control" id="fullname" placeholder="Note" value="${Feedback.getNote()}" name="note" required>
                                                     </div>
                                                     
                                                 </div>
