@@ -80,7 +80,7 @@
                                             <br> 
                                         </div>
                                         <!--  THIS IS FOR ASSIGNED SALES AND MANAGER ONLY -->
-                                        <c:if test="${CurrentUserRole == 1 || CurrentUserRole == 2 || CurrentUserRole == 3 && CurrentOrderSalerId == CurrentLogedInUserId}">
+                                        <c:if test="${Valid == 1}">
                                             <div class="col-lg-6" >
                                                 <h3><b>Sales Information</b></h3><br>
                                                 <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/order/updateSaleInfor?orderId=<c:out value="${CurrentOrder.getOrderId()}" />" method="POST">
@@ -134,7 +134,7 @@
                                     <br>
 
                                     <!--  THIS TABLE IS FOR OTHER SALES ONLY-->
-                                    <c:if test="${!(CurrentOrderSalerId eq CurrentLogedInUserId || CurrentUserRole == 1 || CurrentUserRole == 2)}">
+                                    <c:if test="${Valid == 0}">
 
 
                                         <table class="table table-striped" id="orderDetailTable">
@@ -172,7 +172,15 @@
                                     </c:if>
 
                                     <!--  THIS FORM IS FOR ASSIGNED SALES AND THE MANAGER-->
-                                    <c:if test="${CurrentUserRole == 1 || CurrentUserRole == 2 || CurrentUserRole == 3 && CurrentOrderSalerId == CurrentLogedInUserId}">
+                                    <c:if test="${Valid == 1}">
+                                        <div class="row">
+                                            <div class="col-sm-9"></div>
+                                            <div class="col-sm-3">
+                                                <a href="#myModal-1" data-toggle="modal" class="btn btn-success" style="float: right">
+                                                    <i class="fa fa-plus"></i> <span> Add another product</span>
+                                                </a>
+                                            </div>
+                                        </div><br>
 
                                         <c:if test="${not empty messageUpdateSuccess}">
                                             <b><h4 class="help-block" style="color: green" id="editQuantity">${messageUpdateSuccess}</h4></b>
@@ -234,7 +242,7 @@
 
                                     </c:if>
                                     <br>
-                                    <c:if test="${!(CurrentUserRole == 1 || CurrentUserRole == 2 || CurrentUserRole == 3 && CurrentOrderSalerId == CurrentLogedInUserId)}">
+                                    <c:if test="${Valid == 0}">
                                         <div class="col-lg-offset-10">
                                             <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/order/list'">Back</button>
                                         </div>
@@ -250,6 +258,46 @@
                 </div>
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
+
+        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal-1" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                        <h4 class="modal-title">Add another Product</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/order/addProductToOrderDetail" method="POST">
+                            <div class="form-group">
+                                <label for="newProductId" class="col-lg-2 col-sm-2 control-label">Product</label>
+                                <div class="col-lg-10">
+                                    <select class="form-control m-b-10" name="newProductId" required>
+                                        <c:forEach items="${ProductToAddNew}" var="pan">
+                                            <option value="<c:out value="${pan.getPid()}"/>">${pan.getTitle()}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="newQuantity" class="col-lg-2 col-sm-2 control-label">Quantity<span class="requiredd" style="color:#ff0000">(*)</span></label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="newQuantity" placeholder="Quantity" name="newQuantity" pattern="^[1-9][0-9]*" title="Quantity must be a number" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-offset-2 col-lg-10">
+                                    <button type="submit" class="btn btn-success">Add New</button>
+                                </div>
+                            </div>
+                            <input type="hidden" name="currentOrderId" value="${CurrentOrder.getOrderId()}">
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
 
 
         <!-- jQuery 2.0.2 -->

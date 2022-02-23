@@ -145,4 +145,33 @@ public class OrderDetailDAO extends DBContext {
 
     }
 
+    public int addNewOrderDetail(int orderId, int productId, int quantity, float subTotal)
+            throws SQLException {
+        String sql = "INSERT INTO `onlineshop1`.`orderdetails`(`orderId`,`productId`,"
+                + "`quantity`,`subCost`,`lastUpdated`) VALUES"
+                + "(?,?,?,?,CURRENT_DATE());";
+        int row = 0;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, orderId);
+            preparedStatement.setInt(2, productId);
+            preparedStatement.setInt(3, quantity);
+            preparedStatement.setFloat(4, subTotal);
+            row = preparedStatement.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return row;
+    }
+
 }
