@@ -7,19 +7,27 @@ package controller.manager;
 
 import dal.FeedbackDAO;
 import dal.OrderDAO;
+import dal.OrderDetailDAO;
+import dal.ProductDAO;
 import dal.SettingDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Feedback;
 import model.Order;
+import model.OrderDetail;
 import model.Product;
 import model.Setting;
 import model.User;
@@ -28,7 +36,8 @@ import model.User;
  *
  * @author HL2020
  */
-@WebServlet(name = "FeedbacksController", urlPatterns = {"/feedback/list","/feedback/detail","/feedback/getFeedback",
+@MultipartConfig(maxFileSize = 16177215)
+@WebServlet(name = "FeedbacksController", urlPatterns = {"/feedback/list","/feedback/edit","/feedback/getFeedback",
 "/feedback/search"})
 public class FeedbacksController extends HttpServlet {
 
@@ -77,13 +86,15 @@ public class FeedbacksController extends HttpServlet {
             case "/feedback/list":
                 FeedbacksList(request, response);
                 break;
-            case "/feedback/detail":
-               // searchOrder(request, response);
+            case "/feedback/edit":
+               UpdateFeedback(request, response);
                 break;
             case "/feedback/search":
                 FeedbacksSearch(request, response);
                 break;
-
+            case "/feedback/getFeedback":
+                GetFeedbackID(request, response);
+                break;
         }
     }
 
@@ -113,11 +124,10 @@ public class FeedbacksController extends HttpServlet {
 
      protected void FeedbacksList(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          int currentPage = 1;
-        // Set total records per page is 5
-        int recordsPerPage = 3;
+        int currentPage = 1;
+        int recordsPerPage = 5;
 
-        // Get the current page from request if there any
+        
         if (request.getParameter("currentPage") != null) {
             currentPage = Integer.parseInt(request.getParameter("currentPage"));
         }
@@ -127,7 +137,6 @@ public class FeedbacksController extends HttpServlet {
         SettingDAO settingDAO = new SettingDAO();
         FeedbackDAO feedbackDAO = new FeedbackDAO();        
         List<User> customers = new ArrayList<>();
-       // List<User> sales = new ArrayList<>();
         List<String> orderStatuses = new ArrayList<>();
         List<Feedback> feedback = new ArrayList<>();
         List<Setting> settingList = new ArrayList<>();
@@ -141,7 +150,6 @@ public class FeedbacksController extends HttpServlet {
             feedback = feedbackDAO.getFeedbackByPage(currentPage, recordsPerPage);
             product = feedbackDAO.getAllProduct();
             int rows = feedbackDAO.getNumberOfRows();
-            // Count total number of page
             int numOfPage = rows / recordsPerPage;
             if (rows % recordsPerPage > 0) {
                 numOfPage++;
@@ -215,7 +223,6 @@ public class FeedbacksController extends HttpServlet {
             request.setAttribute("Customers", customers);         
             request.setAttribute("FeedStatuses", feedsStatus);
             request.setAttribute("valueStatus", status);
-            //request.setAttribute("Ratestar", ratestar); 
             request.setAttribute("valueSearch", searchField);
             request.setAttribute("SettingList", settingList);
             request.getRequestDispatcher("/admin/FeedbackList.jsp").forward(request, response);
@@ -224,5 +231,70 @@ public class FeedbacksController extends HttpServlet {
             request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
         }
       }
+       protected void GetFeedbackID(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int feedId = Integer.parseInt(request.getParameter("feedbackId"));
+       
+
+        UserDAO userDAO = new UserDAO();
+        FeedbackDAO feedbackDAO = new FeedbackDAO();               
+        SettingDAO settingDAO = new SettingDAO();
+        ProductDAO productDAO = new ProductDAO();
+        List<Feedback> feed = new ArrayList<>();
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        List<User> cus = new ArrayList<>();
+        //List<Product> products = new ArrayList<>();
+        User currentCustomer = new User();
+        Feedback feedback = new Feedback();
+        Product products = new Product();
+         try {
+            feedback = feedbackDAO.getFeedbackid(feedId); 
+           currentCustomer = userDAO.getUserByUserId(feedback.getCustomerId());
+           String Status = feedback.getFeedbackStatus() + "";
+              
+           products = productDAO.getTitlebyproId(feedback.getProductID());
+           request.setAttribute("CurrentCustomer", currentCustomer);
+            request.setAttribute("Feedback", feedback);
+            request.setAttribute("Products", products);
+           request.setAttribute("currentUserStatus",Status );
+            request.getRequestDispatcher("/admin/FeedbackDetails.jsp").forward(request, response);
+        } catch (Exception ex) {
+            System.out.println("Exception ===== " + ex);
+            request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
+        }
+    }
+      protected void UpdateFeedback(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+      FeedbackDAO feedDao= new FeedbackDAO();
+      int feedid=0;
+      int feedStatus = 0;
+      String note = "";
+      String error = "";
+      note = request.getParameter("note").trim();
+      feedid = Integer.parseInt(request.getParameter("feedbackId"));
+       HttpSession session = request.getSession();
+        if (request.getParameter("status").equals("1")) {
+            feedStatus = 18;
+        } else {
+            feedStatus = 19;
+        }
+         try {
+            int checkUpdateUser = feedDao.updateFeedback(note, feedStatus, feedid);
+            if (checkUpdateUser > 0) {
+                response.sendRedirect("list");
+            } else {
+                error = "Unexcepted error occured. Please try again later !!!";
+                session.setAttribute("errorEditMessage", error);
+                response.sendRedirect("getFeedback?feedbackId=" + feedid);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
+        }
+      } 
+       
+       
+       }
     
-}
+

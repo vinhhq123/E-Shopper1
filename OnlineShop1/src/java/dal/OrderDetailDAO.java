@@ -87,4 +87,91 @@ public class OrderDetailDAO extends DBContext {
         return row;
     }
 
+    public int deleteOrderDetail(int orderDetailId)
+            throws SQLException {
+        String sql = "DELETE FROM `onlineshop1`.`orderdetails` WHERE orderDetailId = ? ;;";
+        int row = 0;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, orderDetailId);
+            row = preparedStatement.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return row;
+    }
+
+    public OrderDetail getOrderDetailsByOrderDetailId(int orderDetailId) throws Exception {
+
+        OrderDetail orderDetail = null;
+
+        try {
+            String sql = "select * from orderdetails where orderDetailId = " + orderDetailId;
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                orderDetail = new OrderDetail();
+                orderDetail.setOrderDetailId(results.getInt("orderDetailId"));
+                orderDetail.setOrderId(results.getInt("orderId"));
+                orderDetail.setProductId(results.getInt("productId"));
+                orderDetail.setQuantity(results.getInt("quantity"));
+                orderDetail.setSubCost(results.getFloat("subCost"));
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return orderDetail;
+
+    }
+
+    public int addNewOrderDetail(int orderId, int productId, int quantity, float subTotal)
+            throws SQLException {
+        String sql = "INSERT INTO `onlineshop1`.`orderdetails`(`orderId`,`productId`,"
+                + "`quantity`,`subCost`,`lastUpdated`) VALUES"
+                + "(?,?,?,?,CURRENT_DATE());";
+        int row = 0;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, orderId);
+            preparedStatement.setInt(2, productId);
+            preparedStatement.setInt(3, quantity);
+            preparedStatement.setFloat(4, subTotal);
+            row = preparedStatement.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return row;
+    }
+
 }

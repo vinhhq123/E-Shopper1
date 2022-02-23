@@ -5,6 +5,10 @@
  */
 package dal;
 import dbcontext.DBContext;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +17,7 @@ import java.util.List;
 import model.Feedback;
 import model.Order;
 import java.sql.SQLException;
+import java.util.Base64;
 import model.Product;
 import model.User;
 
@@ -176,6 +181,93 @@ public class FeedbackDAO extends DBContext{
             }
         }
         return feeds;
+    }
+         public Feedback getFeedbackid(int fid) throws Exception {
+
+        String sql = "SELECT f.*,s.settingStatus from feedback as f join setting as s\n" +
+                        "on f.feedbackStatus=s.settingId where feedbackId =  " + fid;
+        System.out.println(sql);
+        Feedback user = null;
+        String noImage = "";
+
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                user = new Feedback();
+                user.setFeedbackId(results.getInt("feedbackId"));
+                user.setCustomerId(results.getInt("customerId"));
+                user.setRatedStart(results.getInt("ratedStar"));
+                user.setTitle(results.getString("title"));
+                user.setProductID(results.getInt("productId"));
+                user.setFeedbackContent(results.getString("feedbackContent"));
+                user.setNote(results.getString("note"));
+
+                Blob blob = results.getBlob("image");
+                if (blob != null) {
+
+                    InputStream inputStream = blob.getBinaryStream();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                    inputStream.close();
+                    outputStream.close();
+                    user.setImage(base64Image);
+                } else {
+                    user.setImage(noImage);
+                }
+
+                user.setFeedbackStatus(results.getInt("settingStatus"));
+                user.setUpdatedDate(results.getDate("updatedDate"));
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (SQLException | IOException ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return user;
+    }
+         public int updateFeedback(String note, int accountStatus,int feedid) throws SQLException {
+        String sql = "Update feedback set feedbackStatus = ?,note = ? where feedbackId=?;";      
+        int row = 0;
+        
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, accountStatus);
+            preparedStatement.setString(2, note);
+            preparedStatement.setInt(3, feedid);
+            row = preparedStatement.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return row;
     }
 }
 
