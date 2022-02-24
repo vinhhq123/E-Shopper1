@@ -114,6 +114,30 @@ public class UserDAO extends DBContext {
         }
         return null;
     }
+    
+    public User checkPassword(String pass) throws SQLException {
+        String sql = "select * from user where password = ?";
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, pass);
+            results = preparedStatement.executeQuery();
+            while (results.next()) {
+                return new User(results.getInt(1),
+                        results.getString(2), results.getString(3), results.getString(4),
+                        results.getString(5), results.getBoolean(6), results.getString(7),
+                        results.getString(8), results.getString(9),
+                        results.getInt(10), results.getInt(11));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return null;
+    }
 
     public void addAccount(String Email, String Pass) throws SQLException {
         String sql = "INSERT INTO user (email, password, accountStatus, role) VALUES (?, ?, '6', '5');";
@@ -387,7 +411,10 @@ public class UserDAO extends DBContext {
         }
         return row;
     }
-
+    
+    
+    
+    
     public int addNewUserWithImage(String email, String fullname, String title, boolean gender,
             String phone, String address, InputStream avatar, int role, int userStatus, String password) throws SQLException {
         String sql = "INSERT INTO user (email,fullname, title, gender, phone, address, "
