@@ -74,6 +74,7 @@
                                             <ul class="ulclass">
                                                 <li class="lii">Total : 
                                                     <span class="total">
+                                                        <fmt:setLocale value = "vi_VN"/>
                                                         <fmt:formatNumber value="${CurrentOrder.getTotalCost()}" type="currency"/>
                                                     </span></li>
                                             </ul>

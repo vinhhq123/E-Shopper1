@@ -12,6 +12,9 @@ import dal.SettingDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -76,7 +79,7 @@ public class OrderController extends HttpServlet {
             throws ServletException, IOException {
         String action = request.getServletPath();
         System.out.println(action);
-
+        
         switch (action) {
             case "/order/list":
                 getListOrders(request, response);
@@ -99,7 +102,7 @@ public class OrderController extends HttpServlet {
             case "/order/addProductToOrderDetail":
                 addProductToOrder(request, response);
                 break;
-
+            
         }
     }
 
@@ -138,7 +141,7 @@ public class OrderController extends HttpServlet {
         if (request.getParameter("currentPage") != null) {
             currentPage = Integer.parseInt(request.getParameter("currentPage"));
         }
-
+        
         UserDAO userDAO = new UserDAO();
         OrderDAO orderDAO = new OrderDAO();
         SettingDAO settingDAO = new SettingDAO();
@@ -147,7 +150,7 @@ public class OrderController extends HttpServlet {
         List<User> sales = new ArrayList<>();
         List<String> orderStatuses = new ArrayList<>();
         try {
-
+            
             customers = userDAO.getAllUserByRole(5);
             sales = userDAO.getAllUserByRole(3);
             orders = orderDAO.getOrderByPage(currentPage, recordsPerPage);
@@ -158,7 +161,7 @@ public class OrderController extends HttpServlet {
             if (rows % recordsPerPage > 0) {
                 numOfPage++;
             }
-
+            
             request.setAttribute("Orders", orders);
             request.setAttribute("Customers", customers);
             request.setAttribute("Sales", sales);
@@ -167,34 +170,36 @@ public class OrderController extends HttpServlet {
             request.setAttribute("recordsPerPage", recordsPerPage);
             request.setAttribute("currentPage", currentPage);
             request.getRequestDispatcher("/admin/OrderList.jsp").forward(request, response);
-
+            
         } catch (Exception ex) {
             System.out.println("Exception getListOrders ===== " + ex);
             request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
         }
-
+        
     }
-
+    
     protected void searchOrder(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
         int salesId = 0;
         int orderStatus = 0;
         int orderId = 0;
-
+        
         String salesName = "";
         String status = "";
         String dateFrom = "";
         String dateTo = "";
+        String dateFromValue = "";
+        String dateToValue = "";
         String searchField = request.getParameter("table_search").trim();
-
+        
         try {
             orderId = Integer.parseInt(searchField);
         } catch (NumberFormatException ex) {
             orderId = 0;
         }
         System.out.println(orderId);
-
+        
         if (request.getParameter("status") != null) {
             status = request.getParameter("status");
             switch (status) {
@@ -212,18 +217,36 @@ public class OrderController extends HttpServlet {
                     break;
             }
         }
-
+        
         salesId = Integer.parseInt(request.getParameter("salename"));
         if (request.getParameter("from") != null) {
             dateFrom = request.getParameter("from");
+//            String dateFromValue1 = request.getParameter("from");
+//            DateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+//            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+//            try {
+//                dateFromValue = sdf.format(sdf1.parse(dateFromValue1));
+//            } catch (ParseException ex) {
+//                Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         }
         if (request.getParameter("to") != null) {
             dateTo = request.getParameter("to");
+//            String dateToValue1 = request.getParameter("to");
+//            DateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+//            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+//            try {
+//                dateToValue = sdf.format(sdf1.parse(dateToValue1));
+//            } catch (ParseException ex) {
+//                Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         }
-
+        
         System.out.println("date From " + dateFrom);
         System.out.println("date To" + dateTo);
-
+        System.out.println("dateFromValue " + dateFromValue);
+        System.out.println("dateToValue " + dateToValue);
+        
         UserDAO userDAO = new UserDAO();
         OrderDAO orderDAO = new OrderDAO();
         SettingDAO settingDAO = new SettingDAO();
@@ -231,13 +254,13 @@ public class OrderController extends HttpServlet {
         List<User> customers = new ArrayList<>();
         List<User> sales = new ArrayList<>();
         List<String> orderStatuses = new ArrayList<>();
-
+        
         try {
             customers = userDAO.getAllUserByRole(5);
             sales = userDAO.getAllUserByRole(3);
             orderStatuses = settingDAO.getSettingOrderValue();
             orders = orderDAO.searchOrder(searchField, dateFrom, dateTo, salesId, orderStatus, orderId);
-
+            
             request.setAttribute("Orders", orders);
             request.setAttribute("Customers", customers);
             request.setAttribute("Sales", sales);
@@ -245,9 +268,6 @@ public class OrderController extends HttpServlet {
             request.setAttribute("valueStatus", status);
             request.setAttribute("valueSalesId", salesId);
             request.setAttribute("valueSearch", searchField);
-//                SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
-//                request.setAttribute("valueFrom", sdf.parse(dateFrom));
-//                request.setAttribute("valueTo", sdf.parse(dateTo));
             request.setAttribute("valueFrom", dateFrom);
             request.setAttribute("valueTo", dateTo);
             request.getRequestDispatcher("/admin/OrderList.jsp").forward(request, response);
@@ -256,14 +276,14 @@ public class OrderController extends HttpServlet {
             request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
         }
     }
-
+    
     protected void getOrderByOrderId(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
         int orderId = Integer.parseInt(request.getParameter("orderId"));
         String orderStatus = "";
         int validRole = 0;
-
+        
         UserDAO userDAO = new UserDAO();
         OrderDAO orderDAO = new OrderDAO();
         SettingDAO settingDAO = new SettingDAO();
@@ -281,14 +301,14 @@ public class OrderController extends HttpServlet {
         HttpSession session = request.getSession();
         // get account saved in session 
         currentLogedInUser = (User) session.getAttribute("account");
-
+        
         try {
             order = orderDAO.getOrderByOrderId(orderId);
             currentCustomer = userDAO.getUserByUserId(order.getCustomerId());
             currentSale = userDAO.getUserByUserId(order.getSalesId());
             orderStatuses = settingDAO.getSettingOrderValue();
             sales = userDAO.getAllUserByRole(3);
-
+            
             orderDetails = orderDetailDAO.getOrderDetailsByOrderId(orderId);
             products = productDAO.getAllProducts();
             List<Product> productToAddNew = productDAO.getAllProducts();
@@ -300,7 +320,7 @@ public class OrderController extends HttpServlet {
                 }
             }
             System.out.println("productToAddNew size ==== " + productToAddNew.size());
-
+            
             switch (order.getOrderStatus()) {
                 case 20:
                     orderStatus = "Delivered";
@@ -315,16 +335,16 @@ public class OrderController extends HttpServlet {
                     orderStatus = "Ordered";
                     break;
             }
-
+            
             int currentSaleId = order.getSalesId();
             int currentUserRole = currentLogedInUser.getRole();
             int currentUserId = currentLogedInUser.getUid();
-
+            
             System.out.println(currentSaleId + " " + currentUserRole + " " + currentUserId);
             if (currentUserRole == 1 || currentUserRole == 2 || currentUserId == currentSaleId) {
                 validRole = 1;
             }
-
+            
             request.setAttribute("CurrentOrder", order);
             request.setAttribute("CurrentCustomer", currentCustomer);
             request.setAttribute("CurrentSale", currentSale);
@@ -344,10 +364,10 @@ public class OrderController extends HttpServlet {
             request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
         }
     }
-
+    
     protected void updateOrderSalerInfor(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
         int status = 0;
         String salesNote = "";
         int salerId = 0;
@@ -373,7 +393,7 @@ public class OrderController extends HttpServlet {
                 status = 22;
                 break;
         }
-
+        
         OrderDAO orderDAO = new OrderDAO();
         // Get session
         HttpSession session = request.getSession();
@@ -393,31 +413,31 @@ public class OrderController extends HttpServlet {
             request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
         }
     }
-
+    
     protected void updateProductOrderQuantity(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
         float totalCost = 0;
         boolean checkUpdateQuan = false;
         // Get session
         HttpSession session = request.getSession();
-
+        
         int currentOrderId = Integer.parseInt(request.getParameter("currentOrderId"));
         String[] productIds = request.getParameterValues("productToUpdate");
         String[] currentOrderDetailIds = request.getParameterValues("orderDetailToUpdate");
-
+        
         String[] quantities = request.getParameterValues("quantity");
         String[] productPrices = request.getParameterValues("productPrice");
-
+        
         List<OrderDetail> orderDetails = new ArrayList<>();
         OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
         OrderDAO orderDAO = new OrderDAO();
         OrderDetail orderDetail = null;
         ProductDAO productDAO = new ProductDAO();
-
+        
         for (int i = 0; i < productIds.length; i++) {
             orderDetail = new OrderDetail();
-
+            
             int orderDetailId = Integer.parseInt(currentOrderDetailIds[i]);
             orderDetail.setOrderDetailId(orderDetailId);
             try {
@@ -448,7 +468,7 @@ public class OrderController extends HttpServlet {
                             float subCost = price * newQuantity;
                             orderDetail.setSubCost(subCost);
                             totalCost += subCost;
-
+                            
                             try {
                                 int checkUpdateQuantity = orderDetailDAO.updateProductOrderQuantity(orderDetailId, newQuantity, subCost);
                                 if (checkUpdateQuantity > 0) {
@@ -479,7 +499,7 @@ public class OrderController extends HttpServlet {
                         float subCost = price * newQuantity;
                         orderDetail.setSubCost(subCost);
                         totalCost += subCost;
-
+                        
                         try {
                             int checkUpdateQuantity = orderDetailDAO.updateProductOrderQuantity(orderDetailId, newQuantity, subCost);
                             if (checkUpdateQuantity > 0) {
@@ -496,13 +516,13 @@ public class OrderController extends HttpServlet {
                     totalCost += subCost;
                     checkUpdateQuan = true;
                 }
-
+                
             } catch (Exception ex) {
                 Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+            
         }
-
+        
         if (checkUpdateQuan) {
             try {
                 int check = orderDAO.updateTotalCost(currentOrderId, totalCost);
@@ -520,17 +540,17 @@ public class OrderController extends HttpServlet {
                 System.out.println("Exception ===== " + ex);
             }
         }
-
+        
     }
-
+    
     protected void removeProductFromOrder(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
         int orderDetailId = Integer.parseInt(request.getParameter("odid"));
         int orderId = Integer.parseInt(request.getParameter("orderId"));
-
+        
         System.out.println("OrderDetail ID === " + orderDetailId);
-
+        
         OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
         OrderDAO orderDAO = new OrderDAO();
         OrderDetail orderDetail = new OrderDetail();
@@ -539,9 +559,9 @@ public class OrderController extends HttpServlet {
         Product productToBeRemoved = new Product();
         // Get session
         HttpSession session = request.getSession();
-
+        
         try {
-
+            
             order = orderDAO.getOrderByOrderId(orderId);
             orderDetail = orderDetailDAO.getOrderDetailsByOrderDetailId(orderDetailId);
             if (orderDetail != null) {
@@ -557,7 +577,7 @@ public class OrderController extends HttpServlet {
                 if (checkUpdateQuantity > 0) {
                     float subTotaltoMinus = orderDetail.getSubCost();
                     float newTotal = order.getTotalCost() - subTotaltoMinus;
-
+                    
                     int check = orderDAO.updateTotalCost(orderId, newTotal);
                     if (check > 0) {
                         int checkDelete = orderDetailDAO.deleteOrderDetail(orderDetailId);
@@ -575,31 +595,31 @@ public class OrderController extends HttpServlet {
                         session.setAttribute("messageUpdateFail", message);
                         response.sendRedirect("getOrder?orderId=" + orderId);
                     }
-
+                    
                 } else {
                     String message = "Unexpected error occurs.Please try again later !!!";
                     session.setAttribute("messageUpdateFail", message);
                     response.sendRedirect("getOrder?orderId=" + orderId);
                 }
             }
-
+            
         } catch (Exception ex) {
             Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Exception ===== " + ex);
         }
-
+        
     }
-
+    
     protected void addProductToOrder(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
         int productId = Integer.parseInt(request.getParameter("newProductId"));
         int quantity = Integer.parseInt(request.getParameter("newQuantity"));
         int currentOrderId = Integer.parseInt(request.getParameter("currentOrderId"));
-
+        
         System.out.println(productId + " newProductId " + quantity
                 + " newQuantity" + currentOrderId + " currentOrderId");
-
+        
         OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
         OrderDAO orderDAO = new OrderDAO();
         ProductDAO productDAO = new ProductDAO();
@@ -607,7 +627,7 @@ public class OrderController extends HttpServlet {
         Order currentOrder = new Order();
         // Get session
         HttpSession session = request.getSession();
-
+        
         try {
             productToBeAdded = productDAO.getProductById(productId);
             currentOrder = orderDAO.getOrderByOrderId(currentOrderId);
@@ -646,24 +666,24 @@ public class OrderController extends HttpServlet {
                         session.setAttribute("messageUpdateFail", message);
                         response.sendRedirect("getOrder?orderId=" + currentOrderId);
                     }
-
+                    
                 } else {
                     String message = "Unexpected error occurs.Please try again later !!!";
                     session.setAttribute("messageUpdateFail", message);
                     response.sendRedirect("getOrder?orderId=" + currentOrderId);
                 }
-
+                
             } else {
                 // NO MORE PRODUCT IN THE PRODUCT TABLE
                 String message = "Add Failed !!! Product " + productToBeAdded.getTitle() + " will be out of stock !!!";
                 session.setAttribute("messageUpdateFail", message);
                 response.sendRedirect("getOrder?orderId=" + currentOrderId);
             }
-
+            
         } catch (Exception ex) {
             Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Exception ===== " + ex);
         }
-
+        
     }
 }
