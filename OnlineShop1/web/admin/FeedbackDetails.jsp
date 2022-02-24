@@ -1,6 +1,6 @@
 <%-- 
-    Document   : CusDetail
-    Created on : Feb 12, 2022, 12:52:03 PM
+    Document   : FeedbackDetails
+    Created on : Feb 23, 2022, 2:21:11 PM
     Author     : HL2020
 --%>
 
@@ -29,6 +29,7 @@
         <link href="${pageContext.request.contextPath}/admin/css/style.css" rel="stylesheet" type="text/css" />
         <!-- Import css for image -->
         <link href="${pageContext.request.contextPath}/admin/css/UserDetail.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/admin/css/FeedbackDetail.css" rel="stylesheet">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -63,7 +64,7 @@
                                     <div class="col-lg-1"></div>
                                     <div class="col-lg-7">
                                         <div class="panel-body table-responsive">
-                                            <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/customer/update?uid=<c:out value="${currentUser.uid}"/>" method="POST" name="/customer/update"  enctype="multipart/form-data">
+                                        <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/feedback/edit?feedbackId=<c:out value="${Feedback.getFeedbackId()}"/>" method="POST" name="/feedback/edit"  enctype="multipart/form-data">    
                                                 <c:if test="${not empty successEditMessage}">
                                                     <h4 class="help-block" style="color: green" id="successEditMessage">${successEditMessage}</h4>
                                                     <c:remove var="successEditMessage"/>
@@ -75,103 +76,109 @@
                                                     <br>
                                                 </c:if>
                                                
-                                                
+                                                <input type="hidden" value="${Feedback.getFeedbackId()}" name="feedbackId"> 
                                                 <div class="form-group">
                                                     <label for="fullname" class="col-lg-2 col-sm-5 control-label">Fullname</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="fullname" placeholder="Fullname" value="${currentUser.fullname}" name="name" required>
+                                                        <input type="text" class="form-control" id="fullname" placeholder="Fullname" readonly value="${CurrentCustomer.getFullname()}" name="name" required>
                                                     </div>
                                                     
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="title" class="col-lg-2 col-sm-2 control-label">Title</label>
+                                                     <div class="form-group">
+                                                    <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Email</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="title" placeholder="Title" value="${currentUser.title}" name="title" required=>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Gender</label>
-                                                    <div class="col-lg-10">
-                                                        <div class="radio-inline">
-                                                            <label>
-                                                                <input type="radio" name="gender" id="optionsRadios1" value="1" <%=request.getAttribute("userGender").equals("1") ? "checked" : ""%>>
-                                                                Male
-                                                            </label>
-                                                        </div>
-                                                        <div class="radio-inline">
-                                                            <label>
-                                                                <input type="radio" name="gender" id="optionsRadios2" value="0" <%=request.getAttribute("userGender").equals("0") ? "checked" : ""%>>
-                                                                Female
-                                                            </label>
-                                                        </div>
+                                                        <input type="email" class="form-control" id="inputEmail1" placeholder="Email" readonly value="${CurrentCustomer.getEmail()}" name="email"> 
+                                                        <!--<p class="help-block">Example block-level help text here.</p>-->
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="phone" class="col-lg-2 col-sm-2 control-label">Phone</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="phone" placeholder="Phone" value="${currentUser.phone}" name="phone" pattern="[0-9]{10}" title="Phone must be 10 digits and contains numbers only" required>
+                                                        <input type="text" class="form-control" id="phone" placeholder="Phone" readonly  value="${CurrentCustomer.getPhone()}" name="phone" pattern="[0-9]{10}" title="Phone must be 10 digits and contains numbers only" required>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="address" class="col-lg-2 col-sm-2 control-label">Address</label>
+                                                    <label for="fullname" class="col-lg-2 col-sm-5 control-label">Product</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="address" placeholder="Address" value="${currentUser.address}" name="address" required>
+                                                        <input type="text" class="form-control" id="fullname" placeholder="" readonly value="${Products.getTitle()}" name="name" required>
                                                     </div>
+                                                    
                                                 </div>
-                                                    <div class="form-group">
-                                                    <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Email</label>
+                                                <div class="form-group">
+                                                    <label for="fullname" class="col-lg-2 col-sm-5 control-label">Rate Star</label>
                                                     <div class="col-lg-10">
-                                                        <input type="email" class="form-control" id="inputEmail1" placeholder="Email" readonly value="${currentUser.email}" name="email"> 
-                                                        <!--<p class="help-block">Example block-level help text here.</p>-->
+                                                        <input type="text" class="form-control" id="fullname" placeholder="" readonly value="${Feedback.getRatedStart()}" name="name" required>
                                                     </div>
+                                                    
+                                                </div>    
+                                                <div class="form-group">
+                                                    <label for="fullname" class="col-lg-2 col-sm-5 control-label">Title</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" id="fullname" placeholder="" readonly value="${Feedback.getTitle()}" name="name" required>
+                                                    </div>
+                                            
                                                 </div>
-                                         
+                                                  <div class="form-group">
+                                                    <label for="fullname" class="col-lg-2 col-sm-5 control-label">Feedback </label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" id="fullname" placeholder="" readonly value="${Feedback.getFeedbackContent()}" name="name" required>
+                                                    </div>
+                                            
+                                                </div>  
+                                                    
+                                                 <div class="form-group">
+                                                    <label for="avatar" class="col-lg-2 col-sm-2 control-label">Image</label>
+                                                    <div class="col-lg-offset-5 col-lg-15">
+                                                        <div class="profile-pic">
+                                                            <label class="-label" for="file">
+                                                                <c:if test="${ not empty Feedback.getImage()}">
+                                                                    <img src="data:image/jpg;base64,${Feedback.getImage()}" id="output1" width="500" />
+                                                                </c:if>
+                                                                <c:if test="${empty Feedback.getImage()}">
+                                                                    <img src="${pageContext.request.contextPath}/admin/img/no-avatar.png" id="output1" width="200" alt="default image"/>
+                                                                </c:if>
+                                                            </label>
+                                                           
+                                                        </div>
+                                                    </div>
+                                                </div>  
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Status</label>
                                                     <div class="col-lg-10">
                                                         <div class="radio-inline">
                                                             <label>
                                                                 <input type="radio" name="status" id="optionsRadios3" value="1" <%=request.getAttribute("currentUserStatus").equals("1") ? "checked" : ""%>>
-                                                                Active
+                                                                Published
                                                             </label>
                                                         </div>
                                                         <div class="radio-inline">
                                                             <label>
                                                                 <input type="radio" name="status" id="optionsRadios4" value="0" <%=request.getAttribute("currentUserStatus").equals("0") ? "checked" : ""%>>
-                                                                Inactive
+                                                                Hidden
                                                             </label>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="avatar" class="col-lg-2 col-sm-2 control-label">Avatar</label>
-                                                    <div class="col-lg-offset-5 col-lg-15">
-                                                        <div class="profile-pic">
-                                                            <label class="-label" for="file">
-                                                                <c:if test="${ not empty currentUser.avatar}">
-                                                                    <img src="data:image/jpg;base64,${currentUser.avatar}" id="output" width="200" />
-                                                                </c:if>
-                                                                <c:if test="${empty currentUser.avatar}">
-                                                                    <img src="${pageContext.request.contextPath}/admin/img/no-avatar.png" id="output" width="200" alt="default image"/>
-                                                                </c:if>
-                                                            </label>
-                                                            <input id="file" type="file" onchange="loadFile(event)" name="image"/>
-                                                        </div>
+                                                </div>    
+                                               <div class="form-group">
+                                                    <label for="fullname" class="col-lg-2 col-sm-5 control-label">Note</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" id="fullname" placeholder="Note" value="${Feedback.getNote()}" name="note" required>
                                                     </div>
+                                                    
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="col-lg-offset-6 col-lg-10">
+                                                    <div class="col-lg-offset-2 col-lg-10">
                                                         <button type="submit" class="btn btn-success">Save</button>
-                                                        
+                                                        <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/feedback/list'">Back Feedback List</button>
                                                     </div>
                                                 </div>
-                                                <input type="hidden" value="${currentUser.uid}" name="accountId"> 
-                                            </form>
-                                            
+                                                  
+                                               
+                                                                                     
                                         </div>
-                                            <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/customer/list'">Back Customer List</button>
+                                           
                                     </div>
-                                            
+                                           </form>   
                                     <div class="col-lg-4"></div>
                                 </div>
                             </div><!-- /.box -->
