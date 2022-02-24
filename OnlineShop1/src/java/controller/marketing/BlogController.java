@@ -157,12 +157,14 @@ public class BlogController extends HttpServlet {
     protected void searchBlog(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         String searchBlog = request.getParameter("search");
         PostDAO dao = new PostDAO();
         List<PostList> list = dao.searchBlogByTitle(searchBlog);
         List<Setting> listPostCate = dao.getBlogCategory();
         request.setAttribute("listPostCate", listPostCate);
         request.setAttribute("listBlog", list);
+        request.setAttribute("searchValue", searchBlog);
         request.getRequestDispatcher("/blog.jsp").forward(request, response);
 
     }

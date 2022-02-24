@@ -38,7 +38,7 @@
                                 <c:forEach items="${listGoodsCate}" var="o">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <h4 class="panel-title"><a href="#">${o.settingValue}</a></h4>
+                                            <h4 class="panel-title"><a href="<%=request.getContextPath()%>/goods/goodsCate?id=${o.settingId}">${o.settingValue}</a></h4>
                                         </div>
                                     </div>
                                 </c:forEach>
@@ -79,7 +79,7 @@
                                                 <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" width="100" height="250"/>
                                                 <h2>${o.title}</h2>
                                                 <p>${o.lprice}</p>
-                                                <a href="#" class="btn btn-default add-to-cart"><i class=""></i>Show more detail</a>
+                                                <a href="<%=request.getContextPath()%>/goods/detail?pid=${o.pid}" class="btn btn-default add-to-cart">Show more detail</a>
                                             </div>
                                         </div>
                                         <div class="choose">
@@ -100,6 +100,8 @@
                                 </div>
                             </c:forEach>
 
+                        </div><!--features_items-->
+                        
                             <div class="pagination-area">
                                 <c:set var="page" value="${requestScope.page}"/>
                                 <ul class="pagination">
@@ -110,7 +112,6 @@
                                     <li><a class="${i==page?"active":""}" href="<%=request.getContextPath()%>/goods/goodsList?page=${page+1}"><i class="fa fa-angle-double-right"></i></a></li>
                                 </ul>
                             </div>
-                        </div><!--features_items-->
                     </div>
                 </div>
             </div>

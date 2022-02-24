@@ -79,7 +79,7 @@
                 <form action="search" method="post">
                     <div class="col-sm-3">
                         <div class="search_box pull-right">
-                            <input name="search" type="text" placeholder="Search"/>
+                            <input value="${searchValue}" name="search" type="text" placeholder="Search"/>
 <!--                            <button type="submit">
                                 <i class="fa fa-search"></i>
                             </button>-->

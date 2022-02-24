@@ -55,6 +55,18 @@ public class Product {
         this.updatedDate = updatedDate;
         this.author = author;
     }
+    
+    public Product(int pid, String thumbnail, String breif, String title, double lprice, double sprice, int categoryID, Date updatedDate, User author) {
+        this.pid = pid;
+        this.thumbnail = thumbnail;
+        this.breif = breif;
+        this.title = title;
+        this.lprice = lprice;
+        this.sprice = sprice;
+        this.categoryID = categoryID;
+        this.updatedDate = updatedDate;
+        this.author = author;
+    }
 
     public int getPid() {
         return pid;
