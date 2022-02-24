@@ -458,4 +458,13 @@ public class ProductDAO extends DBContext {
         return user;
     }
 
+//     public static void main(String[] args) {
+//
+//        ProductDAO dao = new ProductDAO();
+////        PostList postList = dao.getBlogById(1);
+//        List<Product> list = dao.getAllProducts();
+//        for (Product postList : list) {
+//            System.out.println(postList);
+//        }
+//    }
 }

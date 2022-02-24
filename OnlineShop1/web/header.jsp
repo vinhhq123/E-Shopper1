@@ -25,7 +25,7 @@
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav">
                             <c:if test="${sessionScope.account != null}">
-                                <li><a href="<%=request.getContextPath()%>/setting/list"><i class="fa fa-user"></i> ${sessionScope.account.email}</a></li>
+                                <li><a href="<%=request.getContextPath()%>/setting/list"><i class="fa fa-user"></i> ${sessionScope.account.fullname}</a></li>
                                 </c:if>
 
                             <!--                                                                        <li><a href="./admin/SettingList.jsp"><i class="fa fa-user"></i> Account</a></li>-->
@@ -60,7 +60,7 @@
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
                             <li><a href="${pageContext.request.contextPath}/index.jsp" class="active">Home</a></li>
-                            <li><a href="#">Shop<i></i></a>
+                            <li><a href="<%=request.getContextPath()%>/goods/goodsList">Shop<i></i></a>
                             </li> 
                             <li class="dropdown"><a href="#" >Blog<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
