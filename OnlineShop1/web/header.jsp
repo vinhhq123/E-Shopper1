@@ -60,7 +60,7 @@
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
                             <li><a href="${pageContext.request.contextPath}/index.jsp" class="active">Home</a></li>
-                            <li><a href="#">Shop<i></i></a>
+                            <li><a href="<%=request.getContextPath()%>/goods/goodsList">Shop<i></i></a>
                             </li> 
                             <li class="dropdown"><a href="#" >Blog<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">

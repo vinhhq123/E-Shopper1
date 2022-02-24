@@ -5,19 +5,23 @@
  */
 package controller.user;
 
+import dal.GoodsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Product;
+import model.Setting;
 
 /**
  *
  * @author hungn
  */
-@WebServlet(name = "GoodsController", urlPatterns = {"/good"})
+@WebServlet(name = "GoodsController", urlPatterns = {"/goods/goodsList"})
 public class GoodsController extends HttpServlet {
 
     /**
@@ -29,23 +33,6 @@ public class GoodsController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet GoodsController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet GoodsController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -58,7 +45,24 @@ public class GoodsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        String action = request.getServletPath();
+        System.out.println(action);
+
+        switch (action) {
+            case "/goods/goodsList":
+                getGoods(request, response);
+                break;
+//            case "/blog/detail":
+//                getBlogById(request, response);
+//                break;
+//            case "/blog/cate":
+//                getBlogByCateId(request, response);
+//                break;
+//            case "/blog/search":
+//                searchBlog(request, response);
+//                break;
+        }
     }
 
     /**
@@ -72,7 +76,8 @@ public class GoodsController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        // processRequest(request, response);
+        doGet(request, response);
     }
 
     /**
@@ -85,4 +90,30 @@ public class GoodsController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    protected void getGoods(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        GoodsDAO dao = new GoodsDAO();
+        List<Setting> listGoodsCate = dao.getGoodsCategory();
+        List<Product> listGoodsPage = dao.getGoodsSortByDate();
+        int page, numperpage = 9;
+        int size = listGoodsPage.size();
+        int num = (size % 3 == 0 ? (size / 3) : ((size / 3)) + 1);
+        String xpage = request.getParameter("page");
+        if (xpage == null) {
+            page = 1;
+        } else {
+            page = Integer.parseInt(xpage);
+        }
+        int start, end;
+        start = (page - 1) * numperpage;
+        end = Math.min(page * numperpage, size);
+        List<Product> listGoods = dao.getProductByPage(listGoodsPage, start, end);
+        
+        request.setAttribute("listGoods", listGoods);
+        request.setAttribute("listGoodsCate", listGoodsCate);
+        request.setAttribute("page", page);
+        request.setAttribute("num", num);
+        request.getRequestDispatcher("/goods.jsp").forward(request, response);
+    }
 }
