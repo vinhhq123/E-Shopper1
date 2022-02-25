@@ -141,7 +141,8 @@
                                                     </c:choose>
                                                 </c:forEach>
                                                 <td><span class="subtotal">
-                                                        <fmt:formatNumber value="${order.getTotalCost()}"/>
+                                                        <fmt:setLocale value = "vi_VN"/>
+                                                        <fmt:formatNumber value="${order.getTotalCost()}" type="currency" />
                                                     </span></td>  
                                                     <c:forEach items="${Sales}" var="sa">
                                                         <c:choose>
