@@ -157,11 +157,12 @@
                         <div class="form-group">
                             <label for="name">Password:</label>
                             <input type="password" name="password" id="password" required/>
+                            <p style="color: red">${requestScope.fail3}</p>
                         </div>
                         <div class="form-group">
                             <label for="name">Repeat Password:</label>
                             <input type="password" name="rePassword" id="repassword" required/>
-                            <p style="color: red">${requestScope.fail3}</p>
+                            <p style="color: red">${requestScope.fail4}</p>
                         </div>
                         </div>
                         <div class="form-submit">

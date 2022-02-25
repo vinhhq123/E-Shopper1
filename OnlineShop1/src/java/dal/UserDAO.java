@@ -138,6 +138,32 @@ public class UserDAO extends DBContext {
         }
         return null;
     }
+    
+    public int ChangePass(String pass, String email) throws SQLException {
+        String sql = "UPDATE onlineshop1.user\n"
+                + "SET password = ?\n"
+                + " WHERE email = ?;";
+        int row = 0;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, pass);
+            preparedStatement.setString(2, email);
+            row = preparedStatement.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return row;
+    }
 
     public void addAccount(String Email, String Pass) throws SQLException {
         String sql = "INSERT INTO user (email, password, accountStatus, role) VALUES (?, ?, '6', '5');";

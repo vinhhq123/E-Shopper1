@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Add New User</title>
+        <title>CHANGE PASSWORD</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -37,7 +37,7 @@
     </head>
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
-        <jsp:include page="HeaderAdmin.jsp"></jsp:include>
+        <jsp:include page="../admin/HeaderAdmin.jsp"></jsp:include>
             <div class="wrapper row-offcanvas row-offcanvas-left">
                 <!-- Left side column. contains the logo and sidebar -->
             <jsp:include page="UserSlideBar.jsp"></jsp:include>
@@ -50,7 +50,7 @@
                             <div class="col-xs-12">
                                 <div class="panel">
                                     <header class="panel-heading">
-                                        <b>Add New User</b>
+                                        <b>CHANGE PASSWORD</b>
 
                                     </header>
                                     <!-- <div class="box-header"> -->
@@ -61,152 +61,42 @@
                                         <div class="col-lg-1"></div>
                                         <div class="col-lg-7">
                                             <div class="panel-body table-responsive">
-                                                <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/user/add" method="POST" name="addNewUser"  enctype="multipart/form-data">
+                                                <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/ChangePass" method="POST" name="ChangePassword"  enctype="multipart/form-data">
                                                 <c:if test="${not empty messageAddSuccess}">
                                                     <b><h4 class="help-block" style="color: green" id="successEditMessage">${messageAddSuccess}</h4></b>
                                                         <c:remove var="messageAddSuccess"/>
                                                     <br>
                                                 </c:if>
                                                 <div class="form-group">
-                                                    <label for="avatar" class="col-lg-2 col-sm-2 control-label">Avatar</label>
+                                                    <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label"></label>
                                                     <div class="col-lg-10">
-                                                        <div class="profile-pic">
-                                                            <label class="-label" for="file">
-                                                                <c:if test="${ not empty imageValue}">
-                                                                    <img src="data:image/jpg;base64,${imageValue}" id="output" width="200" />
-                                                                </c:if>
-                                                                <c:if test="${empty imageValue}">
-                                                                    <img src="${pageContext.request.contextPath}/admin/img/user-bg.png" id="output" width="200" />
-                                                                </c:if>
-                                                            </label>
-                                                            <input id="file" type="file" onchange="loadFile(event)" name="image"/>
-                                                            <c:if test="${not empty errorImage}">
-                                                                <p class="help-block" style="color: red" id="errorEmailMessage">${errorImage}</p>
-                                                                <c:remove var="errorImage"/>
-                                                            </c:if>
-                                                        </div>
+                                                        <input  type="hidden" class="form-control" id="inputEmail1" name="email" value="${sessionScope.account.email}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Email</label>
+                                                    <label for="fullname" class="col-lg-2 col-sm-2 control-label">Your current password</label>
                                                     <div class="col-lg-10">
-                                                        <input type="email" class="form-control" id="inputEmail1" placeholder="Email" name="email" value="${emailValue}" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" title="Email must be in the right format">
-                                                        <c:if test="${not empty error}">
-                                                            <p class="help-block" style="color: red" id="errorEmailMessage">${error}</p>
-                                                        </c:if>
+                                                        <input type="text" class="form-control" id="curPass"  name="curPass" value="${curPassValue}"  required  >
+                                                        <p style="color: red">${requestScope.fail1}</p>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="fullname" class="col-lg-2 col-sm-2 control-label">Fullname</label>
+                                                    <label for="title" class="col-lg-2 col-sm-2 control-label">Your new password</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="fullname" placeholder="Fullname" name="fullname" value="${nameValue}" onblur="this.value = removeSpaces(this.value);" required  >
+                                                        <input type="text" class="form-control" id="newPass"  name="newPass" value="${newPassValue}" required>
+                                                        <p style="color: red">${requestScope.fail2}</p>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="title" class="col-lg-2 col-sm-2 control-label">Title</label>
+                                                    <label for="title" class="col-lg-2 col-sm-2 control-label">Re-enter new password</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="title" placeholder="Title" name="title" value="${titleValue}" onblur="this.value = removeSpaces(this.value);" required>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Gender</label>
-                                                    <div class="col-lg-10">
-                                                        <c:if test="${not empty genderValue}">
-                                                            <div class="radio-inline">
-                                                                <label>
-                                                                    <input type="radio" name="gender" id="optionsRadios1" value="1" <%=request.getAttribute("genderValue").equals("1") ? "checked" : ""%>>
-                                                                    Male
-                                                                </label>
-                                                            </div>
-                                                            <div class="radio-inline">
-                                                                <label>
-                                                                    <input type="radio" name="gender" id="optionsRadios2" value="0" <%=request.getAttribute("genderValue").equals("0") ? "checked" : ""%>>
-                                                                    Female
-                                                                </label>
-                                                            </div>
-                                                        </c:if>
-                                                        <c:if test="${empty genderValue}">
-                                                            <div class="radio-inline">
-                                                                <label>
-                                                                    <input type="radio" name="gender" id="optionsRadios1" value="1" checked="">
-                                                                    Male
-                                                                </label>
-                                                            </div>
-                                                            <div class="radio-inline">
-                                                                <label>
-                                                                    <input type="radio" name="gender" id="optionsRadios2" value="0">
-                                                                    Female
-                                                                </label>
-                                                            </div>
-                                                        </c:if>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="phone" class="col-lg-2 col-sm-2 control-label">Phone</label>
-                                                    <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="phone" placeholder="Phone" name="phone" required value="${phoneValue}" pattern="[0-9]{10}" title="Phone must be 10 digits and contains numbers only">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="address" class="col-lg-2 col-sm-2 control-label">Address</label>
-                                                    <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="address" placeholder="Address" name="address" value="${addressValue}" onblur="this.value = removeSpaces(this.value);" required>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="role" class="col-lg-2 col-sm-2 control-label">Role</label>
-                                                    <div class="col-lg-10">
-                                                        <select class="form-control m-b-10" name="role" required>
-                                                            <c:if test="${empty roleValue}">
-                                                                <c:forEach items="${roles}" var="r">
-                                                                    <option value="<c:out value="${r}"/>">${r}</option>
-                                                                    </c:forEach>
-                                                                </c:if>
-                                                                <c:if test="${not empty roleValue}">
-                                                                    <c:forEach items="${roles}" var="role">
-                                                                        <option value="<c:out value="${role}"/>" <c:if test="${role eq roleValue}">selected</c:if>>${role}</option>
-                                                                </c:forEach>
-                                                            </c:if>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">User Status</label>
-                                                    <div class="col-lg-10">
-                                                        <c:if test="${not empty statusValue}">
-                                                            <div class="radio-inline">
-                                                                <label>
-                                                                    <input type="radio" name="status" id="optionsRadios3" value="1" <%=request.getAttribute("statusValue").equals("1") ? "checked" : ""%>>
-                                                                    Active
-                                                                </label>
-                                                            </div>
-                                                            <div class="radio-inline">
-                                                                <label>
-                                                                    <input type="radio" name="status" id="optionsRadios4" value="0" <%=request.getAttribute("statusValue").equals("0") ? "checked" : ""%>>
-                                                                    Inactive
-                                                                </label>
-                                                            </div>
-                                                        </c:if>
-                                                        <c:if test="${empty statusValue}">
-                                                            <div class="radio-inline">
-                                                                <label>
-                                                                    <input type="radio" name="status" id="optionsRadios3" value="1" checked="">
-                                                                    Active
-                                                                </label>
-                                                            </div>
-                                                            <div class="radio-inline">
-                                                                <label>
-                                                                    <input type="radio" name="status" id="optionsRadios4" value="0">
-                                                                    Inactive
-                                                                </label>
-                                                            </div>
-                                                        </c:if>
+                                                        <input type="text" class="form-control" id="reNewPass"  name="reNewPass" value="${reNewPassValue}"  required>
+                                                        <p style="color: red">${requestScope.fail3}</p>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-2 col-lg-10">
-                                                        <button type="submit" class="btn btn-success">Save</button>
-                                                        <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/user/list'">Back</button>
+                                                        <button type="submit" class="btn btn-success">Change</button>
                                                     </div>
                                                 </div>
                                             </form>
