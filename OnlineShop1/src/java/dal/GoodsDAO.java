@@ -208,8 +208,10 @@ public class GoodsDAO {
 
     public Product getGoodsById(int id) {
         String query = "select p.productId, p.thumbnail, p.title, p.list_price, p.sale_price,\n"
-                + "p.categoryId, p.updatedDate, p.breif_information, u.fullname, u.uid from product p inner join user u\n"
-                + "on p.salesId = u.uid where p.productId = ?";
+                + "p.categoryId, p.updatedDate, p.breif_information, u.fullname, u.uid, s.settingId, s.settingValue from product p\n"
+                + "inner join user u on p.salesId = u.uid \n"
+                + "inner join setting s on p.categoryId = s.settingId\n"
+                + "where p.productId = ?";
         try {
             connection = new DBContext().getConnection();
             ps = connection.prepareStatement(query);
@@ -247,6 +249,8 @@ public class GoodsDAO {
                 p.setUpdatedDate(result.getDate("updatedDate"));
                 User u = new User(result.getInt("uid"), result.getString("fullname"));
                 p.setAuthor(u);
+                Setting s = new Setting(result.getInt("settingId"), result.getString("settingValue"));
+                p.setCate(s);
                 return p;
             }
         } catch (Exception e) {
@@ -260,7 +264,7 @@ public class GoodsDAO {
         GoodsDAO dao = new GoodsDAO();
         Product postList = dao.getGoodsById(1);
         System.out.println(postList);
-       // List<Product> list = dao.searchGoodByTitle("Áo");
+        // List<Product> list = dao.searchGoodByTitle("Áo");
 //        for (Product postList : list) {
 //            System.out.println(postList);
 //        }

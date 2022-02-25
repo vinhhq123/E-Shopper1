@@ -14,6 +14,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.Cart;
+import model.Items;
 import model.Product;
 import model.Setting;
 
@@ -21,7 +24,8 @@ import model.Setting;
  *
  * @author hungn
  */
-@WebServlet(name = "GoodsController", urlPatterns = {"/goods/goodsList", "/goods/goodsCate", "/goods/search", "/goods/detail"})
+@WebServlet(name = "GoodsController", urlPatterns = {"/goods/goodsList", "/goods/goodsCate", "/goods/search", "/goods/detail",
+    "/goods/addToCart", "/goods/removeProductCart"})
 public class GoodsController extends HttpServlet {
 
     /**
@@ -61,6 +65,12 @@ public class GoodsController extends HttpServlet {
                 break;
             case "/goods/detail":
                 getGoodsById(request, response);
+                break;
+            case "/goods/addToCart":
+                addProductToCart(request, response);
+                break;
+            case "/goods/removeProductCart":
+                removeProCart(request, response);
                 break;
         }
     }
@@ -109,14 +119,14 @@ public class GoodsController extends HttpServlet {
         start = (page - 1) * numperpage;
         end = Math.min(page * numperpage, size);
         List<Product> listGoods = dao.getProductByPage(listGoodsPage, start, end);
-        
+
         request.setAttribute("listGoods", listGoods);
         request.setAttribute("listGoodsCate", listGoodsCate);
         request.setAttribute("page", page);
         request.setAttribute("num", num);
         request.getRequestDispatcher("/goods.jsp").forward(request, response);
     }
-    
+
     protected void getGoodsByCategory(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -137,14 +147,14 @@ public class GoodsController extends HttpServlet {
         start = (page - 1) * numperpage;
         end = Math.min(page * numperpage, size);
         List<Product> listGoods = dao.getProductByPage(listGoodsByCategory, start, end);
-        
+
         request.setAttribute("listGoodsCate", listGoodsCate);
         request.setAttribute("listGoods", listGoods);
         request.setAttribute("page", page);
         request.setAttribute("num", num);
         request.getRequestDispatcher("/goods.jsp").forward(request, response);
     }
-    
+
     protected void searchGoods(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -166,13 +176,14 @@ public class GoodsController extends HttpServlet {
         start = (page - 1) * numperpage;
         end = Math.min(page * numperpage, size);
         List<Product> listSearchGoods = dao.getProductByPage(listSearch, start, end);
-        
+
         request.setAttribute("listGoodsCate", listGoodsCate);
         request.setAttribute("listGoods", listSearchGoods);
         request.setAttribute("searchValue", searchGoods);
+        request.setAttribute("num", num);
         request.getRequestDispatcher("/goods.jsp").forward(request, response);
     }
-    
+
     protected void getGoodsById(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -180,9 +191,63 @@ public class GoodsController extends HttpServlet {
         GoodsDAO dao = new GoodsDAO();
         Product good = dao.getGoodsById(id);
         List<Setting> listGoodsCate = dao.getGoodsCategory();
-        
+
         request.setAttribute("good", good);
         request.setAttribute("listGoodsCate", listGoodsCate);
         request.getRequestDispatcher("/goods-details.jsp").forward(request, response);
+    }
+
+    protected void addProductToCart(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession(true);
+        Cart cart = null;
+        Object o = session.getAttribute("cart");
+        //co roi
+        if (o != null) {
+            cart = (Cart) o;
+        } else {
+            cart = new Cart();
+        }
+//        String tnum = request.getParameter("num");
+        String tid = request.getParameter("pid");
+        int num, id;
+        try {
+            num = 1;
+            id = Integer.parseInt(tid);
+
+            GoodsDAO pdb = new GoodsDAO();
+            Product p = pdb.getGoodsById(id);
+            //gia ban
+            double price = p.getSprice();
+            Items t = new Items(p, num, price);
+            cart.addItem(t);
+        } catch (NumberFormatException e) {
+            num = 1;
+        }
+        List<Items> list = cart.getItems();
+        session.setAttribute("cart", cart);
+        session.setAttribute("size", list.size());
+        request.getRequestDispatcher("/cart.jsp").forward(request, response);
+    }
+
+    protected void removeProCart(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession(true);
+        Cart cart = null;
+        Object o = session.getAttribute("cart");
+        //co roi
+        if (o != null) {
+            cart = (Cart) o;
+        } else {
+            cart = new Cart();
+        }
+        int id = Integer.parseInt(request.getParameter("id"));
+        cart.removeItem(id);
+        List<Items> list = cart.getItems();
+        session.setAttribute("cart", cart);
+        session.setAttribute("size", list.size());
+        request.getRequestDispatcher("/cart.jsp").forward(request, response);
+
     }
 }

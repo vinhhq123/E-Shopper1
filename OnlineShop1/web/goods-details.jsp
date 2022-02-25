@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -82,25 +83,32 @@
                             <div class="col-sm-7">
                                 <div class="product-information"><!--/product-information-->
                                     <img src="images/product-details/new.jpg" class="newarrival" alt="" />
+                                    <i class="fa fa-user"> ${good.author.fullname}</i>
+                                    <p></p>
                                     <h2>${good.title}</h2>
                                     <p>Product ID: ${good.pid}</p>
+                                    <p>Product Category: ${good.cate.settingValue}</p>
                                     <img src="images/product-details/rating.png" alt="" />
                                     <span>
-                                        <span>${good.lprice}</span>
-<!--                                        <label>Quantity:</label>-->
-<!--                                        <input type="text" value="3" />-->
+                                        <span>
+                                            <fmt:setLocale value = "vi_VN"/>
+                                            <font color="gray" size="-0.5"><strike>
+                                                <fmt:formatNumber value="${good.lprice}" type="currency" /></strike> </font>
+                                            <font color="red">
+                                            <fmt:formatNumber value="${good.sprice}" type="currency" /></font>
+                                        </span>
                                     </span>
                                     <p>${good.breif}</p>
                                     <a href=""><img src="images/product-details/share.png" class="share img-responsive"  alt="" /></a>
                                 </div><!--/product-information-->
-                                <button type="button" class="btn btn-fefault cart">
+                                <a href="${pageContext.request.contextPath}/eShopper/cart.html" class="btn btn-fefault cart">
                                     <i class="fa fa-shopping-cart"></i>
                                     Buy Now
-                                </button>
-                                <button type="button" class="btn btn-fefault cart">
+                                </a>
+                                <a href="<%=request.getContextPath()%>/goods/addToCart?pid=${good.pid}" class="btn btn-fefault cart">
                                     <i class="fa fa-shopping-cart"></i>
                                     Add to cart
-                                </button>
+                                </a>
                             </div>
                         </div><!--/product-details-->
 
@@ -115,10 +123,8 @@
                                     <div class="col-sm-12">
                                         <ul>
                                             <li><a href=""><i class="fa fa-user"></i>${good.author.fullname}</a></li>
-<!--                                            <li><a href=""><i class="fa fa-clock-o"></i>12:41 PM</a></li>
-                                            <li><a href=""><i class="fa fa-calendar-o"></i>31 DEC 2014</a></li>-->
                                         </ul>
-                                        
+
                                         <p><b>Write Your Review</b></p>
 
                                         <form action="#">
@@ -127,14 +133,15 @@
                                                 <input type="email" placeholder="Email Address"/>
                                             </span>
                                             <textarea name="" ></textarea>
-                                            <b>Rating: </b> <img src="images/product-details/rating.png" alt="" />
-                                            <button type="button" class="btn btn-default pull-right">
-                                                Submit
-                                            </button>
+                                            <!--                                            <b>Rating: </b> <img src="images/product-details/rating.png" alt="" />-->
                                         </form>
+                                        <c:if test="${sessionScope.account != null}">
+                                            <a href="${pageContext.request.contextPath}/send-feedback.jsp" type="button" class="btn btn-default">
+                                                Send Feedback
+                                            </a>
+                                        </c:if> 
                                     </div>
                                 </div>
-
                             </div>
                         </div><!--/category-tab-->
 

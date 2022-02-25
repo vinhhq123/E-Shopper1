@@ -12,6 +12,7 @@ import java.sql.Date;
  * @author Edwars
  */
 public class Product {
+
     private int pid;
     private String thumbnail;
     private String title;
@@ -25,11 +26,12 @@ public class Product {
     private Date updatedDate;
     private int salesId;
     private User author;
+    private Setting cate;
 
-    public Product(){
-        
+    public Product() {
+
     }
-    
+
     public Product(int pid, String thumbnail, String title, double lprice, double sprice, String featured, int productStatus, int categoryID, String breif, int quantity, Date updatedDate, int salesId) {
         this.pid = pid;
         this.thumbnail = thumbnail;
@@ -44,7 +46,7 @@ public class Product {
         this.updatedDate = updatedDate;
         this.salesId = salesId;
     }
-    
+
     public Product(int pid, String thumbnail, String title, double lprice, double sprice, int categoryID, Date updatedDate, User author) {
         this.pid = pid;
         this.thumbnail = thumbnail;
@@ -55,17 +57,18 @@ public class Product {
         this.updatedDate = updatedDate;
         this.author = author;
     }
-    
-    public Product(int pid, String thumbnail, String breif, String title, double lprice, double sprice, int categoryID, Date updatedDate, User author) {
+
+    public Product(int pid, String thumbnail, String breif, String title, double lprice, double sprice, int categoryID, Date updatedDate, User author, Setting cate) {
         this.pid = pid;
         this.thumbnail = thumbnail;
-        this.breif = breif;
         this.title = title;
+        this.breif = breif;
         this.lprice = lprice;
         this.sprice = sprice;
         this.categoryID = categoryID;
         this.updatedDate = updatedDate;
         this.author = author;
+        this.cate = cate;
     }
 
     public int getPid() {
@@ -171,6 +174,13 @@ public class Product {
     public void setAuthor(User author) {
         this.author = author;
     }
-    
-    
+
+    public Setting getCate() {
+        return cate;
+    }
+
+    public void setCate(Setting cate) {
+        this.cate = cate;
+    }
+
 }
