@@ -70,6 +70,18 @@ po<%--
                         <i class="fa fa-paperclip"></i> <span>Post Detail</span>
                     </a>
                 </li>
+                
+                <li>
+                    <a href="<%=request.getContextPath()%>/slider/list">
+                        <i class="fa fa-paperclip"></i> <span>Sliders List</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="<%=request.getContextPath()%>/slider/detail">
+                        <i class="fa fa-paperclip"></i> <span>Slider Detail</span>
+                    </a>
+                </li>
 
                 <li>
                     <a href="<%=request.getContextPath()%>/setting/list">
