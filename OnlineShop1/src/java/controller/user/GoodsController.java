@@ -5,7 +5,9 @@
  */
 package controller.user;
 
+import dal.FeedbackDAO;
 import dal.GoodsDAO;
+import dal.SettingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Cart;
+import model.Feedback;
 import model.Items;
 import model.Product;
 import model.Setting;
@@ -104,8 +107,10 @@ public class GoodsController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         GoodsDAO dao = new GoodsDAO();
-        List<Setting> listGoodsCate = dao.getGoodsCategory();
+        SettingDAO sdao = new SettingDAO();
+        List<Setting> listGoodsCate = sdao.getGoodsCategory();
         List<Product> listGoodsPage = dao.getGoodsSortByDate();
+        List<Product> listFeatured = dao.getFeaturedGood();
         int page, numperpage = 9;
         int size = listGoodsPage.size();
         int num = (size % 3 == 0 ? (size / 3) : ((size / 3)) + 1);
@@ -122,6 +127,7 @@ public class GoodsController extends HttpServlet {
 
         request.setAttribute("listGoods", listGoods);
         request.setAttribute("listGoodsCate", listGoodsCate);
+        request.setAttribute("listFeatured", listFeatured);
         request.setAttribute("page", page);
         request.setAttribute("num", num);
         request.getRequestDispatcher("/goods.jsp").forward(request, response);
@@ -132,8 +138,10 @@ public class GoodsController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         int category = Integer.parseInt(request.getParameter("id"));
         GoodsDAO dao = new GoodsDAO();
-        List<Setting> listGoodsCate = dao.getGoodsCategory();
+        SettingDAO sdao = new SettingDAO();
+        List<Setting> listGoodsCate = sdao.getGoodsCategory();
         List<Product> listGoodsByCategory = dao.getGoodsByCategory(category);
+        List<Product> listFeatured = dao.getFeaturedGood();
         int page, numperpage = 9;
         int size = listGoodsByCategory.size();
         int num = (size % 3 == 0 ? (size / 3) : ((size / 3)) + 1);
@@ -150,6 +158,7 @@ public class GoodsController extends HttpServlet {
 
         request.setAttribute("listGoodsCate", listGoodsCate);
         request.setAttribute("listGoods", listGoods);
+        request.setAttribute("listFeatured", listFeatured);
         request.setAttribute("page", page);
         request.setAttribute("num", num);
         request.getRequestDispatcher("/goods.jsp").forward(request, response);
@@ -162,7 +171,9 @@ public class GoodsController extends HttpServlet {
         String searchGoods = request.getParameter("search");
         GoodsDAO dao = new GoodsDAO();
         List<Product> listSearch = dao.searchGoodByTitle(searchGoods);
-        List<Setting> listGoodsCate = dao.getGoodsCategory();
+        SettingDAO sdao = new SettingDAO();
+        List<Setting> listGoodsCate = sdao.getGoodsCategory();
+        List<Product> listFeatured = dao.getFeaturedGood();
         int page, numperpage = 9;
         int size = listSearch.size();
         int num = (size % 3 == 0 ? (size / 3) : ((size / 3)) + 1);
@@ -180,6 +191,7 @@ public class GoodsController extends HttpServlet {
         request.setAttribute("listGoodsCate", listGoodsCate);
         request.setAttribute("listGoods", listSearchGoods);
         request.setAttribute("searchValue", searchGoods);
+        request.setAttribute("listFeatured", listFeatured);
         request.setAttribute("num", num);
         request.getRequestDispatcher("/goods.jsp").forward(request, response);
     }
@@ -188,12 +200,17 @@ public class GoodsController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         int id = Integer.parseInt(request.getParameter("pid"));
+        
         GoodsDAO dao = new GoodsDAO();
+        SettingDAO sdao = new SettingDAO();
+        FeedbackDAO fdao = new FeedbackDAO();
         Product good = dao.getGoodsById(id);
-        List<Setting> listGoodsCate = dao.getGoodsCategory();
+        List<Setting> listGoodsCate = sdao.getGoodsCategory();
+        List<Feedback> listFeedback = fdao.getFeedbackOfEachGood(id);
 
         request.setAttribute("good", good);
         request.setAttribute("listGoodsCate", listGoodsCate);
+        request.setAttribute("listFeedback", listFeedback);
         request.getRequestDispatcher("/goods-details.jsp").forward(request, response);
     }
 

@@ -83,6 +83,8 @@
                             <div class="col-sm-7">
                                 <div class="product-information"><!--/product-information-->
                                     <img src="images/product-details/new.jpg" class="newarrival" alt="" />
+                                    <i class="fa fa-star"> ${good.ratedStars}</i>
+                                    <p></p>
                                     <i class="fa fa-user"> ${good.author.fullname}</i>
                                     <p></p>
                                     <h2>${good.title}</h2>
@@ -118,31 +120,74 @@
                                     <li class="active"><a href="#reviews" data-toggle="tab">Reviews</a></li>
                                 </ul>
                             </div>
-                            <div class="tab-content">
-                                <div class="tab-pane fade active in" id="reviews" >
-                                    <div class="col-sm-12">
-                                        <ul>
-                                            <li><a href=""><i class="fa fa-user"></i>${good.author.fullname}</a></li>
-                                        </ul>
-
-                                        <p><b>Write Your Review</b></p>
-
-                                        <form action="#">
-                                            <span>
-                                                <input type="text" placeholder="Your Name"/>
-                                                <input type="email" placeholder="Email Address"/>
-                                            </span>
-                                            <textarea name="" ></textarea>
-                                            <!--                                            <b>Rating: </b> <img src="images/product-details/rating.png" alt="" />-->
-                                        </form>
-                                        <c:if test="${sessionScope.account != null}">
-                                            <a href="${pageContext.request.contextPath}/send-feedback.jsp" type="button" class="btn btn-default">
-                                                Send Feedback
-                                            </a>
-                                        </c:if> 
+                            <c:forEach items="${listFeedback}" var="o">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade active in" id="reviews" >
+                                        <div class="col-sm-12">
+                                            <ul class="media-list">
+                                                <li class="media">
+                                                    <div class="media-body">
+                                                        <ul class="sinlge-post-meta">
+                                                            <li><i class="fa fa-user"></i>${o.saler.fullname}</li>
+                                                            <!--                                                            <li><i class="fa fa-clock-o"></i> 1:33 pm</li>-->
+                                                            <li><i class="fa fa-calendar"></i>${o.updatedDate}</li>
+                                                        </ul>
+                                                        <ul class="rating-area ratings">
+                                                            <li class="rate-this">Rate:</li>
+                                                            <li>
+                                                                <c:if test="${o.ratedStart==1}">
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                </c:if>
+                                                                <c:if test="${o.ratedStart==2}">
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                </c:if>
+                                                                <c:if test="${o.ratedStart==3}">
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                </c:if>
+                                                                <c:if test="${o.ratedStart==4}">
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                </c:if>
+                                                                <c:if test="${o.ratedStart==5}">
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star color"></i>
+                                                                </c:if>
+                                                            </li>
+                                                            <li class="color"></li>
+                                                        </ul> 
+                                                        <img src="" alt="" />
+                                                        <p>${o.feedbackContent}</p>
+                                                        <!--                                                    <a class="btn btn-primary" href=""><i class="fa fa-reply"></i>Replay</a>-->
+                                                    </div>
+                                                </li>
+                                            </ul> 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </c:forEach>
+                            <c:if test="${sessionScope.account != null}">
+                                <a href="${pageContext.request.contextPath}/send-feedback.jsp" type="button" class="btn btn-default">
+                                    Send Feedback
+                                </a>
+                            </c:if>
                         </div><!--/category-tab-->
 
                     </div>
