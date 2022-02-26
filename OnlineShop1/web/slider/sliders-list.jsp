@@ -2,7 +2,6 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
@@ -120,7 +119,8 @@
                                         <div class="col-lg-1"></div>
                                         <div class="col-lg-7">
                                             <div class="panel-body table-responsive">
-                                                <div class="single-blog-post">
+                        <c:forEach items="${sliders}" var="s">
+                        <div class="single-blog-post">
                         <div class="header-slider">
                           <a style="float: right" href="#"
                             ><button style="width: 70px">Edit</button></a
@@ -136,34 +136,31 @@
                             </label>
 
                           <h4 style="text-align: center; margin-left: 100px">
-                            Title
+                            ${s.s_title}
                           </h4>
                         </div>
                         <br /><br />
                         <div class="post-meta" style="">
-                          <p>#454545</p>
+                          <p>${s.s_id}</p>
                           <a href="">
                             <img
                               style="width: 140px; height: 140px"
-                              src="https://media.istockphoto.com/photos/tiny-insect-picture-id986208300?s=612x612"
+                              src="data:image/jpg;base64,${s.s_image}"
                               alt=""
                             />
                           </a>
                           <p style="display: inline-block; margin-left: 50px; width: 400px;">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Iste nemo maxime dignissimos expedita dolorum
-                            non quibusdam beatae aperiam nam enim, numquam
-                            corrupti a consequuntur hic eveniet soluta dolorem
-                            officiis molestiae.
+                            ${s.s_notes}
                           </p>
                         </div>
                         <a
                           style="margin-top: 20px"
                           class="btn btn-primary"
-                          href=""
-                          >BackLink</a
+                          href="${s.back_link}"
+                          >backlink</a
                         >
                       </div>
+                        </c:forEach>
                                                 
                                         
                                     <div class="col-lg-4"></div>

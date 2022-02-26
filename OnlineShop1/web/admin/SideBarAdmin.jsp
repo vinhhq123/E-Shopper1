@@ -78,7 +78,7 @@ po<%--
                 </li>
                 
                 <li>
-                    <a href="<%=request.getContextPath()%>/slider/detail">
+                    <a href="<%=request.getContextPath()%>/slider/slider-detail.jsp">
                         <i class="fa fa-paperclip"></i> <span>Slider Detail</span>
                     </a>
                 </li>

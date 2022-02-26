@@ -5,7 +5,11 @@
  */
 package controller.marketing;
 
+import dal.PostDAO;
+import dal.SliderDAO;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -14,6 +18,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import model.PostList;
+import model.Slider;
 
 /**
  *
@@ -78,16 +85,30 @@ public class SliderController extends HttpServlet {
     
     protected void sliderDetail(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            request.getRequestDispatcher("/slider/slider-detail.jsp").forward(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(PostController.class.getName()).log(Level.SEVERE, null, ex);
+        String s_title = request.getParameter("s_title");
+        Part filePart = request.getPart("s_image");
+        String s_backlink = request.getParameter("s_backlink");
+        String s_notes = request.getParameter("s_notes");
+        InputStream inputStream = null;
+        
+        if (filePart != null) {
+            System.out.println(filePart.getName());
+            System.out.println(filePart.getSize());
+            System.out.println(filePart.getContentType());
+            // Obtains input stream of the upload file
+            inputStream = filePart.getInputStream();
+            SliderDAO sliderDAO = new SliderDAO();
+            sliderDAO.insertSlider(s_title, inputStream, s_backlink, s_notes);
+        request.getRequestDispatcher("/slider/list").forward(request, response);
         }
     }
     
     protected void slidersList(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            SliderDAO sd = new SliderDAO();
+            ArrayList<Slider> sliders = sd.getSliders();
+            request.setAttribute("sliders", sliders);
             request.getRequestDispatcher("/slider/sliders-list.jsp").forward(request, response);
         } catch (Exception ex) {
             Logger.getLogger(PostController.class.getName()).log(Level.SEVERE, null, ex);

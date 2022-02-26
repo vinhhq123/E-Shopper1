@@ -58,29 +58,19 @@
                                         <div class="col-lg-1"></div>
                                         <div class="col-lg-7">
                                             <div class="panel-body table-responsive">
-                                                <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/customer/add" method="POST" name="/customer/add"  enctype="multipart/form-data">
-                                                <c:if test="${not empty messageAddSuccess}">
-                                                    <b><h4 class="help-block" style="color: green" id="successEditMessage">${messageAddSuccess}</h4></b>
-                                                        <c:remove var="messageAddSuccess"/>
-                                                    <br>
-                                                </c:if>
+                                                <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/slider/detail" method="POST" name="/customer/add"  enctype="multipart/form-data">
+                                                
                                                
                                                 <div class="form-group">
                                                     <label for="inputTitle1" class="col-lg-2 col-sm-2 control-label">Title</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="inputTitle1" placeholder="Title" name="title" value="${emailValue}" >
-                                                        <c:if test="${not empty error}">
-                                                            <p class="help-block" style="color: red" id="errorEmailMessage">${error}</p>
-                                                        </c:if>
+                                                        <input type="text" class="form-control" id="inputTitle1" placeholder="Title" name="s_title" >
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="inputBackLink1" class="col-lg-2 col-sm-2 control-label">Backlink</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="inputBackLink1" placeholder="Backlink" name="Backlink" value="${emailValue}" >
-                                                        <c:if test="${not empty error}">
-                                                            <p class="help-block" style="color: red" id="errorEmailMessage">${error}</p>
-                                                        </c:if>
+                                                        <input type="text" class="form-control" id="inputBackLink1" placeholder="Backlink" name="s_backlink" >
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -96,7 +86,7 @@
                                                                     <img src="${pageContext.request.contextPath}/admin/img/no-avatar.png" id="output" width="200" />
                                                                 </c:if>
                                                             </label>
-                                                            <input id="file" type="file" onchange="loadFile(event)" name="image"/>
+                                                            <input id="file" type="file" onchange="loadFile(event)" name="s_image"/>
                                                             <c:if test="${not empty errorImage}">
                                                                 <p class="help-block" style="color: red" id="errorEmailMessage">${errorImage}</p>
                                                                 <c:remove var="errorImage"/>
@@ -107,7 +97,7 @@
                                                 <div class="form-group">
                                                     <label for="notes" class="col-lg-2 col-sm-2 control-label">Notes</label>
                                                     <div class="col-lg-10">
-                                                            <textarea name="" id="" cols="60" rows="4"></textarea>
+                                                            <textarea name="s_notes" id="" cols="60" rows="4"></textarea>
                                                     </div>
                                                 </div>
                                             
@@ -116,7 +106,6 @@
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-6 col-lg-15">
                                                         <button type="submit" class="btn btn-success">Save</button>
-                                           
                                                     </div>
                                                 </div>
                                             </form>
