@@ -68,4 +68,8 @@ public class SendEmail {
         }
         return check;
     }
+    
+    public boolean sendResetPassMail(){
+        return true;
+    }
 }
