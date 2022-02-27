@@ -68,6 +68,14 @@
         <servlet-name>ChangePassController</servlet-name>
         <servlet-class>controller.user.ChangePassController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ResetPassController</servlet-name>
+        <servlet-class>controller.user.ResetPassController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SendMailController</servlet-name>
+        <servlet-class>controller.user.SendMailController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>
         <url-pattern>/settingList</url-pattern>
@@ -147,6 +155,14 @@
     <servlet-mapping>
         <servlet-name>ChangePassController</servlet-name>
         <url-pattern>/changepass</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResetPassController</servlet-name>
+        <url-pattern>/resetpass</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SendMailController</servlet-name>
+        <url-pattern>/sendmail</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -114,7 +114,7 @@
                                 <input type="text" placeholder="Email" name="email" value="${email}"  /> </br>
                                 <input type="password" placeholder="password" name="password" /> </br>
                                 <a href="register">Don't have an account?</a></br>
-                                <a href="">Forgot your password?</a></br>
+                                <a href="sendmail">Forgot your password?</a></br>
                                 <span>
                                     <input type="checkbox" class="checkbox"> 
                                     Keep me signed in
