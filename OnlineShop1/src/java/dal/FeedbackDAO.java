@@ -288,7 +288,6 @@ public class FeedbackDAO extends DBContext {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, pid);
             results = preparedStatement.executeQuery();
-
             while (results.next()) {
                 Feedback f = new Feedback();
                 f.setFeedbackId(results.getInt("feedbackId"));

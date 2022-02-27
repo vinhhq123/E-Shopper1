@@ -3,26 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/dal/OrderDAO.java</file>
-            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/controller/manager/OrderController.java</file>
-            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/dal/OrderDetailDAO.java</file>
-            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/web/admin/css/orderdetails.css</file>
-            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/web/admin/OrderList.jsp</file>
-            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/web/admin/OrderDetail.jsp</file>
-=======
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/user/index.jsp</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/model/Slider.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/controller/user/HomeController.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/controller/marketing/PostController.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/slider/sliders-list.jsp</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/controller/marketing/SliderController.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/admin/SideBarAdmin.jsp</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/dal/SliderDAO.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/post/PostList.jsp</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/slider/slider-detail.jsp</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/index.jsp</file>
->>>>>>> 717901afebd76192c529c6bfa850dbb783d3f298
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/controller/user/GoodsController.java</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/goods-details.jsp</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/controller/user/HomeController.java</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/controller/marketing/BlogController.java</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/blog.jsp</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/model/PostList.java</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/goods.jsp</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/model/Product.java</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/dal/GoodsDAO.java</file>
         </group>
     </open-files>
 </project-private>
