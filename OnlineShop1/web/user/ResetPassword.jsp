@@ -1,13 +1,17 @@
-
-
+<%-- 
+    Document   : ResetPassword
+    Created on : Feb 27, 2022, 4:37:21 PM
+    Author     : Edwars
+--%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Add Slider</title>
+        <title>RESET PASSWORD</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -29,78 +33,12 @@
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
-        
-        <style>
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 50px;
-      height: 24px;
-    }
-    
-    .switch input { 
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-    
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      -webkit-transition: .4s;
-      transition: .4s;
-    }
-    
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 16px;
-      width:16px;
-      left: 4px;
-      bottom: 4px;
-      background-color: white;
-      -webkit-transition: .4s;
-      transition: .4s;
-    }
-    
-    input:checked + .slider {
-      background-color: #2196F3;
-    }
-    
-    input:focus + .slider {
-      box-shadow: 0 0 1px #2196F3;
-    }
-    
-    input:checked + .slider:before {
-      -webkit-transform: translateX(26px);
-      -ms-transform: translateX(26px);
-      transform: translateX(26px);
-    }
-    
-    /* Rounded sliders */
-    .slider.round {
-      border-radius: 34px;
-    }
-    
-    .slider.round:before {
-      border-radius: 50%;
-    }
-    </style>
     </head>
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
-        <jsp:include page="../admin/HeaderAdmin.jsp"></jsp:include>
             <div class="wrapper row-offcanvas row-offcanvas-left">
                 <!-- Left side column. contains the logo and sidebar -->
-            <jsp:include page="../admin/SideBarManager.jsp"></jsp:include>
-
                 <!-- Right side column. Contains the navbar and content of the page -->
-                <aside class="right-side">
 
                     <!-- Main content -->
                     <section class="content">
@@ -108,8 +46,7 @@
                             <div class="col-xs-12">
                                 <div class="panel">
                                     <header class="panel-heading">
-                                        <b>Add New Customer</b>
-
+                                        <b>RESET PASSWORD</b>
                                     </header>
                                     <!-- <div class="box-header"> -->
                                     <!-- <h3 class="box-title">Responsive Hover Table</h3> -->
@@ -119,61 +56,49 @@
                                         <div class="col-lg-1"></div>
                                         <div class="col-lg-7">
                                             <div class="panel-body table-responsive">
-                        <c:forEach items="${sliders}" var="s">
-                        <div class="single-blog-post">
-                        <div class="header-slider">
-                          <a style="float: right" href="<%=request.getContextPath()%>/slider/getslider?s_id=${s.s_id}"
-                            ><button style="width: 70px">Edit</button></a
-                          >
-                          <a style="float: right; margin: 0 10px" href="#"
-                            ><button style="width: 70px">View</button></a
-                          >
-                         
-
-                            <label style="float: right;" class="switch">
-                            <input type="checkbox" checked>
-                            <span class="slider round"></span>
-                            </label>
-
-                          <h4 style="text-align: center; margin-left: 100px">
-                            ${s.s_title}
-                          </h4>
-                        </div>
-                        <br /><br />
-                        <div class="post-meta" style="">
-                          <p>${s.s_id}</p>
-                          <a href="">
-                            <img
-                              style="width: 140px; height: 140px"
-                              src="data:image/jpg;base64,${s.s_image}"
-                              alt=""
-                            />
-                          </a>
-                          <p style="display: inline-block; margin-left: 50px; width: 400px;">
-                            ${s.s_notes}
-                          </p>
-                        </div>
-                        <a
-                          style="margin-top: 20px"
-                          class="btn btn-primary"
-                          href="${s.back_link}"
-                          >backlink</a
-                        >
-                      </div>
-                        </c:forEach>
-                                                
-                                        
+                                                <form class="form-horizontal" role="form" action="resetpass" method="POST">
+                                                <c:if test="${not empty successMessage}">
+                                                    <b><h4 class="help-block" style="color: green" id="successEditMessage">${successMessage}</h4></b>
+                                                        <c:remove var="successMessage"/>
+                                                    <br>
+                                                </c:if>
+                                                <div class="form-group">
+                                                    <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label"></label>
+                                                    <div class="col-lg-10">
+                                                        <input  type="hidden" class="form-control" name="email" value="${sessionScope.email}">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="title" class="col-lg-2 col-sm-2 control-label">Your new password</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="password" class="form-control" name="newPass" value="${newPassValue}" required>
+                                                        <p style="color: red">${requestScope.fail2}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="title" class="col-lg-2 col-sm-2 control-label">Re-enter new password</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="password" class="form-control" name="reNewPass" value="${reNewPassValue}"  required>
+                                                        <p style="color: red">${requestScope.fail3}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-lg-offset-2 col-lg-10">
+                                                        <button type="submit" class="btn btn-success">Reset</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div><!-- /.box-body -->
+                                    </div>
                                     <div class="col-lg-4"></div>
-                                  
                                 </div>
                             </div><!-- /.box -->
                         </div>
                     </div>
                 </section><!-- /.content -->
                 <div class="footer-main">
-                 Copyright &copy Online Shop , 2022   
+                    Copyright &copy Online Shop , 2022
                 </div>
-            </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
 
 
