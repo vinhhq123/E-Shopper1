@@ -79,41 +79,41 @@
                                                 <input type="hidden" value="${Feedback.getFeedbackId()}" name="feedbackId"> 
                                                 <div class="form-group">
                                                     <label for="fullname" class="col-lg-2 col-sm-5 control-label">Fullname</label>
-                                                    <div class="col-lg-10">
+                                                    <div class="col-lg-3">
                                                         <input type="text" class="form-control" id="fullname" placeholder="Fullname" readonly value="${CurrentCustomer.getFullname()}" name="name" required>
                                                     </div>
                                                     
                                                 </div>
                                                      <div class="form-group">
                                                     <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Email</label>
-                                                    <div class="col-lg-10">
+                                                    <div class="col-lg-3">
                                                         <input type="email" class="form-control" id="inputEmail1" placeholder="Email" readonly value="${CurrentCustomer.getEmail()}" name="email"> 
                                                         <!--<p class="help-block">Example block-level help text here.</p>-->
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="phone" class="col-lg-2 col-sm-2 control-label">Phone</label>
-                                                    <div class="col-lg-10">
+                                                    <div class="col-lg-3">
                                                         <input type="text" class="form-control" id="phone" placeholder="Phone" readonly  value="${CurrentCustomer.getPhone()}" name="phone" pattern="[0-9]{10}" title="Phone must be 10 digits and contains numbers only" required>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="fullname" class="col-lg-2 col-sm-5 control-label">Product</label>
-                                                    <div class="col-lg-10">
+                                                    <div class="col-lg-3">
                                                         <input type="text" class="form-control" id="fullname" placeholder="" readonly value="${Products.getTitle()}" name="name" required>
                                                     </div>
                                                     
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="fullname" class="col-lg-2 col-sm-5 control-label">Rate Star</label>
-                                                    <div class="col-lg-10">
+                                                    <div class="col-lg-3">
                                                         <input type="text" class="form-control" id="fullname" placeholder="" readonly value="${Feedback.getRatedStart()}" name="name" required>
                                                     </div>
                                                     
                                                 </div>    
                                                 <div class="form-group">
                                                     <label for="fullname" class="col-lg-2 col-sm-5 control-label">Title</label>
-                                                    <div class="col-lg-10">
+                                                    <div class="col-lg-6">
                                                         <input type="text" class="form-control" id="fullname" placeholder="" readonly value="${Feedback.getTitle()}" name="name" required>
                                                     </div>
                                             
@@ -121,14 +121,15 @@
                                                   <div class="form-group">
                                                     <label for="fullname" class="col-lg-2 col-sm-5 control-label">Feedback </label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="fullname" placeholder="" readonly value="${Feedback.getFeedbackContent()}" name="name" required>
+                                                         <textarea id="note" placeholder="Sale Notes" name="name" style="width: 450px;" readonly rows="3" cols="30" required >${Feedback.getFeedbackContent()}</textarea>
+                                                       
                                                     </div>
                                             
                                                 </div>  
                                                     
                                                  <div class="form-group">
                                                     <label for="avatar" class="col-lg-2 col-sm-2 control-label">Image</label>
-                                                    <div class="col-lg-offset-5 col-lg-15">
+                                                    <div class="col-lg-offset-4 col-lg-15">
                                                         <div class="profile-pic">
                                                             <label class="-label" for="file">
                                                                 <c:if test="${ not empty Feedback.getImage()}">
@@ -162,7 +163,8 @@
                                                <div class="form-group">
                                                     <label for="fullname" class="col-lg-2 col-sm-5 control-label">Note</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="fullname" placeholder="Note" value="${Feedback.getNote()}" name="note" required>
+                                                       
+                                                         <textarea id="note" placeholder="Note" name="note" style="width: 450px;"  rows="3" cols="30" >${Feedback.getNote()}</textarea>
                                                     </div>
                                                     
                                                 </div>
@@ -174,11 +176,11 @@
                                                 </div>
                                                   
                                                
-                                                                                     
+                                                                                            </form>   
+                                    
                                         </div>
                                            
                                     </div>
-                                           </form>   
                                     <div class="col-lg-4"></div>
                                 </div>
                             </div><!-- /.box -->

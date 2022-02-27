@@ -1,3 +1,6 @@
+<%@page import="java.io.Console"%>
+<%@page import="java.text.DecimalFormat"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -48,22 +51,26 @@
                         <div class="left-sidebar">
                             <h2>Feature Products</h2>
                             <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-                                <div class="single-products">
-                                    <div class="productinfo text-center">
-                                        <img src="images/shop/product12.jpg" alt="" />
-                                        <h2>$56</h2>
-                                        <p>Easy Polo Black Edition</p>
-                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                <c:forEach items="${listFeatured}" var="o">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="175"/>
+                                            <h2>${o.title}</h2>
+                                                <p>
+                                                    <fmt:setLocale value = "vi_VN"/>
+                                                <strike>
+                                                    <fmt:formatNumber value="${o.lprice}" type="currency" />
+                                                </strike>
+                                                <font color="red" size="+1"> <strong>
+                                                    <fmt:formatNumber value="${o.sprice}" type="currency" />  
+                                                </strong>
+                                                </font>
+                                                </p>
+                                            <a href="<%=request.getContextPath()%>/goods/detail?pid=${o.pid}" class="btn btn-default add-to-cart">Show more detail</a>
+                                            <p>Views: ${o.views}</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="single-products">
-                                    <div class="productinfo text-center">
-                                        <img src="images/shop/product12.jpg" alt="" />
-                                        <h2>$56</h2>
-                                        <p>Easy Polo Black Edition</p>
-                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                    </div>
-                                </div>
+                                </c:forEach>
                             </div><!--/category-productsr-->
                         </div>
                     </div>
@@ -78,7 +85,16 @@
                                             <div class="productinfo text-center">
                                                 <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" width="100" height="250"/>
                                                 <h2>${o.title}</h2>
-                                                <p>${o.lprice}</p>
+                                                <p>
+                                                    <fmt:setLocale value = "vi_VN"/>
+                                                <strike>
+                                                    <fmt:formatNumber value="${o.lprice}" type="currency" />
+                                                </strike>
+                                                <font color="red" size="+1"> <strong>
+                                                    <fmt:formatNumber value="${o.sprice}" type="currency" />  
+                                                </strong>
+                                                </font>
+                                                </p>
                                                 <a href="<%=request.getContextPath()%>/goods/detail?pid=${o.pid}" class="btn btn-default add-to-cart">Show more detail</a>
                                             </div>
                                         </div>
@@ -86,11 +102,11 @@
                                             <ul class="nav nav-pills nav-justified">
                                                 <li><i class="fa fa-user"></i>${o.author.fullname}</li>
                                                 <li>
+                                                    <i class="fa fa-star color">${o.ratedStars}</i>
+<!--                                                    <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-half-o"></i>
+                                                    <i class="fa fa-star-half-o"></i>-->
                                                 </li>
                                                 <!--                                            <li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
                                                                                             <li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>-->
@@ -101,17 +117,17 @@
                             </c:forEach>
 
                         </div><!--features_items-->
-                        
-                            <div class="pagination-area">
-                                <c:set var="page" value="${requestScope.page}"/>
-                                <ul class="pagination">
-                                    <c:forEach begin="${1}" end="${requestScope.num}" var="i">
-                                        <li><a class="${i==page?"active":""}" href="<%=request.getContextPath()%>/goods/goodsList?page=${i}">${i}</a></li>
-                                        <!--                                        <li><a href="" class="active">1</a></li>-->
-                                    </c:forEach>
-                                    <li><a class="${i==page?"active":""}" href="<%=request.getContextPath()%>/goods/goodsList?page=${page+1}"><i class="fa fa-angle-double-right"></i></a></li>
-                                </ul>
-                            </div>
+
+                        <div class="pagination-area">
+                            <c:set var="page" value="${requestScope.page}"/>
+                            <ul class="pagination">
+                                <c:forEach begin="${1}" end="${requestScope.num}" var="i">
+                                    <li><a class="${i==page?"active":""}" href="<%=request.getContextPath()%>/goods/goodsList?page=${i}">${i}</a></li>
+                                    <!--                                        <li><a href="" class="active">1</a></li>-->
+                                </c:forEach>
+                                <li><a class="${i==page?"active":""}" href="<%=request.getContextPath()%>/goods/goodsList?page=${page+1}"><i class="fa fa-angle-double-right"></i></a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>

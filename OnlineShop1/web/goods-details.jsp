@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -49,22 +50,26 @@
                                 <div class="left-sidebar">
                                     <h2>Feature Products</h2>
                                     <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-                                        <div class="single-products">
-                                            <div class="productinfo text-center">
-                                                <img src="images/shop/product12.jpg" alt="" />
-                                                <h2>$56</h2>
-                                                <p>Easy Polo Black Edition</p>
-                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        <c:forEach items="${listFeatured}" var="o">
+                                            <div class="single-products">
+                                                <div class="productinfo text-center">
+                                                    <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="175"/>
+                                                    <h2>${o.title}</h2>
+                                                    <p>
+                                                        <fmt:setLocale value = "vi_VN"/>
+                                                    <strike>
+                                                        <fmt:formatNumber value="${o.lprice}" type="currency" />
+                                                    </strike>
+                                                    <font color="red" size="+1"> <strong>
+                                                        <fmt:formatNumber value="${o.sprice}" type="currency" />  
+                                                    </strong>
+                                                    </font>
+                                                    </p>
+                                                    <a href="<%=request.getContextPath()%>/goods/detail?pid=${o.pid}" class="btn btn-default add-to-cart">Show more detail</a>
+                                                    <p>Views: ${o.views}</p>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="single-products">
-                                            <div class="productinfo text-center">
-                                                <img src="images/shop/product12.jpg" alt="" />
-                                                <h2>$56</h2>
-                                                <p>Easy Polo Black Edition</p>
-                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                            </div>
-                                        </div>
+                                        </c:forEach>
                                     </div><!--/category-productsr-->
                                 </div>
                             </div><
@@ -82,25 +87,34 @@
                             <div class="col-sm-7">
                                 <div class="product-information"><!--/product-information-->
                                     <img src="images/product-details/new.jpg" class="newarrival" alt="" />
+                                    <i class="fa fa-star"> ${good.ratedStars}</i>
+                                    <p></p>
+                                    <i class="fa fa-user"> ${good.author.fullname}</i>
+                                    <p></p>
                                     <h2>${good.title}</h2>
                                     <p>Product ID: ${good.pid}</p>
+                                    <p>Product Category: ${good.cate.settingValue}</p>
                                     <img src="images/product-details/rating.png" alt="" />
                                     <span>
-                                        <span>${good.lprice}</span>
-<!--                                        <label>Quantity:</label>-->
-<!--                                        <input type="text" value="3" />-->
+                                        <span>
+                                            <fmt:setLocale value = "vi_VN"/>
+                                            <font color="gray" size="-0.5"><strike>
+                                                <fmt:formatNumber value="${good.lprice}" type="currency" /></strike> </font>
+                                            <font color="red">
+                                            <fmt:formatNumber value="${good.sprice}" type="currency" /></font>
+                                        </span>
                                     </span>
                                     <p>${good.breif}</p>
                                     <a href=""><img src="images/product-details/share.png" class="share img-responsive"  alt="" /></a>
                                 </div><!--/product-information-->
-                                <button type="button" class="btn btn-fefault cart">
+                                <a href="${pageContext.request.contextPath}/eShopper/cart.html" class="btn btn-fefault cart">
                                     <i class="fa fa-shopping-cart"></i>
                                     Buy Now
-                                </button>
-                                <button type="button" class="btn btn-fefault cart">
+                                </a>
+                                <a href="<%=request.getContextPath()%>/goods/addToCart?pid=${good.pid}" class="btn btn-fefault cart">
                                     <i class="fa fa-shopping-cart"></i>
                                     Add to cart
-                                </button>
+                                </a>
                             </div>
                         </div><!--/product-details-->
 
@@ -110,32 +124,74 @@
                                     <li class="active"><a href="#reviews" data-toggle="tab">Reviews</a></li>
                                 </ul>
                             </div>
-                            <div class="tab-content">
-                                <div class="tab-pane fade active in" id="reviews" >
-                                    <div class="col-sm-12">
-                                        <ul>
-                                            <li><a href=""><i class="fa fa-user"></i>${good.author.fullname}</a></li>
-<!--                                            <li><a href=""><i class="fa fa-clock-o"></i>12:41 PM</a></li>
-                                            <li><a href=""><i class="fa fa-calendar-o"></i>31 DEC 2014</a></li>-->
-                                        </ul>
-                                        
-                                        <p><b>Write Your Review</b></p>
-
-                                        <form action="#">
-                                            <span>
-                                                <input type="text" placeholder="Your Name"/>
-                                                <input type="email" placeholder="Email Address"/>
-                                            </span>
-                                            <textarea name="" ></textarea>
-                                            <b>Rating: </b> <img src="images/product-details/rating.png" alt="" />
-                                            <button type="button" class="btn btn-default pull-right">
-                                                Submit
-                                            </button>
-                                        </form>
+                            <c:forEach items="${listFeedback}" var="o">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade active in" id="reviews" >
+                                        <div class="col-sm-12">
+                                            <ul class="media-list">
+                                                <li class="media">
+                                                    <div class="media-body">
+                                                        <ul class="sinlge-post-meta">
+                                                            <li><i class="fa fa-user"></i>${o.saler.fullname}</li>
+                                                            <!--                                                            <li><i class="fa fa-clock-o"></i> 1:33 pm</li>-->
+                                                            <li><i class="fa fa-calendar"></i>${o.updatedDate}</li>
+                                                        </ul>
+                                                        <ul class="rating-area ratings">
+                                                            <li class="rate-this">Rate:</li>
+                                                            <li>
+                                                                <c:if test="${o.ratedStart==1}">
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                </c:if>
+                                                                <c:if test="${o.ratedStart==2}">
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                </c:if>
+                                                                <c:if test="${o.ratedStart==3}">
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                </c:if>
+                                                                <c:if test="${o.ratedStart==4}">
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                </c:if>
+                                                                <c:if test="${o.ratedStart==5}">
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star color"></i>
+                                                                    <i class="fa fa-star color"></i>
+                                                                </c:if>
+                                                            </li>
+                                                            <li class="color"></li>
+                                                        </ul> 
+                                                        <img src="" alt="" />
+                                                        <p>${o.feedbackContent}</p>
+                                                        <!--                                                    <a class="btn btn-primary" href=""><i class="fa fa-reply"></i>Replay</a>-->
+                                                    </div>
+                                                </li>
+                                            </ul> 
+                                        </div>
                                     </div>
                                 </div>
-
-                            </div>
+                            </c:forEach>
+                            <c:if test="${sessionScope.account != null}">
+                                <a href="${pageContext.request.contextPath}/send-feedback.jsp" type="button" class="btn btn-default">
+                                    Send Feedback
+                                </a>
+                            </c:if>
                         </div><!--/category-tab-->
 
                     </div>

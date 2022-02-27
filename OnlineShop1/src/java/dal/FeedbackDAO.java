@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package dal;
+
 import dbcontext.DBContext;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -19,17 +20,19 @@ import model.Order;
 import java.sql.SQLException;
 import java.util.Base64;
 import model.Product;
+import model.Setting;
 import model.User;
 
 /**
  *
  * @author HL2020
  */
-public class FeedbackDAO extends DBContext{
+public class FeedbackDAO extends DBContext {
+
     private Connection connection = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet results = null;
-    
+
     public List<Feedback> getFeedbackByPage(int currentPage, int recordsPerPage) {
 
         List<Feedback> feedbacks = new ArrayList<>();
@@ -43,17 +46,17 @@ public class FeedbackDAO extends DBContext{
             results = preparedStatement.executeQuery();
 
             while (results.next()) {
-                feed = new Feedback();             
-                 feed.setFeedbackId(results.getInt("feedbackId"));
-                 feed.setCustomerId(results.getInt("customerId"));
-                 feed.setRatedStart(results.getInt("ratedStar"));
-                 feed.setProductID(results.getInt("productId"));
-                 feed.setFeedbackStatus(results.getInt("feedbackStatus"));
-                 feed.setFeedbackContent(results.getString("feedbackContent"));
-                 feed.setUpdatedDate(results.getDate("updatedDate"));
-                 feed.setFeedbackContent(results.getString("title"));
-                 feed.setFeedbackContent(results.getString("note"));
-                 feedbacks.add(feed);
+                feed = new Feedback();
+                feed.setFeedbackId(results.getInt("feedbackId"));
+                feed.setCustomerId(results.getInt("customerId"));
+                feed.setRatedStart(results.getInt("ratedStar"));
+                feed.setProductID(results.getInt("productId"));
+                feed.setFeedbackStatus(results.getInt("feedbackStatus"));
+                feed.setFeedbackContent(results.getString("feedbackContent"));
+                feed.setUpdatedDate(results.getDate("updatedDate"));
+                feed.setFeedbackContent(results.getString("title"));
+                feed.setFeedbackContent(results.getString("note"));
+                feedbacks.add(feed);
             }
         } catch (Exception ex) {
             System.out.println("Exception ==== " + ex);
@@ -68,8 +71,9 @@ public class FeedbackDAO extends DBContext{
             }
         }
         return feedbacks;
-        
+
     }
+
     public int getNumberOfRows() throws Exception {
 
         int rows = 0;
@@ -98,7 +102,8 @@ public class FeedbackDAO extends DBContext{
 
         return rows;
     }
-       public List<Product> getAllProduct() {
+
+    public List<Product> getAllProduct() {
 
         List<Product> product = new ArrayList<>();
         Product pro = null;
@@ -135,10 +140,11 @@ public class FeedbackDAO extends DBContext{
         }
         return product;
     }
-        public List<Feedback> searchFeedback(String key, String ratestart, int status, int feedbackId) throws Exception {
+
+    public List<Feedback> searchFeedback(String key, String ratestart, int status, int feedbackId) throws Exception {
         List<Feedback> feeds = new ArrayList<>();
-        String sql = "SELECT a.feedbackId,a.customerId,a.ratedStar,a.productId,a.feedbackStatus,s.fullname\n" +
-            "from feedback a join User s on s.uid=a.customerId where ";
+        String sql = "SELECT a.feedbackId,a.customerId,a.ratedStar,a.productId,a.feedbackStatus,s.fullname\n"
+                + "from feedback a join User s on s.uid=a.customerId where ";
         if (feedbackId != 0) {
             sql += "a.feedbackId = " + feedbackId;
         } else {
@@ -150,7 +156,6 @@ public class FeedbackDAO extends DBContext{
         if (status != 0) {
             sql += " and a.feedbackStatus = " + status;
         }
-       
 
         System.out.println(sql);
         Feedback feed = null;
@@ -163,7 +168,7 @@ public class FeedbackDAO extends DBContext{
                 feed = new Feedback();
                 feed.setFeedbackId(results.getInt("feedbackId"));
                 feed.setCustomerId(results.getInt("customerId"));
-                feed.setRatedStart(results.getInt("ratedStar"));  
+                feed.setRatedStart(results.getInt("ratedStar"));
                 feed.setProductID(results.getInt("productId"));
                 feed.setFeedbackStatus(results.getInt("feedbackStatus"));
                 feeds.add(feed);
@@ -182,10 +187,11 @@ public class FeedbackDAO extends DBContext{
         }
         return feeds;
     }
-         public Feedback getFeedbackid(int fid) throws Exception {
 
-        String sql = "SELECT f.*,s.settingStatus from feedback as f join setting as s\n" +
-                        "on f.feedbackStatus=s.settingId where feedbackId =  " + fid;
+    public Feedback getFeedbackid(int fid) throws Exception {
+
+        String sql = "SELECT f.*,s.settingStatus from feedback as f join setting as s\n"
+                + "on f.feedbackStatus=s.settingId where feedbackId =  " + fid;
         System.out.println(sql);
         Feedback user = null;
         String noImage = "";
@@ -244,10 +250,11 @@ public class FeedbackDAO extends DBContext{
         }
         return user;
     }
-         public int updateFeedback(String note, int accountStatus,int feedid) throws SQLException {
-        String sql = "Update feedback set feedbackStatus = ?,note = ? where feedbackId=?;";      
+
+    public int updateFeedback(String note, int accountStatus, int feedid) throws SQLException {
+        String sql = "Update feedback set feedbackStatus = ?,note = ? where feedbackId=?;";
         int row = 0;
-        
+
         try {
             connection = getConnection();
             preparedStatement = connection.prepareStatement(sql);
@@ -269,6 +276,66 @@ public class FeedbackDAO extends DBContext{
         }
         return row;
     }
+
+    public List<Feedback> getFeedbackOfEachGood(int pid) {
+        List<Feedback> listFeed = new ArrayList<>();
+        String query = "select f.feedbackId, f.ratedStar, f.image, f.feedbackContent, f.updatedDate, u.uid, u.fullname from feedback f\n" +
+"                inner join product p on f.productId = p.productId\n" +
+"                inner join user u on f.customerId = u.uid\n" +
+"                where f.productId = ? order by f.updatedDate desc";
+        try {
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, pid);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                Feedback f = new Feedback();
+                f.setFeedbackId(results.getInt("feedbackId"));
+                f.setRatedStart(results.getInt("ratedStar"));
+                f.setFeedbackContent(results.getString("feedbackContent"));
+
+                Blob blob = results.getBlob("image");
+                if (blob != null) {
+
+                    InputStream inputStream = blob.getBinaryStream();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                    inputStream.close();
+                    outputStream.close();
+                    f.setImage(base64Image);
+                } else {
+                    f.setImage("");
+                }
+
+                f.setUpdatedDate(results.getDate("updatedDate"));
+                User u = new User(results.getInt("uid"), results.getString("fullname"));
+                f.setSaler(u);
+                listFeed.add(f);
+            }
+        } catch (Exception e) {
+
+        }
+        return listFeed;
+    }
+    
+//    public static void main(String[] args) {
+//
+//        FeedbackDAO dao = new FeedbackDAO();
+////        Feedback postList = dao.getFeedbackOfEachGood(1);
+////        System.out.println(postList);
+//         List<Feedback> list = dao.getFeedbackOfEachGood(1);
+//        for (Feedback postList : list) {
+//            System.out.println(postList);
+//        }
+//    }
 }
-
-
