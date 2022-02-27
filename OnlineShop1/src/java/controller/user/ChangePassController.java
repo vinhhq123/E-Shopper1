@@ -15,7 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.User;
+import javax.servlet.http.HttpSession;
 import resources.PasswordEncrypt;
 import resources.Validate;
 
@@ -23,7 +23,7 @@ import resources.Validate;
  *
  * @author Edwars
  */
-public class ChangePasswordController extends HttpServlet {
+public class ChangePassController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,11 +34,10 @@ public class ChangePasswordController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    UserDAO userDAO = new UserDAO();
-    User user = new User();
+    UserDAO usr = new UserDAO();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -67,25 +66,25 @@ public class ChangePasswordController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            String email = "";
-            String curPass = "";
-            String newPass = "";
-            String reNewPass = "";
+            HttpSession session = request.getSession();
             String successMessage = "";
-            
-            email = request.getParameter("email");
-            curPass = request.getParameter("curPass");
-            newPass = request.getParameter("newPass");
-            reNewPass = request.getParameter("reNewPass");
+            String email = request.getParameter("email");
+            String curPass = request.getParameter("curPass");
+            String newPass = request.getParameter("newPass");
+            String reNewPass = request.getParameter("reNewPass");
             Validate validate = new Validate();
             PasswordEncrypt encryptedPass = new PasswordEncrypt();
-            if(userDAO.checkPassword( encryptedPass.generateEncryptedPassword(curPass) ) == null){
-                String fail1 = "Your password is not correct!";
+        try {
+            //request.setAttribute("mailValue", email);
+            request.setAttribute("curPassValue", curPass);
+            request.setAttribute("newPassValue", newPass);
+            request.setAttribute("reNewPassValue", reNewPass);
+            if(usr.getAccount(email, encryptedPass.generateEncryptedPassword(curPass))==null){
+                String fail1 = "This is not your current password!";
                 request.setAttribute("fail1", fail1);
                 request.getRequestDispatcher("./user/ChangePassword.jsp").forward(request, response);
             }
-            else if(validate.checkPassword(newPass)== false)
+           else if(validate.checkPassword(newPass)== false)
             {
                 String fail2 = "Password must be at least 6 characters including at least one lowercase letter, one uppercase letter, one number and one special character!";
                 request.setAttribute("fail2", fail2);
@@ -97,14 +96,15 @@ public class ChangePasswordController extends HttpServlet {
                 request.getRequestDispatcher("./user/ChangePassword.jsp").forward(request, response);
             }
             else{
-                int changePass = userDAO.ChangePass(encryptedPass.generateEncryptedPassword(newPass), email);
+            int changePass = usr.ChangePass(encryptedPass.generateEncryptedPassword(newPass), email);
                 if(changePass > 0){
                     successMessage = "You have successfully changed your password!";
-                    request.getRequestDispatcher("./user/ChangePassword.jsp").forward(request, response);
-                }
+                    session.setAttribute("successMessage", successMessage);
+                    request.getRequestDispatcher("./user/ChangePassword.jsp").forward(request, response);    
             }
+        }
         } catch (SQLException ex) {
-            Logger.getLogger(ChangePasswordController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ChangePassController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

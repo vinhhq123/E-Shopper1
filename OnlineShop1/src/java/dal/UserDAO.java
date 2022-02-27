@@ -115,30 +115,6 @@ public class UserDAO extends DBContext {
         return null;
     }
     
-    public User checkPassword(String pass) throws SQLException {
-        String sql = "select * from user where password = ?";
-        try {
-            connection = getConnection();
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, pass);
-            results = preparedStatement.executeQuery();
-            while (results.next()) {
-                return new User(results.getInt(1),
-                        results.getString(2), results.getString(3), results.getString(4),
-                        results.getString(5), results.getBoolean(6), results.getString(7),
-                        results.getString(8), results.getString(9),
-                        results.getInt(10), results.getInt(11));
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
-        }
-        return null;
-    }
-    
     public int ChangePass(String pass, String email) throws SQLException {
         String sql = "UPDATE onlineshop1.user\n"
                 + "SET password = ?\n"

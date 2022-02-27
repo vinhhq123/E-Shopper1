@@ -61,36 +61,36 @@
                                         <div class="col-lg-1"></div>
                                         <div class="col-lg-7">
                                             <div class="panel-body table-responsive">
-                                                <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/ChangePass" method="POST" name="ChangePassword"  enctype="multipart/form-data">
-                                                <c:if test="${not empty messageAddSuccess}">
-                                                    <b><h4 class="help-block" style="color: green" id="successEditMessage">${messageAddSuccess}</h4></b>
-                                                        <c:remove var="messageAddSuccess"/>
+                                                <form class="form-horizontal" role="form" action="changepass" method="POST">
+                                                <c:if test="${not empty successMessage}">
+                                                    <b><h4 class="help-block" style="color: green" id="successEditMessage">${successMessage}</h4></b>
+                                                        <c:remove var="successMessage"/>
                                                     <br>
                                                 </c:if>
                                                 <div class="form-group">
                                                     <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label"></label>
                                                     <div class="col-lg-10">
-                                                        <input  type="hidden" class="form-control" id="inputEmail1" name="email" value="${sessionScope.account.email}">
+                                                        <input  type="hidden" class="form-control" name="email" value="${sessionScope.account.email}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="fullname" class="col-lg-2 col-sm-2 control-label">Your current password</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="curPass"  name="curPass" value="${curPassValue}"  required  >
+                                                        <input type="text" class="form-control" name="curPass" value="${curPassValue}"  required  >
                                                         <p style="color: red">${requestScope.fail1}</p>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="title" class="col-lg-2 col-sm-2 control-label">Your new password</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="newPass"  name="newPass" value="${newPassValue}" required>
+                                                        <input type="text" class="form-control" name="newPass" value="${newPassValue}" required>
                                                         <p style="color: red">${requestScope.fail2}</p>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="title" class="col-lg-2 col-sm-2 control-label">Re-enter new password</label>
                                                     <div class="col-lg-10">
-                                                        <input type="text" class="form-control" id="reNewPass"  name="reNewPass" value="${reNewPassValue}"  required>
+                                                        <input type="text" class="form-control" name="reNewPass" value="${reNewPassValue}"  required>
                                                         <p style="color: red">${requestScope.fail3}</p>
                                                     </div>
                                                 </div>

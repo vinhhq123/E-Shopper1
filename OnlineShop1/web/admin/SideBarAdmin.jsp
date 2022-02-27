@@ -76,8 +76,8 @@ po<%--
                         <i class="fa fa-wrench"></i> <span>Setting List</span>
                     </a>
                 </li>
-                                <li>
-                    <a href="<%=request.getContextPath()%>/ChangePass">
+                <li>
+                    <a href="<%=request.getContextPath()%>/changepass">
                         <i class="fa fa-book"></i> <span>Change Password</span>
                     </a>
                 </li>

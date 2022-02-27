@@ -13,7 +13,7 @@ import java.security.NoSuchAlgorithmException;
  * @author Edwars
  */
 public class PasswordEncrypt {
-    public String generateEncryptedPassword(String password) {
+   public String generateEncryptedPassword(String password) {
         String encryptedpassword = null;
 
         try {
@@ -43,6 +43,6 @@ public class PasswordEncrypt {
 
     public static void main(String[] args) {
         PasswordEncrypt obj = new PasswordEncrypt();
-        System.out.println(obj.generateEncryptedPassword("123"));
+        System.out.println(obj.generateEncryptedPassword("admin"));
     }
 }
