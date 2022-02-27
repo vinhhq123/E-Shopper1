@@ -50,8 +50,14 @@
                 </li>
 
                 <li>
-                    <a href="basic_form.html">
-                        <i class="fa fa-square"></i> <span>Slider List</span>
+                    <a href="<%=request.getContextPath()%>/slider/list">
+                        <i class="fa fa-paperclip"></i> <span>Sliders List</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="<%=request.getContextPath()%>/slider/detail">
+                        <i class="fa fa-paperclip"></i> <span>Slider Detail</span>
                     </a>
                 </li>
 

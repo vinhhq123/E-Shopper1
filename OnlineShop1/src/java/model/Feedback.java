@@ -22,7 +22,8 @@ public class Feedback {
     private Date updatedDate;
     private String title;
     private String note;
-
+    private User saler;
+    
     public Feedback() {
     }
 
@@ -37,6 +38,15 @@ public class Feedback {
         this.updatedDate = updatedDate;
         this.title = title;
         this.note = note;
+    }
+
+    public Feedback(int feedbackId, int ratedStart, String image, String feedbackContent, Date updatedDate, User saler) {
+        this.feedbackId = feedbackId;
+        this.ratedStart = ratedStart;
+        this.image = image;
+        this.feedbackContent = feedbackContent;
+        this.updatedDate = updatedDate;
+        this.saler = saler;
     }
 
     public int getFeedbackId() {
@@ -117,6 +127,14 @@ public class Feedback {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public User getSaler() {
+        return saler;
+    }
+
+    public void setSaler(User saler) {
+        this.saler = saler;
     }
     
 }

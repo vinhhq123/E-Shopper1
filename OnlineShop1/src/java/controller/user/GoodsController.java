@@ -5,7 +5,9 @@
  */
 package controller.user;
 
+import dal.FeedbackDAO;
 import dal.GoodsDAO;
+import dal.SettingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -14,6 +16,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.Cart;
+import model.Feedback;
+import model.Items;
 import model.Product;
 import model.Setting;
 
@@ -21,7 +27,8 @@ import model.Setting;
  *
  * @author hungn
  */
-@WebServlet(name = "GoodsController", urlPatterns = {"/goods/goodsList"})
+@WebServlet(name = "GoodsController", urlPatterns = {"/goods/goodsList", "/goods/goodsCate", "/goods/search", "/goods/detail",
+    "/goods/addToCart", "/goods/removeProductCart"})
 public class GoodsController extends HttpServlet {
 
     /**
@@ -53,15 +60,21 @@ public class GoodsController extends HttpServlet {
             case "/goods/goodsList":
                 getGoods(request, response);
                 break;
-//            case "/blog/detail":
-//                getBlogById(request, response);
-//                break;
-//            case "/blog/cate":
-//                getBlogByCateId(request, response);
-//                break;
-//            case "/blog/search":
-//                searchBlog(request, response);
-//                break;
+            case "/goods/goodsCate":
+                getGoodsByCategory(request, response);
+                break;
+            case "/goods/search":
+                searchGoods(request, response);
+                break;
+            case "/goods/detail":
+                getGoodsById(request, response);
+                break;
+            case "/goods/addToCart":
+                addProductToCart(request, response);
+                break;
+            case "/goods/removeProductCart":
+                removeProCart(request, response);
+                break;
         }
     }
 
@@ -94,8 +107,10 @@ public class GoodsController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         GoodsDAO dao = new GoodsDAO();
-        List<Setting> listGoodsCate = dao.getGoodsCategory();
+        SettingDAO sdao = new SettingDAO();
+        List<Setting> listGoodsCate = sdao.getGoodsCategory();
         List<Product> listGoodsPage = dao.getGoodsSortByDate();
+        List<Product> listFeatured = dao.getFeaturedGood();
         int page, numperpage = 9;
         int size = listGoodsPage.size();
         int num = (size % 3 == 0 ? (size / 3) : ((size / 3)) + 1);
@@ -109,11 +124,147 @@ public class GoodsController extends HttpServlet {
         start = (page - 1) * numperpage;
         end = Math.min(page * numperpage, size);
         List<Product> listGoods = dao.getProductByPage(listGoodsPage, start, end);
-        
+
         request.setAttribute("listGoods", listGoods);
         request.setAttribute("listGoodsCate", listGoodsCate);
+        request.setAttribute("listFeatured", listFeatured);
         request.setAttribute("page", page);
         request.setAttribute("num", num);
         request.getRequestDispatcher("/goods.jsp").forward(request, response);
+    }
+
+    protected void getGoodsByCategory(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        int category = Integer.parseInt(request.getParameter("id"));
+        GoodsDAO dao = new GoodsDAO();
+        SettingDAO sdao = new SettingDAO();
+        List<Setting> listGoodsCate = sdao.getGoodsCategory();
+        List<Product> listGoodsByCategory = dao.getGoodsByCategory(category);
+        List<Product> listFeatured = dao.getFeaturedGood();
+        int page, numperpage = 9;
+        int size = listGoodsByCategory.size();
+        int num = (size % 3 == 0 ? (size / 3) : ((size / 3)) + 1);
+        String xpage = request.getParameter("page");
+        if (xpage == null) {
+            page = 1;
+        } else {
+            page = Integer.parseInt(xpage);
+        }
+        int start, end;
+        start = (page - 1) * numperpage;
+        end = Math.min(page * numperpage, size);
+        List<Product> listGoods = dao.getProductByPage(listGoodsByCategory, start, end);
+
+        request.setAttribute("listGoodsCate", listGoodsCate);
+        request.setAttribute("listGoods", listGoods);
+        request.setAttribute("listFeatured", listFeatured);
+        request.setAttribute("page", page);
+        request.setAttribute("num", num);
+        request.getRequestDispatcher("/goods.jsp").forward(request, response);
+    }
+
+    protected void searchGoods(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        String searchGoods = request.getParameter("search");
+        GoodsDAO dao = new GoodsDAO();
+        List<Product> listSearch = dao.searchGoodByTitle(searchGoods);
+        SettingDAO sdao = new SettingDAO();
+        List<Setting> listGoodsCate = sdao.getGoodsCategory();
+        List<Product> listFeatured = dao.getFeaturedGood();
+        int page, numperpage = 9;
+        int size = listSearch.size();
+        int num = (size % 3 == 0 ? (size / 3) : ((size / 3)) + 1);
+        String xpage = request.getParameter("page");
+        if (xpage == null) {
+            page = 1;
+        } else {
+            page = Integer.parseInt(xpage);
+        }
+        int start, end;
+        start = (page - 1) * numperpage;
+        end = Math.min(page * numperpage, size);
+        List<Product> listSearchGoods = dao.getProductByPage(listSearch, start, end);
+
+        request.setAttribute("listGoodsCate", listGoodsCate);
+        request.setAttribute("listGoods", listSearchGoods);
+        request.setAttribute("searchValue", searchGoods);
+        request.setAttribute("listFeatured", listFeatured);
+        request.setAttribute("num", num);
+        request.getRequestDispatcher("/goods.jsp").forward(request, response);
+    }
+
+    protected void getGoodsById(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        int id = Integer.parseInt(request.getParameter("pid"));
+        
+        GoodsDAO dao = new GoodsDAO();
+        SettingDAO sdao = new SettingDAO();
+        FeedbackDAO fdao = new FeedbackDAO();
+        Product good = dao.getGoodsById(id);
+        List<Setting> listGoodsCate = sdao.getGoodsCategory();
+        List<Feedback> listFeedback = fdao.getFeedbackOfEachGood(id);
+
+        request.setAttribute("good", good);
+        request.setAttribute("listGoodsCate", listGoodsCate);
+        request.setAttribute("listFeedback", listFeedback);
+        request.getRequestDispatcher("/goods-details.jsp").forward(request, response);
+    }
+
+    protected void addProductToCart(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession(true);
+        Cart cart = null;
+        Object o = session.getAttribute("cart");
+        //co roi
+        if (o != null) {
+            cart = (Cart) o;
+        } else {
+            cart = new Cart();
+        }
+//        String tnum = request.getParameter("num");
+        String tid = request.getParameter("pid");
+        int num, id;
+        try {
+            num = 1;
+            id = Integer.parseInt(tid);
+
+            GoodsDAO pdb = new GoodsDAO();
+            Product p = pdb.getGoodsById(id);
+            //gia ban
+            double price = p.getSprice();
+            Items t = new Items(p, num, price);
+            cart.addItem(t);
+        } catch (NumberFormatException e) {
+            num = 1;
+        }
+        List<Items> list = cart.getItems();
+        session.setAttribute("cart", cart);
+        session.setAttribute("size", list.size());
+        request.getRequestDispatcher("/cart.jsp").forward(request, response);
+    }
+
+    protected void removeProCart(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession(true);
+        Cart cart = null;
+        Object o = session.getAttribute("cart");
+        //co roi
+        if (o != null) {
+            cart = (Cart) o;
+        } else {
+            cart = new Cart();
+        }
+        int id = Integer.parseInt(request.getParameter("id"));
+        cart.removeItem(id);
+        List<Items> list = cart.getItems();
+        session.setAttribute("cart", cart);
+        session.setAttribute("size", list.size());
+        request.getRequestDispatcher("/cart.jsp").forward(request, response);
+
     }
 }

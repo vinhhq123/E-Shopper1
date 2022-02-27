@@ -48,7 +48,7 @@ po<%--
                 </li>
 
                 <li>
-                    <a href="basic_form.html">
+                    <a href="<%=request.getContextPath()%>/feedback/list">
                         <i class="fa fa-check"></i> <span>Feedback List</span>
                     </a>
                 </li>
@@ -68,6 +68,18 @@ po<%--
                 <li>
                     <a href="<%=request.getContextPath()%>/post/PostDetail.jsp">
                         <i class="fa fa-paperclip"></i> <span>Post Detail</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="<%=request.getContextPath()%>/slider/list">
+                        <i class="fa fa-paperclip"></i> <span>Sliders List</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="<%=request.getContextPath()%>/slider/slider-detail.jsp">
+                        <i class="fa fa-paperclip"></i> <span>Slider Detail</span>
                     </a>
                 </li>
 

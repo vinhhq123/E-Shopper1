@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import model.Feedback;
 import model.Setting;
 
 /**
@@ -594,5 +595,25 @@ public class SettingDAO extends DBContext {
             }
         }
         return roles;
+    }
+    
+    public List<Setting> getGoodsCategory() {
+        List<Setting> listGoodsCate = new ArrayList<>();
+        String query = "select settingId, settingValue from setting where settingType = 5";
+        try {
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                // PostList p = new PostList();
+                Setting s = new Setting(results.getInt("settingId"), results.getString("settingValue"));
+
+                listGoodsCate.add(s);
+            }
+        } catch (Exception e) {
+
+        }
+        return listGoodsCate;
     }
 }

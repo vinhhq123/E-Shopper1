@@ -12,6 +12,7 @@ import java.sql.Date;
  * @author Edwars
  */
 public class Product {
+
     private int pid;
     private String thumbnail;
     private String title;
@@ -25,12 +26,14 @@ public class Product {
     private Date updatedDate;
     private int salesId;
     private User author;
+    private Setting cate;
+    private double ratedStars;
 
-    public Product(){
-        
+    public Product() {
+
     }
-    
-    public Product(int pid, String thumbnail, String title, double lprice, double sprice, String featured, int productStatus, int categoryID, String breif, int quantity, Date updatedDate, int salesId) {
+
+    public Product(int pid, String thumbnail, String title, double lprice, double sprice, String featured, int productStatus, int categoryID, String breif, int quantity, Date updatedDate, int salesId, double ratedStars) {
         this.pid = pid;
         this.thumbnail = thumbnail;
         this.title = title;
@@ -43,9 +46,10 @@ public class Product {
         this.quantity = quantity;
         this.updatedDate = updatedDate;
         this.salesId = salesId;
+        this.ratedStars = ratedStars;
     }
-    
-    public Product(int pid, String thumbnail, String title, double lprice, double sprice, int categoryID, Date updatedDate, User author) {
+
+    public Product(int pid, String thumbnail, String title, double lprice, double sprice, int categoryID, Date updatedDate, User author, double ratedStars) {
         this.pid = pid;
         this.thumbnail = thumbnail;
         this.title = title;
@@ -54,6 +58,21 @@ public class Product {
         this.categoryID = categoryID;
         this.updatedDate = updatedDate;
         this.author = author;
+        this.ratedStars = ratedStars;
+    }
+
+    public Product(int pid, String thumbnail, String breif, String title, double lprice, double sprice, int categoryID, Date updatedDate, User author, Setting cate, double ratedStars) {
+        this.pid = pid;
+        this.thumbnail = thumbnail;
+        this.title = title;
+        this.breif = breif;
+        this.lprice = lprice;
+        this.sprice = sprice;
+        this.categoryID = categoryID;
+        this.updatedDate = updatedDate;
+        this.author = author;
+        this.cate = cate;
+        this.ratedStars = ratedStars;
     }
 
     public int getPid() {
@@ -159,6 +178,23 @@ public class Product {
     public void setAuthor(User author) {
         this.author = author;
     }
+
+    public Setting getCate() {
+        return cate;
+    }
+
+    public void setCate(Setting cate) {
+        this.cate = cate;
+    }
+
+    public double getRatedStars() {
+        return ratedStars;
+    }
+
+    public void setRatedStars(double ratedStars) {
+        this.ratedStars = ratedStars;
+    }
     
     
+
 }
