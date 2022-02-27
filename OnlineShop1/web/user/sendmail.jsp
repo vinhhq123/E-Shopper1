@@ -1,4 +1,8 @@
-
+<%-- 
+    Document   : ResetPassword
+    Created on : Feb 27, 2022, 4:37:21 PM
+    Author     : Edwars
+--%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -8,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>CHANGE PASSWORD</title>
+        <title>RESET PASSWORD</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="Developed By M Abdur Rokib Promy">
         <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -33,12 +37,9 @@
     </head>
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
-        <jsp:include page="../admin/HeaderAdmin.jsp"></jsp:include>
             <div class="wrapper row-offcanvas row-offcanvas-left">
                 <!-- Left side column. contains the logo and sidebar -->
-            <jsp:include page="UserSlideBar.jsp"></jsp:include>
                 <!-- Right side column. Contains the navbar and content of the page -->
-                <aside class="right-side">
 
                     <!-- Main content -->
                     <section class="content">
@@ -46,8 +47,7 @@
                             <div class="col-xs-12">
                                 <div class="panel">
                                     <header class="panel-heading">
-                                        <b>CHANGE PASSWORD</b>
-
+                                        <b>RESET PASSWORD</b>
                                     </header>
                                     <!-- <div class="box-header"> -->
                                     <!-- <h3 class="box-title">Responsive Hover Table</h3> -->
@@ -57,42 +57,22 @@
                                         <div class="col-lg-1"></div>
                                         <div class="col-lg-7">
                                             <div class="panel-body table-responsive">
-                                                <form class="form-horizontal" role="form" action="changepass" method="POST">
+                                                <form class="form-horizontal" role="form" action="sendmail" method="POST">
                                                 <c:if test="${not empty successMessage}">
                                                     <b><h4 class="help-block" style="color: green" id="successEditMessage">${successMessage}</h4></b>
                                                         <c:remove var="successMessage"/>
                                                     <br>
                                                 </c:if>
                                                 <div class="form-group">
-                                                    <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label"></label>
+                                                    <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Input your Email</label>
                                                     <div class="col-lg-10">
-                                                        <input  type="hidden" class="form-control" name="email" value="${sessionScope.account.email}">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="fullname" class="col-lg-2 col-sm-2 control-label">Your current password</label>
-                                                    <div class="col-lg-10">
-                                                        <input type="password" class="form-control" name="curPass" value="${curPassValue}"  required  >
+                                                        <input  type="text" class="form-control" name="email" value ="${mailValue}" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" title="Email must be in the right format">
                                                         <p style="color: red">${requestScope.fail1}</p>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="title" class="col-lg-2 col-sm-2 control-label">Your new password</label>
-                                                    <div class="col-lg-10">
-                                                        <input type="password" class="form-control" name="newPass" value="${newPassValue}" required>
-                                                        <p style="color: red">${requestScope.fail2}</p>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="title" class="col-lg-2 col-sm-2 control-label">Re-enter new password</label>
-                                                    <div class="col-lg-10">
-                                                        <input type="password" class="form-control" name="reNewPass" value="${reNewPassValue}"  required>
-                                                        <p style="color: red">${requestScope.fail3}</p>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
                                                     <div class="col-lg-offset-2 col-lg-10">
-                                                        <button type="submit" class="btn btn-success">Change</button>
+                                                        <button type="submit" class="btn btn-success">Send</button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -107,7 +87,6 @@
                 <div class="footer-main">
                     Copyright &copy Online Shop , 2022
                 </div>
-            </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
 
 
