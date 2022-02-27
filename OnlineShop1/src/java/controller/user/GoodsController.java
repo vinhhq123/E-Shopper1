@@ -200,17 +200,19 @@ public class GoodsController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         int id = Integer.parseInt(request.getParameter("pid"));
-        
+
         GoodsDAO dao = new GoodsDAO();
         SettingDAO sdao = new SettingDAO();
         FeedbackDAO fdao = new FeedbackDAO();
         Product good = dao.getGoodsById(id);
+        dao.updateViews(id);
         List<Setting> listGoodsCate = sdao.getGoodsCategory();
         List<Feedback> listFeedback = fdao.getFeedbackOfEachGood(id);
-
+        List<Product> listFeatured = dao.getFeaturedGood();
         request.setAttribute("good", good);
         request.setAttribute("listGoodsCate", listGoodsCate);
         request.setAttribute("listFeedback", listFeedback);
+        request.setAttribute("listFeatured", listFeatured);
         request.getRequestDispatcher("/goods-details.jsp").forward(request, response);
     }
 

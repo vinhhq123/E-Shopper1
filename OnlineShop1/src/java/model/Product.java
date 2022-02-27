@@ -28,6 +28,7 @@ public class Product {
     private User author;
     private Setting cate;
     private double ratedStars;
+    private int views;
 
     public Product() {
 
@@ -73,6 +74,15 @@ public class Product {
         this.author = author;
         this.cate = cate;
         this.ratedStars = ratedStars;
+    }
+    
+    public Product(int pid,String thumbnail, String title, double lprice, double sprice, int views) {
+        this.pid = pid;
+        this.thumbnail = thumbnail;
+        this.title = title;
+        this.lprice = lprice;
+        this.sprice = sprice;
+        this.views = views;
     }
 
     public int getPid() {
@@ -194,7 +204,13 @@ public class Product {
     public void setRatedStars(double ratedStars) {
         this.ratedStars = ratedStars;
     }
-    
-    
+
+    public int getViews() {
+        return views;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
+    }
 
 }
