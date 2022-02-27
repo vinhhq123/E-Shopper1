@@ -50,22 +50,26 @@
                                 <div class="left-sidebar">
                                     <h2>Feature Products</h2>
                                     <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-                                        <div class="single-products">
-                                            <div class="productinfo text-center">
-                                                <img src="images/shop/product12.jpg" alt="" />
-                                                <h2>$56</h2>
-                                                <p>Easy Polo Black Edition</p>
-                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        <c:forEach items="${listFeatured}" var="o">
+                                            <div class="single-products">
+                                                <div class="productinfo text-center">
+                                                    <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="175"/>
+                                                    <h2>${o.title}</h2>
+                                                    <p>
+                                                        <fmt:setLocale value = "vi_VN"/>
+                                                    <strike>
+                                                        <fmt:formatNumber value="${o.lprice}" type="currency" />
+                                                    </strike>
+                                                    <font color="red" size="+1"> <strong>
+                                                        <fmt:formatNumber value="${o.sprice}" type="currency" />  
+                                                    </strong>
+                                                    </font>
+                                                    </p>
+                                                    <a href="<%=request.getContextPath()%>/goods/detail?pid=${o.pid}" class="btn btn-default add-to-cart">Show more detail</a>
+                                                    <p>Views: ${o.views}</p>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="single-products">
-                                            <div class="productinfo text-center">
-                                                <img src="images/shop/product12.jpg" alt="" />
-                                                <h2>$56</h2>
-                                                <p>Easy Polo Black Edition</p>
-                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                            </div>
-                                        </div>
+                                        </c:forEach>
                                     </div><!--/category-productsr-->
                                 </div>
                             </div><

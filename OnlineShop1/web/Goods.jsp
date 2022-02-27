@@ -54,7 +54,7 @@
                                 <c:forEach items="${listFeatured}" var="o">
                                     <div class="single-products">
                                         <div class="productinfo text-center">
-                                            <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" />
+                                            <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="175"/>
                                             <h2>${o.title}</h2>
                                                 <p>
                                                     <fmt:setLocale value = "vi_VN"/>
@@ -67,6 +67,7 @@
                                                 </font>
                                                 </p>
                                             <a href="<%=request.getContextPath()%>/goods/detail?pid=${o.pid}" class="btn btn-default add-to-cart">Show more detail</a>
+                                            <p>Views: ${o.views}</p>
                                         </div>
                                     </div>
                                 </c:forEach>

@@ -64,6 +64,10 @@
         <servlet-name>ProductsController</servlet-name>
         <servlet-class>controller.manager.ProductsController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ChangePassController</servlet-name>
+        <servlet-class>controller.user.ChangePassController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>
         <url-pattern>/settingList</url-pattern>
@@ -72,7 +76,6 @@
         <servlet-name>SearchSettingController</servlet-name>
         <url-pattern>/searchSetting</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>ActivateSettingController</servlet-name>
         <url-pattern>/activateSetting</url-pattern>
@@ -140,6 +143,10 @@
     <servlet-mapping>
         <servlet-name>ProductsController</servlet-name>
         <url-pattern>/product</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangePassController</servlet-name>
+        <url-pattern>/changepass</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

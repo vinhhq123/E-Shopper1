@@ -27,45 +27,10 @@
             <ul class="sidebar-menu">
                 <li>
                     <a href="index.html">
-                        <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                        <i class="fa fa-dashboard"></i> <span>User Information</span>
                     </a>
                 </li>
                
-                <li>
-                    <a href="<%=request.getContextPath()%>/proList">
-                        <i class="fa fa-book"></i> <span>Product List</span>
-                    </a>
-                </li>
-
-                <li>
-                     <a href="<%=request.getContextPath()%>/customer/list">
-                        <i class="fa fa-user"></i> <span>Customer List</span>
-                    </a>
-                </li>
-
-                <li>
-                   <a href="<%=request.getContextPath()%>/feedback/list">
-                        <i class="fa fa-check"></i> <span>Feedback List</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="<%=request.getContextPath()%>/slider/list">
-                        <i class="fa fa-paperclip"></i> <span>Sliders List</span>
-                    </a>
-                </li>
-                
-                <li>
-                    <a href="<%=request.getContextPath()%>/slider/detail">
-                        <i class="fa fa-paperclip"></i> <span>Slider Detail</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="basic_form.html">
-                        <i class="fa fa-paperclip"></i> <span>Post List</span>
-                    </a>
-                </li>
                 <li>
                     <a href="<%=request.getContextPath()%>/changepass">
                         <i class="fa fa-book"></i> <span>Change Password</span>

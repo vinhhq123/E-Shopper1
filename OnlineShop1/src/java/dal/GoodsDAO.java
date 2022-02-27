@@ -41,7 +41,7 @@ public class GoodsDAO {
     public List<Product> getGoodsSortByDate() {
         List<Product> listProduct = new ArrayList<>();
         String query = "select p.productId, p.thumbnail, p.title, p.list_price, p.sale_price,\n"
-                + "p.categoryId, p.updatedDate, p.ratedStars, u.uid, u.fullname from product p inner join user u\n"
+                + "p.categoryId, p.updatedDate, p.ratedStar, u.uid, u.fullname from product p inner join user u\n"
                 + "on p.salesId = u.uid order by p.updatedDate desc";
         try {
             connection = new DBContext().getConnection();
@@ -77,7 +77,7 @@ public class GoodsDAO {
                 p.setCategoryID(result.getInt("categoryId"));
                 p.setUpdatedDate(result.getDate("updatedDate"));
                 User u = new User(result.getInt("uid"), result.getString("fullname"));
-                p.setRatedStars(result.getDouble("ratedStars"));
+                p.setRatedStars(result.getDouble("ratedStar"));
                 p.setAuthor(u);
 
                 listProduct.add(p);
@@ -91,7 +91,7 @@ public class GoodsDAO {
     public List<Product> getGoodsByCategory(int id) {
         List<Product> listProduct = new ArrayList<>();
         String query = "select p.productId, p.thumbnail, p.title, p.list_price, p.sale_price,\n"
-                + "p.categoryId, p.updatedDate, p.ratedStars, u.fullname, u.uid from product p inner join user u\n"
+                + "p.categoryId, p.updatedDate, p.ratedStar, u.fullname, u.uid from product p inner join user u\n"
                 + "on p.salesId = u.uid where p.categoryId = ?";
         try {
             connection = new DBContext().getConnection();
@@ -128,7 +128,7 @@ public class GoodsDAO {
                 p.setCategoryID(result.getInt("categoryId"));
                 p.setUpdatedDate(result.getDate("updatedDate"));
                 User u = new User(result.getInt("uid"), result.getString("fullname"));
-                p.setRatedStars(result.getDouble("ratedStars"));
+                p.setRatedStars(result.getDouble("ratedStar"));
                 p.setAuthor(u);
 
                 listProduct.add(p);
@@ -142,7 +142,7 @@ public class GoodsDAO {
     public List<Product> searchGoodByTitle(String search) {
         List<Product> listProduct = new ArrayList<>();
         String query = "select p.productId, p.thumbnail, p.title, p.list_price, p.sale_price,\n"
-                + "p.categoryId, p.updatedDate, p.ratedStars, u.fullname, u.uid from product p inner join user u\n"
+                + "p.categoryId, p.updatedDate, p.ratedStar, u.fullname, u.uid from product p inner join user u\n"
                 + "on p.salesId = u.uid where p.title like ?";
         try {
             connection = new DBContext().getConnection();
@@ -179,7 +179,7 @@ public class GoodsDAO {
                 p.setCategoryID(result.getInt("categoryId"));
                 p.setUpdatedDate(result.getDate("updatedDate"));
                 User u = new User(result.getInt("uid"), result.getString("fullname"));
-                p.setRatedStars(result.getDouble("ratedStars"));
+                p.setRatedStars(result.getDouble("ratedStar"));
                 p.setAuthor(u);
 
                 listProduct.add(p);
@@ -192,7 +192,7 @@ public class GoodsDAO {
 
     public Product getGoodsById(int id) {
         String query = "select p.productId, p.thumbnail, p.title, p.list_price, p.sale_price,\n"
-                + "p.categoryId, p.updatedDate, p.breif_information, p.ratedStars, u.fullname, u.uid, s.settingId, s.settingValue from product p\n"
+                + "p.categoryId, p.updatedDate, p.breif_information, p.ratedStar, u.fullname, u.uid, s.settingId, s.settingValue from product p\n"
                 + "inner join user u on p.salesId = u.uid \n"
                 + "inner join setting s on p.categoryId = s.settingId\n"
                 + "where p.productId = ?";
@@ -234,7 +234,7 @@ public class GoodsDAO {
                 User u = new User(result.getInt("uid"), result.getString("fullname"));
                 p.setAuthor(u);
                 Setting s = new Setting(result.getInt("settingId"), result.getString("settingValue"));
-                p.setRatedStars(result.getDouble("ratedStars"));
+                p.setRatedStars(result.getDouble("ratedStar"));
                 p.setCate(s);
                 return p;
             }
@@ -243,11 +243,10 @@ public class GoodsDAO {
         }
         return null;
     }
-    
+
     public List<Product> getFeaturedGood() {
         List<Product> listProduct = new ArrayList<>();
-        String query = "select productId, thumbnail, title, list_price, sale_price,\n" +
-"                categoryId, updatedDate, ratedStars from product order by ratedStars desc limit 5";
+        String query = "select productId, thumbnail, title, list_price, sale_price, views from product order by views desc limit 5";
         try {
             connection = new DBContext().getConnection();
             ps = connection.prepareStatement(query);
@@ -279,11 +278,7 @@ public class GoodsDAO {
                 p.setTitle(result.getString("title"));
                 p.setLprice(result.getDouble("list_price"));
                 p.setSprice(result.getDouble("sale_price"));
-                p.setCategoryID(result.getInt("categoryId"));
-                p.setUpdatedDate(result.getDate("updatedDate"));
-                User u = new User(result.getInt("uid"), result.getString("fullname"));
-                p.setRatedStars(result.getDouble("ratedStars"));
-                p.setAuthor(u);
+                p.setViews(result.getInt("views"));
 
                 listProduct.add(p);
             }
@@ -292,17 +287,27 @@ public class GoodsDAO {
         }
         return listProduct;
     }
-//    
-//    
-//
-//    public static void main(String[] args) {
-//
-//        GoodsDAO dao = new GoodsDAO();
-//        Product postList = dao.getGoodsById(1);
-//        System.out.println(postList);
-//         List<Product> list1 = dao.getFeaturedGood();
-//        for (Product list : list1) {
-//            System.out.println(list);
-//        }
-//    }
+
+    public void updateViews(int id) {
+        String query = "update product set views = views + 1 where productId = ?";
+        try {
+            connection = new DBContext().getConnection();
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+
+        }
+    }
+
+    public static void main(String[] args) {
+
+        GoodsDAO dao = new GoodsDAO();
+        Product postList = dao.getGoodsById(1);
+        System.out.println(postList);
+        List<Product> list1 = dao.getGoodsSortByDate();
+        for (Product list : list1) {
+            System.out.println(list);
+        }
+    }
 }

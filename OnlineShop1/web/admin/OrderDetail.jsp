@@ -118,7 +118,7 @@
                                                     <div class="form-group">
                                                         <label for="note" class="col-lg-2 col-sm-2 control-label">Notes</label>
                                                         <div class="col-lg-10">
-                                                            <textarea id="note" placeholder="Sale Notes" name="note" style="width: 430px;"  rows="3" cols="30" >${CurrentOrder.getSalesNote()}</textarea>
+                                                            <textarea id="note" placeholder="Sale Notes" name="note" style="width: 430px;"  rows="3" cols="30" maxlength="200">${CurrentOrder.getSalesNote()}</textarea>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -222,7 +222,7 @@
                                                         </c:choose>
                                                     </c:forEach>
 
-                                                    <td><input name="quantity" value="${ods.getQuantity()}" pattern="[0-9]" required/></td>  
+                                                                <td><input name="quantity" value="${ods.getQuantity()}" pattern="^[1-9][0-9]*" required maxlength="9"/></td>  
                                                     <td><span class="subtotal">
                                                             <fmt:formatNumber value="${ods.getSubCost()}" type="currency"/>
                                                         </span></td>
@@ -283,7 +283,7 @@
                             <div class="form-group">
                                 <label for="newQuantity" class="col-lg-2 col-sm-2 control-label">Quantity<span class="requiredd" style="color:#ff0000">(*)</span></label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control" id="newQuantity" placeholder="Quantity" name="newQuantity" pattern="^[1-9][0-9]*" title="Quantity must be a number" required>
+                                    <input type="text" class="form-control" id="newQuantity" placeholder="Quantity" name="newQuantity" pattern="^[1-9][0-9]*" title="Quantity must be a number" required maxlength="9">
                                 </div>
                             </div>
                             <div class="form-group">
