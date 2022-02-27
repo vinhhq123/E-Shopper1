@@ -27,7 +27,7 @@ import model.Slider;
  * @author CHANHSIRO
  */
 @MultipartConfig(maxFileSize = 16177215)
-@WebServlet(name = "SliderController", urlPatterns = {"/slider/detail", "/slider/list"})
+@WebServlet(name = "SliderController", urlPatterns = {"/slider/detail", "/slider/list", "/slider/getslider", "/slider/edit"})
 public class SliderController extends HttpServlet {
 
     /**
@@ -65,6 +65,12 @@ public class SliderController extends HttpServlet {
                 break;
             case "/slider/list":
                 slidersList(request, response);
+                break;
+            case "/slider/getslider":
+                getSliderById(request, response);
+                break;
+            case "/slider/edit":
+                sliderEdit(request, response);
                 break;
         }
     }
@@ -110,6 +116,44 @@ public class SliderController extends HttpServlet {
             ArrayList<Slider> sliders = sd.getSliders();
             request.setAttribute("sliders", sliders);
             request.getRequestDispatcher("/slider/sliders-list.jsp").forward(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(PostController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    protected void getSliderById(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            SliderDAO sd = new SliderDAO();
+            String sliderIdRaw = request.getParameter("s_id");
+            int s_id = Integer.parseInt(sliderIdRaw);
+            Slider slider = sd.getSliderById(s_id);
+            request.setAttribute("slider", slider);
+            request.getRequestDispatcher("/slider/slider-edit.jsp").forward(request, response);
+            
+        } catch (Exception ex) {
+            Logger.getLogger(PostController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    protected void sliderEdit(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            String s_title = request.getParameter("s_title");
+            String back_link = request.getParameter("s_backlink");
+            int s_id = Integer.parseInt(request.getParameter("s_id"));
+            String s_notes = request.getParameter("s_notes");
+            InputStream inputStream = null;
+        Part filePart = request.getPart("s_image");
+            System.out.println(filePart.getName());
+            System.out.println(filePart.getSize());
+            System.out.println(filePart.getContentType());
+            // Obtains input stream of the upload file
+            inputStream = filePart.getInputStream();
+            SliderDAO sd = new SliderDAO();
+        sd.update(s_id, s_title, inputStream, back_link, s_notes);
+        request.getRequestDispatcher("/slider/list").forward(request, response);
+        
         } catch (Exception ex) {
             Logger.getLogger(PostController.class.getName()).log(Level.SEVERE, null, ex);
         }

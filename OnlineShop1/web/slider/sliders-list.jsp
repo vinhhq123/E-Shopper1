@@ -122,7 +122,7 @@
                         <c:forEach items="${sliders}" var="s">
                         <div class="single-blog-post">
                         <div class="header-slider">
-                          <a style="float: right" href="#"
+                          <a style="float: right" href="<%=request.getContextPath()%>/slider/getslider?s_id=${s.s_id}"
                             ><button style="width: 70px">Edit</button></a
                           >
                           <a style="float: right; margin: 0 10px" href="#"
