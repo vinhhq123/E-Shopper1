@@ -187,6 +187,27 @@ public class UserDAO extends DBContext {
         return null;
     }
 
+    public User getName(String email) {
+        try {
+            String sql = "SELECT email ,fullname,uid FROM user WHERE email = ?";
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, email);
+            results = preparedStatement.executeQuery();
+            if (results.next()) {
+                User user = new User();
+                user.setEmail(email);
+                user.setFullname(results.getString("fullname"));
+                user.setUid(results.getInt("uid"));
+                return user;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
     public int getNumberOfRows() throws Exception {
 
         int rows = 0;

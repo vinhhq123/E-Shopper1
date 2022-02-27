@@ -15,6 +15,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.PostList;
 import model.Slider;
 import model.User;
@@ -107,6 +109,24 @@ public class SliderDAO extends DBContext {
             }
         }
         return sliders;
+    }
+    
+    public void update(int s_id, String s_title, InputStream s_image, String s_backlink, String s_notes) {
+        try {
+            String sql = "UPDATE `onlineshop1`.`slider` \n" +
+                         "SET `s_title` = ?, `s_imgage` = ?, `s_backlink` = ?, `s_notes` = ? \n" +
+                         "WHERE (`slider_id` = ?);";
+            connection = getConnection();
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, s_title);
+            ps.setBlob(2, s_image);
+            ps.setString(3, s_backlink);
+            ps.setString(4, s_notes);
+            ps.setInt(5, s_id);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
