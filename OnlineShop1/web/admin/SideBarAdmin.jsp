@@ -48,7 +48,7 @@ po<%--
                 </li>
 
                 <li>
-                    <a href="basic_form.html">
+                    <a href="<%=request.getContextPath()%>/feedback/list">
                         <i class="fa fa-check"></i> <span>Feedback List</span>
                     </a>
                 </li>
