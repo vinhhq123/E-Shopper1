@@ -90,6 +90,41 @@
     .slider.round:before {
       border-radius: 50%;
     }
+    
+    * {
+  box-sizing: border-box;
+}
+
+form.example input[type=text] {
+  padding: 1px;
+  font-size: 16px;
+  border: 1px solid grey;
+  float: left;
+  width: 77%;
+  background: #f1f1f1;
+}
+
+form.example button {
+  float: left;
+  width: 23%;
+  
+  background: #2196F3;
+  color: white;
+  font-size: 16px;
+  border: 1px solid grey;
+  border-left: none;
+  cursor: pointer;
+}
+
+form.example button:hover {
+  background: #0b7dda;
+}
+
+form.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}
     </style>
     </head>
     <body class="skin-black">
@@ -117,6 +152,12 @@
                                     <!-- </div> -->
                                     <div class="row">
                                         <div class="col-lg-1"></div>
+                  <div style="float: right; margin-bottom: 20px; margin-right: 50px; margin-top: 10px;" class="search-form">
+                    <form class="example" action="/action_page.php" style="margin:auto;max-width:300px">
+                      <input type="text" placeholder="Search.." name="search2">
+                      <button type="submit">Search</i></button>
+                    </form>
+                  </div>
                                         <div class="col-lg-7">
                                             <div class="panel-body table-responsive">
                         <c:forEach items="${sliders}" var="s">
@@ -130,10 +171,9 @@
                           >
                          
 
-                            <label style="float: right;" class="switch">
-                            <input type="checkbox" checked>
-                            <span class="slider round"></span>
-                            </label>
+                            <a style="float: right;" href="#"
+                            ><button style="width: 70px">Hide</button></a
+                          >
 
                           <h4 style="text-align: center; margin-left: 100px">
                             ${s.s_title}
