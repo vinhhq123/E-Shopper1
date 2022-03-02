@@ -153,7 +153,7 @@ form.example::after {
                                     <div class="row">
                                         <div class="col-lg-1"></div>
                   <div style="float: right; margin-bottom: 20px; margin-right: 50px; margin-top: 10px;" class="search-form">
-                    <form class="example" action="/action_page.php" style="margin:auto;max-width:300px">
+                    <form class="example" action="<%=request.getContextPath()%>/slider/list" style="margin:auto;max-width:300px">
                       <input type="text" placeholder="Search.." name="search2">
                       <button type="submit">Search</i></button>
                     </form>

@@ -113,9 +113,17 @@ public class SliderController extends HttpServlet {
             throws ServletException, IOException {
         try {
             SliderDAO sd = new SliderDAO();
-            ArrayList<Slider> sliders = sd.getSliders();
+            String search = request.getParameter("search2");
+            if(search == null){
+                ArrayList<Slider> sliders = sd.getSliders("");
             request.setAttribute("sliders", sliders);
             request.getRequestDispatcher("/slider/sliders-list.jsp").forward(request, response);
+            } else {
+                ArrayList<Slider> sliders = sd.getSliders(search);
+            request.setAttribute("sliders", sliders);
+            request.getRequestDispatcher("/slider/sliders-list.jsp").forward(request, response);
+            }
+            
         } catch (Exception ex) {
             Logger.getLogger(PostController.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -57,15 +57,16 @@ public class SliderDAO extends DBContext {
 
     }
     
-    public ArrayList<Slider> getSliders() throws Exception {
+    public ArrayList<Slider> getSliders(String search) throws Exception {
         ArrayList<Slider> sliders = new ArrayList<>();
         try {
             String sql = "select s.slider_id, s.s_title, s.s_imgage, s.s_backlink, s.s_notes \n" +
-                         "from onlineshop1.slider as s";
+"from onlineshop1.slider as s WHERE s.s_title like ?";
             System.out.println(sql);
             String noImage = "";
             connection = getConnection();
             ps = connection.prepareStatement(sql);
+            ps.setString(1, "%" + search + "%");
             result = ps.executeQuery();
 
             while (result.next()) {
