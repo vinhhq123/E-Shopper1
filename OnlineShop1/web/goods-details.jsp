@@ -49,12 +49,12 @@
 
                                 <div class="left-sidebar">
                                     <h2>Feature Products</h2>
-                                    <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+                                    <div class="panel-group"><!--category-productsr-->
                                         <c:forEach items="${listFeatured}" var="o">
                                             <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="175"/>
-                                                    <h2>${o.title}</h2>
+                                                <div class="text-center">
+                                                    <img src="data:image/jpg;base64,${o.getThumbnail()}" width="250" height="200"/>
+                                                    <font color="#fe980f">${o.title}<p>Views: ${o.views}</p></font>
                                                     <p>
                                                         <fmt:setLocale value = "vi_VN"/>
                                                     <strike>
@@ -66,13 +66,12 @@
                                                     </font>
                                                     </p>
                                                     <a href="<%=request.getContextPath()%>/goods/detail?pid=${o.pid}" class="btn btn-default add-to-cart">Show more detail</a>
-                                                    <p>Views: ${o.views}</p>
                                                 </div>
                                             </div>
                                         </c:forEach>
                                     </div><!--/category-productsr-->
                                 </div>
-                            </div><
+                            </div>
 
                         </div>
                     </div>
@@ -121,12 +120,13 @@
                         <div class="category-tab shop-details-tab"><!--category-tab-->
                             <div class="col-sm-12">
                                 <ul class="nav nav-tabs">
-                                    <li class="active"><a href="#reviews" data-toggle="tab">Reviews</a></li>
+                                    <li class="active"><a href="#reviews" data-toggle="tab">Reviews</a></li>                             
                                 </ul>
                             </div>
-                            <c:forEach items="${listFeedback}" var="o">
-                                <div class="tab-content">
-                                    <div class="tab-pane fade active in" id="reviews" >
+
+                            <div class="tab-content">
+                                <div class="tab-pane fade active in" id="reviews" >
+                                    <c:forEach items="${listFeedback}" var="o">
                                         <div class="col-sm-12">
                                             <ul class="media-list">
                                                 <li class="media">
@@ -184,9 +184,10 @@
                                                 </li>
                                             </ul> 
                                         </div>
-                                    </div>
+                                    </c:forEach>
                                 </div>
-                            </c:forEach>
+                            </div>
+
                             <c:if test="${sessionScope.account != null}">
                                 <a href="${pageContext.request.contextPath}/send-feedback.jsp" type="button" class="btn btn-default">
                                     Send Feedback

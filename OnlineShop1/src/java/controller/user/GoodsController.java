@@ -113,7 +113,7 @@ public class GoodsController extends HttpServlet {
         List<Product> listFeatured = dao.getFeaturedGood();
         int page, numperpage = 9;
         int size = listGoodsPage.size();
-        int num = (size % 3 == 0 ? (size / 3) : ((size / 3)) + 1);
+        int num = (size % numperpage == 0 ? (size / numperpage) : ((size / numperpage)) + 1);
         String xpage = request.getParameter("page");
         if (xpage == null) {
             page = 1;
@@ -144,7 +144,7 @@ public class GoodsController extends HttpServlet {
         List<Product> listFeatured = dao.getFeaturedGood();
         int page, numperpage = 9;
         int size = listGoodsByCategory.size();
-        int num = (size % 3 == 0 ? (size / 3) : ((size / 3)) + 1);
+        int num = (size % numperpage == 0 ? (size / numperpage) : ((size / numperpage)) + 1);
         String xpage = request.getParameter("page");
         if (xpage == null) {
             page = 1;
@@ -176,7 +176,7 @@ public class GoodsController extends HttpServlet {
         List<Product> listFeatured = dao.getFeaturedGood();
         int page, numperpage = 9;
         int size = listSearch.size();
-        int num = (size % 3 == 0 ? (size / 3) : ((size / 3)) + 1);
+        int num = (size % numperpage == 0 ? (size / numperpage) : ((size / numperpage)) + 1);
         String xpage = request.getParameter("page");
         if (xpage == null) {
             page = 1;
@@ -200,7 +200,7 @@ public class GoodsController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         int id = Integer.parseInt(request.getParameter("pid"));
-
+        
         GoodsDAO dao = new GoodsDAO();
         SettingDAO sdao = new SettingDAO();
         FeedbackDAO fdao = new FeedbackDAO();

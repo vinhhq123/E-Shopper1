@@ -328,12 +328,64 @@ public class FeedbackDAO extends DBContext {
         return listFeed;
     }
     
+    public List<Feedback> getFeedbackOfEachGoodByStars(int pid, int star) {
+        List<Feedback> listFeed = new ArrayList<>();
+        String query = "select f.feedbackId, f.ratedStar, f.image, f.feedbackContent, f.updatedDate, u.uid, u.fullname from feedback f\n" +
+"                inner join product p on f.productId = p.productId\n" +
+"                inner join user u on f.customerId = u.uid\n" +
+"                where f.productId = ? and f.ratedStar = ?";
+        try {
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, pid);
+            preparedStatement.setInt(2, star);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                Feedback f = new Feedback();
+                f.setFeedbackId(results.getInt("feedbackId"));
+                f.setRatedStart(results.getInt("ratedStar"));
+                f.setFeedbackContent(results.getString("feedbackContent"));
+
+                Blob blob = results.getBlob("image");
+                if (blob != null) {
+
+                    InputStream inputStream = blob.getBinaryStream();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                    inputStream.close();
+                    outputStream.close();
+                    f.setImage(base64Image);
+                } else {
+                    f.setImage("");
+                }
+
+                f.setUpdatedDate(results.getDate("updatedDate"));
+                User u = new User(results.getInt("uid"), results.getString("fullname"));
+                f.setSaler(u);
+                listFeed.add(f);
+            }
+        } catch (Exception e) {
+
+        }
+        return listFeed;
+    }
+    
 //    public static void main(String[] args) {
 //
 //        FeedbackDAO dao = new FeedbackDAO();
 ////        Feedback postList = dao.getFeedbackOfEachGood(1);
 ////        System.out.println(postList);
-//         List<Feedback> list = dao.getFeedbackOfEachGood(1);
+//         List<Feedback> list = dao.getFeedbackOfEachGoodByStars(1,5);
 //        for (Feedback postList : list) {
 //            System.out.println(postList);
 //        }
