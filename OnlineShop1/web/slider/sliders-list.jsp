@@ -166,7 +166,7 @@ form.example::after {
                           <a style="float: right" href="<%=request.getContextPath()%>/slider/getslider?s_id=${s.s_id}"
                             ><button style="width: 70px">Edit</button></a
                           >
-                          <a style="float: right; margin: 0 10px" href="#"
+                          <a style="float: right; margin: 0 10px" href="${pageContext.request.contextPath}/home"
                             ><button style="width: 70px">View</button></a
                           >
                          
