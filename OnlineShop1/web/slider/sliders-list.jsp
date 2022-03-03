@@ -177,7 +177,7 @@ form.example::after {
                                                         Hide
                                     </c:if>
                                     <c:if test="${s.s_status ne 1}">
-                                                        Public
+                                                        Show
                                     </c:if>
                                 </button></a>
 
