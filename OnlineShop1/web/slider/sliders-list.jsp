@@ -171,9 +171,15 @@ form.example::after {
                           >
                          
 
-                            <a style="float: right;" href="#"
-                            ><button style="width: 70px">Hide</button></a
-                          >
+                            <a style="float: right;" href="<%=request.getContextPath()%>/slider/status?s_id=${s.s_id}&s_status=${s.s_status}"
+                            ><button style="width: 70px">
+                                    <c:if test="${s.s_status eq 1}">
+                                                        Hide
+                                    </c:if>
+                                    <c:if test="${s.s_status ne 1}">
+                                                        Public
+                                    </c:if>
+                                </button></a>
 
                           <h4 style="text-align: center; margin-left: 100px">
                             ${s.s_title}

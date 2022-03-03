@@ -38,8 +38,7 @@ public class HomeController extends HttpServlet {
         try {
             response.setContentType("text/html;charset=UTF-8");
             SliderDAO sd = new SliderDAO();
-            String search = "";
-            ArrayList<Slider> sliders = sd.getSliders(search);
+            ArrayList<Slider> sliders = sd.getSlidersByStatus();
             request.setAttribute("sliders", sliders);
             request.getRequestDispatcher("index.jsp").forward(request, response);
         } catch (Exception ex) {
