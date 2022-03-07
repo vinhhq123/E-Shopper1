@@ -154,7 +154,12 @@ form.example::after {
                                         <div class="col-lg-1"></div>
                   <div style="float: right; margin-bottom: 20px; margin-right: 50px; margin-top: 10px;" class="search-form">
                     <form class="example" action="<%=request.getContextPath()%>/slider/list" style="margin:auto;max-width:300px">
-                      <input type="text" placeholder="Search.." name="search2">
+                <input type="text" placeholder="Search.." name="search2" value="${search1}">
+                      <select class="select" aria-label="Default select example" name="status">
+                                                            <option selected value="">All Statuses</option>
+                                                            <option value="1">Show</option>
+                                                            <option value="0">Hide</option>
+                      </select>
                       <button type="submit">Search</i></button>
                     </form>
                   </div>

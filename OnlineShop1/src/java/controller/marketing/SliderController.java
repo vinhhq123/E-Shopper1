@@ -118,11 +118,13 @@ public class SliderController extends HttpServlet {
             SliderDAO sd = new SliderDAO();
             String search = request.getParameter("search2");
             if(search == null){
-                ArrayList<Slider> sliders = sd.getSliders("");
+                ArrayList<Slider> sliders = sd.getSliders("", "");
             request.setAttribute("sliders", sliders);
             request.getRequestDispatcher("/slider/sliders-list.jsp").forward(request, response);
             } else {
-                ArrayList<Slider> sliders = sd.getSliders(search);
+                String status = request.getParameter("status");
+                ArrayList<Slider> sliders = sd.getSliders(search, status);
+            request.setAttribute("search1", search);
             request.setAttribute("sliders", sliders);
             request.getRequestDispatcher("/slider/sliders-list.jsp").forward(request, response);
             }

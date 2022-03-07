@@ -3,17 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/admin/SettingEdit.jsp</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/controller/user/HomeController.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/admin/SettingAdd.jsp</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/controller/marketing/PostController.java</file>
+            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/dal/SettingDAO.java</file>
             <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/slider/sliders-list.jsp</file>
             <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/controller/marketing/SliderController.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/admin/SideBarAdmin.jsp</file>
             <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/dal/SliderDAO.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/admin/SideBarManager.jsp</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/admin/ProductList.jsp</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/index.jsp</file>
+            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/admin/SettingList.jsp</file>
+            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/controller/admin/SettingController.java</file>
         </group>
     </open-files>
 </project-private>
