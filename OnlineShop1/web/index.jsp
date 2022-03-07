@@ -59,7 +59,7 @@
                                         <h1><span>E</span>-SHOPPER</h1>
                                         <h2>${s.s_title}</h2>
                                         <p>${s.s_notes} </p>
-                                        <a href="facebook.com/chanhsiroo"><button type="button" class="btn btn-default get">Get it now</button></a>
+                                        <a href="${s.back_link}"><button type="button" class="btn btn-default get">Get it now</button></a>
                                     </div>
                                     <div class="col-sm-6">
                                         <img style="width:350px;height:440px;" src="data:image/jpg;base64,${s.s_image}" class="girl img-responsive" alt="" />
