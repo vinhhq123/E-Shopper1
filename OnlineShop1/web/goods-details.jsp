@@ -86,7 +86,7 @@
                             <div class="col-sm-7">
                                 <div class="product-information"><!--/product-information-->
                                     <img src="images/product-details/new.jpg" class="newarrival" alt="" />
-                                    <i class="fa fa-star"> ${good.ratedStars}</i>
+                                    <i class="fa fa-star"> <fmt:formatNumber pattern="#.#" value="${star}"/></i>
                                     <p></p>
                                     <i class="fa fa-user"> ${good.author.fullname}</i>
                                     <p></p>
@@ -106,7 +106,7 @@
                                     <p>${good.breif}</p>
                                     <a href=""><img src="images/product-details/share.png" class="share img-responsive"  alt="" /></a>
                                 </div><!--/product-information-->
-                                <a href="${pageContext.request.contextPath}/eShopper/cart.html" class="btn btn-fefault cart">
+                                <a href="<%=request.getContextPath()%>/goods/addToCartContact?pid=${good.pid}" class="btn btn-fefault cart">
                                     <i class="fa fa-shopping-cart"></i>
                                     Buy Now
                                 </a>
@@ -133,8 +133,7 @@
                                                     <div class="media-body">
                                                         <ul class="sinlge-post-meta">
                                                             <li><i class="fa fa-user"></i>${o.saler.fullname}</li>
-                                                            <!--                                                            <li><i class="fa fa-clock-o"></i> 1:33 pm</li>-->
-                                                            <li><i class="fa fa-calendar"></i>${o.updatedDate}</li>
+                                                            <li><i class="fa fa-calendar"></i><fmt:formatDate pattern="dd-MM-yyyy" value="${o.updatedDate}"/></li>
                                                         </ul>
                                                         <ul class="rating-area ratings">
                                                             <li class="rate-this">Rate:</li>
@@ -192,6 +191,9 @@
                                 <a href="${pageContext.request.contextPath}/send-feedback.jsp" type="button" class="btn btn-default">
                                     Send Feedback
                                 </a>
+                            </c:if>
+                            <c:if test="${sessionScope.account == null}">
+                                <p style="text-align: center">Login to send feedback <a href="${pageContext.request.contextPath}/Login.jsp">Login</a></p>
                             </c:if>
                         </div><!--/category-tab-->
 

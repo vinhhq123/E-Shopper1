@@ -99,13 +99,9 @@
                                         </div>
                                         <div class="choose">
                                             <ul class="nav nav-pills nav-justified">
-                                                <li><i class="fa fa-user"></i>${o.author.fullname}</li>
+                                                <li><i class="fa fa-user"></i> ${o.author.fullname}</li>
                                                 <li>
-                                                    <i class="fa fa-star color">${o.ratedStars}</i>
-<!--                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-half-o"></i>-->
+                                                    <i class="fa fa-star color"> <fmt:formatNumber pattern="#.#" value="${o.ratedStars}"/></i>
                                                 </li>
                                                 <!--                                            <li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
                                                                                             <li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>-->
