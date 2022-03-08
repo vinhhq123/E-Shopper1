@@ -90,6 +90,41 @@
     .slider.round:before {
       border-radius: 50%;
     }
+    
+    * {
+  box-sizing: border-box;
+}
+
+form.example input[type=text] {
+  padding: 1px;
+  font-size: 16px;
+  border: 1px solid grey;
+  float: left;
+  width: 77%;
+  background: #f1f1f1;
+}
+
+form.example button {
+  float: left;
+  width: 23%;
+  
+  background: #2196F3;
+  color: white;
+  font-size: 16px;
+  border: 1px solid grey;
+  border-left: none;
+  cursor: pointer;
+}
+
+form.example button:hover {
+  background: #0b7dda;
+}
+
+form.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}
     </style>
     </head>
     <body class="skin-black">
@@ -117,6 +152,17 @@
                                     <!-- </div> -->
                                     <div class="row">
                                         <div class="col-lg-1"></div>
+                  <div style="float: right; margin-bottom: 20px; margin-right: 50px; margin-top: 10px;" class="search-form">
+                    <form class="example" action="<%=request.getContextPath()%>/slider/list" style="margin:auto;max-width:300px">
+                <input type="text" placeholder="Search.." name="search2" value="${search1}">
+                      <select class="select" aria-label="Default select example" name="status">
+                                                            <option selected value="">All Statuses</option>
+                                                            <option value="1">Show</option>
+                                                            <option value="0">Hide</option>
+                      </select>
+                      <button type="submit">Search</i></button>
+                    </form>
+                  </div>
                                         <div class="col-lg-7">
                                             <div class="panel-body table-responsive">
                         <c:forEach items="${sliders}" var="s">
@@ -125,15 +171,20 @@
                           <a style="float: right" href="<%=request.getContextPath()%>/slider/getslider?s_id=${s.s_id}"
                             ><button style="width: 70px">Edit</button></a
                           >
-                          <a style="float: right; margin: 0 10px" href="#"
+                          <a style="float: right; margin: 0 10px" href="${pageContext.request.contextPath}/home"
                             ><button style="width: 70px">View</button></a
                           >
                          
 
-                            <label style="float: right;" class="switch">
-                            <input type="checkbox" checked>
-                            <span class="slider round"></span>
-                            </label>
+                            <a style="float: right;" href="<%=request.getContextPath()%>/slider/status?s_id=${s.s_id}&s_status=${s.s_status}"
+                            ><button style="width: 70px">
+                                    <c:if test="${s.s_status eq 1}">
+                                                        Hide
+                                    </c:if>
+                                    <c:if test="${s.s_status ne 1}">
+                                                        Show
+                                    </c:if>
+                                </button></a>
 
                           <h4 style="text-align: center; margin-left: 100px">
                             ${s.s_title}

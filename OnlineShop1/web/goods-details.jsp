@@ -49,12 +49,12 @@
 
                                 <div class="left-sidebar">
                                     <h2>Feature Products</h2>
-                                    <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+                                    <div class="panel-group"><!--category-productsr-->
                                         <c:forEach items="${listFeatured}" var="o">
                                             <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="175"/>
-                                                    <h2>${o.title}</h2>
+                                                <div class="text-center">
+                                                    <img src="data:image/jpg;base64,${o.getThumbnail()}" width="250" height="200"/>
+                                                    <font color="#fe980f">${o.title}<p>Views: ${o.views}</p></font>
                                                     <p>
                                                         <fmt:setLocale value = "vi_VN"/>
                                                     <strike>
@@ -66,13 +66,12 @@
                                                     </font>
                                                     </p>
                                                     <a href="<%=request.getContextPath()%>/goods/detail?pid=${o.pid}" class="btn btn-default add-to-cart">Show more detail</a>
-                                                    <p>Views: ${o.views}</p>
                                                 </div>
                                             </div>
                                         </c:forEach>
                                     </div><!--/category-productsr-->
                                 </div>
-                            </div><
+                            </div>
 
                         </div>
                     </div>
@@ -87,7 +86,7 @@
                             <div class="col-sm-7">
                                 <div class="product-information"><!--/product-information-->
                                     <img src="images/product-details/new.jpg" class="newarrival" alt="" />
-                                    <i class="fa fa-star"> ${good.ratedStars}</i>
+                                    <i class="fa fa-star"> <fmt:formatNumber pattern="#.#" value="${star}"/></i>
                                     <p></p>
                                     <i class="fa fa-user"> ${good.author.fullname}</i>
                                     <p></p>
@@ -107,7 +106,7 @@
                                     <p>${good.breif}</p>
                                     <a href=""><img src="images/product-details/share.png" class="share img-responsive"  alt="" /></a>
                                 </div><!--/product-information-->
-                                <a href="${pageContext.request.contextPath}/eShopper/cart.html" class="btn btn-fefault cart">
+                                <a href="<%=request.getContextPath()%>/goods/addToCartContact?pid=${good.pid}" class="btn btn-fefault cart">
                                     <i class="fa fa-shopping-cart"></i>
                                     Buy Now
                                 </a>
@@ -121,20 +120,20 @@
                         <div class="category-tab shop-details-tab"><!--category-tab-->
                             <div class="col-sm-12">
                                 <ul class="nav nav-tabs">
-                                    <li class="active"><a href="#reviews" data-toggle="tab">Reviews</a></li>
+                                    <li class="active"><a href="#reviews" data-toggle="tab">Reviews</a></li>                             
                                 </ul>
                             </div>
-                            <c:forEach items="${listFeedback}" var="o">
-                                <div class="tab-content">
-                                    <div class="tab-pane fade active in" id="reviews" >
+
+                            <div class="tab-content">
+                                <div class="tab-pane fade active in" id="reviews" >
+                                    <c:forEach items="${listFeedback}" var="o">
                                         <div class="col-sm-12">
                                             <ul class="media-list">
                                                 <li class="media">
                                                     <div class="media-body">
                                                         <ul class="sinlge-post-meta">
                                                             <li><i class="fa fa-user"></i>${o.saler.fullname}</li>
-                                                            <!--                                                            <li><i class="fa fa-clock-o"></i> 1:33 pm</li>-->
-                                                            <li><i class="fa fa-calendar"></i>${o.updatedDate}</li>
+                                                            <li><i class="fa fa-calendar"></i><fmt:formatDate pattern="dd-MM-yyyy" value="${o.updatedDate}"/></li>
                                                         </ul>
                                                         <ul class="rating-area ratings">
                                                             <li class="rate-this">Rate:</li>
@@ -184,13 +183,17 @@
                                                 </li>
                                             </ul> 
                                         </div>
-                                    </div>
+                                    </c:forEach>
                                 </div>
-                            </c:forEach>
+                            </div>
+
                             <c:if test="${sessionScope.account != null}">
                                 <a href="${pageContext.request.contextPath}/send-feedback.jsp" type="button" class="btn btn-default">
                                     Send Feedback
                                 </a>
+                            </c:if>
+                            <c:if test="${sessionScope.account == null}">
+                                <p style="text-align: center">Login to send feedback <a href="${pageContext.request.contextPath}/Login.jsp">Login</a></p>
                             </c:if>
                         </div><!--/category-tab-->
 

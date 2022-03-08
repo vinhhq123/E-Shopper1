@@ -50,12 +50,12 @@
 
                         <div class="left-sidebar">
                             <h2>Feature Products</h2>
-                            <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+                            <div class="panel-group"><!--category-productsr-->
                                 <c:forEach items="${listFeatured}" var="o">
                                     <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="175"/>
-                                            <h2>${o.title}</h2>
+                                        <div class="text-center">
+                                            <img src="data:image/jpg;base64,${o.getThumbnail()}" width="250" height="200"/>
+                                            <font color="#fe980f">${o.title}<p>Views: ${o.views}</p></font>
                                                 <p>
                                                     <fmt:setLocale value = "vi_VN"/>
                                                 <strike>
@@ -67,7 +67,6 @@
                                                 </font>
                                                 </p>
                                             <a href="<%=request.getContextPath()%>/goods/detail?pid=${o.pid}" class="btn btn-default add-to-cart">Show more detail</a>
-                                            <p>Views: ${o.views}</p>
                                         </div>
                                     </div>
                                 </c:forEach>
@@ -100,13 +99,9 @@
                                         </div>
                                         <div class="choose">
                                             <ul class="nav nav-pills nav-justified">
-                                                <li><i class="fa fa-user"></i>${o.author.fullname}</li>
+                                                <li><i class="fa fa-user"></i> ${o.author.fullname}</li>
                                                 <li>
-                                                    <i class="fa fa-star color">${o.ratedStars}</i>
-<!--                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-half-o"></i>-->
+                                                    <i class="fa fa-star color"> <fmt:formatNumber pattern="#.#" value="${o.ratedStars}"/></i>
                                                 </li>
                                                 <!--                                            <li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
                                                                                             <li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>-->

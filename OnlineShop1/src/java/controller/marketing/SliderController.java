@@ -27,7 +27,7 @@ import model.Slider;
  * @author CHANHSIRO
  */
 @MultipartConfig(maxFileSize = 16177215)
-@WebServlet(name = "SliderController", urlPatterns = {"/slider/detail", "/slider/list", "/slider/getslider", "/slider/edit"})
+@WebServlet(name = "SliderController", urlPatterns = {"/slider/detail", "/slider/list", "/slider/getslider", "/slider/edit", "/slider/status"})
 public class SliderController extends HttpServlet {
 
     /**
@@ -72,6 +72,9 @@ public class SliderController extends HttpServlet {
             case "/slider/edit":
                 sliderEdit(request, response);
                 break;
+            case "/slider/status":
+                sliderStatus(request, response);
+                break;
         }
     }
 
@@ -113,9 +116,19 @@ public class SliderController extends HttpServlet {
             throws ServletException, IOException {
         try {
             SliderDAO sd = new SliderDAO();
-            ArrayList<Slider> sliders = sd.getSliders();
+            String search = request.getParameter("search2");
+            if(search == null){
+                ArrayList<Slider> sliders = sd.getSliders("", "");
             request.setAttribute("sliders", sliders);
             request.getRequestDispatcher("/slider/sliders-list.jsp").forward(request, response);
+            } else {
+                String status = request.getParameter("status");
+                ArrayList<Slider> sliders = sd.getSliders(search, status);
+            request.setAttribute("search1", search);
+            request.setAttribute("sliders", sliders);
+            request.getRequestDispatcher("/slider/sliders-list.jsp").forward(request, response);
+            }
+            
         } catch (Exception ex) {
             Logger.getLogger(PostController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -153,6 +166,26 @@ public class SliderController extends HttpServlet {
             SliderDAO sd = new SliderDAO();
         sd.update(s_id, s_title, inputStream, back_link, s_notes);
         request.getRequestDispatcher("/slider/list").forward(request, response);
+        
+        } catch (Exception ex) {
+            Logger.getLogger(PostController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    protected void sliderStatus(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            int s_id = Integer.parseInt(request.getParameter("s_id"));
+            int s_status = Integer.parseInt(request.getParameter("s_status"));
+            if(s_status == 1){
+                SliderDAO sd = new SliderDAO();
+                sd.updateStatus(s_id, 0);
+            } else {
+                SliderDAO sd = new SliderDAO();
+                sd.updateStatus(s_id, 1);
+            }
+            
+            response.sendRedirect("../slider/list");
         
         } catch (Exception ex) {
             Logger.getLogger(PostController.class.getName()).log(Level.SEVERE, null, ex);

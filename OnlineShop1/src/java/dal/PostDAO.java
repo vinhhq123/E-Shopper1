@@ -145,9 +145,9 @@ public class PostDAO extends DBContext {
             result = ps.executeQuery();
 
             while (result.next()) {
-               // PostList p = new PostList();
+                // PostList p = new PostList();
                 Setting s = new Setting(result.getInt("settingId"), result.getString("settingValue"));
-                
+
                 listPostCate.add(s);
             }
         } catch (Exception e) {
@@ -171,7 +171,28 @@ public class PostDAO extends DBContext {
             while (result.next()) {
                 PostList p = new PostList();
                 p.setPostId(result.getInt("postId"));
-                p.setThumbnail(result.getString("thumbnail"));
+
+                Blob blob = result.getBlob("thumbnail");
+                if (blob != null) {
+                    InputStream inputStream = blob.getBinaryStream();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                    inputStream.close();
+                    outputStream.close();
+                    p.setThumbnail(base64Image);
+                } else {
+                    p.setThumbnail("");
+                }
+
                 p.setPostTitle(result.getString("postTitle"));
                 p.setBreifInformation(result.getString("breifInformation"));
                 p.setPostContent(result.getString("postContent"));
@@ -334,7 +355,7 @@ public class PostDAO extends DBContext {
         }
         return postlist;
     }
-    
+
     public void delete(int postId) {
         try {
             String sql = "Delete from post where postId = ?";
@@ -346,7 +367,7 @@ public class PostDAO extends DBContext {
             Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void updatePost(int postId, String postTitle, String postContent, InputStream thumbnail) {
         try {
             String sql = "UPDATE `onlineshop1`.`post` SET `thumbnail` = ?,"

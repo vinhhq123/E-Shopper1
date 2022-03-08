@@ -28,6 +28,7 @@ import javax.servlet.http.HttpSession;
 import model.Order;
 import model.OrderDetail;
 import model.Product;
+import model.Setting;
 import model.User;
 
 /**
@@ -36,7 +37,8 @@ import model.User;
  */
 @WebServlet(name = "OrderController", urlPatterns = {"/order/list", "/order/search",
     "/order/getOrder", "/order/updateSaleInfor", "/order/updateOrderQuantity",
-    "/order/removeProduct", "/order/addProductToOrderDetail"})
+    "/order/removeProduct", "/order/addProductToOrderDetail", "/order/getCustomerOrders",
+    "/order/filterCustomerOrders", "/order/cancelCustomerOrder"})
 public class OrderController extends HttpServlet {
 
     /**
@@ -101,6 +103,15 @@ public class OrderController extends HttpServlet {
                 break;
             case "/order/addProductToOrderDetail":
                 addProductToOrder(request, response);
+                break;
+            case "/order/getCustomerOrders":
+                getCustomerOrders(request, response);
+                break;
+            case "/order/filterCustomerOrders":
+                filterCustomerOrders(request, response);
+                break;
+            case "/order/cancelCustomerOrder":
+                cancelCustomerOrder(request, response);
                 break;
 
         }
@@ -419,7 +430,7 @@ public class OrderController extends HttpServlet {
 
         float totalCost = 0;
         boolean checkUpdateQuan = false;
-        String errorQuantiy="";
+        String errorQuantiy = "";
         // Get session
         HttpSession session = request.getSession();
 
@@ -694,5 +705,136 @@ public class OrderController extends HttpServlet {
             System.out.println("Exception ===== " + ex);
         }
 
+    }
+
+    protected void getCustomerOrders(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        OrderDAO orderDAO = new OrderDAO();
+        SettingDAO settingDAO = new SettingDAO();
+        ProductDAO productDAO = new ProductDAO();
+        List<String> orderStatuses = new ArrayList<>();
+        List<Order> orders = new ArrayList<>();
+        List<Product> featuredProducts = new ArrayList<>();
+        List<Setting> postCategories = new ArrayList<>();
+        User user = new User();
+        // Get session
+        HttpSession session = request.getSession();
+
+        try {
+            user = (User) session.getAttribute("account");
+            orderStatuses = settingDAO.getSettingOrderValue();
+            orders = orderDAO.getOrdersByCustomerId(user.getUid());
+            featuredProducts = productDAO.getFiveFeaturedProducts();
+            postCategories = settingDAO.getAllBlogCategory();
+
+            request.setAttribute("CustomerOrders", orders);
+            request.setAttribute("OrderStatuses", orderStatuses);
+            request.setAttribute("FeaturedProducts", featuredProducts);
+            request.setAttribute("PostCategories", postCategories);
+            request.getRequestDispatcher("/order-history.jsp").forward(request, response);
+
+        } catch (Exception ex) {
+            Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Exception ===== " + ex);
+        }
+
+    }
+
+    protected void filterCustomerOrders(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        int orderStatus = 0;
+
+        String status = "";
+        String dateFrom = "";
+        String dateTo = "";
+        String dateFromValue = "";
+        String dateToValue = "";
+
+        if (request.getParameter("status") != null) {
+            status = request.getParameter("status");
+            switch (status) {
+                case "Ordered":
+                    orderStatus = 25;
+                    break;
+                case "Delivered":
+                    orderStatus = 20;
+                    break;
+                case "Transporting":
+                    orderStatus = 21;
+                    break;
+                case "Canceled":
+                    orderStatus = 22;
+                    break;
+            }
+        }
+
+        if (request.getParameter("customerFrom") != null) {
+            dateFrom = request.getParameter("customerFrom");
+        }
+        if (request.getParameter("customerTo") != null) {
+            dateTo = request.getParameter("customerTo");
+        }
+
+        System.out.println("date From " + dateFrom);
+        System.out.println("date To" + dateTo);
+        System.out.println("dateFromValue " + dateFromValue);
+        System.out.println("dateToValue " + dateToValue);
+
+        OrderDAO orderDAO = new OrderDAO();
+        SettingDAO settingDAO = new SettingDAO();
+        ProductDAO productDAO = new ProductDAO();
+        List<Order> orders = new ArrayList<>();
+        List<Product> featuredProducts = new ArrayList<>();
+        List<String> orderStatuses = new ArrayList<>();
+        List<Setting> postCategories = new ArrayList<>();
+        User user = new User();
+        // Get session
+        HttpSession session = request.getSession();
+
+        try {
+            user = (User) session.getAttribute("account");
+            int currentCustomerId = user.getUid();
+            orderStatuses = settingDAO.getSettingOrderValue();
+            orders = orderDAO.filterCustomerOrders(dateFrom, dateTo, orderStatus, currentCustomerId);
+            featuredProducts = productDAO.getFiveFeaturedProducts();
+            postCategories = settingDAO.getAllBlogCategory();
+
+            request.setAttribute("CustomerOrders", orders);
+            request.setAttribute("OrderStatuses", orderStatuses);
+            request.setAttribute("valueCStatus", status);
+            request.setAttribute("valueCFrom", dateFrom);
+            request.setAttribute("valueCTo", dateTo);
+            request.setAttribute("PostCategories", postCategories);
+            request.setAttribute("FeaturedProducts", featuredProducts);
+            request.getRequestDispatcher("/order-history.jsp").forward(request, response);
+        } catch (Exception ex) {
+            System.out.println("Exception Filter Customer Orders ===== " + ex);
+        }
+    }
+
+    protected void cancelCustomerOrder(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        int cancelOrderId = Integer.parseInt(request.getParameter("orderId"));
+
+        OrderDAO orderDAO = new OrderDAO();
+        // Get session
+        HttpSession session = request.getSession();
+        try {
+            int check = orderDAO.cancelCustomerOrder(cancelOrderId);
+            if (check > 0) {
+                String message = "Cancel Order Susscessfully .";
+                session.setAttribute("messageCancelOrder", message);
+                response.sendRedirect("order/getCustomerOrders");
+            } else {
+                String messageFail = "Unexpected error occurs.Please try again later";
+                session.setAttribute("messageCancelOrder", messageFail);
+                response.sendRedirect("order/getCustomerOrders");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Exception cancel User order ===== " + ex);
+        }
     }
 }

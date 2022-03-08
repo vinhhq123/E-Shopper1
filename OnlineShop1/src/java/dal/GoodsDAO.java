@@ -41,8 +41,10 @@ public class GoodsDAO {
     public List<Product> getGoodsSortByDate() {
         List<Product> listProduct = new ArrayList<>();
         String query = "select p.productId, p.thumbnail, p.title, p.list_price, p.sale_price,\n"
-                + "p.categoryId, p.updatedDate, p.ratedStar, u.uid, u.fullname from product p inner join user u\n"
-                + "on p.salesId = u.uid order by p.updatedDate desc";
+                + "p.categoryId, p.updatedDate, (select avg(f.ratedStar) from feedback f\n"
+                + "where f.productId = p.productId) as 'star', u.uid, u.fullname from product p\n"
+                + "inner join user u on p.salesId = u.uid\n"
+                + "order by p.updatedDate desc;";
         try {
             connection = new DBContext().getConnection();
             ps = connection.prepareStatement(query);
@@ -77,9 +79,9 @@ public class GoodsDAO {
                 p.setCategoryID(result.getInt("categoryId"));
                 p.setUpdatedDate(result.getDate("updatedDate"));
                 User u = new User(result.getInt("uid"), result.getString("fullname"));
-                p.setRatedStars(result.getDouble("ratedStar"));
+                //result.getDouble(1);
                 p.setAuthor(u);
-
+                p.setRatedStars(result.getDouble(8));
                 listProduct.add(p);
             }
         } catch (Exception e) {
@@ -91,7 +93,8 @@ public class GoodsDAO {
     public List<Product> getGoodsByCategory(int id) {
         List<Product> listProduct = new ArrayList<>();
         String query = "select p.productId, p.thumbnail, p.title, p.list_price, p.sale_price,\n"
-                + "p.categoryId, p.updatedDate, p.ratedStar, u.fullname, u.uid from product p inner join user u\n"
+                + "p.categoryId, p.updatedDate,(select avg(f.ratedStar) from feedback f\n"
+                + "where f.productId = p.productId) as 'star', u.fullname, u.uid from product p inner join user u\n"
                 + "on p.salesId = u.uid where p.categoryId = ?";
         try {
             connection = new DBContext().getConnection();
@@ -128,7 +131,7 @@ public class GoodsDAO {
                 p.setCategoryID(result.getInt("categoryId"));
                 p.setUpdatedDate(result.getDate("updatedDate"));
                 User u = new User(result.getInt("uid"), result.getString("fullname"));
-                p.setRatedStars(result.getDouble("ratedStar"));
+                p.setRatedStars(result.getDouble("star"));
                 p.setAuthor(u);
 
                 listProduct.add(p);
@@ -142,7 +145,7 @@ public class GoodsDAO {
     public List<Product> searchGoodByTitle(String search) {
         List<Product> listProduct = new ArrayList<>();
         String query = "select p.productId, p.thumbnail, p.title, p.list_price, p.sale_price,\n"
-                + "p.categoryId, p.updatedDate, p.ratedStar, u.fullname, u.uid from product p inner join user u\n"
+                + "p.categoryId, p.updatedDate, u.fullname, u.uid from product p inner join user u\n"
                 + "on p.salesId = u.uid where p.title like ?";
         try {
             connection = new DBContext().getConnection();
@@ -179,7 +182,7 @@ public class GoodsDAO {
                 p.setCategoryID(result.getInt("categoryId"));
                 p.setUpdatedDate(result.getDate("updatedDate"));
                 User u = new User(result.getInt("uid"), result.getString("fullname"));
-                p.setRatedStars(result.getDouble("ratedStar"));
+               // p.setRatedStars(result.getDouble("ratedStar"));
                 p.setAuthor(u);
 
                 listProduct.add(p);
@@ -192,7 +195,7 @@ public class GoodsDAO {
 
     public Product getGoodsById(int id) {
         String query = "select p.productId, p.thumbnail, p.title, p.list_price, p.sale_price,\n"
-                + "p.categoryId, p.updatedDate, p.breif_information, p.ratedStar, u.fullname, u.uid, s.settingId, s.settingValue from product p\n"
+                + "p.categoryId, p.updatedDate, p.breif_information, u.fullname, u.uid, s.settingId, s.settingValue from product p\n"
                 + "inner join user u on p.salesId = u.uid \n"
                 + "inner join setting s on p.categoryId = s.settingId\n"
                 + "where p.productId = ?";
@@ -234,7 +237,7 @@ public class GoodsDAO {
                 User u = new User(result.getInt("uid"), result.getString("fullname"));
                 p.setAuthor(u);
                 Setting s = new Setting(result.getInt("settingId"), result.getString("settingValue"));
-                p.setRatedStars(result.getDouble("ratedStar"));
+//                p.setRatedStars(result.getDouble("ratedStar"));
                 p.setCate(s);
                 return p;
             }
@@ -300,14 +303,33 @@ public class GoodsDAO {
         }
     }
 
-    public static void main(String[] args) {
+    public double avgStar(int id) {
+        double star = 0;
+        String query = "select avg(f.ratedStar) as 'stars' from product p inner join feedback f on p.productId = f.productId\n"
+                + "where p.productId = ?";
+        try {
+            connection = new DBContext().getConnection();
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            result = ps.executeQuery();
+            while (result.next()) {
+                star = result.getDouble(1);
+            }
+        } catch (Exception e) {
 
-        GoodsDAO dao = new GoodsDAO();
-        Product postList = dao.getGoodsById(1);
-        System.out.println(postList);
-        List<Product> list1 = dao.getGoodsSortByDate();
-        for (Product list : list1) {
-            System.out.println(list);
         }
+        return star;
     }
+
+//    public static void main(String[] args) {
+//
+//        GoodsDAO dao = new GoodsDAO();
+//        Product postList = dao.getGoodsById(1);
+//        double a = dao.avgStar(1);
+//        System.out.println(a);
+//        List<Product> list1 = dao.getGoodsSortByDate();
+//        for (Product list : list1) {
+//            System.out.println(list);
+//        }
+//    }
 }
