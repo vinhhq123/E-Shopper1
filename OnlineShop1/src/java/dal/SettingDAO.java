@@ -533,6 +533,7 @@ public class SettingDAO extends DBContext {
         }
         return roles;
     }
+
     public List<Setting> getAllFeedStatus() throws Exception {
 
         List<Setting> settings = new ArrayList<>();
@@ -568,6 +569,7 @@ public class SettingDAO extends DBContext {
 
         return settings;
     }
+
     public List<String> getSettingFeedbackValue() {
         List<String> roles = new ArrayList<>();
         String role = null;
@@ -596,7 +598,7 @@ public class SettingDAO extends DBContext {
         }
         return roles;
     }
-    
+
     public List<Setting> getGoodsCategory() {
         List<Setting> listGoodsCate = new ArrayList<>();
         String query = "select settingId, settingValue from setting where settingType = 5";
@@ -615,5 +617,34 @@ public class SettingDAO extends DBContext {
 
         }
         return listGoodsCate;
+    }
+
+    public List<String> getAllUserTitleValues() {
+        List<String> roles = new ArrayList<>();
+        String role = null;
+        String sql = "select distinct settingValue from setting where settingType = 9;";
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                role = new String();
+                role = results.getString(1);
+                roles.add(role);
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return roles;
     }
 }

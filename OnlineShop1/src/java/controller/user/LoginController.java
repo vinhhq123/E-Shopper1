@@ -5,9 +5,14 @@
  */
 package controller.user;
 
+import dal.SettingDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +38,7 @@ public class LoginController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -49,7 +54,7 @@ public class LoginController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher("./user/Login.jsp").forward(request, response);
-        
+
     }
 
     /**
@@ -65,19 +70,31 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        request.setAttribute("email", email);
+
         UserDAO usr = new UserDAO();
+        SettingDAO settingDAO = new SettingDAO();
         PasswordEncrypt encryptedPass = new PasswordEncrypt();
-        User user = usr.getAccount(email, encryptedPass.generateEncryptedPassword(password));
-        if(user == null){
+        List<String> userTitleValues = new ArrayList<>();
+        User user = null;
+
+        request.setAttribute("email", email);
+
+        try {
+            user = usr.getAccount(email, encryptedPass.generateEncryptedPassword(password));
+            userTitleValues = settingDAO.getAllUserTitleValues();
+        } catch (Exception ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (user == null) {
             String fail = "Login faild, please re-login!";
             request.setAttribute("fail", fail);
             request.getRequestDispatcher("./user/Login.jsp").forward(request, response);
         } else {
             request.getSession().setAttribute("account", user);
+            request.getSession().setAttribute("titles", userTitleValues);
             response.sendRedirect("home");
         }
-        
+
     }
 
     /**

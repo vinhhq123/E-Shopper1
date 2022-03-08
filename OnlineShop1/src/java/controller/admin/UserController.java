@@ -39,7 +39,8 @@ import resources.SendEmail;
  */
 @MultipartConfig(maxFileSize = 16177215)
 @WebServlet(name = "UserController", urlPatterns = {"/user/list", "/user/search",
-    "/user/getUser", "/user/update", "/user/add", "/user/toadd"})
+    "/user/getUser", "/user/update", "/user/add", "/user/toadd",
+    "/user/updateProfile"})
 public class UserController extends HttpServlet {
 
     /**
@@ -88,6 +89,9 @@ public class UserController extends HttpServlet {
                 break;
             case "/user/toadd":
                 toAdd(request, response);
+                break;
+            case "/user/updateProfile":
+                updateProfile(request, response);
                 break;
 
         }
@@ -410,8 +414,8 @@ public class UserController extends HttpServlet {
         SendEmail se = new SendEmail();
         PasswordEncrypt passwordEncrypt = new PasswordEncrypt();
         List<String> roles = new ArrayList<>();
-        
-                switch (role) {
+
+        switch (role) {
             case "admin":
                 convertedRole = 1;
                 break;
@@ -428,7 +432,7 @@ public class UserController extends HttpServlet {
                 convertedRole = 5;
                 break;
         }
-                
+
         // Get session
         HttpSession session = request.getSession();
 
@@ -469,7 +473,7 @@ public class UserController extends HttpServlet {
                 request.getRequestDispatcher("/admin/AddNewUser.jsp").forward(request, response);
             } else {
                 // Insert into Account table with user entered email and default password is 123
-                
+
                 String password = passwordEncrypt.generateEncryptedPassword("123");
                 int checkAddUser = userDAO.addNewUserWithImage(email, name, title,
                         genderbit, phone, address, inputStream, convertedRole, accountStaus, password);
@@ -505,6 +509,66 @@ public class UserController extends HttpServlet {
         request.setAttribute("roles", roles);
         request.getRequestDispatcher("/admin/AddNewUser.jsp").forward(request, response);
 
+    }
+
+    protected void updateProfile(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String error = "";
+        String phone = "";
+        String name = "";
+        String title = "";
+        String address = "";
+        String successMessage = "";
+        int currentUserId = 0;
+        boolean check = true;
+
+        phone = request.getParameter("newMobile");
+        name = request.getParameter("newFullname").trim();
+        title = request.getParameter("newTitle");
+        address = request.getParameter("newAddress").trim();
+        currentUserId = Integer.parseInt(request.getParameter("currentUserId"));
+
+        // Input stream of the upload file
+        InputStream inputStream = null;
+        // Obtains the upload file
+        // part in this multipart request
+        Part filePart = request.getPart("image");
+
+        if (filePart.getSize() != 0) {
+            System.out.println(filePart.getName());
+            System.out.println(filePart.getSize());
+            System.out.println(filePart.getContentType());
+            // Obtains input stream of the upload file
+            inputStream = filePart.getInputStream();
+        } else {
+            inputStream = null;
+        }
+
+        System.out.println(name + " " + phone + " " + title + " " + address + " " + currentUserId);
+//        UserDAO userDAO = new UserDAO();
+//        try {
+//            response.setContentType("text/html");
+//            PrintWriter out = response.getWriter();
+//            int checkUpdateUserProfile = userDAO.updateUserProfile(name, title, phone, address,
+//                    inputStream, currentUserId);
+//            if (checkUpdateUserProfile > 0) {
+//                out.print("Update information successfully .");
+//            } else {
+//                out.print("Unexpected error occurs. Please try again later !!!");
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        if (check) {
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+            out.print("OK");
+        } else {
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+            out.print("Invalid !!!");
+        }
     }
 
 }

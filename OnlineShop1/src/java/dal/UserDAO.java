@@ -114,7 +114,7 @@ public class UserDAO extends DBContext {
         }
         return null;
     }
-    
+
     public int ChangePass(String pass, String email) throws SQLException {
         String sql = "UPDATE onlineshop1.user\n"
                 + "SET password = ?\n"
@@ -163,9 +163,10 @@ public class UserDAO extends DBContext {
         }
     }
 
-    public User getAccount(String email, String password) {
+    public User getAccount(String email, String password) throws Exception {
+        String noImage = "";
         try {
-            String sql = "SELECT role,email, password ,fullname,uid FROM user WHERE email = ? and password = ?";
+            String sql = "SELECT title,phone,address,avatar,role,email, password ,fullname,uid FROM user WHERE email = ? and password = ?";
             connection = getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, email);
@@ -178,6 +179,34 @@ public class UserDAO extends DBContext {
                 user.setFullname(results.getString("fullname"));
                 user.setUid(results.getInt("uid"));
                 user.setRole(results.getInt("role"));
+
+                Blob blob = results.getBlob("avatar");
+                if (blob != null) {
+
+                    InputStream inputStream = blob.getBinaryStream();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                    inputStream.close();
+                    outputStream.close();
+                    user.setAvatar(base64Image);
+                } else {
+                    user.setAvatar(noImage);
+                }
+
+                user.setEmail(results.getString("email"));
+                user.setPhone(results.getString("phone"));
+                user.setTitle(results.getString("title"));
+                user.setAddress(results.getString("address"));
+
                 return user;
             }
 
@@ -207,7 +236,7 @@ public class UserDAO extends DBContext {
         }
         return null;
     }
-    
+
     public int getNumberOfRows() throws Exception {
 
         int rows = 0;
@@ -434,10 +463,7 @@ public class UserDAO extends DBContext {
         }
         return row;
     }
-    
-    
-    
-    
+
     public int addNewUserWithImage(String email, String fullname, String title, boolean gender,
             String phone, String address, InputStream avatar, int role, int userStatus, String password) throws SQLException {
         String sql = "INSERT INTO user (email,fullname, title, gender, phone, address, "
@@ -862,6 +888,45 @@ public class UserDAO extends DBContext {
             }
         }
         return users;
+    }
+
+    public int updateUserProfile(String fullname, String title, String phone,
+            String address, InputStream avatar, int uid) throws SQLException {
+        String sql = "UPDATE user \n"
+                + "SET fullname = ?,title = ? ,phone = ?,address = ? ";
+        int row = 0;
+        if (avatar != null) {
+            sql += " ,avatar = ? WHERE uid = ?;";
+        } else {
+            sql += " WHERE uid = ?;";
+        }
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, fullname);
+            preparedStatement.setString(2, title);
+            preparedStatement.setString(3, phone);
+            preparedStatement.setString(4, address);
+            if (avatar != null) {
+                preparedStatement.setBlob(5, avatar);
+                preparedStatement.setInt(6, uid);
+            } else {
+                preparedStatement.setInt(5, uid);
+            }
+            row = preparedStatement.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return row;
     }
 
 }
