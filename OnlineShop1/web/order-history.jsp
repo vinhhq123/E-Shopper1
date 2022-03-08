@@ -155,7 +155,7 @@
                     <div class="row">
 
                         <div class="search_box pull-right">
-                            <form action="search" method="post">
+                            <form action="<%=request.getContextPath()%>/blog/search" method="post">
                                 <input value="${searchValue}" name="search" type="text" placeholder="Search Post Title"/>
                             </form>
                         </div>
@@ -165,11 +165,11 @@
                             <h2>Post Category</h2>
                             <div class="brands-name">
                                 <ul class="nav nav-pills nav-stacked" style="text-align: center">
-                                    <!--                                    <c:forEach items="${listPostCate}" var="o">
-                                                                            <li><a href="<%=request.getContextPath()%>/blog/cate?id=${o.settingId}">${o.settingValue}</a></li>
-                                    </c:forEach>-->
-                                    <li><a href="<%=request.getContextPath()%>/blog/cate?id=${o.settingId}">Marketing</a></li>
-                                    <li><a href="<%=request.getContextPath()%>/blog/cate?id=${o.settingId}">Promoted</a></li>
+                                    <c:forEach items="${PostCategories}" var="pct">
+                                        <li><a href="<%=request.getContextPath()%>/blog/cate?id=${pct.settingId}">${pct.settingValue}</a></li>
+                                        </c:forEach>
+<!--                                    <li><a href="<%=request.getContextPath()%>/blog/cate?id=${o.settingId}">Marketing</a></li>
+                                    <li><a href="<%=request.getContextPath()%>/blog/cate?id=${o.settingId}">Promoted</a></li>-->
                                 </ul>
                             </div>
                             <hr>    

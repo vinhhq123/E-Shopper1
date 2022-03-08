@@ -647,4 +647,24 @@ public class SettingDAO extends DBContext {
         }
         return roles;
     }
+
+    public List<Setting> getAllBlogCategory() {
+        List<Setting> listPostCate = new ArrayList<>();
+        String query = "select settingId, settingValue from setting where settingType = 3";
+        try {
+            connection = new DBContext().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                // PostList p = new PostList();
+                Setting s = new Setting(results.getInt("settingId"), results.getString("settingValue"));
+
+                listPostCate.add(s);
+            }
+        } catch (Exception e) {
+
+        }
+        return listPostCate;
+    }
 }
