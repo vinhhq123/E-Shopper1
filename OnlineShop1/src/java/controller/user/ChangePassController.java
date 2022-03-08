@@ -74,37 +74,40 @@ public class ChangePassController extends HttpServlet {
             String reNewPass = request.getParameter("reNewPass");
             Validate validate = new Validate();
             PasswordEncrypt encryptedPass = new PasswordEncrypt();
+        try {
             //request.setAttribute("mailValue", email);
             request.setAttribute("curPassValue", curPass);
             request.setAttribute("newPassValue", newPass);
             request.setAttribute("reNewPassValue", reNewPass);
-            try {
-                if(usr.getAccount(email, encryptedPass.generateEncryptedPassword(curPass))==null){
-                    String fail1 = "This is not your current password!";
-                    request.setAttribute("fail1", fail1);
-                    request.getRequestDispatcher("./user/ChangePassword.jsp").forward(request, response);
-                }
-                else if(validate.checkPassword(newPass)== false)
-                {
-                    String fail2 = "Password must be at least 6 characters including at least one lowercase letter, one uppercase letter, one number and one special character!";
-                    request.setAttribute("fail2", fail2);
-                    request.getRequestDispatcher("./user/ChangePassword.jsp").forward(request, response);
-                }
-                else if(!newPass.equals(reNewPass)){
-                    String fail3 = "Password and RePassword are not matched!";
-                    request.setAttribute("fail3", fail3);
-                    request.getRequestDispatcher("./user/ChangePassword.jsp").forward(request, response);
-                }
-                else{
-                    int changePass = usr.ChangePass(encryptedPass.generateEncryptedPassword(newPass), email);
-                    if(changePass > 0){
-                        successMessage = "You have successfully changed your password!";
-                        session.setAttribute("successMessage", successMessage);
-                        request.getRequestDispatcher("./user/ChangePassword.jsp").forward(request, response);
-                    }
-                }       } catch (Exception ex) {
-                    Logger.getLogger(ChangePassController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            if(usr.getAccount(email, encryptedPass.generateEncryptedPassword(curPass))==null){
+                String fail1 = "This is not your current password!";
+                request.setAttribute("fail1", fail1);
+                request.getRequestDispatcher("./user/ChangePassword.jsp").forward(request, response);
+            }
+           else if(validate.checkPassword(newPass)== false)
+            {
+                String fail2 = "Password must be at least 6 characters including at least one lowercase letter, one uppercase letter, one number and one special character!";
+                request.setAttribute("fail2", fail2);
+                request.getRequestDispatcher("./user/ChangePassword.jsp").forward(request, response);
+            }
+            else if(!newPass.equals(reNewPass)){
+                String fail3 = "Password and RePassword are not matched!";
+                request.setAttribute("fail3", fail3);
+                request.getRequestDispatcher("./user/ChangePassword.jsp").forward(request, response);
+            }
+            else{
+            int changePass = usr.ChangePass(encryptedPass.generateEncryptedPassword(newPass), email);
+                if(changePass > 0){
+                    successMessage = "You have successfully changed your password!";
+                    session.setAttribute("successMessage", successMessage);
+                    request.getRequestDispatcher("./user/ChangePassword.jsp").forward(request, response);    
+            }
+        }
+        } catch (SQLException ex) {
+            Logger.getLogger(ChangePassController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ChangePassController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
