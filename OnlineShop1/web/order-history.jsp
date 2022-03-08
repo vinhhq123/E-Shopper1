@@ -197,5 +197,6 @@
         <script src="${pageContext.request.contextPath}/assets/js/price-range.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/jquery.prettyPhoto.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
+        <script src="${pageContext.request.contextPath}/admin/js/userProfile.js" type="text/javascript"></script>
     </body>
 </html>

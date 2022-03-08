@@ -522,6 +522,7 @@ public class UserController extends HttpServlet {
         String successMessage = "";
         int currentUserId = 0;
         boolean check = true;
+        User afterUpdated = new User();
 
         phone = request.getParameter("newMobile");
         name = request.getParameter("newFullname").trim();
@@ -546,29 +547,37 @@ public class UserController extends HttpServlet {
         }
 
         System.out.println(name + " " + phone + " " + title + " " + address + " " + currentUserId);
-//        UserDAO userDAO = new UserDAO();
-//        try {
+        UserDAO userDAO = new UserDAO();
+        try {
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+            int checkUpdateUserProfile = userDAO.updateUserProfile(name, title, phone, address,
+                    inputStream, currentUserId);
+            if (checkUpdateUserProfile > 0) {
+                try {
+                    afterUpdated = userDAO.getUserByUserId(currentUserId);
+                } catch (Exception ex) {
+                    Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println("Exception Get User after update ====== " + ex);
+                }
+                request.getSession().setAttribute("account", afterUpdated);
+                out.print("Your profile has been updated");
+            } else {
+                out.print("Unexpected error occurs. Please try again later !!!");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Exception Update user profile ====== " + ex);
+        }
+//        if (check) {
 //            response.setContentType("text/html");
 //            PrintWriter out = response.getWriter();
-//            int checkUpdateUserProfile = userDAO.updateUserProfile(name, title, phone, address,
-//                    inputStream, currentUserId);
-//            if (checkUpdateUserProfile > 0) {
-//                out.print("Update information successfully .");
-//            } else {
-//                out.print("Unexpected error occurs. Please try again later !!!");
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+//            out.print("OK");
+//        } else {
+//            response.setContentType("text/html");
+//            PrintWriter out = response.getWriter();
+//            out.print("Invalid !!!");
 //        }
-        if (check) {
-            response.setContentType("text/html");
-            PrintWriter out = response.getWriter();
-            out.print("OK");
-        } else {
-            response.setContentType("text/html");
-            PrintWriter out = response.getWriter();
-            out.print("Invalid !!!");
-        }
     }
 
 }
