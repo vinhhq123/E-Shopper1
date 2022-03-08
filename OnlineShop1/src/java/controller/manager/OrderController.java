@@ -788,6 +788,7 @@ public class OrderController extends HttpServlet {
         List<Order> orders = new ArrayList<>();
         List<Product> featuredProducts = new ArrayList<>();
         List<String> orderStatuses = new ArrayList<>();
+        List<Setting> postCategories = new ArrayList<>();
         User user = new User();
         // Get session
         HttpSession session = request.getSession();
@@ -798,12 +799,14 @@ public class OrderController extends HttpServlet {
             orderStatuses = settingDAO.getSettingOrderValue();
             orders = orderDAO.filterCustomerOrders(dateFrom, dateTo, orderStatus, currentCustomerId);
             featuredProducts = productDAO.getFiveFeaturedProducts();
+            postCategories = settingDAO.getAllBlogCategory();
 
             request.setAttribute("CustomerOrders", orders);
             request.setAttribute("OrderStatuses", orderStatuses);
             request.setAttribute("valueCStatus", status);
             request.setAttribute("valueCFrom", dateFrom);
             request.setAttribute("valueCTo", dateTo);
+            request.setAttribute("PostCategories", postCategories);
             request.setAttribute("FeaturedProducts", featuredProducts);
             request.getRequestDispatcher("/order-history.jsp").forward(request, response);
         } catch (Exception ex) {
