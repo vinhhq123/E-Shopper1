@@ -68,7 +68,7 @@
                                                 <div class="form-group" style="margin-right:12px;">
                                                 <select class="select" aria-label="Default select example" name="role" style="height: 30px">
                                                         <c:if test="${empty valueRole}">
-                                                            <option selected value="">Rate Star</option>
+                                                            <option selected value="">All Rate Star</option>
                                                             <option value="1">1 Star</option>
                                                             <option value="2">2 Star</option>
                                                             <option value="3">3 Star</option>

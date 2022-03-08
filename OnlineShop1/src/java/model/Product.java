@@ -29,6 +29,7 @@ public class Product {
     private Setting cate;
     private double ratedStars;
     private int views;
+    
 
     public Product() {
 
