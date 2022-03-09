@@ -3,13 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/web/blog.jsp</file>
-            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/dal/SettingDAO.java</file>
-            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/dal/PostDAO.java</file>
             <file>file:/D:/SWP/Iter2/g6/OnlineShop1/web/order-history.jsp</file>
+            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/dal/OrderDAO.java</file>
             <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/controller/manager/OrderController.java</file>
             <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/controller/admin/UserController.java</file>
-            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/controller/marketing/BlogController.java</file>
+            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/web/header.jsp</file>
             <file>file:/D:/SWP/Iter2/g6/OnlineShop1/web/admin/js/userProfile.js</file>
         </group>
     </open-files>

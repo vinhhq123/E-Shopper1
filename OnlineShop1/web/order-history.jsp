@@ -43,13 +43,13 @@
                         <form class="form-inline" role="form" action="<%=request.getContextPath()%>/order/filterCustomerOrders">
                             <div class="form-group" style="margin-right:12px;">
                                 <label for="fromC" class="sr-only"><b>From </b></label>
-                                <input type="text" class="form-control" id="fromC" name="customerFrom" 
-                                       placeholder="From Order Time" onfocus="(this.type = 'date')" value="${requestScope.valueCFrom}" >
+                                <input type="date" class="form-control" id="fromC" name="customerFrom" 
+                                       placeholder="From Order Time"  value="${requestScope.valueCFrom}" >
                             </div>
                             <div class="form-group" style="margin-right:12px;">
                                 <label for="toC" class="sr-only"><b>To </b></label>
-                                <input type="text" class="form-control" id="toC" name="customerTo"
-                                       placeholder="To Order Time" onfocus="(this.type = 'date')" value="${requestScope.valueCTo}">
+                                <input type="date" class="form-control" id="toC" name="customerTo"
+                                       placeholder="To Order Time" value="${requestScope.valueCTo}">
                             </div>
                             <div class="form-group" style="margin-right:8px;">
                                 <select class="select" aria-label="Default select example" name="status" style="height: 30px">
@@ -199,5 +199,6 @@
         <script src="${pageContext.request.contextPath}/assets/js/jquery.prettyPhoto.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
         <script src="${pageContext.request.contextPath}/admin/js/userProfile.js" type="text/javascript"></script>
+
     </body>
 </html>

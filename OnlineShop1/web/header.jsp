@@ -102,16 +102,16 @@
                             </ul>
                         </div>
                     </div>
-                    <form action="<%=request.getContextPath()%>/blog/search" method="post">
+<!--                    <form action="<%=request.getContextPath()%>/blog/search" method="post">
                         <div class="col-sm-3">
                             <div class="search_box pull-right">
                                 <input value="${searchValue}" name="search" type="text" placeholder="Search"/>
-                                <!--                            <button type="submit">
+                                                            <button type="submit">
                                                                 <i class="fa fa-search"></i>
-                                                            </button>-->
+                                                            </button>
                             </div>
                         </div>
-                    </form>
+                    </form>-->
 
                 </div>
             </div>
