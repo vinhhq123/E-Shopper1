@@ -829,11 +829,11 @@ public class OrderController extends HttpServlet {
             if (check > 0) {
                 String message = "Cancel Order Susscessfully .";
                 session.setAttribute("messageCancelOrder", message);
-                response.sendRedirect("order/getCustomerOrders");
+                response.sendRedirect("getCustomerOrders");
             } else {
                 String messageFail = "Unexpected error occurs.Please try again later";
                 session.setAttribute("messageCancelOrder", messageFail);
-                response.sendRedirect("order/getCustomerOrders");
+                response.sendRedirect("getCustomerOrders");
             }
         } catch (SQLException ex) {
             System.out.println("Exception cancel User order ===== " + ex);

@@ -37,7 +37,7 @@
             <div class="container">
                 <div class="col-sm-8">
                     <div class="page-title">
-                        <h1>Order History</h1>
+                        <h2 class="title text-center">Order History</h2>
                     </div>
                     <div class="panel-body table-responsive">
                         <form class="form-inline" role="form" action="<%=request.getContextPath()%>/order/filterCustomerOrders">
@@ -105,9 +105,10 @@
                                     </td>  
                                     <td align="right">
                                         <c:if test="${cos.getOrderStatus() == 25}">
-                                            <button type="button" class="btn-xs btn-danger" onclick="window.location = '<%=request.getContextPath()%>/">Cancel</button>
+                                            <button type="button" class="btn-xs btn-danger" onclick="if (confirm('Do you want to cancel this order?'))
+                                                window.location = '<%=request.getContextPath()%>/order/cancelCustomerOrder?orderId=${cos.getOrderId()}'">Cancel</button>
                                         </c:if>
-                                        <button type="button" class="btn-xs btn-default" style="background: #FE980F;  color: #FFFFFF;"  onclick="window.location = '<%=request.getContextPath()%>/">View</button>
+                                        <button type="button" class="btn-xs btn-default" style="background: #FE980F;  color: #FFFFFF;"  onclick="window.location = '<%=request.getContextPath()%>/'">View</button>
                                     </td>
 
                                 </tr>
