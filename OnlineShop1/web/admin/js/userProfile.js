@@ -14,6 +14,7 @@ $(document).ready(function () {
         var imageV = $('#file').val();
 //            var formData = $("#editProfile").serialize(); //Lấy tất cả data trong form
         var formData = document.getElementById('editProfile');
+//        var url = "http://localhost:8080/OnlineShop1/user/updateProfile";
         console.log(imageV);
         $.ajax({
             type: 'POST',

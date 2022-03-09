@@ -166,7 +166,7 @@
                             <div class="brands-name">
                                 <ul class="nav nav-pills nav-stacked" style="text-align: center">
                                     <c:forEach items="${PostCategories}" var="pct">
-                                        <li><a href="<%=request.getContextPath()%>/blog/cate?id=${pct.settingId}">${pct.settingValue}</a></li>
+                                        <li><a href="<%=request.getContextPath()%>/blog/cate?id=${pct.settingId}"><b>${pct.settingValue}</b></a></li>
                                         </c:forEach>
 <!--                                    <li><a href="<%=request.getContextPath()%>/blog/cate?id=${o.settingId}">Marketing</a></li>
                                     <li><a href="<%=request.getContextPath()%>/blog/cate?id=${o.settingId}">Promoted</a></li>-->
@@ -177,7 +177,7 @@
                             <div class="brands-name">
                                 <ul style="text-align: center;padding-right: 10%;">
                                     <c:forEach items="${FeaturedProducts}" var="fps">
-                                        <li><a href="#" target="_blank">
+                                        <li><a href="<%=request.getContextPath()%>/goods/detail?pid=${fps.getPid()}" target="_blank">
                                                 <img src="data:image/jpg;base64,${fps.getThumbnail()}" alt="Product Image" style="width:210px;height: 220px;" class="features_items_img">
                                             </a>
                                             <p>${fps.getTitle()}</p>
