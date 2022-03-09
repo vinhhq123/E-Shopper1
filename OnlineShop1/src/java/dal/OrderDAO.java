@@ -328,8 +328,8 @@ public class OrderDAO extends DBContext {
 
     public int cancelCustomerOrder(int orderId) throws SQLException {
 
-        String sql = "UPDATE `onlineshop1`.`orders`\n"
-                + " SET orderStatus` = 22, lastUpdated = CURDATE() "
+        String sql = "UPDATE orders\n"
+                + " SET orderStatus = 22, lastUpdated = CURDATE() "
                 + " WHERE `orderId` = ? ;";
 
         int row = 0;

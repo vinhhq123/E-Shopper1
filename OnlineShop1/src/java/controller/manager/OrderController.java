@@ -736,6 +736,7 @@ public class OrderController extends HttpServlet {
 
         } catch (Exception ex) {
             Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
+            request.getRequestDispatcher("/error500.jsp").forward(request, response);
             System.out.println("Exception ===== " + ex);
         }
 
@@ -811,6 +812,7 @@ public class OrderController extends HttpServlet {
             request.getRequestDispatcher("/order-history.jsp").forward(request, response);
         } catch (Exception ex) {
             System.out.println("Exception Filter Customer Orders ===== " + ex);
+            request.getRequestDispatcher("/error500.jsp").forward(request, response);
         }
     }
 
@@ -827,14 +829,15 @@ public class OrderController extends HttpServlet {
             if (check > 0) {
                 String message = "Cancel Order Susscessfully .";
                 session.setAttribute("messageCancelOrder", message);
-                response.sendRedirect("order/getCustomerOrders");
+                response.sendRedirect("getCustomerOrders");
             } else {
                 String messageFail = "Unexpected error occurs.Please try again later";
                 session.setAttribute("messageCancelOrder", messageFail);
-                response.sendRedirect("order/getCustomerOrders");
+                response.sendRedirect("getCustomerOrders");
             }
         } catch (SQLException ex) {
             System.out.println("Exception cancel User order ===== " + ex);
+            request.getRequestDispatcher("/error500.jsp").forward(request, response);
         }
     }
 }

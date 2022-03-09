@@ -37,19 +37,19 @@
             <div class="container">
                 <div class="col-sm-8">
                     <div class="page-title">
-                        <h1>Order History</h1>
+                        <h2 class="title text-center">Order History</h2>
                     </div>
                     <div class="panel-body table-responsive">
                         <form class="form-inline" role="form" action="<%=request.getContextPath()%>/order/filterCustomerOrders">
                             <div class="form-group" style="margin-right:12px;">
                                 <label for="fromC" class="sr-only"><b>From </b></label>
-                                <input type="text" class="form-control" id="fromC" name="customerFrom" 
-                                       placeholder="From Order Time" onfocus="(this.type = 'date')" value="${requestScope.valueCFrom}" >
+                                <input type="date" class="form-control" id="fromC" name="customerFrom" 
+                                       placeholder="From Order Time"  value="${requestScope.valueCFrom}" >
                             </div>
                             <div class="form-group" style="margin-right:12px;">
                                 <label for="toC" class="sr-only"><b>To </b></label>
-                                <input type="text" class="form-control" id="toC" name="customerTo"
-                                       placeholder="To Order Time" onfocus="(this.type = 'date')" value="${requestScope.valueCTo}">
+                                <input type="date" class="form-control" id="toC" name="customerTo"
+                                       placeholder="To Order Time" value="${requestScope.valueCTo}">
                             </div>
                             <div class="form-group" style="margin-right:8px;">
                                 <select class="select" aria-label="Default select example" name="status" style="height: 30px">
@@ -105,9 +105,10 @@
                                     </td>  
                                     <td align="right">
                                         <c:if test="${cos.getOrderStatus() == 25}">
-                                            <button type="button" class="btn-xs btn-danger" onclick="window.location = '<%=request.getContextPath()%>/">Cancel</button>
+                                            <button type="button" class="btn-xs btn-danger" onclick="if (confirm('Do you want to cancel this order?'))
+                                                window.location = '<%=request.getContextPath()%>/order/cancelCustomerOrder?orderId=${cos.getOrderId()}'">Cancel</button>
                                         </c:if>
-                                        <button type="button" class="btn-xs btn-default" style="background: #FE980F;  color: #FFFFFF;"  onclick="window.location = '<%=request.getContextPath()%>/">View</button>
+                                        <button type="button" class="btn-xs btn-default" style="background: #FE980F;  color: #FFFFFF;"  onclick="window.location = '<%=request.getContextPath()%>/'">View</button>
                                     </td>
 
                                 </tr>
@@ -166,7 +167,7 @@
                             <div class="brands-name">
                                 <ul class="nav nav-pills nav-stacked" style="text-align: center">
                                     <c:forEach items="${PostCategories}" var="pct">
-                                        <li><a href="<%=request.getContextPath()%>/blog/cate?id=${pct.settingId}">${pct.settingValue}</a></li>
+                                        <li><a href="<%=request.getContextPath()%>/blog/cate?id=${pct.settingId}"><b>${pct.settingValue}</b></a></li>
                                         </c:forEach>
 <!--                                    <li><a href="<%=request.getContextPath()%>/blog/cate?id=${o.settingId}">Marketing</a></li>
                                     <li><a href="<%=request.getContextPath()%>/blog/cate?id=${o.settingId}">Promoted</a></li>-->
@@ -177,7 +178,7 @@
                             <div class="brands-name">
                                 <ul style="text-align: center;padding-right: 10%;">
                                     <c:forEach items="${FeaturedProducts}" var="fps">
-                                        <li><a href="#" target="_blank">
+                                        <li><a href="<%=request.getContextPath()%>/goods/detail?pid=${fps.getPid()}" target="_blank">
                                                 <img src="data:image/jpg;base64,${fps.getThumbnail()}" alt="Product Image" style="width:210px;height: 220px;" class="features_items_img">
                                             </a>
                                             <p>${fps.getTitle()}</p>
@@ -198,5 +199,6 @@
         <script src="${pageContext.request.contextPath}/assets/js/jquery.prettyPhoto.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
         <script src="${pageContext.request.contextPath}/admin/js/userProfile.js" type="text/javascript"></script>
+
     </body>
 </html>
