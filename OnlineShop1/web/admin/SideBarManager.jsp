@@ -55,11 +55,7 @@
                     </a>
                 </li>
                 
-                <li>
-                    <a href="<%=request.getContextPath()%>/slider/detail">
-                        <i class="fa fa-paperclip"></i> <span>Slider Detail</span>
-                    </a>
-                </li>
+                
 
                 <li>
                     <a href="basic_form.html">

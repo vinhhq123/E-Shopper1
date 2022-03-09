@@ -105,6 +105,8 @@ public class ChangePassController extends HttpServlet {
         }
         } catch (SQLException ex) {
             Logger.getLogger(ChangePassController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ChangePassController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
