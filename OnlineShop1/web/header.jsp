@@ -3,7 +3,7 @@
 
 <!-- Import css for image -->
 <link href="${pageContext.request.contextPath}/admin/css/UserDetail.css" rel="stylesheet">
-<script src="${pageContext.request.contextPath}/assets/js/jquery.js"></script>
+
 <header id="header"><!--header-->
 
 
@@ -117,89 +117,137 @@
             </div>
         </div> <!--header-bottom-->
         <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal-2" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                    <h4 class="modal-title">User Profile</h4>
-                </div>
-                <div class="modal-body">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                        <h4 class="modal-title">User Profile</h4>
+                    </div>
+                    <div class="modal-body">
 
-                    <form class="form-horizontal" role="form" method="POST"  name="editProfile" id="editProfile"  enctype="multipart/form-data" >
-<!--                        action="<%=request.getContextPath()%>/user/updateProfile" method="POST"-->
-                        <h4 class="help-block" style="color: green;padding-left: 40px;" id="successEditMessage"></h4>
-                        <div class="form-group">
-                            <label for="avatar" class="col-lg-2 col-sm-2 control-label">Avatar</label>
-                            <div class="col-lg-10">
-                                <div class="profile-pic">
-                                    <label class="-label" for="file">
-                                        <c:if test="${ not empty account.avatar}">
-                                            <img src="data:image/jpg;base64,${account.avatar}" id="output" width="200" />
-                                        </c:if>
-                                        <c:if test="${empty account.avatar}">
-                                            <img src="${pageContext.request.contextPath}/admin/img/user-bg.png" id="output" width="200" alt="default image"/>
-                                        </c:if>
-                                    </label>
-                                    <input id="file" type="file" onchange="loadFile(event)" name="image"/>
+                        <form class="form-horizontal" role="form" method="POST"  name="editProfile" id="editProfile"  enctype="multipart/form-data" >
+    <!--                        action="<%=request.getContextPath()%>/user/updateProfile" method="POST"-->
+                            <h4 class="help-block" style="color: green;padding-left: 40px;" id="successEditMessage"></h4>
+                            <div class="form-group">
+                                <label for="avatar" class="col-lg-2 col-sm-2 control-label">Avatar</label>
+                                <div class="col-lg-10">
+                                    <div class="profile-pic">
+                                        <label class="-label" for="file">
+                                            <c:if test="${ not empty account.avatar}">
+                                                <img src="data:image/jpg;base64,${account.avatar}" id="output" width="200" />
+                                            </c:if>
+                                            <c:if test="${empty account.avatar}">
+                                                <img src="${pageContext.request.contextPath}/admin/img/user-bg.png" id="output" width="200" alt="default image"/>
+                                            </c:if>
+                                        </label>
+                                        <input id="file" type="file" onchange="loadFile(event)" name="image"/>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="email" class="col-lg-2 col-sm-2 control-label">Email<span style="color:#ff0000"> (*)</span></label>
-                            <div class="col-lg-10">
-                                <input type="text" class="form-control" id="email" readonly value="${account.email}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="newFullname" class="col-lg-2 col-sm-2 control-label">Fullname<span style="color:#ff0000">(*)</span></label>
-                            <div class="col-lg-10">
-                                <input type="text" class="form-control" id="newFullname" placeholder="Fullname" name="newFullname" title="Fullname contains characters only" required maxlength="50" value="${account.fullname}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="newTitle" class="col-lg-2 col-sm-2 control-label">Title<span style="color:#ff0000"> (*)</span></label>
-                            <div class="col-lg-10">
-                                <c:forEach items="${titles}" var="til">
-                                    <div class="radio-inline">
-                                    <label>
-                                        <input type="radio" name="newTitle" id="optionsRadios5" value="<c:out value="${til}" />" 
-                                               <c:if test="${til == account.title}">checked</c:if>>
-                                        <c:out value="${til}" />
-                                    </label>
+                            <div class="form-group">
+                                <label for="email" class="col-lg-2 col-sm-2 control-label">Email<span style="color:#ff0000"> (*)</span></label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="email" readonly value="${account.email}">
                                 </div>
-                                </c:forEach>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="newMobile" class="col-lg-2 col-sm-2 control-label">Mobile<span style="color:#ff0000"> (*)</span></label>
-                            <div class="col-lg-10">
-                                <input type="text" class="form-control" id="newMobile" placeholder="Mobile" 
-                                       name="newMobile" pattern="[0-9]{10}" title="Phone contains numbers only" required maxlength="10" value="${account.phone}">
+                            <div class="form-group">
+                                <label for="newFullname" class="col-lg-2 col-sm-2 control-label">Fullname<span style="color:#ff0000">(*)</span></label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="newFullname" placeholder="Fullname" name="newFullname" title="Fullname contains characters only" required maxlength="50" value="${account.fullname}">
+                                    <p class="help-block" style="color: red" id="errorFullName"></p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="newAddress" class="col-lg-2 col-sm-2 control-label">Address<span style="color:#ff0000">(*)</span></label>
-                            <div class="col-lg-10">
-                                <input type="text" class="form-control" id="newAddress" placeholder="Address" name="newAddress" 
-                                       title="Address cannot be null" required maxlength="200" value="${account.address}">
+                            <div class="form-group">
+                                <label for="newTitle" class="col-lg-2 col-sm-2 control-label">Title<span style="color:#ff0000"> (*)</span></label>
+                                <div class="col-lg-10">
+                                    <c:forEach items="${titles}" var="til">
+                                        <div class="radio-inline">
+                                            <label>
+                                                <input type="radio" name="newTitle" id="optionsRadios5" value="<c:out value="${til}" />" 
+                                                       <c:if test="${til == account.title}">checked</c:if>>
+                                                <c:out value="${til}" />
+                                            </label>
+                                        </div>
+                                    </c:forEach>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-lg-offset-2 col-lg-10">
-                                <button type="button" class="btn btn-default get" id="saveC">Save changes</button>
+                            <div class="form-group">
+                                <label for="newMobile" class="col-lg-2 col-sm-2 control-label">Mobile<span style="color:#ff0000"> (*)</span></label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="newMobile" placeholder="Mobile" 
+                                           name="newMobile" pattern="[0-9]{10}" title="Phone contains numbers only" required maxlength="10" value="${account.phone}">
+                                    <p class="help-block" style="color: red" id="errorPhone"></p>
+                                </div>
                             </div>
-                        </div>
-                        <input type="hidden" name="currentUserId" value="${account.uid}" id="currentUserId">
-                    </form>
+                            <div class="form-group">
+                                <label for="newAddress" class="col-lg-2 col-sm-2 control-label">Address<span style="color:#ff0000">(*)</span></label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="newAddress" placeholder="Address" name="newAddress" 
+                                           title="Address cannot be null" required maxlength="200" value="${account.address}">
+                                    <p class="help-block" style="color: red" id="errorAddress"></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-offset-2 col-lg-10">
+                                    <button type="button" class="btn btn-default get" id="saveC">Save changes</button>
+                                </div>
+                            </div>
+                            <input type="hidden" name="currentUserId" value="${account.uid}" id="currentUserId">
+                        </form>
+
+                    </div>
 
                 </div>
-
             </div>
         </div>
-    </div>
 </header> 
-                                
+<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
 <!-- User Detail -->
 <script src="${pageContext.request.contextPath}/admin/js/UserDetail.js" type="text/javascript"></script>
 <!-- User Profile -->
 <script src="${pageContext.request.contextPath}/admin/js/userProfile.js" type="text/javascript"></script>
+<!--<script>
+    $(document).ready(function () {
+    $('#editProfile').validate({
+       rules:{
+           newFullname : {required : true,maxlength : 50},
+           newMobile :{required : true,length : 50},
+           newAddress: {required : true,length : 200}
+           
+       },
+       submitHandler: function (form){
+           console.log('HEREEEEEEE');
+       } 
+    });
+     });
+                
+
+//        $('#saveC').click(function () {
+////            var fullname = $('#newFullname').val();
+////            var title = $('#optionsRadios5').val();
+////            var phone = $('#newMobile').val();
+////            var address = $('#newAddress').val();
+////            var uId = $('#currentUserId').val();
+//        var imageV = $('#file').val();
+////            var formData = $("#editProfile").serialize(); //Lấy tất cả data trong form
+//        var formData = document.getElementById('editProfile');
+////        var url = "http://localhost:8080/OnlineShop1/user/updateProfile";
+//        console.log(imageV);
+//        $.ajax({
+//            type: 'POST',
+//            enctype: 'multipart/form-data',
+//            data: new FormData(formData),
+//            url: 'user/updateProfile',
+//            processData: false,
+//            contentType: false,
+//            success: function (result) {
+//                $('#successEditMessage').html(result);
+//            },
+//            error: function (result) {
+//                $("#successEditMessage").html(result);
+//            }
+//
+//        });
+//    });
+</script>-->
