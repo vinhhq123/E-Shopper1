@@ -110,106 +110,76 @@ public class Author implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         String url = httpRequest.getRequestURI() + "?" + httpRequest.getQueryString();
-        System.out.println(url + "teeeeeeeee");
         HttpSession session = httpRequest.getSession();
         User user = (User) session.getAttribute("account");
         if (url.contains("post") || url.contains("setting") || url.contains("slider")
                 || url.contains("product") || url.contains("customer") || url.contains("feedback") || url.contains("order")
                 || url.contains("setting") || url.contains("user")) {
-            System.out.println("lalalala");
             if (user == null) {
                 httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
-                
+
             } else {
-                if (url.contains("updateProfile")){
+                if (url.contains("updateProfile")) {
                     chain.doFilter(request, response);
-                } else if (url.contains("getproduct")){
+                } else if (url.contains("getproduct")) {
                     chain.doFilter(request, response);
-                } else if (url.contains("CustomerOrder")){
+                } else if (url.contains("CustomerOrder")) {
                     chain.doFilter(request, response);
                 } else if (url.contains("setting/list")) {
-                    //co
-                    if (user.getRole() == 3 ||user.getRole() == 4 || user.getRole() == 2 || user.getRole() == 1) {
-                        System.out.println("lxlxlxlxlxlx");
+                    if (user.getRole() == 3 || user.getRole() == 4 || user.getRole() == 2 || user.getRole() == 1) {
                         chain.doFilter(request, response);
                     } else {
                         request.getRequestDispatcher("/admin/404.jsp").forward(request, response);
                     }
-                    //
-                }
-                else if (url.contains("setting")) {
-                    //co
+                } else if (url.contains("setting")) {
                     if (user.getRole() == 1) {
-                        System.out.println("lxlxlxlxlxlx");
                         chain.doFilter(request, response);
                     } else {
                         request.getRequestDispatcher("/admin/404.jsp").forward(request, response);
                     }
-                    //
-                } else if (url.contains("slider")){
-                    //co
+                } else if (url.contains("slider")) {
                     if (user.getRole() == 4 || user.getRole() == 2 || user.getRole() == 1) {
-                        System.out.println("lxlxlxlxlxlx");
                         chain.doFilter(request, response);
                     } else {
                         request.getRequestDispatcher("/admin/404.jsp").forward(request, response);
                     }
-                    //
-                } else if (url.contains("post")){
-                    //co
+                } else if (url.contains("post")) {
                     if (user.getRole() == 4 || user.getRole() == 2 || user.getRole() == 1) {
-                        System.out.println("lxlxlxlxlxlx");
                         chain.doFilter(request, response);
                     } else {
                         request.getRequestDispatcher("/admin/404.jsp").forward(request, response);
                     }
-                    //
-                } else if (url.contains("product")){
-                    //co
+                } else if (url.contains("product")) {
                     if (user.getRole() == 2 || user.getRole() == 1) {
-                        System.out.println("lxlxlxlxlxlx");
                         chain.doFilter(request, response);
                     } else {
                         request.getRequestDispatcher("/admin/404.jsp").forward(request, response);
                     }
-                    //
-                } else if(url.contains("customer")){
-                    //co
+                } else if (url.contains("customer")) {
                     if (user.getRole() == 2 || user.getRole() == 1) {
-                        System.out.println("lxlxlxlxlxlx");
                         chain.doFilter(request, response);
                     } else {
                         request.getRequestDispatcher("/admin/404.jsp").forward(request, response);
                     }
-                    //
-                } else if (url.contains("feedback")){
-                    //co
+                } else if (url.contains("feedback")) {
                     if (user.getRole() == 2 || user.getRole() == 1) {
-                        System.out.println("lxlxlxlxlxlx");
                         chain.doFilter(request, response);
                     } else {
                         request.getRequestDispatcher("/admin/404.jsp").forward(request, response);
                     }
-                    //
-                } else if (url.contains("order")){
-                    //co
+                } else if (url.contains("order")) {
                     if (user.getRole() == 3 || user.getRole() == 2 || user.getRole() == 1) {
-                        System.out.println("lxlxlxlxlxlx");
                         chain.doFilter(request, response);
                     } else {
                         request.getRequestDispatcher("/admin/404.jsp").forward(request, response);
                     }
-                    //
-                } else if (url.contains("user")){
-                    //co
+                } else if (url.contains("user")) {
                     if (user.getRole() == 1) {
-                        System.out.println("lxlxlxlxlxlx");
                         chain.doFilter(request, response);
                     } else {
                         request.getRequestDispatcher("/admin/404.jsp").forward(request, response);
                     }
-                    //
-                } 
+                }
             }
         } else {
             chain.doFilter(request, response);
