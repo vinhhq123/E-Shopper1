@@ -38,7 +38,8 @@ import model.User;
 @WebServlet(name = "OrderController", urlPatterns = {"/order/list", "/order/search",
     "/order/getOrder", "/order/updateSaleInfor", "/order/updateOrderQuantity",
     "/order/removeProduct", "/order/addProductToOrderDetail", "/order/getCustomerOrders",
-    "/order/filterCustomerOrders", "/order/cancelCustomerOrder"})
+    "/order/filterCustomerOrders", "/order/cancelCustomerOrder","/order/getOrderInfo",
+     "/order/removeproductinfo"})
 public class OrderController extends HttpServlet {
 
     /**
@@ -113,7 +114,12 @@ public class OrderController extends HttpServlet {
             case "/order/cancelCustomerOrder":
                 cancelCustomerOrder(request, response);
                 break;
-
+            case "/order/getOrderInfo":
+                getOrderInforByOrderId(request, response);
+                break;
+                case "/order/removeproductinfo":
+                removeProductFromOrderInfo(request, response);
+                break;
         }
     }
 
@@ -839,5 +845,130 @@ public class OrderController extends HttpServlet {
             System.out.println("Exception cancel User order ===== " + ex);
             request.getRequestDispatcher("/error500.jsp").forward(request, response);
         }
+    }
+     protected void getOrderInforByOrderId(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        int orderId = Integer.parseInt(request.getParameter("orderId"));
+        String orderStatus = "";
+        int validRole = 0;
+         List<Product> featuredProducts = new ArrayList<>();
+        UserDAO userDAO = new UserDAO();
+        OrderDAO orderDAO = new OrderDAO();
+        SettingDAO settingDAO = new SettingDAO();
+        ProductDAO productDAO = new ProductDAO();
+        OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        List<User> sales = new ArrayList<>();
+        List<String> orderStatuses = new ArrayList<>();
+        List<Product> products = new ArrayList<>();
+        Order order = new Order();
+       List<Setting> postCategories = new ArrayList<>();
+             try {
+             featuredProducts = productDAO.getFiveFeaturedProducts();
+            order = orderDAO.getOrderByOrderId(orderId);
+           postCategories = settingDAO.getAllProCategory();
+            orderStatuses = settingDAO.getSettingOrderValue();
+          
+            
+            orderDetails = orderDetailDAO.getOrderDetailsByOrderId(orderId);
+            products = productDAO.getAllProductswithimage();
+            
+
+            switch (order.getOrderStatus()) {
+                case 20:
+                    orderStatus = "Delivered";
+                    break;
+                case 21:
+                    orderStatus = "Transporting";
+                    break;
+                case 22:
+                    orderStatus = "Canceled";
+                    break;
+                case 25:
+                    orderStatus = "Ordered";
+                    break;
+            }
+
+            request.setAttribute("CurrentOrder", order);
+             request.setAttribute("PostCategories", postCategories);
+            request.setAttribute("OrderStatuses", orderStatuses);     
+            request.setAttribute("CurrentOrderStatus", orderStatus);
+            request.setAttribute("Products", products);
+            request.setAttribute("OrderDetails", orderDetails);       
+            request.setAttribute("CurrentOrder", order);
+            request.setAttribute("Valid", validRole);
+            request.setAttribute("FeaturedProducts", featuredProducts);
+            request.getRequestDispatcher("/orderinformation.jsp").forward(request, response);
+        } catch (Exception ex) {
+            System.out.println("Exception getOrderByOrderId ===== " + ex);
+            request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
+        }
+    }
+      protected void removeProductFromOrderInfo(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        int orderDetailId = Integer.parseInt(request.getParameter("odid"));
+        int orderId = Integer.parseInt(request.getParameter("orderId"));
+
+        System.out.println("OrderDetail ID === " + orderDetailId);
+
+        OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
+        OrderDAO orderDAO = new OrderDAO();
+        OrderDetail orderDetail = new OrderDetail();
+        Order order = new Order();
+        ProductDAO productDAO = new ProductDAO();
+        Product productToBeRemoved = new Product();
+        // Get session
+        HttpSession session = request.getSession();
+
+        try {
+
+            order = orderDAO.getOrderByOrderId(orderId);
+            orderDetail = orderDetailDAO.getOrderDetailsByOrderDetailId(orderDetailId);
+            if (orderDetail != null) {
+                // GET PRODUCT AND QUANTITY TO BE ADDED 
+                int productIdToBeRemoved = orderDetail.getProductId();
+                int quantityToBeAdded = orderDetail.getQuantity();
+                // GET PRODUCT TO BE REMOVED
+                productToBeRemoved = productDAO.getProductById(productIdToBeRemoved);
+                // NEW QUANTITY TO BE ADDED
+                int newQuantity = quantityToBeAdded + productToBeRemoved.getQuantity();
+                // UPDATE PRODUCT QUANTITY
+                int checkUpdateQuantity = productDAO.updateProductQuantity(newQuantity, productIdToBeRemoved);
+                if (checkUpdateQuantity > 0) {
+                    float subTotaltoMinus = orderDetail.getSubCost();
+                    float newTotal = order.getTotalCost() - subTotaltoMinus;
+
+                    int check = orderDAO.updateTotalCost(orderId, newTotal);
+                    if (check > 0) {
+                        int checkDelete = orderDetailDAO.deleteOrderDetail(orderDetailId);
+                        if (checkDelete > 0) {
+                            String message = "Remove product succesfully.";
+                            session.setAttribute("messageUpdateSuccess", message);
+                            response.sendRedirect("getOrderInfo?orderId=" + orderId);
+                        } else {
+                            String message = "Unexpected error occurs.Please try again later !!!";
+                            session.setAttribute("messageUpdateFail", message);
+                            response.sendRedirect("getOrderInfo?orderId=" + orderId);
+                        }
+                    } else {
+                        String message = "Unexpected error occurs.Please try again later !!!";
+                        session.setAttribute("messageUpdateFail", message);
+                        response.sendRedirect("getOrderInfo?orderId=" + orderId);
+                    }
+
+                } else {
+                    String message = "Unexpected error occurs.Please try again later !!!";
+                    session.setAttribute("messageUpdateFail", message);
+                    response.sendRedirect("getOrderInfo?orderId=" + orderId);
+                }
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Exception ===== " + ex);
+        }
+
     }
 }

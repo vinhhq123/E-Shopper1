@@ -1,8 +1,9 @@
 <%-- 
-    Document   : order-history
-    Created on : 08-Mar-2022, 17:15:40
-    Author     : VINH
+    Document   : orderinformation
+    Created on : Mar 10, 2022, 1:31:38 PM
+    Author     : HL2020
 --%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -37,82 +38,53 @@
             <div class="container">
                 <div class="col-sm-8">
                     <div class="page-title">
-                        <h2 class="title text-center">Order History</h2>
+                        <h2 class="title text-center">Order Information</h2>
                     </div>
                     <div class="panel-body table-responsive">
-                        <form class="form-inline" role="form" action="<%=request.getContextPath()%>/order/filterCustomerOrders">
-                            <div class="form-group" style="margin-right:12px;">
-                                <label for="fromC" class="sr-only"><b>From </b></label>
-                                <input type="date" class="form-control" id="fromC" name="customerFrom" 
-                                       placeholder="From Order Time"  value="${requestScope.valueCFrom}" >
-                            </div>
-                            <div class="form-group" style="margin-right:12px;">
-                                <label for="toC" class="sr-only"><b>To </b></label>
-                                <input type="date" class="form-control" id="toC" name="customerTo"
-                                       placeholder="To Order Time" value="${requestScope.valueCTo}">
-                            </div>
-                            <div class="form-group" style="margin-right:8px;">
-                                <select class="select" aria-label="Default select example" name="status" style="height: 30px">
-                                    <c:if test="${empty valueCStatus}">
-                                        <option value="">All Statuses</option>
-                                        <c:forEach items="${OrderStatuses}" var="ost">
-                                            <option value="<c:out value="${ost}"/>">${ost}</option>
-                                        </c:forEach>
-                                    </c:if>
-                                    <c:if test="${not empty valueCStatus}">
-                                        <option value="" >All Statuses</option>
-                                        <c:forEach items="${OrderStatuses}" var="ost">
-                                            <option value="<c:out value="${ost}"/>" <c:if test="${ost eq valueCStatus}">selected</c:if>>${ost}</option>
-                                        </c:forEach>
-                                    </c:if>
-
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-default" style="background: #FE980F;  color: #FFFFFF;">Filter</button>
-                        </form>
+                        
                         <br>
                         <table class="table table-responsive" id="OrderHistoryTable">
                             <tr>
-                                <th >ID</th>
-                                <th >Order Time</th>
-                                <th >Last Updated</th>
-                                <th style="text-align:right">Total Cost</th>
-                                <th style="text-align:right">Status</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Thumbnail</th>
+                                <th style="text-align:right">Unit Price</th>
+                                <th style="text-align: center">Quantity</th>
+                                <th>Sub Total</th>
                                 <th style="text-align:right">Actions</th>
                             </tr>
                             <tr>
-                                <c:forEach items="${CustomerOrders}" var="cos">
-                                    <td><b>${cos.getOrderId()}</b></td>
-                                    <td><fmt:formatDate value="${cos.getOrderDate()}" pattern="dd-MM-yyyy" /></td>
-                                    <td><fmt:formatDate value="${cos.getUpdatedDate()}" pattern="dd-MM-yyyy" /></td> 
-                                    <td align="right"><span class="subtotal">
-                                            <fmt:setLocale value = "vi_VN"/>
-                                            <fmt:formatNumber value="${cos.getTotalCost()}" type="currency" />
-                                        </span></td> 
-                                    <td align="right">                                                    
-                                        <c:if test="${cos.getOrderStatus() == 25}">
-                                            <span class="label label-primary">Ordered</span>
-                                        </c:if>
-                                        <c:if test="${cos.getOrderStatus() == 20}">
-                                            <span class="label label-success">Delivered</span>
-                                        </c:if>
-                                        <c:if test="${cos.getOrderStatus() == 21}">
-                                            <span class="label label-warning">Transporting</span>
-                                        </c:if>
-                                        <c:if test="${cos.getOrderStatus() == 22}">
-                                            <span class="label label-danger">Canceled</span>
-                                        </c:if>
-                                    </td>  
-                                    <td align="right">
-                                        <c:if test="${cos.getOrderStatus() == 25}">
-                                            <button type="button" class="btn-xs btn-danger" onclick="if (confirm('Do you want to cancel this order?'))
-                                                window.location = '<%=request.getContextPath()%>/order/cancelCustomerOrder?orderId=${cos.getOrderId()}'">Cancel</button>
-                                        </c:if>
-                                        <button type="button" class="btn-xs btn-default" style="background: #FE980F;  color: #FFFFFF;"  onclick="window.location = '<%=request.getContextPath()%>/order/getOrderInfo?orderId=${cos.getOrderId()}'">View</button>
-                                    </td>
+                                <c:forEach items="${OrderDetails}" var="ods">
+                                <tr>
+                                    <c:forEach items="${Products}" var="p">
+                                        <c:choose>
+                                            <c:when test="${p.getPid() == ods.getProductId() }">
+                                                <td>${p.getTitle()}</td>
+                                                <td><c:if test="${p.getCategoryID() == 13}">Shoes</c:if>
+                                                    <c:if test="${p.getCategoryID() == 14}">Clothes</c:if>
+                                                    <c:if test="${p.getCategoryID() == 15}">Bags</c:if>
+                                                    </td>
+                                                    <td><img src="data:image/jpg;base64,${p.getThumbnail()}" id="output1" width="100" /></td>    
+                                                <td><span class="price">
+                                                        <fmt:formatNumber value="${p.getSprice()}" type="currency"/>
+                                                    </span></td>
+                                            <input type="hidden" value="${p.getSprice()}" name="productPrice">
+                                        </c:when>
+                                    </c:choose>
+                                </c:forEach>
 
-                                </tr>
-                            </c:forEach>
+                                <td><input name="quantity" value="${ods.getQuantity()}" pattern="^[1-9][0-9]*" required maxlength="9"/></td>  
+                                <td><span class="subtotal">
+                                        <fmt:formatNumber value="${ods.getSubCost()}" type="currency"/>
+                                    </span></td>
+<!--                                                        <input path="cartLines[${varStatus.index}].quantity" value="2"/>-->
+                                    <td><input type="hidden" value="${ods.getProductId()}" name="productToUpdate">
+                                        <input type="hidden" value="${ods.getOrderDetailId()}" name="orderDetailToUpdate">
+                                        <button type="button" class="btn-xs btn-danger" onclick="if (confirm('Do you want to delete this product from this order?'))
+                                                                    window.location = '<%=request.getContextPath()%>/order/removeproductinfo?odid=${ods.getOrderDetailId()}&orderId=${CurrentOrder.getOrderId()}'">Cancel</button></td>
+                        </tr>
+                            </tr>
+                        </c:forEach>
                         </table>
 
                         <br>
@@ -157,13 +129,13 @@
 
                         <div class="search_box pull-right">
                             <form action="<%=request.getContextPath()%>/blog/search" method="post">
-                                <input value="${searchValue}" name="search" type="text" placeholder="Search Post Title"/>
+                                <input value="${searchValue}" name="search" type="text" placeholder="Search Product"/>
                             </form>
                         </div>
                     </div><hr>
                     <div class="blog-post-area">
                         <div class="brands_products"><!--brands_products-->
-                            <h2>Post Category</h2>
+                            <h2>Product Category</h2>
                             <div class="brands-name">
                                 <ul class="nav nav-pills nav-stacked" style="text-align: center">
                                     <c:forEach items="${PostCategories}" var="pct">
