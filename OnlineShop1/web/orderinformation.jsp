@@ -11,6 +11,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/assets/css/font-awesome.min.css" rel="stylesheet">
@@ -24,7 +25,8 @@
         <!--[if lt IE 9]>
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
-        <![endif]-->       
+        <![endif]-->   
+        <link href="<%=request.getContextPath()%>/admin/css/orderdetails.css" rel="stylesheet" type="text/css" />
         <link rel="shortcut icon" href="images/ico/favicon.ico">
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
@@ -43,7 +45,7 @@
                     <div class="panel-body table-responsive">
                         
                         <br>
-                        <table class="table table-responsive" id="OrderHistoryTable">
+                        <table class="table table-responsive" id="orderDetailTableEdit">
                             <tr>
                                 <th>Name</th>
                                 <th>Category</th>
@@ -55,7 +57,7 @@
                             </tr>
                             <tr>
                                 <c:forEach items="${OrderDetails}" var="ods">
-                                <tr>
+                               
                                     <c:forEach items="${Products}" var="p">
                                         <c:choose>
                                             <c:when test="${p.getPid() == ods.getProductId() }">
@@ -66,15 +68,17 @@
                                                     </td>
                                                     <td><img src="data:image/jpg;base64,${p.getThumbnail()}" id="output1" width="100" /></td>    
                                                 <td><span class="price">
+                                                        <fmt:setLocale value = "vi_VN"/>
                                                         <fmt:formatNumber value="${p.getSprice()}" type="currency"/>
                                                     </span></td>
                                             <input type="hidden" value="${p.getSprice()}" name="productPrice">
                                         </c:when>
                                     </c:choose>
                                 </c:forEach>
-
+                                            
                                 <td><input name="quantity" value="${ods.getQuantity()}" pattern="^[1-9][0-9]*" required maxlength="9"/></td>  
                                 <td><span class="subtotal">
+                                        <fmt:setLocale value = "vi_VN"/>
                                         <fmt:formatNumber value="${ods.getSubCost()}" type="currency"/>
                                     </span></td>
 <!--                                                        <input path="cartLines[${varStatus.index}].quantity" value="2"/>-->
@@ -86,7 +90,14 @@
                             </tr>
                         </c:forEach>
                         </table>
-
+                        <h3><b>Total Cost</b></h3>
+                                            <ul class="ulclass">
+                                                <li class="lii">Total : 
+                                                    <span class="total">
+                                                        <fmt:setLocale value = "vi_VN"/>
+                                                        <fmt:formatNumber value="${CurrentOrder.getTotalCost()}" type="currency"/>
+                                                    </span></li>
+                                            </ul>
                         <br>
                         <c:if test="${requestScope.CustomerOrders.isEmpty()}">
                             <p style="text-align: center">No matching Orders found </p>
