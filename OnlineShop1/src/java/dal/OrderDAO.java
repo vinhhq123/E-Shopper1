@@ -254,7 +254,7 @@ public class OrderDAO extends DBContext {
         Order order = null;
 
         try {
-            String sql = "select * from orders where customerId = ?";
+            String sql = "select * from orders where customerId = ? order by orderDate desc";
             connection = getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, customerId);
