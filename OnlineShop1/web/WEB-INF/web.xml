@@ -17,8 +17,9 @@
         <servlet-name>ProductsController</servlet-name>
         <servlet-name>ProductListController</servlet-name>
         <servlet-name>SearchProductController</servlet-name>
-        <servlet-name>SettingController</servlet-name>
         <servlet-name>UserController</servlet-name>
+        <servlet-name>PostController</servlet-name>
+        <url-pattern>/setting/*</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>SettingListController</servlet-name>

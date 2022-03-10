@@ -25,17 +25,17 @@ import model.User;
  * @author CHANHSIRO
  */
 public class Author implements Filter {
-    
+
     private static final boolean debug = true;
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
     private FilterConfig filterConfig = null;
-    
+
     public Author() {
-    }    
-    
+    }
+
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
@@ -62,8 +62,8 @@ public class Author implements Filter {
 	    log(buf.toString());
 	}
          */
-    }    
-    
+    }
+
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
@@ -101,30 +101,116 @@ public class Author implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
-        
+
         if (debug) {
             log("Author:doFilter()");
         }
-        
+
         doBeforeProcessing(request, response);
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         String url = httpRequest.getRequestURI() + "?" + httpRequest.getQueryString();
-        System.out.println(url);
+        System.out.println(url + "teeeeeeeee");
         HttpSession session = httpRequest.getSession();
-        User user = (User)session.getAttribute("account");
-        if(url.contains("slider") || url.contains("blog") || url.contains("post") ||
-                url.contains("pro") || url.contains("customer") || url.contains("feedback") || url.contains("order")
-               || url.contains("setting") || url.contains("user")){
-            if(user == null){
-            httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
-        } else {
-            if (user.getRole() == 5) {
-            chain.doFilter(request, response);
-        } else {
-            httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
-        }
-        }
+        User user = (User) session.getAttribute("account");
+        if (url.contains("post") || url.contains("setting") || url.contains("slider")
+                || url.contains("product") || url.contains("customer") || url.contains("feedback") || url.contains("order")
+                || url.contains("setting") || url.contains("user")) {
+            System.out.println("lalalala");
+            if (user == null) {
+                httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
+                
+            } else {
+                if (url.contains("updateProfile")){
+                    chain.doFilter(request, response);
+                } else if (url.contains("getproduct")){
+                    chain.doFilter(request, response);
+                } else if (url.contains("CustomerOrder")){
+                    chain.doFilter(request, response);
+                } else if (url.contains("setting/list")) {
+                    //co
+                    if (user.getRole() == 3 ||user.getRole() == 4 || user.getRole() == 2 || user.getRole() == 1) {
+                        System.out.println("lxlxlxlxlxlx");
+                        chain.doFilter(request, response);
+                    } else {
+                        request.getRequestDispatcher("/admin/404.jsp").forward(request, response);
+                    }
+                    //
+                }
+                else if (url.contains("setting")) {
+                    //co
+                    if (user.getRole() == 1) {
+                        System.out.println("lxlxlxlxlxlx");
+                        chain.doFilter(request, response);
+                    } else {
+                        request.getRequestDispatcher("/admin/404.jsp").forward(request, response);
+                    }
+                    //
+                } else if (url.contains("slider")){
+                    //co
+                    if (user.getRole() == 4 || user.getRole() == 2 || user.getRole() == 1) {
+                        System.out.println("lxlxlxlxlxlx");
+                        chain.doFilter(request, response);
+                    } else {
+                        request.getRequestDispatcher("/admin/404.jsp").forward(request, response);
+                    }
+                    //
+                } else if (url.contains("post")){
+                    //co
+                    if (user.getRole() == 4 || user.getRole() == 2 || user.getRole() == 1) {
+                        System.out.println("lxlxlxlxlxlx");
+                        chain.doFilter(request, response);
+                    } else {
+                        request.getRequestDispatcher("/admin/404.jsp").forward(request, response);
+                    }
+                    //
+                } else if (url.contains("product")){
+                    //co
+                    if (user.getRole() == 2 || user.getRole() == 1) {
+                        System.out.println("lxlxlxlxlxlx");
+                        chain.doFilter(request, response);
+                    } else {
+                        request.getRequestDispatcher("/admin/404.jsp").forward(request, response);
+                    }
+                    //
+                } else if(url.contains("customer")){
+                    //co
+                    if (user.getRole() == 2 || user.getRole() == 1) {
+                        System.out.println("lxlxlxlxlxlx");
+                        chain.doFilter(request, response);
+                    } else {
+                        request.getRequestDispatcher("/admin/404.jsp").forward(request, response);
+                    }
+                    //
+                } else if (url.contains("feedback")){
+                    //co
+                    if (user.getRole() == 2 || user.getRole() == 1) {
+                        System.out.println("lxlxlxlxlxlx");
+                        chain.doFilter(request, response);
+                    } else {
+                        request.getRequestDispatcher("/admin/404.jsp").forward(request, response);
+                    }
+                    //
+                } else if (url.contains("order")){
+                    //co
+                    if (user.getRole() == 3 || user.getRole() == 2 || user.getRole() == 1) {
+                        System.out.println("lxlxlxlxlxlx");
+                        chain.doFilter(request, response);
+                    } else {
+                        request.getRequestDispatcher("/admin/404.jsp").forward(request, response);
+                    }
+                    //
+                } else if (url.contains("user")){
+                    //co
+                    if (user.getRole() == 1) {
+                        System.out.println("lxlxlxlxlxlx");
+                        chain.doFilter(request, response);
+                    } else {
+                        request.getRequestDispatcher("/admin/404.jsp").forward(request, response);
+                    }
+                    //
+                } 
+            }
         } else {
             chain.doFilter(request, response);
         }
@@ -138,7 +224,7 @@ public class Author implements Filter {
             problem = t;
             t.printStackTrace();
         }
-        
+
         doAfterProcessing(request, response);
 
         // If there was a problem, we want to rethrow it if it is
@@ -173,16 +259,16 @@ public class Author implements Filter {
     /**
      * Destroy method for this filter
      */
-    public void destroy() {        
+    public void destroy() {
     }
 
     /**
      * Init method for this filter
      */
-    public void init(FilterConfig filterConfig) {        
+    public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
-            if (debug) {                
+            if (debug) {
                 log("Author:Initializing filter");
             }
         }
@@ -201,20 +287,20 @@ public class Author implements Filter {
         sb.append(")");
         return (sb.toString());
     }
-    
+
     private void sendProcessingError(Throwable t, ServletResponse response) {
-        String stackTrace = getStackTrace(t);        
-        
+        String stackTrace = getStackTrace(t);
+
         if (stackTrace != null && !stackTrace.equals("")) {
             try {
                 response.setContentType("text/html");
                 PrintStream ps = new PrintStream(response.getOutputStream());
-                PrintWriter pw = new PrintWriter(ps);                
+                PrintWriter pw = new PrintWriter(ps);
                 pw.print("<html>\n<head>\n<title>Error</title>\n</head>\n<body>\n"); //NOI18N
 
                 // PENDING! Localize this for next official release
-                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");                
-                pw.print(stackTrace);                
+                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");
+                pw.print(stackTrace);
                 pw.print("</pre></body>\n</html>"); //NOI18N
                 pw.close();
                 ps.close();
@@ -231,7 +317,7 @@ public class Author implements Filter {
             }
         }
     }
-    
+
     public static String getStackTrace(Throwable t) {
         String stackTrace = null;
         try {
@@ -245,11 +331,9 @@ public class Author implements Filter {
         }
         return stackTrace;
     }
-    
+
     public void log(String msg) {
-        filterConfig.getServletContext().log(msg);        
+        filterConfig.getServletContext().log(msg);
     }
-    
+
 }
-
-
