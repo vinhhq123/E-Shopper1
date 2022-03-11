@@ -31,12 +31,6 @@
         <jsp:include page="header.jsp"/>
         <section id="cart_items">
             <div class="container">
-                <!--			<div class="breadcrumbs">
-                                                <ol class="breadcrumb">
-                                                  <li><a href="#">Home</a></li>
-                                                  <li class="active">Shopping Cart</li>
-                                                </ol>
-                                        </div>-->
                 <div class="table-responsive cart_info">
                     <table class="table table-condensed">
                         <thead>
@@ -67,9 +61,7 @@
                                     </td>
                                     <td class="cart_quantity">
                                         <div class="cart_quantity_button">
-                                            <!--									<a class="cart_quantity_up" href=""> + </a>-->
                                             <input class="cart_quantity_input" readonly type="text" name="quantity" value="${i.quantity}" autocomplete="off" size="2">
-                                            <!--									<a class="cart_quantity_down" href=""> - </a>-->
                                         </div>
                                     </td>
                                     <td class="cart_total">
@@ -78,10 +70,8 @@
                                     </td>
                                     <td class="cart_delete">
                                         <form action="<%=request.getContextPath()%>/goods/removeProductCart" method="post">
-<!--                                            <a class="cart_quantity_delete" href=""><i class="fa fa-times">-->
                                                     <input type="hidden" name="id" value="${i.product.pid}"/>
                                                     <input type="submit" value="Remove"/>
-<!--                                                </i></a>-->
                                         </form>
                                     </td>
                                 </tr>
