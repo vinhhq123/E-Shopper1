@@ -123,7 +123,15 @@ public class Author implements Filter {
                     chain.doFilter(request, response);
                 } else if (url.contains("getproduct")) {
                     chain.doFilter(request, response);
-                } else if (url.contains("CustomerOrder")) {
+                }
+                else if (url.contains("getOrderInfo")) {
+                    chain.doFilter(request, response);
+                }
+                else if (url.contains("getorderfeedback")) {
+                    chain.doFilter(request, response);
+                }else if (url.contains("removeproductinfo")) {
+                    chain.doFilter(request, response);
+                }else if (url.contains("CustomerOrder")) { 
                     chain.doFilter(request, response);
                 } else if (url.contains("setting/list")) {
                     if (user.getRole() == 3 || user.getRole() == 4 || user.getRole() == 2 || user.getRole() == 1) {
