@@ -425,7 +425,8 @@ public class ProductDAO extends DBContext {
         }
         return row;
     }
-     public Product getTitlebyproId(int pid) throws Exception {
+
+    public Product getTitlebyproId(int pid) throws Exception {
 
         String sql = "SELECT productId,title from product where productId= " + pid;
         System.out.println(sql);
@@ -456,6 +457,61 @@ public class ProductDAO extends DBContext {
             }
         }
         return user;
+    }
+
+    public List<Product> getFiveFeaturedProducts() {
+
+        List<Product> products = new ArrayList<>();
+        Product product = null;
+        String noImage = "";
+
+        try {
+            String sql = "select * from product where featuredProduct =1 limit 5;";
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                product = new Product();
+                product.setPid(results.getInt("productId"));
+                product.setTitle(results.getString("title"));
+
+                Blob blob = results.getBlob("thumbnail");
+                if (blob != null) {
+
+                    InputStream inputStream = blob.getBinaryStream();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                    inputStream.close();
+                    outputStream.close();
+                    product.setThumbnail(base64Image);
+                } else {
+                    product.setThumbnail(noImage);
+                }
+                products.add(product);
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return products;
     }
 
 //     public static void main(String[] args) {

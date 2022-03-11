@@ -20,6 +20,7 @@ public class Order {
     private int orderStatus;
     private Date orderDate;
     private String salesNote;
+    private Date updatedDate;
 
     public Order() {
     }
@@ -33,8 +34,6 @@ public class Order {
         this.orderDate = orderDate;
         this.salesNote = salesNote;
     }
-
-
 
     public int getOrderId() {
         return orderId;
@@ -90,6 +89,14 @@ public class Order {
 
     public void setSalesNote(String salesNote) {
         this.salesNote = salesNote;
+    }
+
+    public Date getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
     }
     
     

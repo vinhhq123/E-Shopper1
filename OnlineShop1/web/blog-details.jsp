@@ -53,14 +53,22 @@
                                 </p>
                                 <div class="pager-area">
                                     <ul class="pager pull-right">
-<!--                                        <li><a href="#">Pre</a></li>
-                                        <li><a href="#">Next</a></li>-->
+                                        <!--                                        <li><a href="#">Pre</a></li>
+                                                                                <li><a href="#">Next</a></li>-->
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-4">
+                        <div class="row">
+
+                            <div class="search_box pull-right">
+                                <form action="<%=request.getContextPath()%>/blog/search" method="post">
+                                    <input value="${searchValue}" name="search" type="text" placeholder="Search Post Title"/>
+                                </form>
+                            </div>
+                        </div><hr>
                         <div class="blog-post-area">
                             <div class="brands_products"><!--brands_products-->
                                 <h2>Blog Category</h2>

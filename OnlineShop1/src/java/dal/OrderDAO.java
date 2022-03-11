@@ -248,4 +248,109 @@ public class OrderDAO extends DBContext {
         return row;
     }
 
+    public List<Order> getOrdersByCustomerId(int customerId) {
+
+        List<Order> orders = new ArrayList<>();
+        Order order = null;
+
+        try {
+            String sql = "select * from orders where customerId = ?";
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, customerId);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                order = new Order();
+                order.setOrderId(results.getInt("orderId"));
+                order.setTotalCost(results.getFloat("totalCost"));
+                order.setOrderStatus(results.getInt("orderStatus"));
+                order.setOrderDate(results.getDate("orderDate"));
+                order.setUpdatedDate(results.getDate("lastUpdated"));
+                orders.add(order);
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return orders;
+    }
+
+    public List<Order> filterCustomerOrders(String from, String to,
+            int status, int customerId) throws Exception {
+        List<Order> orders = new ArrayList<>();
+        String sql = "select * from orders where customerId = " + customerId;
+        if (status != 0) {
+            sql += " and orderStatus = " + status;
+        }
+        if (!from.isEmpty() && !to.isEmpty()) {
+            sql += " and (orderDate between '" + from + "' and '" + to + "');";
+        }
+
+        System.out.println(sql);
+        Order order = null;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                order = new Order();
+                order.setOrderId(results.getInt("orderId"));
+                order.setTotalCost(results.getFloat("totalCost"));
+                order.setOrderStatus(results.getInt("orderStatus"));
+                order.setOrderDate(results.getDate("orderDate"));
+                order.setUpdatedDate(results.getDate("lastUpdated"));
+                orders.add(order);
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return orders;
+    }
+
+    public int cancelCustomerOrder(int orderId) throws SQLException {
+
+        String sql = "UPDATE orders\n"
+                + " SET orderStatus = 22, lastUpdated = CURDATE() "
+                + " WHERE `orderId` = ? ;";
+
+        int row = 0;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, orderId);
+            row = preparedStatement.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return row;
+    }
+
 }

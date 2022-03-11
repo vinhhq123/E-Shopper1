@@ -1,0 +1,85 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 08-Mar-2022, 17:16:41
+    Author     : VINH
+*/
+.brands-name {
+    border: 1px solid #F7F7F0;
+    padding-bottom: 20px;
+    padding-top: 15px;
+}
+
+
+.brands-name .nav-stacked li a {
+    background-color:  #fff;
+    color: #696763 ;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    padding: 5px 25px;
+    text-decoration: #000;
+    text-transform: uppercase;
+}
+
+.brands-name .nav-stacked li a:hover{
+    background-color: #FAD733;
+    color:#696763;
+}
+.features_items_img{
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 150px;
+}
+.features_items_img:hover{
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+/*            img {
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                padding: 5px;
+                width: 150px;
+            }
+
+            img:hover {
+                box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+            }*/
+.navigation ul 
+{
+    list-style: none;
+    padding: 0;
+    width: 400px;
+    margin: 0 auto;
+}
+.page-title h1 {
+    color: #FE980F;
+    font-family: 'Roboto', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0 auto 30px;
+    text-transform: uppercase;
+    position: relative;
+    z-index:3;
+}
+.subtotal {
+    color: red;
+    font-weight: bold;
+}
+/*            .search_box input {
+                background: #F0F0E9;
+                border: medium none;
+                color: #B2B2B2;
+                font-family: 'roboto';
+                font-size: 12px;
+                font-weight: 300;
+                height: 35px;
+                outline: medium none;
+                padding-left: 10px;
+                width: 155px;
+                background-image: url(./images/home/searchicon.png);
+                background-repeat: no-repeat;
+                background-position: 130px;
+            }*/

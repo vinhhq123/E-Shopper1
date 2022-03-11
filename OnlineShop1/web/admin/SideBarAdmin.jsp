@@ -19,7 +19,7 @@ po<%--
                     <img src="${pageContext.request.contextPath}/admin/img/avatar3.png" class="img-circle" alt="User Image" />
                 </div>
                 <div class="pull-left info">
-                    <p>Hello, ${fullname}</p>
+                    <p>Hello, </p>
 
                     <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                 </div>
