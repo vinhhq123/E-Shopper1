@@ -3,12 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/dal/SettingDAO.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/slider/sliders-list.jsp</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/controller/marketing/SliderController.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/dal/SliderDAO.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/admin/SettingList.jsp</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/controller/admin/SettingController.java</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/controller/user/GoodsController.java</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/goods-details.jsp</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/controller/marketing/BlogController.java</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/controller/user/ResetPassController.java</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/dal/FeedbackDAO.java</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/model/PostList.java</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/goods.jsp</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/model/Product.java</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/dal/GoodsDAO.java</file>
         </group>
     </open-files>
 </project-private>
