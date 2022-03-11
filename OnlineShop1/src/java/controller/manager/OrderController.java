@@ -39,7 +39,7 @@ import model.User;
     "/order/getOrder", "/order/updateSaleInfor", "/order/updateOrderQuantity",
     "/order/removeProduct", "/order/addProductToOrderDetail", "/order/getCustomerOrders",
     "/order/filterCustomerOrders", "/order/cancelCustomerOrder","/order/getOrderInfo",
-     "/order/removeproductinfo"})
+     "/order/removeproductinfo","/order/getorderfeedback"})
 public class OrderController extends HttpServlet {
 
     /**
@@ -117,8 +117,11 @@ public class OrderController extends HttpServlet {
             case "/order/getOrderInfo":
                 getOrderInforByOrderId(request, response);
                 break;
-                case "/order/removeproductinfo":
+            case "/order/removeproductinfo":
                 removeProductFromOrderInfo(request, response);
+                break;
+            case "/order/getorderfeedback":
+                GetOrderFeedback(request, response);
                 break;
         }
     }
@@ -863,11 +866,11 @@ public class OrderController extends HttpServlet {
         List<String> orderStatuses = new ArrayList<>();
         List<Product> products = new ArrayList<>();
         Order order = new Order();
-       List<Setting> postCategories = new ArrayList<>();
+        List<Setting> postCategories = new ArrayList<>();
              try {
              featuredProducts = productDAO.getFiveFeaturedProducts();
             order = orderDAO.getOrderByOrderId(orderId);
-           postCategories = settingDAO.getAllProCategory();
+            postCategories = settingDAO.getAllProCategory();
             orderStatuses = settingDAO.getSettingOrderValue();
           
             
@@ -897,7 +900,7 @@ public class OrderController extends HttpServlet {
             request.setAttribute("Products", products);
             request.setAttribute("OrderDetails", orderDetails);       
             request.setAttribute("CurrentOrder", order);
-            request.setAttribute("Valid", validRole);
+            
             request.setAttribute("FeaturedProducts", featuredProducts);
             request.getRequestDispatcher("/orderinformation.jsp").forward(request, response);
         } catch (Exception ex) {
@@ -971,4 +974,67 @@ public class OrderController extends HttpServlet {
         }
 
     }
+      protected void GetOrderFeedback(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int orderId = Integer.parseInt(request.getParameter("orderId"));
+        int orderDetailId = Integer.parseInt(request.getParameter("odid"));
+
+        System.out.println("OrderDetail ID === " + orderDetailId);
+        String orderStatus = "";
+        int validRole = 0;
+         List<Product> featuredProducts = new ArrayList<>();
+        UserDAO userDAO = new UserDAO();
+        OrderDAO orderDAO = new OrderDAO();
+        SettingDAO settingDAO = new SettingDAO();
+        ProductDAO productDAO = new ProductDAO();
+        OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        List<User> sales = new ArrayList<>();
+        List<String> orderStatuses = new ArrayList<>();
+        List<Product> products = new ArrayList<>();
+        Order order = new Order();
+        List<Setting> postCategories = new ArrayList<>();
+        User currentCustomer = new User();
+        OrderDetail orderDetail = new OrderDetail();
+             try {
+             featuredProducts = productDAO.getFiveFeaturedProducts();
+            order = orderDAO.getOrderByOrderId(orderId);
+            postCategories = settingDAO.getAllProCategory();
+            orderStatuses = settingDAO.getSettingOrderValue();
+           currentCustomer = userDAO.getUserByUserId(order.getCustomerId());
+               orderDetail = orderDetailDAO.getOrderDetailsByOrderDetailId(orderDetailId);
+            //orderDetails = orderDetailDAO.getOrderDetailsByOrderId(orderId);
+            products = productDAO.getAllProductswithimage();
+            
+
+            switch (order.getOrderStatus()) {
+                case 20:
+                    orderStatus = "Delivered";
+                    break;
+                case 21:
+                    orderStatus = "Transporting";
+                    break;
+                case 22:
+                    orderStatus = "Canceled";
+                    break;
+                case 25:
+                    orderStatus = "Ordered";
+                    break;
+            }
+
+            request.setAttribute("CurrentOrder", order);
+            request.setAttribute("PostCategories", postCategories);
+            request.setAttribute("OrderStatuses", orderStatuses);     
+            request.setAttribute("CurrentOrderStatus", orderStatus);
+            request.setAttribute("Products", products);
+            request.setAttribute("OrderDetails", orderDetail);       
+            request.setAttribute("CurrentOrder", order);
+            request.setAttribute("CurrentCustomer", currentCustomer);
+            request.setAttribute("FeaturedProducts", featuredProducts);
+            request.getRequestDispatcher("/orderfeedback.jsp").forward(request, response);
+        } catch (Exception ex) {
+            System.out.println("Exception getOrderByOrderId ===== " + ex);
+            request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
+        }
+      }
 }

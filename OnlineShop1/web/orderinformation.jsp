@@ -38,7 +38,7 @@
         <jsp:include page="header.jsp"/>
         <section>
             <div class="container">
-                <div class="col-sm-8">
+                <div class="col-sm-9">
                     <div class="page-title">
                         <h2 class="title text-center">Order Information</h2>
                     </div>
@@ -50,10 +50,11 @@
                                 <th>Name</th>
                                 <th>Category</th>
                                 <th>Thumbnail</th>
-                                <th style="text-align:right">Unit Price</th>
+                                <th style="text-align:center">Unit Price</th>
                                 <th style="text-align: center">Quantity</th>
-                                <th>Sub Total</th>
-                                <th style="text-align:right">Actions</th>
+                                
+                                <th style="text-align:center">Cancel</th>
+                                <th style="text-align:center">Feedback</th>
                             </tr>
                             <tr>
                                 <c:forEach items="${OrderDetails}" var="ods">
@@ -66,7 +67,7 @@
                                                     <c:if test="${p.getCategoryID() == 14}">Clothes</c:if>
                                                     <c:if test="${p.getCategoryID() == 15}">Bags</c:if>
                                                     </td>
-                                                    <td><img src="data:image/jpg;base64,${p.getThumbnail()}" id="output1" width="100" /></td>    
+                                                    <td><img src="data:image/jpg;base64,${p.getThumbnail()}" id="output1" width="110" /></td>    
                                                 <td><span class="price">
                                                         <fmt:setLocale value = "vi_VN"/>
                                                         <fmt:formatNumber value="${p.getSprice()}" type="currency"/>
@@ -76,16 +77,21 @@
                                     </c:choose>
                                 </c:forEach>
                                             
-                                <td><input name="quantity" value="${ods.getQuantity()}" pattern="^[1-9][0-9]*" required maxlength="9"/></td>  
-                                <td><span class="subtotal">
-                                        <fmt:setLocale value = "vi_VN"/>
-                                        <fmt:formatNumber value="${ods.getSubCost()}" type="currency"/>
-                                    </span></td>
+                                <td style="text-align:center">${ods.getQuantity()}</td>  
+                                
 <!--                                                        <input path="cartLines[${varStatus.index}].quantity" value="2"/>-->
                                     <td><input type="hidden" value="${ods.getProductId()}" name="productToUpdate">
                                         <input type="hidden" value="${ods.getOrderDetailId()}" name="orderDetailToUpdate">
                                         <button type="button" class="btn-xs btn-danger" onclick="if (confirm('Do you want to delete this product from this order?'))
-                                                                    window.location = '<%=request.getContextPath()%>/order/removeproductinfo?odid=${ods.getOrderDetailId()}&orderId=${CurrentOrder.getOrderId()}'">Cancel</button></td>
+                                                                    window.location = '<%=request.getContextPath()%>/order/removeproductinfo?odid=${ods.getOrderDetailId()}&orderId=${CurrentOrder.getOrderId()}'">Cancel</button>
+                                       
+                                    </td>
+                                     <td><input type="hidden" value="${ods.getProductId()}" name="productToUpdate">
+                                        <input type="hidden" value="${ods.getOrderDetailId()}" name="orderDetailToUpdate">
+                                     
+                                        <button type="button" class="btn-xs btn-success" onclick="if (confirm('Do you want send feedback to this order?'))
+                                                                    window.location = '<%=request.getContextPath()%>/order/getorderfeedback?odid=${ods.getOrderDetailId()}&orderId=${CurrentOrder.getOrderId()}'">Feedback</button>
+                                    </td>
                         </tr>
                             </tr>
                         </c:forEach>
@@ -135,7 +141,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <div class="row">
 
                         <div class="search_box pull-right">
@@ -159,10 +165,10 @@
                             <hr>    
                             <h2>Featured Products</h2>
                             <div class="brands-name">
-                                <ul style="text-align: center;padding-right: 10%;">
+                                <ul style="text-align: center;padding-right: 5%;">
                                     <c:forEach items="${FeaturedProducts}" var="fps">
                                         <li><a href="<%=request.getContextPath()%>/goods/detail?pid=${fps.getPid()}" target="_blank">
-                                                <img src="data:image/jpg;base64,${fps.getThumbnail()}" alt="Product Image" style="width:210px;height: 220px;" class="features_items_img">
+                                                <img src="data:image/jpg;base64,${fps.getThumbnail()}" alt="Product Image" style="width:130px;height: 130px;" class="features_items_img">
                                             </a>
                                             <p>${fps.getTitle()}</p>
                                         </li>
