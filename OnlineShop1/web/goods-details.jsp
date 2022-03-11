@@ -29,7 +29,16 @@
 
     <body>
         <jsp:include page="header.jsp"/>
-
+        <form action="<%=request.getContextPath()%>/goods/search" method="post" class="search_box pull-right">
+            <div class="col-sm-12">
+                <div class="search_box pull-right">
+                    <input value="${searchValue}" name="search" type="text" placeholder="Search"/>
+<!--                    <button type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>-->
+                </div>
+            </div>
+        </form>
         <section>
             <div class="container">
                 <div class="row">
