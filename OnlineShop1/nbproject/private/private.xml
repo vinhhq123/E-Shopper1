@@ -3,12 +3,25 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/dal/UserDAO.java</file>
             <file>file:/D:/SWP/Iter2/g6/OnlineShop1/web/order-history.jsp</file>
             <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/controller/manager/OrderController.java</file>
             <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/controller/admin/UserController.java</file>
             <file>file:/D:/SWP/Iter2/g6/OnlineShop1/web/header.jsp</file>
             <file>file:/D:/SWP/Iter2/g6/OnlineShop1/web/admin/js/userProfile.js</file>
+=======
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/controller/user/GoodsController.java</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/goods-details.jsp</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/blog-details.jsp</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/cart.jsp</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/blog.jsp</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/goods.jsp</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/cart-contact.jsp</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/cart-completion.jsp</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/web/header.jsp</file>
+            <file>file:/D:/FPT/Semester%205/New%20folder/g6/OnlineShop1/src/java/dal/GoodsDAO.java</file>
+>>>>>>> 7833d7e6f21d53f0c6043ebd2f8e10bbfe8c718a
         </group>
     </open-files>
 </project-private>

@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import model.OrderDetail;
 import java.util.ArrayList;
 import java.util.List;
+import model.Order;
 
 /**
  *
@@ -173,5 +174,37 @@ public class OrderDetailDAO extends DBContext {
         }
         return row;
     }
+ public OrderDetail getOrderDetailsFeedback(int orderDetailId) throws Exception {
 
+        OrderDetail orderDetail = null;
+        Order order = null;
+        try {
+            String sql = "SELECT b.orderDetailId,a.customerId,b.productId FROM orders as a join orderdetails as b\n"
+                    + "on a.orderId=b.orderDetailId where b.orderDetailId=" + orderDetailId;
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                orderDetail = new OrderDetail();
+                orderDetail.setOrderDetailId(results.getInt("orderDetailId"));
+                orderDetail.setProductId(results.getInt("productId"));
+                order =  new Order();
+                order.setCustomerId(results.getInt("customerId"));
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return orderDetail;
+
+    }
 }

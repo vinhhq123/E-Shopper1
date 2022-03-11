@@ -513,6 +513,122 @@ public class ProductDAO extends DBContext {
         }
         return products;
     }
+    public Product getProductByOrder(int pid) throws Exception {
+
+        String sql = "SELECT p.productId,p.thumbnail,p.sale_price,p.title,p.productStatus,p.categoryId  from product as p\n"
+                + "join orderdetails as a on p.productId=a.productId join orders as b on b.orderId=a.orderId\n"
+                + "where b.orderId = " + pid;
+        System.out.println(sql);
+        Product product = null;
+        String noImage = "";
+
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                product = new Product();
+                product.setPid(results.getInt("productId"));
+                Blob blob = results.getBlob("thumbnail");
+                if (blob != null) {
+
+                    InputStream inputStream = blob.getBinaryStream();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                    inputStream.close();
+                    outputStream.close();
+                    product.setThumbnail(base64Image);
+                } else {
+                    product.setThumbnail(noImage);
+                }
+                product.setSprice(results.getDouble("sale_price"));
+                product.setTitle(results.getString("title"));
+                product.setProductStatus(results.getInt("productStatus"));
+                product.setCategoryID(results.getInt("categoryId"));               
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (SQLException | IOException ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return product;
+    }
+     public List<Product> getAllProductswithimage() {
+
+        List<Product> products = new ArrayList<>();
+        Product product = null;
+         String noImage = "";
+        try {
+            String sql = "select * from product ";
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                product = new Product();
+                product.setPid(results.getInt("productId"));
+                product.setTitle(results.getString("title"));
+                 Blob blob = results.getBlob("thumbnail");
+                if (blob != null) {
+
+                    InputStream inputStream = blob.getBinaryStream();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                    inputStream.close();
+                    outputStream.close();
+                    product.setThumbnail(base64Image);
+                } else {
+                    product.setThumbnail(noImage);
+                }
+                product.setSprice(results.getDouble("sale_price"));
+                product.setProductStatus(results.getInt("productStatus"));
+                product.setCategoryID(results.getInt("categoryId"));
+                product.setSalesId(results.getInt("salesId"));
+                product.setQuantity(results.getInt("quantity"));
+                product.setUpdatedDate(results.getDate("updatedDate"));
+                products.add(product);
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return products;
+    }
+
 
 //     public static void main(String[] args) {
 //
