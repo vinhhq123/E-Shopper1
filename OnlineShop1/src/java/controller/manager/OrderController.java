@@ -1002,7 +1002,7 @@ public class OrderController extends HttpServlet {
             postCategories = settingDAO.getAllProCategory();
             orderStatuses = settingDAO.getSettingOrderValue();
            currentCustomer = userDAO.getUserByUserId(order.getCustomerId());
-               orderDetail = orderDetailDAO.getOrderDetailsByOrderDetailId(orderDetailId);
+             orderDetail = orderDetailDAO.getOrderDetailsByOrderDetailId(orderDetailId);
             //orderDetails = orderDetailDAO.getOrderDetailsByOrderId(orderId);
             products = productDAO.getAllProductswithimage();
             

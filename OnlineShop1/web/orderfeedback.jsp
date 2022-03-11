@@ -48,23 +48,28 @@
                         <table class="table table-responsive" id="orderDetailTableEdit">
                             <input type="hidden" class="form-control" id="fullname" placeholder="Fullname" readonly value="${CurrentOrder.getOrderId()}" name="name" required>    
                             <input type="hidden" class="form-control" id="fullname" placeholder="Fullname" readonly value="${OrderDetails.getOrderDetailId()}" name="name" required>   
-                         <h2 class="text-light-blue">User Information</h2>
+                         <h2 class="title text-left">USER INFORMATION</h2>
                             
-                          <ul class="">
+                          <ul class="text">
                               
                               <li class="lii">Name : <b><i>${CurrentCustomer.getFullname()}</i></b></li>
                               <li class="lii">Email :  <b><i>${CurrentCustomer.getEmail()}</i></b></li>
                               <li class="lii">Mobile : <b><i>${CurrentCustomer.getPhone()}</i></b></li>
-
+                              <li class="lii">Address : <b><i>${CurrentCustomer.getAddress()}</i></b></li>
                           </ul>
                         </table>
                               <form action="#">
                                   <input type="hidden" class="form-control" id="fullname" placeholder="Fullname" readonly value="${CurrentCustomer.getUid()}" name="name" required>
                                    <input type="hidden" class="form-control" id="fullname" placeholder="Fullname" readonly value="${OrderDetails.getProductId()}" name="name" required>
                                         
-                                        <textarea name="" rows="5" cols="30" ></textarea>
-                                        <b>Rating: </b> <img src="images/product-details/rating.png" alt="" />
-                                        <button type="button" class="btn btn-default pull-right">
+                                        <b>Comments </b><textarea name="" rows="5" cols="30" ></textarea>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <b></b>
+                                        <b>Rating:</b> <img src="images/product-details/rating.png" alt="" />
+                                        <br>
+                                        <button type="button" class="btn btn-primary pull-right">
                                             Submit
                                         </button>
                                     </form>
