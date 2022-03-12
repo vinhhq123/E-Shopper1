@@ -6,6 +6,7 @@
  */
 package controller.admin;
 
+import controller.user.ChangePassController;
 import dal.PostDAO;
 import dal.SettingDAO;
 import dal.UserDAO;
@@ -32,6 +33,7 @@ import model.Setting;
 import model.User;
 import resources.PasswordEncrypt;
 import resources.SendEmail;
+import resources.Validate;
 
 /**
  *
@@ -41,7 +43,9 @@ import resources.SendEmail;
 @WebServlet(name = "UserController", urlPatterns = {"/user/list", "/user/search",
     "/user/getUser", "/user/update", "/user/add", "/user/toadd",
     "/user/updateProfile", "/blog/user/updateProfile", "/goods/user/updateProfile",
-    "/order/user/updateProfile"})
+    "/order/user/updateProfile",
+    "/user/changePass", "/blog/user/changePass", "/goods/user/changePass",
+    "/order/user/changePass"})
 public class UserController extends HttpServlet {
 
     /**
@@ -102,6 +106,18 @@ public class UserController extends HttpServlet {
                 break;
             case "/order/user/updateProfile":
                 updateProfile(request, response);
+                break;
+            case "/user/changePass":
+                changePass(request, response);
+                break;
+            case "/blog/user/changePass":
+                changePass(request, response);
+                break;
+            case "/goods/user/changePass":
+                changePass(request, response);
+                break;
+            case "/order/user/changePass":
+                changePass(request, response);
                 break;
         }
 
@@ -522,7 +538,6 @@ public class UserController extends HttpServlet {
 
     protected void updateProfile(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         String error = "";
         String phone = "";
         String name = "";
@@ -588,5 +603,47 @@ public class UserController extends HttpServlet {
 //            out.print("Invalid !!!");
 //        }
     }
-
+    
+    protected void changePass(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+            UserDAO usr = new UserDAO();
+            String successMessage = "";
+            String email = request.getParameter("email");
+            String curPass = request.getParameter("curPass");
+            String newPass = request.getParameter("newPass");
+            String reNewPass = request.getParameter("reNewPass");
+            Validate validate = new Validate();
+            PasswordEncrypt encryptedPass = new PasswordEncrypt();
+        try {
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+            //request.setAttribute("mailValue", email);
+            request.getSession().setAttribute("curPassValue", curPass);
+            request.getSession().setAttribute("newPassValue", newPass);
+            request.getSession().setAttribute("reNewPassValue", reNewPass);
+            if(usr.getAccount(email, encryptedPass.generateEncryptedPassword(curPass))==null){
+                String fail1 = "This is not your current password!";
+                request.getSession().setAttribute("fail1", fail1);
+            }
+           else if(validate.checkPassword(newPass)== false)
+            {
+                String fail2 = "Password must be at least 6 characters including at least one lowercase letter, one uppercase letter, one number and one special character!";
+                request.getSession().setAttribute("fail2", fail2);
+            }
+            else if(!newPass.equals(reNewPass)){
+                String fail3 = "Password and RePassword are not matched!";
+                request.getSession().setAttribute("fail3", fail3);
+            }
+            else{
+            int changePass = usr.ChangePass(encryptedPass.generateEncryptedPassword(newPass), email);
+                if(changePass > 0){
+                    out.print("You have successfully changed your password!");
+            }
+        }
+        } catch (SQLException ex) {
+            Logger.getLogger(ChangePassController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ChangePassController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
