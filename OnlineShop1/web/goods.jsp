@@ -31,6 +31,16 @@
 
     <body>
         <jsp:include page="header.jsp"/>
+        <form action="<%=request.getContextPath()%>/goods/search" method="post" class="search_box pull-right">
+            <div class="col-sm-12">
+                <div class="search_box pull-right">
+                    <input value="${searchValue}" name="search" type="text" placeholder="Search"/>
+<!--                    <button type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>-->
+                </div>
+            </div>
+        </form>
         <section>
             <div class="container">
                 <div class="row">
@@ -56,16 +66,16 @@
                                         <div class="text-center">
                                             <img src="data:image/jpg;base64,${o.getThumbnail()}" width="250" height="200"/>
                                             <font color="#fe980f">${o.title}<p>Views: ${o.views}</p></font>
-                                                <p>
-                                                    <fmt:setLocale value = "vi_VN"/>
-                                                <strike>
-                                                    <fmt:formatNumber value="${o.lprice}" type="currency" />
-                                                </strike>
-                                                <font color="red" size="+1"> <strong>
-                                                    <fmt:formatNumber value="${o.sprice}" type="currency" />  
-                                                </strong>
-                                                </font>
-                                                </p>
+                                            <p>
+                                                <fmt:setLocale value = "vi_VN"/>
+                                            <strike>
+                                                <fmt:formatNumber value="${o.lprice}" type="currency" />
+                                            </strike>
+                                            <font color="red" size="+1"> <strong>
+                                                <fmt:formatNumber value="${o.sprice}" type="currency" />  
+                                            </strong>
+                                            </font>
+                                            </p>
                                             <a href="<%=request.getContextPath()%>/goods/detail?pid=${o.pid}" class="btn btn-default add-to-cart">Show more detail</a>
                                         </div>
                                     </div>

@@ -12,6 +12,7 @@ import dal.ProductDAO;
 import dal.SettingDAO;
 import dal.UserDAO;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import model.Feedback;
 import model.Order;
 import model.OrderDetail;
@@ -38,7 +40,7 @@ import model.User;
  */
 @MultipartConfig(maxFileSize = 16177215)
 @WebServlet(name = "FeedbacksController", urlPatterns = {"/feedback/list","/feedback/edit","/feedback/getFeedback",
-"/feedback/search"})
+"/feedback/search","/feedback/add"})
 public class FeedbacksController extends HttpServlet {
 
     /**
@@ -94,6 +96,9 @@ public class FeedbacksController extends HttpServlet {
                 break;
             case "/feedback/getFeedback":
                 GetFeedbackID(request, response);
+                break;
+            case "/feedback/add":
+                AddFeedback(request, response);
                 break;
         }
     }
@@ -293,8 +298,46 @@ public class FeedbacksController extends HttpServlet {
             request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
         }
       } 
+        protected void AddFeedback(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        InputStream inputStream = null;
+       String content = "";
+       String cusid="";
+       String star="";
+       String pid="";
+       String base64Image = "";
+       String status="";
+        int convertedStar = 0;
+       content = request.getParameter("content").trim();
+       cusid = request.getParameter("cusid");
+       pid = request.getParameter("pid");
+       status = request.getParameter("status");
        
-       
-       }
+       Part filePart = request.getPart("image");
+       if (filePart != null) {
+            System.out.println(filePart.getName());
+            System.out.println(filePart.getSize());
+            System.out.println(filePart.getContentType());
+            // Obtains input stream of the upload file
+            inputStream = filePart.getInputStream();
+            switch (star) {
+            case "1":
+                convertedStar = 1;
+                break;
+            case "2":
+                convertedStar = 2;
+                break;
+            case "3":
+                convertedStar = 3;
+                break;
+            case "4":
+                convertedStar = 4;
+                break;
+            case "5":
+                convertedStar = 5;
+                break;
+        }
+        }
+       }}
     
 

@@ -71,6 +71,11 @@
                             <button type="submit" class="btn btn-default" style="background: #FE980F;  color: #FFFFFF;">Filter</button>
                         </form>
                         <br>
+                        <c:if test="${not empty messageCancelOrder}">
+                            <b><h4 class="help-block" style="color: green" id="messageCancelOrder">${messageCancelOrder}</h4></b>
+                                <c:remove var="messageCancelOrder"/>
+                            <br>
+                        </c:if>
                         <table class="table table-responsive" id="OrderHistoryTable">
                             <tr>
                                 <th >ID</th>
@@ -106,9 +111,9 @@
                                     <td align="right">
                                         <c:if test="${cos.getOrderStatus() == 25}">
                                             <button type="button" class="btn-xs btn-danger" onclick="if (confirm('Do you want to cancel this order?'))
-                                                window.location = '<%=request.getContextPath()%>/order/cancelCustomerOrder?orderId=${cos.getOrderId()}'">Cancel</button>
+                                                        window.location = '<%=request.getContextPath()%>/order/cancelCustomerOrder?orderId=${cos.getOrderId()}'">Cancel</button>
                                         </c:if>
-                                        <button type="button" class="btn-xs btn-default" style="background: #FE980F;  color: #FFFFFF;"  onclick="window.location = '<%=request.getContextPath()%>/'">View</button>
+                                        <button type="button" class="btn-xs btn-default" style="background: #FE980F;  color: #FFFFFF;"  onclick="window.location = '<%=request.getContextPath()%>/order/getOrderInfo?orderId=${cos.getOrderId()}'">View</button>
                                     </td>
 
                                 </tr>
@@ -168,9 +173,9 @@
                                 <ul class="nav nav-pills nav-stacked" style="text-align: center">
                                     <c:forEach items="${PostCategories}" var="pct">
                                         <li><a href="<%=request.getContextPath()%>/blog/cate?id=${pct.settingId}"><b>${pct.settingValue}</b></a></li>
-                                        </c:forEach>
-<!--                                    <li><a href="<%=request.getContextPath()%>/blog/cate?id=${o.settingId}">Marketing</a></li>
-                                    <li><a href="<%=request.getContextPath()%>/blog/cate?id=${o.settingId}">Promoted</a></li>-->
+                                                </c:forEach>
+        <!--                                    <li><a href="<%=request.getContextPath()%>/blog/cate?id=${o.settingId}">Marketing</a></li>
+                                            <li><a href="<%=request.getContextPath()%>/blog/cate?id=${o.settingId}">Promoted</a></li>-->
                                 </ul>
                             </div>
                             <hr>    

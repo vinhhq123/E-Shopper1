@@ -379,6 +379,36 @@ public class FeedbackDAO extends DBContext {
         }
         return listFeed;
     }
+    public int addNewFeedback(int cusID, int rate, int proId,InputStream avatar,int status,String content) throws SQLException {
+        String sql = "INSERT INTO feedback (customerId,ratedStar,productId,image,feedbackStatus,feedbackContent)\n"
+                + "VALUES (?,?,?,?,?,?);";
+        int row = 0;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, cusID);
+            preparedStatement.setInt(2, rate);
+             preparedStatement.setInt(2, proId);
+            if (avatar != null) {
+                preparedStatement.setBlob(4, avatar);
+            }
+             preparedStatement.setInt(5, status);
+             preparedStatement.setString(6, content);
+            row = preparedStatement.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return row;
+    }
     
 //    public static void main(String[] args) {
 //

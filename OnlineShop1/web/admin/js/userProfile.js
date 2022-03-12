@@ -36,10 +36,14 @@ $(document).ready(function () {
                 processData: false,
                 contentType: false,
                 success: function (result) {
-                    $('#successEditMessage').html(result);
                     $("#errorPhone").html('');
                     $("#errorAddress").html('');
                     $("#errorFullName").html('');
+                    $('#successEditMessage').html(result);
+                    $('#successEditMessage').delay(5000).fadeOut();
+//                    setTimeout(function () {
+//                        $('#successEditMessage').html('');
+//                    }, 5000);
                 },
                 error: function (result) {
                     $("#successEditMessage").html(result);
