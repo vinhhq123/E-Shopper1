@@ -52,10 +52,35 @@
                                                 <i class="fa fa-ticket fa-fw pull-right"></i>
                                                 My Order
                                             </a>
-                                            <a href="<%=request.getContextPath()%>/setting/list">
-                                                <i class="fa fa-cog fa-fw pull-right"></i>
-                                                Settings
-                                            </a>
+                                            <!-- CURRENT USER IS ADMIN -->
+                                            <c:if test="${account.getRole() == 1}">
+                                                <a href="<%=request.getContextPath()%>/setting/list">
+                                                    <i class="fa fa-cog fa-fw pull-right"></i>
+                                                    Settings
+                                                </a>
+                                            </c:if>
+                                            <!-- CURRENT USER IS MANAGER -->
+                                            <!-- WILL CHANGE TO DASHBOARD LATER-->
+                                            <c:if test="${account.getRole() == 2}">
+                                                <a href="<%=request.getContextPath()%>/customer/list">
+                                                    <i class="fa fa-users fa-fw pull-right"></i>
+                                                    Customers
+                                                </a>
+                                            </c:if>
+                                            <!-- CURRENT USER IS SALES -->
+                                            <c:if test="${account.getRole() == 3}">
+                                                <a href="<%=request.getContextPath()%>/order/list">
+                                                    <i class="fa fa-square fa-fw pull-right"></i>
+                                                    Orders
+                                                </a>
+                                            </c:if>
+                                            <!-- CURRENT USER IS MARKETING-->
+                                            <c:if test="${account.getRole() == 4}">
+                                                <a href="<%=request.getContextPath()%>/post/list">
+                                                    <i class="fa fa-paperclip fa-fw pull-right"></i>
+                                                    Posts
+                                                </a>
+                                            </c:if>
                                             <a href="${pageContext.request.contextPath}/Login.jsp">
                                                 <i class="fa fa-power-off fa-fw pull-right"></i> Logout</a>
                                         </li>
@@ -195,7 +220,7 @@
 <!-- User Detail -->
 <script src="${pageContext.request.contextPath}/admin/js/UserDetail.js" type="text/javascript"></script>
 <!-- User Profile -->
-<script src="${pageContext.request.contextPath}/admin/js/userProfile.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/admin/js/userProfile1.js" type="text/javascript"></script>
 <!--<script>
     $(document).ready(function () {
     $('#editProfile').validate({

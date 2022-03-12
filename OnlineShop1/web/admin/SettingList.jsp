@@ -105,7 +105,7 @@
                                             <tr>
                                                 <td>${con.getSettingId()}</td>
                                                 <td>
-                                                    <c:forEach var="type" begin="1" end="8" step="1">
+                                                    <c:forEach var="type" begin="1" end="9" step="1">
                                                         <c:if test="${type ==  con.getSettingType()}">
                                                             ${types[type-1]}
                                                         </c:if>    

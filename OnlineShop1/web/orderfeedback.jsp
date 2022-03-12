@@ -27,6 +27,7 @@
         <script src="js/respond.min.js"></script>
         <![endif]-->   
         <link href="<%=request.getContextPath()%>/admin/css/orderdetails.css" rel="stylesheet" type="text/css" />
+        <link href="<%=request.getContextPath()%>/admin/css/ratestar.css" rel="stylesheet" type="text/css" />
         <link rel="shortcut icon" href="images/ico/favicon.ico">
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
@@ -58,18 +59,40 @@
                               <li class="lii">Address : <b><i>${CurrentCustomer.getAddress()}</i></b></li>
                           </ul>
                         </table>
-                              <form action="#">
-                                  <input type="hidden" class="form-control" id="fullname" placeholder="Fullname" readonly value="${CurrentCustomer.getUid()}" name="name" required>
-                                   <input type="hidden" class="form-control" id="fullname" placeholder="Fullname" readonly value="${OrderDetails.getProductId()}" name="name" required>
+                              <form action="<%=request.getContextPath()%>/feedback/add" method="POST" enctype="multipart/form-data">
+                                  <input type="hidden" class="form-control" id="fullname" placeholder="Fullname" readonly value="${CurrentCustomer.getUid()}" name="cusid" required>
+                                  <input type="hidden" class="form-control" id="fullname" placeholder="Fullname" readonly value="${OrderDetails.getProductId()}" name="pid" required>
                                         
-                                        <b>Comments </b><textarea name="" rows="5" cols="30" ></textarea>
+                                        <b>    Comments: </b><br><textarea name="content" rows="5" cols="30" >${content}</textarea>
+                                        
+                                        
                                         <br>
+                                       <br>
+                                         <div class="form-group">                                            
+                                          <label class="col-sm-2 control-label">Rating:</label>
+                                           <div id="rating">
+                                            <input type="radio" id="star5" name="star" value="5" />
+                                            <label class = "full" for="star5" title="Awesome - 5 stars"></label>
+
+                                            <input type="radio" id="star4" name="star" value="4" />
+                                            <label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+
+                                            <input type="radio" id="star3" name="star" value="3" />
+                                            <label class = "full" for="star3" title="Meh - 3 stars"></label>
+
+                                            <input type="radio" id="star2" name="star" value="2" />
+                                            <label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+
+                                            <input type="radio" id="star1" name="star" value="1" />
+                                            <label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+                                           </div>
+                                                </div><br>
+                                      <br>
+                                      <br>
+                                                <div><b>Image: </b><input type="file" name="image" /></div>
                                         <br>
-                                        <br>
-                                        <b></b>
-                                        <b>Rating:</b> <img src="images/product-details/rating.png" alt="" />
-                                        <br>
-                                        <button type="button" class="btn btn-primary pull-right">
+                                       
+                                        <button type="submit" class="btn btn-primary pull-right">
                                             Submit
                                         </button>
                                     </form>
@@ -92,11 +115,16 @@
                 <div class="col-sm-4">
                     <div class="row">
 
-                        <div class="search_box pull-right">
-                            <form action="<%=request.getContextPath()%>/blog/search" method="post">
-                                <input value="${searchValue}" name="search" type="text" placeholder="Search Product"/>
-                            </form>
-                        </div>
+                         <form action="<%=request.getContextPath()%>/goods/search" method="post" class="search_box pull-right">
+                                    <div class="col-sm-12">
+                                        <div class="search_box pull-right">
+                                            <input value="${searchValue}" name="search" type="text" placeholder="Search Product"/>
+                                            <!--                    <button type="submit">
+                                                                    <i class="fa fa-search"></i>
+                                                                </button>-->
+                                        </div>
+                                    </div>
+                                </form>
                     </div><hr>
                     <div class="blog-post-area">
                         <div class="brands_products"><!--brands_products-->
@@ -104,7 +132,7 @@
                             <div class="brands-name">
                                 <ul class="nav nav-pills nav-stacked" style="text-align: center">
                                     <c:forEach items="${PostCategories}" var="pct">
-                                        <li><a href="<%=request.getContextPath()%>/blog/cate?id=${pct.settingId}"><b>${pct.settingValue}</b></a></li>
+                                        <li><a href="<%=request.getContextPath()%>/goods/goodsCate?id=${pct.settingId}"><b>${pct.settingValue}</b></a></li>
                                         </c:forEach>
 <!--                                    <li><a href="<%=request.getContextPath()%>/blog/cate?id=${o.settingId}">Marketing</a></li>
                                     <li><a href="<%=request.getContextPath()%>/blog/cate?id=${o.settingId}">Promoted</a></li>-->
@@ -136,7 +164,7 @@
         <script src="${pageContext.request.contextPath}/assets/js/jquery.prettyPhoto.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
         <script src="${pageContext.request.contextPath}/admin/js/userProfile.js" type="text/javascript"></script>
-
+        <script src="${pageContext.request.contextPath}/admin/js/ratestar.js" type="text/javascript"></script>
     </body>
 </html>
 

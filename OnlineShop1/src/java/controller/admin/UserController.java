@@ -40,7 +40,8 @@ import resources.SendEmail;
 @MultipartConfig(maxFileSize = 16177215)
 @WebServlet(name = "UserController", urlPatterns = {"/user/list", "/user/search",
     "/user/getUser", "/user/update", "/user/add", "/user/toadd",
-    "/user/updateProfile"})
+    "/user/updateProfile", "/blog/user/updateProfile", "/goods/user/updateProfile",
+    "/order/user/updateProfile"})
 public class UserController extends HttpServlet {
 
     /**
@@ -93,7 +94,15 @@ public class UserController extends HttpServlet {
             case "/user/updateProfile":
                 updateProfile(request, response);
                 break;
-
+            case "/blog/user/updateProfile":
+                updateProfile(request, response);
+                break;
+            case "/goods/user/updateProfile":
+                updateProfile(request, response);
+                break;
+            case "/order/user/updateProfile":
+                updateProfile(request, response);
+                break;
         }
 
     }

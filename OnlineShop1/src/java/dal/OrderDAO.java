@@ -254,7 +254,7 @@ public class OrderDAO extends DBContext {
         Order order = null;
 
         try {
-            String sql = "select * from orders where customerId = ?";
+            String sql = "select * from orders where customerId = ? order by orderDate desc";
             connection = getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, customerId);
@@ -292,9 +292,9 @@ public class OrderDAO extends DBContext {
             sql += " and orderStatus = " + status;
         }
         if (!from.isEmpty() && !to.isEmpty()) {
-            sql += " and (orderDate between '" + from + "' and '" + to + "');";
+            sql += " and (orderDate between '" + from + "' and '" + to + "') ";
         }
-
+        sql += " order by orderDate desc";
         System.out.println(sql);
         Order order = null;
         try {

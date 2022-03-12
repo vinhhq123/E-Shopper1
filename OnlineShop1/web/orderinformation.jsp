@@ -96,14 +96,21 @@
                             </tr>
                         </c:forEach>
                         </table>
-                        <h3><b>Total Cost</b></h3>
-                                            <ul class="ulclass">
+                        
+                        
+                    <div class="page-title">
+                        <h2 class="title text-right"><b>Total Cost</b></h2>
+                        </div>
+                                            <ul class="ulclass text-right">
                                                 <li class="lii">Total : 
                                                     <span class="total">
                                                         <fmt:setLocale value = "vi_VN"/>
                                                         <fmt:formatNumber value="${CurrentOrder.getTotalCost()}" type="currency"/>
                                                     </span></li>
-                                            </ul>
+                                            </ul> 
+                                                        <div class="col-lg-offset col-lg-8">
+                                                            <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/order/getCustomerOrders'">Back Order List</button>
+                                                        </div>
                         <br>
                         <c:if test="${requestScope.CustomerOrders.isEmpty()}">
                             <p style="text-align: center">No matching Orders found </p>
@@ -144,11 +151,17 @@
                 <div class="col-sm-3">
                     <div class="row">
 
-                        <div class="search_box pull-right">
-                            <form action="<%=request.getContextPath()%>/blog/search" method="post">
-                                <input value="${searchValue}" name="search" type="text" placeholder="Search Product"/>
-                            </form>
-                        </div>
+                        
+                                <form action="<%=request.getContextPath()%>/goods/search" method="post" class="search_box pull-right">
+                                    <div class="col-sm-12">
+                                        <div class="search_box pull-right">
+                                            <input value="${searchValue}" name="search" type="text" placeholder="Search Product"/>
+                                            <!--                    <button type="submit">
+                                                                    <i class="fa fa-search"></i>
+                                                                </button>-->
+                                        </div>
+                                    </div>
+                                </form>
                     </div><hr>
                     <div class="blog-post-area">
                         <div class="brands_products"><!--brands_products-->
@@ -156,7 +169,7 @@
                             <div class="brands-name">
                                 <ul class="nav nav-pills nav-stacked" style="text-align: center">
                                     <c:forEach items="${PostCategories}" var="pct">
-                                        <li><a href="<%=request.getContextPath()%>/blog/cate?id=${pct.settingId}"><b>${pct.settingValue}</b></a></li>
+                                        <li><a href="<%=request.getContextPath()%>/goods/goodsCate?id=${pct.settingId}"><b>${pct.settingValue}</b></a></li>
                                         </c:forEach>
 <!--                                    <li><a href="<%=request.getContextPath()%>/blog/cate?id=${o.settingId}">Marketing</a></li>
                                     <li><a href="<%=request.getContextPath()%>/blog/cate?id=${o.settingId}">Promoted</a></li>-->

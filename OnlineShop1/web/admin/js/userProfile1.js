@@ -40,10 +40,10 @@ $(document).ready(function () {
                     $("#errorAddress").html('');
                     $("#errorFullName").html('');
                     $('#successEditMessage').html(result);
-                    $('#successEditMessage').delay(5000).fadeOut();
-//                    setTimeout(function () {
-//                        $('#successEditMessage').html('');
-//                    }, 5000);
+//                    $('#successEditMessage').delay(5000).html('');
+                    setTimeout(function () {
+                        $('#successEditMessage').html('');
+                    }, 5000);
                 },
                 error: function (result) {
                     $("#successEditMessage").html(result);

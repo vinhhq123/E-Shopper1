@@ -11,11 +11,14 @@ import dal.OrderDetailDAO;
 import dal.ProductDAO;
 import dal.SettingDAO;
 import dal.UserDAO;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -300,44 +303,31 @@ public class FeedbacksController extends HttpServlet {
       } 
         protected void AddFeedback(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        InputStream inputStream = null;
-       String content = "";
-       String cusid="";
-       String star="";
-       String pid="";
-       String base64Image = "";
-       String status="";
-        int convertedStar = 0;
-       content = request.getParameter("content").trim();
-       cusid = request.getParameter("cusid");
-       pid = request.getParameter("pid");
-       status = request.getParameter("status");
        
-       Part filePart = request.getPart("image");
-       if (filePart != null) {
-            System.out.println(filePart.getName());
-            System.out.println(filePart.getSize());
-            System.out.println(filePart.getContentType());
-            // Obtains input stream of the upload file
-            inputStream = filePart.getInputStream();
-            switch (star) {
-            case "1":
-                convertedStar = 1;
-                break;
-            case "2":
-                convertedStar = 2;
-                break;
-            case "3":
-                convertedStar = 3;
-                break;
-            case "4":
-                convertedStar = 4;
-                break;
-            case "5":
-                convertedStar = 5;
-                break;
+        try {
+            InputStream inputStream = null;
+            String content = request.getParameter("content");
+            String cusid=request.getParameter("cusid");
+            String star=request.getParameter("star");
+            String pid=request.getParameter("pid");
+            //int status=Integer.parseInt("status");
+            
+            Part filePart = request.getPart("image");
+            if (filePart != null) {
+                System.out.println(filePart.getName());
+                System.out.println(filePart.getSize());
+                System.out.println(filePart.getContentType());
+                // Obtains input stream of the upload file
+                inputStream = filePart.getInputStream();}
+            
+            FeedbackDAO feedDAO= new FeedbackDAO();
+            feedDAO.addNewFeedback(Integer.parseInt(cusid),Integer.parseInt(star), Integer.parseInt(pid), inputStream, 18, content);
+            //request.getRequestDispatcher("/orderfeedback.jsp").forward(request, response);
+            response.sendRedirect("../home");
+        } catch (SQLException ex) {
+            Logger.getLogger(FeedbacksController.class.getName()).log(Level.SEVERE, null, ex);
         }
         }
-       }}
+       }
     
 
