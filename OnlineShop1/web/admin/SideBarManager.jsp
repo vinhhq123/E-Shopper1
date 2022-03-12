@@ -30,21 +30,26 @@
                         <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                     </a>
                 </li>
-               
+
                 <li>
                     <a href="<%=request.getContextPath()%>/proList">
                         <i class="fa fa-book"></i> <span>Product List</span>
                     </a>
                 </li>
+                <li>
+                    <a href="<%=request.getContextPath()%>/order/list">
+                        <i class="fa fa-square"></i> <span>Order List</span>
+                    </a>
+                </li>
 
                 <li>
-                     <a href="<%=request.getContextPath()%>/customer/list">
+                    <a href="<%=request.getContextPath()%>/customer/list">
                         <i class="fa fa-user"></i> <span>Customer List</span>
                     </a>
                 </li>
 
                 <li>
-                   <a href="<%=request.getContextPath()%>/feedback/list">
+                    <a href="<%=request.getContextPath()%>/feedback/list">
                         <i class="fa fa-check"></i> <span>Feedback List</span>
                     </a>
                 </li>
@@ -54,8 +59,8 @@
                         <i class="fa fa-paperclip"></i> <span>Sliders List</span>
                     </a>
                 </li>
-                
-                
+
+
 
                 <li>
                     <a href="basic_form.html">
@@ -67,7 +72,7 @@
                         <i class="fa fa-book"></i> <span>Change Password</span>
                     </a>
                 </li>
-               
+
 
             </ul>
         </section>

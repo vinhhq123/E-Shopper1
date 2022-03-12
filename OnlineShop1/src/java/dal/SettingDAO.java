@@ -93,7 +93,9 @@ public class SettingDAO extends DBContext {
                 case "Order Status":
                     sql += " and settingType = 8";
                     break;
-
+                case "User Title":
+                    sql += " and settingType = 9";
+                    break;
             }
         }
         if (status != "") {

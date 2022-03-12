@@ -134,6 +134,13 @@ public class Author implements Filter {
                 }else if (url.contains("CustomerOrder")) { 
                     chain.doFilter(request, response);
                 } else if (url.contains("setting/list")) {
+                    /*
+                    1: admin
+                    2: manager
+                    3: sale
+                    4: marketing
+                    5: customer
+                    */
                     if (user.getRole() == 3 || user.getRole() == 4 || user.getRole() == 2 || user.getRole() == 1) {
                         chain.doFilter(request, response);
                     } else {
@@ -192,30 +199,30 @@ public class Author implements Filter {
         } else {
             chain.doFilter(request, response);
         }
-        Throwable problem = null;
-        try {
-            chain.doFilter(request, response);
-        } catch (Throwable t) {
-            // If an exception is thrown somewhere down the filter chain,
-            // we still want to execute our after processing, and then
-            // rethrow the problem after that.
-            problem = t;
-            t.printStackTrace();
-        }
-
-        doAfterProcessing(request, response);
-
-        // If there was a problem, we want to rethrow it if it is
-        // a known type, otherwise log it.
-        if (problem != null) {
-            if (problem instanceof ServletException) {
-                throw (ServletException) problem;
-            }
-            if (problem instanceof IOException) {
-                throw (IOException) problem;
-            }
-            sendProcessingError(problem, response);
-        }
+//        Throwable problem = null;
+//        try {
+//            chain.doFilter(request, response);
+//        } catch (Throwable t) {
+//            // If an exception is thrown somewhere down the filter chain,
+//            // we still want to execute our after processing, and then
+//            // rethrow the problem after that.
+//            problem = t;
+//            t.printStackTrace();
+//        }
+//
+//        doAfterProcessing(request, response);
+//
+//        // If there was a problem, we want to rethrow it if it is
+//        // a known type, otherwise log it.
+//        if (problem != null) {
+//            if (problem instanceof ServletException) {
+//                throw (ServletException) problem;
+//            }
+//            if (problem instanceof IOException) {
+//                throw (IOException) problem;
+//            }
+//            sendProcessingError(problem, response);
+//        }
     }
 
     /**
