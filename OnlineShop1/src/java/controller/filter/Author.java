@@ -134,6 +134,13 @@ public class Author implements Filter {
                 }else if (url.contains("CustomerOrder")) { 
                     chain.doFilter(request, response);
                 } else if (url.contains("setting/list")) {
+                    /*
+                    1: admin
+                    2: manager
+                    3: sale
+                    4: marketing
+                    5: customer
+                    */
                     if (user.getRole() == 3 || user.getRole() == 4 || user.getRole() == 2 || user.getRole() == 1) {
                         chain.doFilter(request, response);
                     } else {
