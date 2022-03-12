@@ -304,7 +304,7 @@ public class FeedbacksController extends HttpServlet {
         protected void AddFeedback(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
        
-        try {
+         try {
             InputStream inputStream = null;
             String content = request.getParameter("content");
             String cusid=request.getParameter("cusid");
@@ -323,7 +323,7 @@ public class FeedbacksController extends HttpServlet {
             FeedbackDAO feedDAO= new FeedbackDAO();
             feedDAO.addNewFeedback(Integer.parseInt(cusid),Integer.parseInt(star), Integer.parseInt(pid), inputStream, 18, content);
             //request.getRequestDispatcher("/orderfeedback.jsp").forward(request, response);
-            response.sendRedirect("../home");
+            response.sendRedirect("../goods/goodsList");
         } catch (SQLException ex) {
             Logger.getLogger(FeedbacksController.class.getName()).log(Level.SEVERE, null, ex);
         }

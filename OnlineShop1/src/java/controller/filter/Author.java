@@ -123,6 +123,8 @@ public class Author implements Filter {
                     chain.doFilter(request, response);
                 } else if (url.contains("getproduct")) {
                     chain.doFilter(request, response);
+                }else if (url.contains("feedback/add")) {
+                    chain.doFilter(request, response);
                 }
                 else if (url.contains("getOrderInfo")) {
                     chain.doFilter(request, response);
