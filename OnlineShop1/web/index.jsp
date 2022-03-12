@@ -41,7 +41,7 @@
         <section id="slider"><!--slider-->
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div>
                         <div id="slider-carousel" class="carousel slide" data-ride="carousel">
                             <ol class="carousel-indicators">
                                 <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
@@ -50,32 +50,30 @@
                             </ol>
 
                             <div class="carousel-inner">
-                                <div class="item active">
-                                    <div class="col-sm-6">
-                                        <h1><span>E</span>-SHOPPER</h1>
-                                        <h2>Free E-Commerce Template</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                                        <button type="button" class="btn btn-default get">Get it now</button>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <img src="assets/images/home/girl1.jpg" class="girl img-responsive" alt="" />
-                                        <img src="assets/images/home/pricing.png"  class="pricing" alt="" />
-                                    </div>
-                                </div>
-                                <c:forEach items="${sliders}" var="s">
-                                    <div class="item">
-                                        <div class="col-sm-6">
-                                            <h1><span>E</span>-SHOPPER</h1>
-                                            <h2>${s.s_title}</h2>
-                                            <p>${s.s_notes} </p>
-                                            <a href="${s.back_link}"><button type="button" class="btn btn-default get">Get it now</button></a>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <img style="width:350px;height:440px;" src="data:image/jpg;base64,${s.s_image}" class="girl img-responsive" alt="" />
-                                            <img src="assets/images/home/pricing.png"  class="pricing" alt="" />
-                                        </div>
+
+                                <c:forEach items="${sliders}" var="s" begin="0" end="0">
+                                    <div class="item active">
+                                            <a href="${s.back_link}">
+                                                <img style="position: relative;width: 1000px;height: 450px; top: 10px" src="data:image/jpg;base64,${s.s_image}" alt="" />
+                                            </a>
+    <!--                                        <h2 style="position: absolute; top: 150px; left: 150px">${s.s_title}</h2>
+                                            <p style="position: absolute; top: 200px; left: 150px">${s.s_notes}</p>-->
+    <!--                                        <a href="${s.back_link}" style="position: absolute;top: 250px; left: 150px"><button type="button" class="btn btn-default get">Get it now</button></a>-->
                                     </div>
                                 </c:forEach>
+
+
+                                <c:forEach items="${sliders}" var="s" begin="1" end="2">
+                                    <div class="item">
+                                        <a href="${s.back_link}">
+                                            <img style="position: relative;width: 1000px;height: 450px; top: 10px" src="data:image/jpg;base64,${s.s_image}" alt="" />
+                                        </a>
+<!--                                        <h2 style="position: absolute; top: 150px; left: 150px">${s.s_title}</h2>
+                                        <p style="position: absolute; top: 200px; left: 150px">${s.s_notes}</p>-->
+<!--                                        <a href="${s.back_link}" style="position: absolute;top: 250px; left: 150px"><button type="button" class="btn btn-default get">Get it now</button></a>-->
+                                    </div>
+                                </c:forEach>
+
                             </div>
 
 
@@ -113,13 +111,14 @@
                             <h2>Feature Products</h2>
                             <div class="panel-group"><!--category-productsr-->
                                 <c:forEach items="${listFeatured}" var="o">
-                                    <div class="single-products">
-                                        <div class="">
+                                    <div class="single-products row">
+                                        <div class="col-sm-5">
                                             <img src="data:image/jpg;base64,${o.getThumbnail()}" width="100" height="100"/>
-                                            <font color="#fe980f">${o.title}<p></p></font>
-                                            <a href="<%=request.getContextPath()%>/goods/detail?pid=${o.pid}" class="btn btn-default add-to-cart">Show more detail</a>
                                         </div>
-
+                                        <div class="col-sm-7">
+                                            <font color="#fe980f">${o.title}<p></p></font>
+                                            <a href="<%=request.getContextPath()%>/goods/detail?pid=${o.pid}" class="btn btn-default add-to-cart">Show</a>
+                                        </div>
                                     </div>
                                 </c:forEach>
                             </div><!--/category-productsr-->
@@ -149,7 +148,7 @@
                                                             </strong>
                                                             </font>
                                                             </p>
-                                                            <a href="<%=request.getContextPath()%>/goods/detail?pid=${o.pid}" class="btn btn-default add-to-cart">Show more detail</a>
+                                                            <a href="<%=request.getContextPath()%>/goods/detail?pid=${o.pid}" class="btn btn-default add-to-cart">Show</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -162,7 +161,7 @@
                                                 <div class="product-image-wrapper">
                                                     <div class="single-products">
                                                         <div class="productinfo text-center">
-                                                            <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" width="100" height="200"/>
+                                                            <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="200"/>
                                                             <h2>${o.title}</h2>
                                                             <p>
                                                                 <fmt:setLocale value = "vi_VN"/>
@@ -174,7 +173,7 @@
                                                             </strong>
                                                             </font>
                                                             </p>
-                                                            <a href="<%=request.getContextPath()%>/goods/detail?pid=${o.pid}" class="btn btn-default add-to-cart">Show more detail</a>
+                                                            <a href="<%=request.getContextPath()%>/goods/detail?pid=${o.pid}" class="btn btn-default add-to-cart">Show</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -196,17 +195,17 @@
                             <h2 class="title text-center">hot posts</h2>
                             <c:forEach items="${listHotBlogs}" var="o">
                                 <div class="col-sm-5">
-                                    <div class="view-product">
-                                        <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="">
+                                    <div class="">
+                                        <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="150" width="300">
                                     </div>
                                 </div>
                                 <div class="col-sm-7">
-                                    <div class="single-blog-post">
+                                    <div class="blog-post-area single-blog-post">
                                         <h3>${o.postTitle}</h3>
                                         <div class="post-meta"> 
-                                            <p><i class=''></i> ${o.category.settingValue}</p>
+                                            <p><i class='fas fa-tags'></i>Blog Category: ${o.category.settingValue}</p>
                                         </div>
-                                        <a  class="btn btn-primary" href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">Read More</a>
+                                        <a class="btn btn-primary" href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">Read More</a>
                                     </div>
                                 </div>
                             </c:forEach>

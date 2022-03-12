@@ -35,9 +35,6 @@
             <div class="col-sm-12">
                 <div class="search_box pull-right">
                     <input value="${searchValue}" name="search" type="text" placeholder="Search"/>
-<!--                    <button type="submit">
-                        <i class="fa fa-search"></i>
-                    </button>-->
                 </div>
             </div>
         </form>
@@ -46,7 +43,7 @@
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="left-sidebar">
-                            <h2>Category</h2>
+                            <h2>Product Category</h2>
                             <div class="panel-group category-products" id="accordian"><!--category-productsr-->
                                 <c:forEach items="${listGoodsCate}" var="o">
                                     <div class="panel panel-default">
@@ -62,21 +59,23 @@
                             <h2>Feature Products</h2>
                             <div class="panel-group"><!--category-productsr-->
                                 <c:forEach items="${listFeatured}" var="o">
-                                    <div class="single-products">
-                                        <div class="text-center">
-                                            <img src="data:image/jpg;base64,${o.getThumbnail()}" width="250" height="200"/>
+                                    <div class="single-products row">
+                                        <div class="col-sm-5">
+                                            <img src="data:image/jpg;base64,${o.getThumbnail()}" width="100" height="100"/>
+                                        </div>
+                                        <div class="col-sm-7">
                                             <font color="#fe980f">${o.title}<p>Views: ${o.views}</p></font>
                                             <p>
                                                 <fmt:setLocale value = "vi_VN"/>
                                             <strike>
                                                 <fmt:formatNumber value="${o.lprice}" type="currency" />
                                             </strike>
-                                            <font color="red" size="+1"> <strong>
+                                            <font color="red" size="+0.5"> <strong>
                                                 <fmt:formatNumber value="${o.sprice}" type="currency" />  
                                             </strong>
                                             </font>
                                             </p>
-                                            <a href="<%=request.getContextPath()%>/goods/detail?pid=${o.pid}" class="btn btn-default add-to-cart">Show more detail</a>
+                                            <a href="<%=request.getContextPath()%>/goods/detail?pid=${o.pid}" class="btn btn-default add-to-cart">Show</a>
                                         </div>
                                     </div>
                                 </c:forEach>
@@ -104,7 +103,7 @@
                                                 </strong>
                                                 </font>
                                                 </p>
-                                                <a href="<%=request.getContextPath()%>/goods/detail?pid=${o.pid}" class="btn btn-default add-to-cart">Show more detail</a>
+                                                <a href="<%=request.getContextPath()%>/goods/detail?pid=${o.pid}" class="btn btn-default add-to-cart">Show</a>
                                             </div>
                                         </div>
                                         <div class="choose">
