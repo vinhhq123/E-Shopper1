@@ -388,7 +388,7 @@ public class FeedbackDAO extends DBContext {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, cusID);
             preparedStatement.setInt(2, rate);
-             preparedStatement.setInt(2, proId);
+             preparedStatement.setInt(3, proId);
             if (avatar != null) {
                 preparedStatement.setBlob(4, avatar);
             }
@@ -408,6 +408,63 @@ public class FeedbackDAO extends DBContext {
             }
         }
         return row;
+    }
+     public Feedback getLastInsertedFeedback() throws Exception {
+
+        String sql = "SELECT * FROM feedback ORDER BY feedbackId DESC LIMIT 1; ";
+        System.out.println(sql);
+        Feedback pro = null;
+        String noImage = "";
+
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                pro = new Feedback();
+                pro.setFeedbackId(results.getInt("feedbackId"));
+                pro.setCustomerId(results.getInt("customerId"));
+                pro.setRatedStart(results.getInt("ratedStar"));
+                pro.setProductID(results.getInt("productId"));
+                pro.setFeedbackStatus(results.getInt("feedbackStatus"));
+                pro.setFeedbackContent(results.getString("feedbackContent"));             
+
+                Blob blob = results.getBlob("image");
+                if (blob != null) {
+
+                    InputStream inputStream = blob.getBinaryStream();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                    inputStream.close();
+                    outputStream.close();
+                    pro.setImage(base64Image);
+                } else {
+                    pro.setImage(noImage);
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (SQLException | IOException ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return pro;
     }
     
 //    public static void main(String[] args) {
