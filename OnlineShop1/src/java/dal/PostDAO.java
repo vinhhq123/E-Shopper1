@@ -273,6 +273,62 @@ public class PostDAO extends DBContext {
         return arr;
     }
 
+    public List<PostList> getFeaturedBlogs() {
+        List<PostList> listBlog = new ArrayList<>();
+        String query = "select p.postId, p.thumbnail, p.postTitle, p.views, s.settingId, s.settingValue from post p \n" +
+"                inner join setting s on p.postCategory = s.settingId order by p.views desc limit 3";
+        try {
+            connection = new DBContext().getConnection();
+            ps = connection.prepareStatement(query);
+            result = ps.executeQuery();
+
+            while (result.next()) {
+                PostList p = new PostList();
+                p.setPostId(result.getInt("postId"));
+                p.setPostTitle(result.getString("postTitle"));
+                Setting s = new Setting(result.getInt("settingId"), result.getString("settingValue"));
+                p.setCategory(s);
+                Blob blob = result.getBlob("thumbnail");
+                if (blob != null) {
+                    InputStream inputStream = blob.getBinaryStream();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                    inputStream.close();
+                    outputStream.close();
+                    p.setThumbnail(base64Image);
+                } else {
+                    p.setThumbnail("");
+                }
+                p.setViews(result.getInt("views"));
+                listBlog.add(p);
+            }
+        } catch (Exception e) {
+
+        }
+        return listBlog;
+    }
+    
+    public void updateViews(int id) {
+        String query = "update product set views = views + 1 where productId = ?";
+        try {
+            connection = new DBContext().getConnection();
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+
+        }
+    }
+    
     public void insertPost(String postContent, InputStream thumbnail, String postTitle, int postAuthor) {
 
         String sql = "INSERT INTO `post` (`thumbnail`, `postTitle`, `postContent`, `postAuthor`) \n"
@@ -390,8 +446,8 @@ public class PostDAO extends DBContext {
 //
 //        PostDAO dao = new PostDAO();
 ////        PostList postList = dao.getBlogById(1);
-//        List<Setting> list = dao.getBlogCategory();
-//        for (Setting postList : list) {
+//        List<PostList> list = dao.getFeaturedBlogs();
+//        for (PostList postList : list) {
 //            System.out.println(postList);
 //        }
 //    }

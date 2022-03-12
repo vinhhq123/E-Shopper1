@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="logo pull-left">
-                        <a href="${pageContext.request.contextPath}/index.jsp"><img src="${pageContext.request.contextPath}/assets/images/home/logo.png" alt="" /></a>
+                        <a href="<%=request.getContextPath()%>/home"><img src="${pageContext.request.contextPath}/assets/images/home/logo.png" alt="" /></a>
                     </div>
                 </div>
                 <div class="col-sm-8">
@@ -85,7 +85,7 @@
                         </div>
                         <div class="mainmenu pull-left">
                             <ul class="nav navbar-nav collapse navbar-collapse">
-                                <li><a href="${pageContext.request.contextPath}/index.jsp" class="active">Home</a></li>
+                                <li><a href="<%=request.getContextPath()%>/home" class="active">Home</a></li>
                                 <li><a href="<%=request.getContextPath()%>/goods/goodsList">Shop<i></i></a>
                                 </li> 
                                 <li class="dropdown"><a href="#" >Blog<i class="fa fa-angle-down"></i></a>
@@ -102,17 +102,6 @@
                             </ul>
                         </div>
                     </div>
-<!--                    <form action="<%=request.getContextPath()%>/blog/search" method="post">
-                        <div class="col-sm-3">
-                            <div class="search_box pull-right">
-                                <input value="${searchValue}" name="search" type="text" placeholder="Search"/>
-                                                            <button type="submit">
-                                                                <i class="fa fa-search"></i>
-                                                            </button>
-                            </div>
-                        </div>
-                    </form>-->
-
                 </div>
             </div>
         </div> <!--header-bottom-->
