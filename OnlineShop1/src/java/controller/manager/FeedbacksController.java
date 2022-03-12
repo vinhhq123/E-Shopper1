@@ -321,8 +321,9 @@ public class FeedbacksController extends HttpServlet {
                 inputStream = filePart.getInputStream();}
             
             FeedbackDAO feedDAO= new FeedbackDAO();
-            feedDAO.addNewFeedback(Integer.parseInt(cusid),4, Integer.parseInt(pid), inputStream, 18, content);
-            request.getRequestDispatcher("list").forward(request, response);
+            feedDAO.addNewFeedback(Integer.parseInt(cusid),Integer.parseInt(star), Integer.parseInt(pid), inputStream, 18, content);
+            request.getRequestDispatcher("/orderfeedback.jsp").forward(request, response);
+            //response.sendRedirect("");
         } catch (SQLException ex) {
             Logger.getLogger(FeedbacksController.class.getName()).log(Level.SEVERE, null, ex);
         }
