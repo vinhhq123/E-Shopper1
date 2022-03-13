@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Product Details | E-Shopper</title>
+        <title>Cart | E-Shopper</title>
         <link href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/assets/css/font-awesome.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/assets/css/prettyPhoto.css" rel="stylesheet">
