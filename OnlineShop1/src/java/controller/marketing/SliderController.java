@@ -179,7 +179,7 @@ public class SliderController extends HttpServlet {
             int s_status = Integer.parseInt(request.getParameter("s_status"));
             if(s_status == 1){
                 SliderDAO sd = new SliderDAO();
-                sd.updateStatus(s_id, 0);
+                sd.updateStatus(s_id, 2);
             } else {
                 SliderDAO sd = new SliderDAO();
                 sd.updateStatus(s_id, 1);
