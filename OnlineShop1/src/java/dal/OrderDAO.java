@@ -352,5 +352,65 @@ public class OrderDAO extends DBContext {
         }
         return row;
     }
+    
+    public Order getLastOrder() throws Exception {
+        String sql = "select * from orders ORDER BY orderId DESC LIMIT 1;";
+        System.out.println(sql);
+        Order order = null;
 
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                order = new Order();
+                order.setOrderId(results.getInt("orderId"));
+                order.setCustomerId(results.getInt("customerId"));
+                order.setTotalCost(results.getFloat("totalCost"));
+                order.setSalesId(results.getInt("salesId"));
+                order.setOrderStatus(results.getInt("orderStatus"));
+                order.setOrderDate(results.getDate("orderDate"));
+                order.setSalesNote(results.getString("salesNote"));
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (SQLException | IOException ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+        return order;
+    }
+    
+    public int addOrder(int cid, float totalCost, int sid) throws Exception {
+    String sql = "INSERT INTO `onlineshop1`.`orders` (`customerId`, `totalCost`, `salesId`, `orderStatus`, `orderDate`, `lastUpdated`)"
+                + "VALUES (?,?,?,25,CURRENT_DATE(),CURRENT_DATE())";
+    int row = 0;
+    try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, cid);
+            preparedStatement.setFloat(2, totalCost);
+            preparedStatement.setInt(3, sid);
+            row = preparedStatement.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println("Exception ==== " + ex);
+        } finally {
+            try {
+                closeConnection(connection);
+                closePrepareStatement(preparedStatement);
+                //closeResultSet(results);
+
+            } catch (Exception ex) {
+                System.out.println("Exception ==== " + ex);
+            }
+        }
+    return row;
+    }
 }

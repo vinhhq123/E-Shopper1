@@ -380,8 +380,8 @@ public class FeedbackDAO extends DBContext {
         return listFeed;
     }
     public int addNewFeedback(int cusID, int rate, int proId,InputStream avatar,int status,String content) throws SQLException {
-        String sql = "INSERT INTO feedback (customerId,ratedStar,productId,image,feedbackStatus,feedbackContent)\n"
-                + "VALUES (?,?,?,?,?,?);";
+        String sql = "INSERT INTO feedback (customerId,ratedStar,productId,image,feedbackStatus,feedbackContent,updatedDate)\n"
+                + "VALUES (?,?,?,?,?,?,'2022-03-15');";
         int row = 0;
         try {
             connection = getConnection();

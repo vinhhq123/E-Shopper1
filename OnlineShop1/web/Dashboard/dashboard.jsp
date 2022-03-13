@@ -84,13 +84,42 @@ td, th {
                         <div class="col-sm-9">
                             <div class="well">
                                 <h4>Dashboard</h4>
-                                <p>Some text..</p>
+                                <table class="table table-striped" id="SettingListTable">
+                                        <tr>
+                                            <th >ID</th>
+                                            <th >Customer Name</th>
+                                            <th >Email</th>
+                                            <th >Mobile</th>
+                                            <th >Total Cost</th>
+                                        </tr>
+                                        <c:forEach items="${Orders}" var="order">
+                                            <tr>
+                                                <td>1</td>
+                                                
+                                                <c:forEach items="${Customers}" var="cus">
+                                                    
+                                                        <c:if test="${cus.getUid() == order.getCustomerId()}">
+                                                            <td>${cus.getFullname()}</td>
+                                                            <td>${cus.getEmail()}</td>
+                                                            <td>${cus.getPhone()}</td>
+                                                        </c:if>
+                                                    
+                                                </c:forEach>
+                                                <td><span class="subtotal">
+                                                        <fmt:setLocale value = "vi_VN"/>
+                                                        <fmt:formatNumber value="${order.getTotalCost()}" type="currency" />
+                                                    </span></td>  
+                                                    
+                                                
+                                            </tr>
+                                        </c:forEach>
+                                    </table>
                             </div>
                             <div class="row">
                                 <div class="col-sm-3">
                                     <div class="well">
-                                        <h4>Users</h4>
-                                        <p>1 Million</p> 
+                                        <h4>Total Users</h4>
+                                        <p>${totalUser}</p>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">

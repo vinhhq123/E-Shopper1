@@ -63,8 +63,8 @@
                                   <input type="hidden" class="form-control" id="fullname" placeholder="Fullname" readonly value="${CurrentCustomer.getUid()}" name="cusid" required>
                                   <input type="hidden" class="form-control" id="fullname" placeholder="Fullname" readonly value="${OrderDetails.getProductId()}" name="pid" required>
                                         
-                                        <b>    Comments: </b><br><textarea name="content" rows="5" cols="30" >${content}</textarea>
-                                        
+                                        <b>    Comments: </b><br><textarea name="content" rows="5" cols="30" onkeyup="change(this);" >${content}</textarea>
+                                         Bạn đã nhập <span id="char_cnt">0</span> ký tự. Bạn còn <span id="chars_left">300</span> ký tự nữa.
                                         
                                         <br>
                                        <br>
@@ -91,10 +91,14 @@
                                       <br>
                                                 <div><b>Image: </b><input type="file" name="image" /></div>
                                         <br>
-                                       
-                                        <button type="submit" class="btn btn-primary pull-right">
+                                         
+                                        <button type="submit" class="btn btn-success pull-right">
                                             Submit
                                         </button>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <button type="button" class=" btn btn-primary " onclick="window.location = '<%=request.getContextPath()%>/order/getCustomerOrders'">Back Order List</button>
                                     </form>
                         
                         <c:if test="${requestScope.CustomerOrders.isEmpty()}">
@@ -165,6 +169,7 @@
         <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
         <script src="${pageContext.request.contextPath}/admin/js/userProfile.js" type="text/javascript"></script>
         <script src="${pageContext.request.contextPath}/admin/js/ratestar.js" type="text/javascript"></script>
+         <script src="${pageContext.request.contextPath}/assets/js/feedbacktext.js"></script>
     </body>
 </html>
 

@@ -33,9 +33,6 @@
             <div class="col-sm-12">
                 <div class="search_box pull-right">
                     <input value="${searchValue}" name="search" type="text" placeholder="Search"/>
-                    <!--                    <button type="submit">
-                                            <i class="fa fa-search"></i>
-                                        </button>-->
                 </div>
             </div>
         </form>
@@ -61,17 +58,17 @@
                                     <div class="panel-group"><!--category-productsr-->
                                         <c:forEach items="${listFeatured}" var="o">
                                             <div class="single-products row">
-                                                <div class="col-sm-5">
-                                                    <img src="data:image/jpg;base64,${o.getThumbnail()}" width="100" height="100"/>
+                                                <div class="col-sm-4">
+                                                    <img src="data:image/jpg;base64,${o.getThumbnail()}" width="90" height="90"/>
                                                 </div>
-                                                <div class="col-sm-7">
+                                                <div class="col-sm-8">
                                                     <font color="#fe980f">${o.title}<p>Views: ${o.views}</p></font>
                                                     <p>
                                                         <fmt:setLocale value = "vi_VN"/>
                                                     <strike>
                                                         <fmt:formatNumber value="${o.lprice}" type="currency" />
                                                     </strike>
-                                                    <font color="red" size="+0.5"> <strong>
+                                                    <font color="red" size="+0.25"> <strong>
                                                         <fmt:formatNumber value="${o.sprice}" type="currency" />  
                                                     </strong>
                                                     </font>

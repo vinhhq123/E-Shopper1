@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Product Details | E-Shopper</title>
+        <title>Cart Contact | E-Shopper</title>
         <link href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/assets/css/font-awesome.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/assets/css/prettyPhoto.css" rel="stylesheet">
@@ -59,11 +59,11 @@
                                     </td>
                                     <td class="cart_description">
                                         <h4><a>${i.product.title}</a></h4>
-                                        <p>Product Id: ${i.product.pid}</p>
+                                        <p name="pid">Product Id: ${i.product.pid}</p>
                                     </td>
                                     <td class="cart_price">
                                         <fmt:setLocale value = "vi_VN"/>
-                                        <p><fmt:formatNumber value="${i.product.sprice}" type="currency" /></p>
+                                        <p name="price"><fmt:formatNumber value="${i.product.sprice}" type="currency" /></p>
                                     </td>
                                     <td class="cart_quantity">
                                         <div class="cart_quantity_button">
@@ -75,13 +75,6 @@
                                     <td class="cart_total">
                                         <fmt:setLocale value = "vi_VN"/>
                                         <p class="cart_total_price"><fmt:formatNumber value="${i.product.sprice * i.quantity}" type="currency" /></p>
-                                    </td>
-                                    <td class="cart_delete">
-                                        <form action="<%=request.getContextPath()%>/goods/removeProductCart" method="post">
-                                            <!--                                            <a class="cart_quantity_delete" href=""><i class="fa fa-times">-->
-                                            <input type="hidden" name="id" value="${i.product.pid}"/>
-                                            <input type="submit" value="Remove"/>
-                                        </form>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -95,15 +88,9 @@
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="shopper-info">
-                            <p>Shopper Information</p>
-                            <form>
-                                <input type="text" placeholder="Display Name">
-                                <input type="text" placeholder="User Name">
-                                <input type="password" placeholder="Password">
-                                <input type="password" placeholder="Confirm password">
-                            </form>
-                            <a class="btn btn-primary" href="">Get Quotes</a>
-                            <a class="btn btn-primary" href="">Continue</a>
+                            <p>Total Cost</p>
+                            <fmt:setLocale value = "vi_VN"/>
+                            <p class="cart_total_price" name ="totalcost" style="color: #FE980F;font-size: 30px;"><fmt:formatNumber value="${sessionScope.cart.getTotalMoney()}" type="currency" /></p>
                         </div>
                     </div>
                     <div class="col-sm-5 clearfix">
@@ -111,45 +98,14 @@
                             <p>Bill To</p>
                             <div class="form-one">
                                 <form>
-                                    <input type="text" placeholder="Company Name">
-                                    <input type="text" placeholder="Email*">
-                                    <input type="text" placeholder="Title">
-                                    <input type="text" placeholder="First Name *">
-                                    <input type="text" placeholder="Middle Name">
-                                    <input type="text" placeholder="Last Name *">
-                                    <input type="text" placeholder="Address 1 *">
-                                    <input type="text" placeholder="Address 2">
-                                </form>
-                            </div>
-                            <div class="form-two">
-                                <form>
-                                    <input type="text" placeholder="Zip / Postal Code *">
-                                    <select>
-                                        <option>-- Country --</option>
-                                        <option>United States</option>
-                                        <option>Bangladesh</option>
-                                        <option>UK</option>
-                                        <option>India</option>
-                                        <option>Pakistan</option>
-                                        <option>Ucrane</option>
-                                        <option>Canada</option>
-                                        <option>Dubai</option>
-                                    </select>
-                                    <select>
-                                        <option>-- State / Province / Region --</option>
-                                        <option>United States</option>
-                                        <option>Bangladesh</option>
-                                        <option>UK</option>
-                                        <option>India</option>
-                                        <option>Pakistan</option>
-                                        <option>Ucrane</option>
-                                        <option>Canada</option>
-                                        <option>Dubai</option>
-                                    </select>
-                                    <input type="password" placeholder="Confirm password">
-                                    <input type="text" placeholder="Phone *">
-                                    <input type="text" placeholder="Mobile Phone">
-                                    <input type="text" placeholder="Fax">
+                                    <input type="hidden" name="id" value="${sessionScope.account.uid}">
+                                    <input type="text" name="email" placeholder="Email*" value="${sessionScope.account.email}">
+                                    <input type="text" name="title" placeholder="Title" value="${sessionScope.account.title}">
+                                    <input type="text" name="fullname" placeholder="Full Name *" value="${sessionScope.account.fullname}">
+                                    <input type="text" name="addresss" placeholder="Address 1 *" value="${sessionScope.account.address}">
+                                    <input type="text" name="phone" placeholder="Phone Number *" value="${sessionScope.account.phone}">
+                                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/cart.jsp">Modify Order</a>
+                                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/cart-completion.jsp">Buy Now</a>
                                 </form>
                             </div>
                         </div>

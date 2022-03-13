@@ -121,4 +121,27 @@ public class SendEmail {
                 + "</html>";
         SendEmail.send(email, subject, message, "ed23112001@gmail.com", "Ed2311wars@");
     }    
+     
+    public static void ContactMail(String username,  String email) {
+        String subject = "[OnlineShop]order confirmation & payment guides!";
+        String message = "<!DOCTYPE html>\n"
+                + "<html lang=\"en\">\n "
+                + "\n"
+                + "<head>\n "
+                + "</head>\n"
+                + "\n"
+                + "<body>\n"
+                + "    <h3 style=\"color: blue;\">Xin chào " + username + " !</h3>\n"
+                + "    <div>Chúng tôi đã nhận được yêu cầu đặt hàng của bạn bao gồm</div>\n"
+                + "    <div>Bạn sẽ nhận được đơn hàng của mình trong vòng 1 tuần nữa.</div>\n"
+                + "    <div>Trân thành cám ơn quý khách đã mua hàng ở cửa hàng chúng tôi.</div>\n"
+                + "    <div>Thư này được tạo ra tự động.</div>\n"
+                + "    <div>Nếu bạn cần trợ giúp hoặc có câu hỏi, hãy gửi email đến chúng tôi bất cứ lúc nào.</div>\n"
+                + "    <h3 style=\"color: blue;\">Trân trọng!</h3>\n"
+                + "\n"
+                + "</body>\n"
+                + "\n"
+                + "</html>";
+        SendEmail.send(email, subject, message, "ed23112001@gmail.com", "Ed2311wars@");
+    }    
 }
