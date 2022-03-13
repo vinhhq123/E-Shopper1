@@ -5,31 +5,18 @@
  */
 package controller.user;
 
-import controller.marketing.PostController;
-import dal.GoodsDAO;
-import dal.PostDAO;
-import dal.SettingDAO;
-import dal.SliderDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.PostList;
-import model.Product;
-import model.Setting;
-import model.Slider;
 
 /**
  *
- * @author hungn
+ * @author Edwars
  */
-public class HomeController extends HttpServlet {
+public class CartController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,25 +29,18 @@ public class HomeController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            response.setContentType("text/html;charset=UTF-8");
-            GoodsDAO dao = new GoodsDAO();
-            SettingDAO sdao = new SettingDAO();
-            SliderDAO sd = new SliderDAO();
-            PostDAO pdao = new PostDAO();
-            ArrayList<Slider> sliders = sd.getSlidersByStatus();
-            List<Setting> listGoodsCate = sdao.getGoodsCategory();
-            List<Product> listGoods = dao.getSomeLatestProduct();
-            List<Product> listFeatured = dao.getFeaturedGood();
-            List<PostList> listHotPost = pdao.getFeaturedBlogs();
-            request.setAttribute("sliders", sliders);
-            request.setAttribute("listGoodsCate", listGoodsCate);
-            request.setAttribute("listFeatured", listFeatured);
-            request.setAttribute("listGoods", listGoods);
-            request.setAttribute("listHotBlogs", listHotPost);
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(PostController.class.getName()).log(Level.SEVERE, null, ex);
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet CartController</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet CartController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

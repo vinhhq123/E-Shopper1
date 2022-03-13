@@ -1,3 +1,6 @@
+<%@page import="java.io.Console"%>
+<%@page import="java.text.DecimalFormat"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -28,47 +31,51 @@
 
     <body>
         <jsp:include page="header.jsp"/>
-
+        <form action="<%=request.getContextPath()%>/goods/search" method="post" class="search_box pull-right"><!--search box -->
+            <div class="col-sm-12">
+                <div class="search_box pull-right">
+                    <input value="${searchValue}" name="search" type="text" placeholder="Search"/>
+                </div>
+            </div>
+        </form>
         <section id="slider"><!--slider-->
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div>
                         <div id="slider-carousel" class="carousel slide" data-ride="carousel">
                             <ol class="carousel-indicators">
                                 <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
                                 <li data-target="#slider-carousel" data-slide-to="1"></li>
                                 <li data-target="#slider-carousel" data-slide-to="2"></li>
                             </ol>
-                            
+
                             <div class="carousel-inner">
-                                <div class="item active">
-                                    <div class="col-sm-6">
-                                        <h1><span>E</span>-SHOPPER</h1>
-                                        <h2>Free E-Commerce Template</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                                        <button type="button" class="btn btn-default get">Get it now</button>
+
+                                <c:forEach items="${sliders}" var="s" begin="0" end="0">
+                                    <div class="item active">
+                                            <a href="${s.back_link}">
+                                                <img style="position: relative;width: 1000px;height: 450px; top: 10px" src="data:image/jpg;base64,${s.s_image}" alt="" />
+                                            </a>
+    <!--                                        <h2 style="position: absolute; top: 150px; left: 150px">${s.s_title}</h2>
+                                            <p style="position: absolute; top: 200px; left: 150px">${s.s_notes}</p>-->
+    <!--                                        <a href="${s.back_link}" style="position: absolute;top: 250px; left: 150px"><button type="button" class="btn btn-default get">Get it now</button></a>-->
                                     </div>
-                                    <div class="col-sm-6">
-                                        <img src="assets/images/home/girl1.jpg" class="girl img-responsive" alt="" />
-                                        <img src="assets/images/home/pricing.png"  class="pricing" alt="" />
-                                    </div>
-                                </div>
-                                <c:forEach items="${sliders}" var="s">
-                                <div class="item">
-                                    <div class="col-sm-6">
-                                        <h1><span>E</span>-SHOPPER</h1>
-                                        <h2>${s.s_title}</h2>
-                                        <p>${s.s_notes} </p>
-                                        <a href="${s.back_link}"><button type="button" class="btn btn-default get">Get it now</button></a>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <img style="width:350px;height:440px;" src="data:image/jpg;base64,${s.s_image}" class="girl img-responsive" alt="" />
-                                        <img src="assets/images/home/pricing.png"  class="pricing" alt="" />
-                                    </div>
-                                </div>
                                 </c:forEach>
+
+
+                                <c:forEach items="${sliders}" var="s" begin="1" end="2">
+                                    <div class="item">
+                                        <a href="${s.back_link}">
+                                            <img style="position: relative;width: 1000px;height: 450px; top: 10px" src="data:image/jpg;base64,${s.s_image}" alt="" />
+                                        </a>
+<!--                                        <h2 style="position: absolute; top: 150px; left: 150px">${s.s_title}</h2>
+                                        <p style="position: absolute; top: 200px; left: 150px">${s.s_notes}</p>-->
+<!--                                        <a href="${s.back_link}" style="position: absolute;top: 250px; left: 150px"><button type="button" class="btn btn-default get">Get it now</button></a>-->
+                                    </div>
+                                </c:forEach>
+
                             </div>
-                            
+
 
                             <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
                                 <i class="fa fa-angle-left"></i>
@@ -86,176 +93,139 @@
         <section>
             <div class="container">
                 <div class="row">
-
-                    <div class="col-sm-12 padding-right">
-                        <div class="features_items"><!--features_items-->
-                            <h2 class="title text-center">Features Items</h2>
-                                <div class="col-sm-4">
-                                    <div class="product-image-wrapper">
-                                        <div class="single-products">
-                                            <div class="productinfo text-center">
-                                                <img src="assets/images/home/product1.jpg" alt="" />
-                                                <h2>$56</h2>
-                                                <p>Easy Polo Black Edition</p>
-                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                            </div>
-                                            <div class="product-overlay">
-                                                <div class="overlay-content">
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="choose">
-                                            <ul class="nav nav-pills nav-justified">
-                                                <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                                <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <img src="assets/images/home/product2.jpg" alt="" />
-                                            <h2>$56</h2>
-                                            <p>Easy Polo Black Edition</p>
-                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                        </div>
-                                        <div class="product-overlay">
-                                            <div class="overlay-content">
-                                                <h2>$56</h2>
-                                                <p>Easy Polo Black Edition</p>
-                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="choose">
-                                        <ul class="nav nav-pills nav-justified">
-                                            <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                            <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <img src="assets/images/home/product3.jpg" alt="" />
-                                            <h2>$56</h2>
-                                            <p>Easy Polo Black Edition</p>
-                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                        </div>
-                                        <div class="product-overlay">
-                                            <div class="overlay-content">
-                                                <h2>$56</h2>
-                                                <p>Easy Polo Black Edition</p>
-                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="choose">
-                                        <ul class="nav nav-pills nav-justified">
-                                            <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                            <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div><!--features_items-->
-
-                <div class="recommended_items"><!--recommended_items-->
-                    <h2 class="title text-center">recommended items</h2>
-                    <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="item active">
-                                <c:forEach begin="1" end="3">
-                                    <div class="col-sm-4">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="assets/images/home/recommend1.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                </div>
-
-                                            </div>
+                    <div class="col-sm-3">
+                        <div class="left-sidebar">
+                            <h2>Product Category</h2>
+                            <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+                                <c:forEach items="${listGoodsCate}" var="o">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title"><a href="<%=request.getContextPath()%>/goods/goodsCate?id=${o.settingId}">${o.settingValue}</a></h4>
                                         </div>
                                     </div>
                                 </c:forEach>
-                            </div>
-                            <div class="item">	
-                                <div class="col-sm-4">
-                                    <div class="product-image-wrapper">
-                                        <div class="single-products">
-                                            <div class="productinfo text-center">
-                                                <img src="assets/images/home/recommend1.jpg" alt="" />
-                                                <h2>$56</h2>
-                                                <p>Easy Polo Black Edition</p>
-                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="product-image-wrapper">
-                                        <div class="single-products">
-                                            <div class="productinfo text-center">
-                                                <img src="assets/images/home/recommend2.jpg" alt="" />
-                                                <h2>$56</h2>
-                                                <p>Easy Polo Black Edition</p>
-                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="product-image-wrapper">
-                                        <div class="single-products">
-                                            <div class="productinfo text-center">
-                                                <img src="assets/images/home/recommend3.jpg" alt="" />
-                                                <h2>$56</h2>
-                                                <p>Easy Polo Black Edition</p>
-                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            </div><!--/category-productsr-->
                         </div>
-                        <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
-                            <i class="fa fa-angle-left"></i>
-                        </a>
-                        <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
-                            <i class="fa fa-angle-right"></i>
-                        </a>			
-                    </div>
-                </div><!--/recommended_items-->
 
+                        <div class="left-sidebar">
+                            <h2>Feature Products</h2>
+                            <div class="panel-group"><!--category-productsr-->
+                                <c:forEach items="${listFeatured}" var="o">
+                                    <div class="single-products row">
+                                        <div class="col-sm-5">
+                                            <img src="data:image/jpg;base64,${o.getThumbnail()}" width="100" height="100"/>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <font color="#fe980f">${o.title}<p></p></font>
+                                            <a href="<%=request.getContextPath()%>/goods/detail?pid=${o.pid}" class="btn btn-default add-to-cart">Show</a>
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                            </div><!--/category-productsr-->
+                        </div>
+                    </div>
+
+                    <div class="col-sm-9 padding-right">
+                        <div class="features_items"><!--features_items-->
+                            <h2 class="title text-center">Latest products</h2>                          
+                            <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="item active">	
+                                        <c:forEach items="${listGoods}" var="o" begin="0" end="2">
+                                            <div class="col-sm-4">
+                                                <div class="product-image-wrapper">
+                                                    <div class="single-products">
+                                                        <div class="productinfo text-center">
+                                                            <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" width="100" height="200"/>
+                                                            <h2>${o.title}</h2>
+                                                            <p>
+                                                                <fmt:setLocale value = "vi_VN"/>
+                                                            <strike>
+                                                                <fmt:formatNumber value="${o.lprice}" type="currency" />
+                                                            </strike>
+                                                            <font color="red" size="+1"> <strong>
+                                                                <fmt:formatNumber value="${o.sprice}" type="currency" />  
+                                                            </strong>
+                                                            </font>
+                                                            </p>
+                                                            <a href="<%=request.getContextPath()%>/goods/detail?pid=${o.pid}" class="btn btn-default add-to-cart">Show</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </c:forEach>
+                                    </div>
+                                    <div class="item">	
+                                        <c:forEach items="${listGoods}" var="o" begin="3" end="5">
+                                            <div class="col-sm-4">
+                                                <div class="product-image-wrapper">
+                                                    <div class="single-products">
+                                                        <div class="productinfo text-center">
+                                                            <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="200"/>
+                                                            <h2>${o.title}</h2>
+                                                            <p>
+                                                                <fmt:setLocale value = "vi_VN"/>
+                                                            <strike>
+                                                                <fmt:formatNumber value="${o.lprice}" type="currency" />
+                                                            </strike>
+                                                            <font color="red" size="+1"> <strong>
+                                                                <fmt:formatNumber value="${o.sprice}" type="currency" />  
+                                                            </strong>
+                                                            </font>
+                                                            </p>
+                                                            <a href="<%=request.getContextPath()%>/goods/detail?pid=${o.pid}" class="btn btn-default add-to-cart">Show</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </c:forEach>
+                                    </div>
+                                </div>
+                                <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+                                    <i class="fa fa-angle-left"></i>
+                                </a>
+                                <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+                                    <i class="fa fa-angle-right"></i>
+                                </a>			
+                            </div>
+
+                        </div><!--features_items-->
+
+                        <div class="product-details"><!--product-details-->
+                            <h2 class="title text-center">hot posts</h2>
+                            <c:forEach items="${listHotBlogs}" var="o">
+                                <div class="col-sm-5">
+                                    <div class="">
+                                        <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="150" width="300">
+                                    </div>
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="blog-post-area single-blog-post">
+                                        <h3>${o.postTitle}</h3>
+                                        <div class="post-meta"> 
+                                            <p><i class='fas fa-tags'></i>Blog Category: ${o.category.settingValue}</p>
+                                        </div>
+                                        <a class="btn btn-primary" href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">Read More</a>
+                                    </div>
+                                </div>
+                            </c:forEach>
+                        </div>
+                    </div><!--/recommended_items-->
+
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<jsp:include page="footer.jsp"/>
-
+    <jsp:include page="footer.jsp"/>
 
 
-<script src="assets/js/jquery.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/jquery.scrollUp.min.js"></script>
-<script src="assets/js/price-range.js"></script>
-<script src="assets/js/jquery.prettyPhoto.js"></script>
-<script src="assets/js/main.js"></script>
+
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery.scrollUp.min.js"></script>
+    <script src="assets/js/price-range.js"></script>
+    <script src="assets/js/jquery.prettyPhoto.js"></script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>

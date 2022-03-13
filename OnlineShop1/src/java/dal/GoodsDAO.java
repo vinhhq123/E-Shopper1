@@ -182,7 +182,7 @@ public class GoodsDAO {
                 p.setCategoryID(result.getInt("categoryId"));
                 p.setUpdatedDate(result.getDate("updatedDate"));
                 User u = new User(result.getInt("uid"), result.getString("fullname"));
-               // p.setRatedStars(result.getDouble("ratedStar"));
+                // p.setRatedStars(result.getDouble("ratedStar"));
                 p.setAuthor(u);
 
                 listProduct.add(p);
@@ -291,6 +291,49 @@ public class GoodsDAO {
         return listProduct;
     }
 
+    public List<Product> getSomeLatestProduct() {
+        List<Product> listProduct = new ArrayList<>();
+        String query = "select productId, thumbnail, title, list_price, sale_price from product\n"
+                + "order by updatedDate desc limit 6;";
+        try {
+            connection = new DBContext().getConnection();
+            ps = connection.prepareStatement(query);
+            result = ps.executeQuery();
+
+            while (result.next()) {
+                Product p = new Product();
+                p.setPid(result.getInt("productId"));
+                Blob blob = result.getBlob("thumbnail");
+                if (blob != null) {
+                    InputStream inputStream = blob.getBinaryStream();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                    inputStream.close();
+                    outputStream.close();
+                    p.setThumbnail(base64Image);
+                } else {
+                    p.setThumbnail("");
+                }
+                p.setTitle(result.getString("title"));
+                p.setLprice(result.getDouble("list_price"));
+                p.setSprice(result.getDouble("sale_price"));
+                listProduct.add(p);
+            }
+        } catch (Exception e) {
+
+        }
+        return listProduct;
+    }
+
     public void updateViews(int id) {
         String query = "update product set views = views + 1 where productId = ?";
         try {
@@ -324,10 +367,10 @@ public class GoodsDAO {
 //    public static void main(String[] args) {
 //
 //        GoodsDAO dao = new GoodsDAO();
-//        Product postList = dao.getGoodsById(1);
-//        double a = dao.avgStar(1);
-//        System.out.println(a);
-//        List<Product> list1 = dao.getGoodsSortByDate();
+////        Product postList = dao.getGoodsById(1);
+////        double a = dao.avgStar(1);
+////        System.out.println(a);
+//        List<Product> list1 = dao.getSomeLatestProduct();
 //        for (Product list : list1) {
 //            System.out.println(list);
 //        }

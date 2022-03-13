@@ -8,7 +8,6 @@
         <filter-name>Author</filter-name>
         <servlet-name>RegisterController</servlet-name>
         <servlet-name>SliderController</servlet-name>
-        <servlet-name>BlogController</servlet-name>
         <servlet-name>AddProductController</servlet-name>
         <servlet-name>CustomerController</servlet-name>
         <servlet-name>EditProductController</servlet-name>
@@ -97,6 +96,14 @@
         <servlet-name>SendMailController</servlet-name>
         <servlet-class>controller.user.SendMailController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CartController</servlet-name>
+        <servlet-class>controller.user.CartController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LogoutController</servlet-name>
+        <servlet-class>controller.user.LogoutController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>
         <url-pattern>/settingList</url-pattern>
@@ -184,6 +191,14 @@
     <servlet-mapping>
         <servlet-name>SendMailController</servlet-name>
         <url-pattern>/sendmail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartController</servlet-name>
+        <url-pattern>/cart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutController</servlet-name>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

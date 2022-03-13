@@ -2,6 +2,28 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+<<<<<<< HEAD
+<<<<<<< HEAD
+            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/web/admin/js/userProfile1.js</file>
+            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/web/order-history.jsp</file>
+            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/controller/manager/OrderController.java</file>
+            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/controller/admin/UserController.java</file>
+            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/controller/filter/Author.java</file>
+            <file>file:/D:/SWP/Iter2/g6/OnlineShop1/web/header.jsp</file>
+=======
+            <file>file:/C:/Users/84984/Desktop/ShopIter4/OnlineShop1/web/eShopper/css/main.css</file>
+            <file>file:/C:/Users/84984/Desktop/ShopIter4/OnlineShop1/src/java/dbcontext/DBContext.java</file>
+            <file>file:/C:/Users/84984/Desktop/ShopIter4/OnlineShop1/web/assets/css/main.css</file>
+>>>>>>> 3e5f54db41fcf6f3602009834ca1a4b882a33e0b
+=======
+            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/admin/404.jsp</file>
+            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/admin/Error.jsp</file>
+            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/controller/marketing/SliderController.java</file>
+            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/controller/filter/Author.java</file>
+            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/controller/admin/SettingController.java</file>
+>>>>>>> c96a51a1b8e646542157a2e42c2ad48c7b00ebc1
+        </group>
     </open-files>
 </project-private>
