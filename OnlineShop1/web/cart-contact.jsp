@@ -54,25 +54,25 @@
                             <c:set var="o" value="${sessionScope.cart}"/>
                             <c:forEach items="${o.items}" var="i">
                                 <tr>
-                                    <td class="cart_product">
+                                    <td class="cart_product col-sm-2">
                                         <a href=""><img src="data:image/jpg;base64,${i.product.getThumbnail()}" alt="" width="100px" height="100px"></a>
                                     </td>
-                                    <td class="cart_description">
+                                    <td class="cart_description col-sm-4">
                                         <h4><a>${i.product.title}</a></h4>
                                         <p name="pid">Product Id: ${i.product.pid}</p>
                                     </td>
-                                    <td class="cart_price">
+                                    <td class="cart_price col-sm-2">
                                         <fmt:setLocale value = "vi_VN"/>
                                         <p name="price"><fmt:formatNumber value="${i.product.sprice}" type="currency" /></p>
                                     </td>
-                                    <td class="cart_quantity">
+                                    <td class="cart_quantity col-sm-2">
                                         <div class="cart_quantity_button">
                                             <!--									<a class="cart_quantity_up" href=""> + </a>-->
                                             <input class="cart_quantity_input" readonly type="text" name="quantity" value="${i.quantity}" autocomplete="off" size="2">
                                             <!--									<a class="cart_quantity_down" href=""> - </a>-->
                                         </div>
                                     </td>
-                                    <td class="cart_total">
+                                    <td class="cart_total col-sm-2">
                                         <fmt:setLocale value = "vi_VN"/>
                                         <p class="cart_total_price"><fmt:formatNumber value="${i.product.sprice * i.quantity}" type="currency" /></p>
                                     </td>
@@ -104,7 +104,7 @@
                                     <input type="text" name="fullname" placeholder="Full Name *" value="${sessionScope.account.fullname}">
                                     <input type="text" name="addresss" placeholder="Address 1 *" value="${sessionScope.account.address}">
                                     <input type="text" name="phone" placeholder="Phone Number *" value="${sessionScope.account.phone}">
-                                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/cart.jsp">Modify Order</a>
+                                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/goods/addToCart">Modify Order</a>
                                     <a class="btn btn-primary" href="<%=request.getContextPath()%>/cart-completion.jsp">Buy Now</a>
                                 </form>
                             </div>

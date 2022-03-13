@@ -33,7 +33,7 @@ import resources.SendEmail;
  * @author hungn
  */
 @WebServlet(name = "GoodsController", urlPatterns = {"/goods/goodsList", "/goods/goodsCate", "/goods/search", "/goods/detail",
-    "/goods/addToCart", "/goods/removeProductCart", "/goods/addToCartContact","/goods/checkOut"})
+    "/goods/addToCart", "/goods/removeProductCart", "/goods/addToCartContact", "/goods/checkOut"})
 public class GoodsController extends HttpServlet {
 
     /**
@@ -122,7 +122,7 @@ public class GoodsController extends HttpServlet {
         List<Setting> listGoodsCate = sdao.getGoodsCategory();
         List<Product> listGoodsPage = dao.getGoodsSortByDate();
         List<Product> listFeatured = dao.getFeaturedGood();
-        
+
         int page, numperpage = 9;
         int size = listGoodsPage.size();
         int num = (size % numperpage == 0 ? (size / numperpage) : ((size / numperpage)) + 1);
@@ -212,7 +212,7 @@ public class GoodsController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         int id = Integer.parseInt(request.getParameter("pid"));
-        
+
         GoodsDAO dao = new GoodsDAO();
         SettingDAO sdao = new SettingDAO();
         FeedbackDAO fdao = new FeedbackDAO();
@@ -262,7 +262,7 @@ public class GoodsController extends HttpServlet {
         session.setAttribute("size", list.size());
         request.getRequestDispatcher("/cart.jsp").forward(request, response);
     }
-    
+
     protected void addProductToCartContact(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -314,7 +314,7 @@ public class GoodsController extends HttpServlet {
         session.setAttribute("size", list.size());
         request.getRequestDispatcher("/cart.jsp").forward(request, response);
     }
-    
+
     protected void checkOut(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
@@ -328,16 +328,22 @@ public class GoodsController extends HttpServlet {
             }
             OrderDAO ord = new OrderDAO();
             OrderDetailDAO ordd = new OrderDetailDAO();
+//            GoodsDAO dao = new GoodsDAO();
+//            SettingDAO sdao = new SettingDAO();
+//            List<Setting> listGoodsCate = sdao.getGoodsCategory();
+//            List<Product> listFeatured = dao.getFeaturedGood();
             int oid = ord.getLastOrder().getOrderId() + 1;
             float totaCost = cart.getTotalMoney();
             int uid = Integer.parseInt(request.getParameter("id"));
             String username = request.getParameter("fullname");
             String email = request.getParameter("email");
             int checkAddOrder = ord.addOrder(oid, totaCost, uid);
-            if (checkAddOrder > 0){
+            if (checkAddOrder > 0) {
                 SendEmail sm = new SendEmail();
                 sm.ContactMail(username, email);
-               request.getRequestDispatcher("/cart-completion.jsp").forward(request, response); 
+//                request.setAttribute("listGoodsCate", listGoodsCate);
+//                request.setAttribute("listFeatured", listFeatured);
+                request.getRequestDispatcher("/cart-completion.jsp").forward(request, response);
             }
 
         } catch (Exception ex) {
