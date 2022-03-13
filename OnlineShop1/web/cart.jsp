@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Product Details | E-Shopper</title>
+        <title>Cart | E-Shopper</title>
         <link href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/assets/css/font-awesome.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/assets/css/prettyPhoto.css" rel="stylesheet">
@@ -31,7 +31,7 @@
         <jsp:include page="header.jsp"/>
         <section id="cart_items">
             <div class="container">
-                <div class="table-responsive cart_info">
+                <div class="table-responsive cart_info" style="margin-bottom: 25px;">
                     <table class="table table-condensed">
                         <thead>
                             <tr class="cart_menu">
@@ -77,7 +77,11 @@
                                 </tr>
                             </c:forEach>
                         </tbody>
-                    </table>
+                    </table> 
+                </div>
+                <div class="container shopper-informations" style="margin-bottom: 30px;">
+                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/cart-contact.jsp">Check Out</a>
+                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/goods/goodsList">Choose more Product</a>
                 </div>
             </div>
         </section> <!--/#cart_items-->
