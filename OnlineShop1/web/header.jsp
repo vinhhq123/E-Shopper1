@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="logo pull-left">
-                        <a href="${pageContext.request.contextPath}/index.jsp"><img src="${pageContext.request.contextPath}/assets/images/home/logo.png" alt="" /></a>
+                        <a href="<%=request.getContextPath()%>/home"><img src="${pageContext.request.contextPath}/assets/images/home/logo.png" alt="" /></a>
                     </div>
                 </div>
                 <div class="col-sm-8">
@@ -27,22 +27,6 @@
                                         <span>${sessionScope.account.fullname} <i class="caret"></i></span>
                                     </a>
                                     <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
-
-                                        <!--                                        <li>
-                                                                                    <a href="#">
-                                                                                        <i class="fa fa-clock-o fa-fw pull-right"></i>
-                                                                                        <span class="badge badge-success pull-right">10</span> Updates</a>
-                                                                                    <a href="#">
-                                                                                        <i class="fa fa-envelope-o fa-fw pull-right"></i>
-                                                                                        <span class="badge badge-danger pull-right">5</span> Messages</a>
-                                                                                    <a href="#"><i class="fa fa-magnet fa-fw pull-right"></i>
-                                                                                        <span class="badge badge-info pull-right">3</span> Subscriptions</a>
-                                                                                    <a href="#"><i class="fa fa-question fa-fw pull-right"></i> <span class=
-                                                                                                                                                      "badge pull-right">11</span> FAQ</a>
-                                                                                </li>-->
-
-                                        <li class="divider"></li>
-
                                         <li>
                                             <a href="#myModal-2" data-toggle="modal" >
                                                 <i class="fa fa-user fa-fw pull-right"></i>
@@ -81,6 +65,10 @@
                                                     Posts
                                                 </a>
                                             </c:if>
+                                            <a href="#myModal-3" data-toggle="modal" >
+                                                <i class="fa fa-user fa-fw pull-right"></i>
+                                                Change Password
+                                            </a>
                                             <a href="${pageContext.request.contextPath}/Login.jsp">
                                                 <i class="fa fa-power-off fa-fw pull-right"></i> Logout</a>
                                         </li>
@@ -110,7 +98,7 @@
                         </div>
                         <div class="mainmenu pull-left">
                             <ul class="nav navbar-nav collapse navbar-collapse">
-                                <li><a href="${pageContext.request.contextPath}/index.jsp" class="active">Home</a></li>
+                                <li><a href="<%=request.getContextPath()%>/home" class="active">Home</a></li>
                                 <li><a href="<%=request.getContextPath()%>/goods/goodsList">Shop<i></i></a>
                                 </li> 
                                 <li class="dropdown"><a href="#" >Blog<i class="fa fa-angle-down"></i></a>
@@ -127,17 +115,6 @@
                             </ul>
                         </div>
                     </div>
-<!--                    <form action="<%=request.getContextPath()%>/blog/search" method="post">
-                        <div class="col-sm-3">
-                            <div class="search_box pull-right">
-                                <input value="${searchValue}" name="search" type="text" placeholder="Search"/>
-                                                            <button type="submit">
-                                                                <i class="fa fa-search"></i>
-                                                            </button>
-                            </div>
-                        </div>
-                    </form>-->
-
                 </div>
             </div>
         </div> <!--header-bottom-->
@@ -225,6 +202,53 @@
                 </div>
             </div>
         </div>
+
+        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal-3" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                        <h4 class="modal-title">Change Password</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <form class="form-horizontal" role="form" method="POST"  name="changePass" id="changePass"  enctype="multipart/form-data" >
+    <!--                        action="<%=request.getContextPath()%>/user/changePass" method="POST"-->
+                            <h4 class="help-block" style="color: green;padding-left: 40px;" id="successEditMessage"></h4>
+                            <div class="form-group">
+                                <label for="curPass" class="col-lg-2 col-sm-2 control-label">Current Password<span style="color:#ff0000">(*)</span></label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="curPass" name="curPass" value="${curPassValue}">
+                                    <p class="help-block" style="color: red" id="errorFullName">${requestScope.fail1}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="newPass" class="col-lg-2 col-sm-2 control-label">New Password<span style="color:#ff0000">(*)</span></label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="newPass" name="newPass" value="${newPassValue}">
+                                    <p class="help-block" style="color: red" id="errorFullName">${requestScope.fail2}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="reNewPass" class="col-lg-2 col-sm-2 control-label">Re-Enter Password<span style="color:#ff0000">(*)</span></label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="reNewPass" name="reNewPass" value="${reNewPassValue}">
+                                    <p class="help-block" style="color: red" id="errorFullName">${requestScope.fail3}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-offset-2 col-lg-10">
+                                    <button type="button" class="btn btn-default get" id="saveCC">Save changes</button>
+                                </div>
+                            </div>
+                            <input type="hidden" name="email" value="${account.email}" id="email">
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
 </header> 
 <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
@@ -232,47 +256,3 @@
 <script src="${pageContext.request.contextPath}/admin/js/UserDetail.js" type="text/javascript"></script>
 <!-- User Profile -->
 <script src="${pageContext.request.contextPath}/admin/js/userProfile1.js" type="text/javascript"></script>
-<!--<script>
-    $(document).ready(function () {
-    $('#editProfile').validate({
-       rules:{
-           newFullname : {required : true,maxlength : 50},
-           newMobile :{required : true,length : 50},
-           newAddress: {required : true,length : 200}
-           
-       },
-       submitHandler: function (form){
-           console.log('HEREEEEEEE');
-       } 
-    });
-     });
-                
-
-//        $('#saveC').click(function () {
-////            var fullname = $('#newFullname').val();
-////            var title = $('#optionsRadios5').val();
-////            var phone = $('#newMobile').val();
-////            var address = $('#newAddress').val();
-////            var uId = $('#currentUserId').val();
-//        var imageV = $('#file').val();
-////            var formData = $("#editProfile").serialize(); //Lấy tất cả data trong form
-//        var formData = document.getElementById('editProfile');
-////        var url = "http://localhost:8080/OnlineShop1/user/updateProfile";
-//        console.log(imageV);
-//        $.ajax({
-//            type: 'POST',
-//            enctype: 'multipart/form-data',
-//            data: new FormData(formData),
-//            url: 'user/updateProfile',
-//            processData: false,
-//            contentType: false,
-//            success: function (result) {
-//                $('#successEditMessage').html(result);
-//            },
-//            error: function (result) {
-//                $("#successEditMessage").html(result);
-//            }
-//
-//        });
-//    });
-</script>-->

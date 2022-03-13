@@ -85,6 +85,14 @@ public class Product {
         this.sprice = sprice;
         this.views = views;
     }
+    
+    public Product(int pid,String thumbnail, String title, double lprice, double sprice) {
+        this.pid = pid;
+        this.thumbnail = thumbnail;
+        this.title = title;
+        this.lprice = lprice;
+        this.sprice = sprice;
+    }
 
     public int getPid() {
         return pid;

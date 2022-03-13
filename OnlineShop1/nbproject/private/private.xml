@@ -3,12 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/SWP/Iter2/g6/OnlineShop1/web/admin/js/userProfile1.js</file>
             <file>file:/D:/SWP/Iter2/g6/OnlineShop1/web/order-history.jsp</file>
             <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/controller/manager/OrderController.java</file>
             <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/controller/admin/UserController.java</file>
             <file>file:/D:/SWP/Iter2/g6/OnlineShop1/src/java/controller/filter/Author.java</file>
             <file>file:/D:/SWP/Iter2/g6/OnlineShop1/web/header.jsp</file>
+=======
+            <file>file:/C:/Users/84984/Desktop/ShopIter4/OnlineShop1/web/eShopper/css/main.css</file>
+            <file>file:/C:/Users/84984/Desktop/ShopIter4/OnlineShop1/src/java/dbcontext/DBContext.java</file>
+            <file>file:/C:/Users/84984/Desktop/ShopIter4/OnlineShop1/web/assets/css/main.css</file>
+>>>>>>> 3e5f54db41fcf6f3602009834ca1a4b882a33e0b
         </group>
     </open-files>
 </project-private>

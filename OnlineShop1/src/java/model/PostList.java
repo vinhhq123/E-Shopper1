@@ -24,7 +24,7 @@ public class PostList {
     private int satatusPL;
     private Date updateDate;
     private User user;
-    
+    private int views;
     
     public PostList() {
     }
@@ -135,4 +135,13 @@ public class PostList {
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
+
+    public int getViews() {
+        return views;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
+    }
+    
 }

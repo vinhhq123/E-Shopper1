@@ -115,7 +115,7 @@ public class GoodsController extends HttpServlet {
         List<Product> listGoodsPage = dao.getGoodsSortByDate();
         List<Product> listFeatured = dao.getFeaturedGood();
         
-        int page, numperpage = 12;
+        int page, numperpage = 9;
         int size = listGoodsPage.size();
         int num = (size % numperpage == 0 ? (size / numperpage) : ((size / numperpage)) + 1);
         String xpage = request.getParameter("page");
