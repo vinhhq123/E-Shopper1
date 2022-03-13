@@ -13,7 +13,7 @@ import java.util.List;
  * @author hungn
  */
 public class Cart {
-    private int userId;
+    private int cartId;
     private List<Items> items;
     private int customerId;
     public Cart() {
@@ -24,8 +24,8 @@ public class Cart {
         this.items = items;
     }
 
-    public Cart(int userId, List<Items> items, int customerId) {
-        this.userId = userId;
+    public Cart(int cartId, List<Items> items, int customerId) {
+        this.cartId = cartId;
         this.items = items;
         this.customerId = customerId;
     }
@@ -34,12 +34,12 @@ public class Cart {
         return items;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getCartId() {
+        return cartId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
     }
 
     public int getCustomerId() {
@@ -87,8 +87,8 @@ public class Cart {
         }
     }
 //total money
-    public double getTotalMoney() {
-        double t = 0;
+    public float getTotalMoney() {
+        float t = 0;
         for (Items i : items) {
             t += (i.getQuantity() * i.getPrice());
         }

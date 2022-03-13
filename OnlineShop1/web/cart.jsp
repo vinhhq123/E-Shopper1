@@ -31,7 +31,7 @@
         <jsp:include page="header.jsp"/>
         <section id="cart_items">
             <div class="container">
-                <div class="table-responsive cart_info">
+                <div class="table-responsive cart_info" style="margin-bottom: 25px;">
                     <table class="table table-condensed">
                         <thead>
                             <tr class="cart_menu">
@@ -77,7 +77,11 @@
                                 </tr>
                             </c:forEach>
                         </tbody>
-                    </table>
+                    </table> 
+                </div>
+                <div class="container shopper-informations" style="margin-bottom: 30px;">
+                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/cart-contact.jsp">Check Out</a>
+                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/goods/goodsList">Choose more Product</a>
                 </div>
             </div>
         </section> <!--/#cart_items-->

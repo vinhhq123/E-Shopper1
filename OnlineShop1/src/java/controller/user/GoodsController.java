@@ -7,10 +7,14 @@ package controller.user;
 
 import dal.FeedbackDAO;
 import dal.GoodsDAO;
+import dal.OrderDAO;
+import dal.OrderDetailDAO;
 import dal.SettingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,13 +26,14 @@ import model.Feedback;
 import model.Items;
 import model.Product;
 import model.Setting;
+import resources.SendEmail;
 
 /**
  *
  * @author hungn
  */
 @WebServlet(name = "GoodsController", urlPatterns = {"/goods/goodsList", "/goods/goodsCate", "/goods/search", "/goods/detail",
-    "/goods/addToCart", "/goods/removeProductCart", "/goods/addToCartContact"})
+    "/goods/addToCart", "/goods/removeProductCart", "/goods/addToCartContact","/goods/checkOut"})
 public class GoodsController extends HttpServlet {
 
     /**
@@ -77,6 +82,9 @@ public class GoodsController extends HttpServlet {
                 break;
             case "/goods/addToCartContact":
                 addProductToCartContact(request, response);
+                break;
+            case "/goods/checkOut":
+                checkOut(request, response);
                 break;
         }
     }
@@ -305,5 +313,35 @@ public class GoodsController extends HttpServlet {
         session.setAttribute("cart", cart);
         session.setAttribute("size", list.size());
         request.getRequestDispatcher("/cart.jsp").forward(request, response);
+    }
+    
+    protected void checkOut(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            HttpSession session = request.getSession(true);
+            Cart cart = null;
+            Object o = session.getAttribute("cart");
+            if (o != null) {
+                cart = (Cart) o;
+            } else {
+                cart = new Cart();
+            }
+            OrderDAO ord = new OrderDAO();
+            OrderDetailDAO ordd = new OrderDetailDAO();
+            int oid = ord.getLastOrder().getOrderId() + 1;
+            float totaCost = cart.getTotalMoney();
+            int uid = Integer.parseInt(request.getParameter("id"));
+            String username = request.getParameter("fullname");
+            String email = request.getParameter("email");
+            int checkAddOrder = ord.addOrder(oid, totaCost, uid);
+            if (checkAddOrder > 0){
+                SendEmail sm = new SendEmail();
+                sm.ContactMail(username, email);
+               request.getRequestDispatcher("/cart-completion.jsp").forward(request, response); 
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(GoodsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
