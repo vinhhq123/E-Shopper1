@@ -48,27 +48,27 @@
                             <c:set var="o" value="${sessionScope.cart}"/>
                             <c:forEach items="${o.items}" var="i">
                                 <tr>
-                                    <td class="cart_product">
+                                    <td class="cart_product col-sm-2">
                                         <a href=""><img src="data:image/jpg;base64,${i.product.getThumbnail()}" alt="" width="100px" height="100px"></a>
                                     </td>
-                                    <td class="cart_description">
+                                    <td class="cart_description col-sm-2">
                                         <h4><a>${i.product.title}</a></h4>
                                         <p>Product Id: ${i.product.pid}</p>
                                     </td>
-                                    <td class="cart_price">
+                                    <td class="cart_price col-sm-2">
                                         <fmt:setLocale value = "vi_VN"/>
                                         <p><fmt:formatNumber value="${i.product.sprice}" type="currency" /></p>
                                     </td>
-                                    <td class="cart_quantity">
+                                    <td class="cart_quantity col-sm-2">
                                         <div class="cart_quantity_button">
                                             <input class="cart_quantity_input" readonly type="text" name="quantity" value="${i.quantity}" autocomplete="off" size="2">
                                         </div>
                                     </td>
-                                    <td class="cart_total">
+                                    <td class="cart_total col-sm-2">
                                         <fmt:setLocale value = "vi_VN"/>
                                         <p class="cart_total_price"><fmt:formatNumber value="${i.product.sprice * i.quantity}" type="currency" /></p>
                                     </td>
-                                    <td class="cart_delete">
+                                    <td class="cart_delete col-sm-2">
                                         <form action="<%=request.getContextPath()%>/goods/removeProductCart" method="post">
                                                     <input type="hidden" name="id" value="${i.product.pid}"/>
                                                     <input type="submit" value="Remove"/>
@@ -80,8 +80,8 @@
                     </table> 
                 </div>
                 <div class="container shopper-informations" style="margin-bottom: 30px;">
-                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/cart-contact.jsp">Check Out</a>
-                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/goods/goodsList">Choose more Product</a>
+                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/goods/addToCartContact">Check Out</a>
+                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/goods/goodsList">Choose More Product</a>
                 </div>
             </div>
         </section> <!--/#cart_items-->
