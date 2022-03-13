@@ -123,6 +123,8 @@ public class Author implements Filter {
                     chain.doFilter(request, response);
                 } else if (url.contains("getproduct")) {
                     chain.doFilter(request, response);
+                }else if (url.contains("feedback/add")) {
+                    chain.doFilter(request, response);
                 }
                 else if (url.contains("getOrderInfo")) {
                     chain.doFilter(request, response);
@@ -141,7 +143,7 @@ public class Author implements Filter {
                     4: marketing
                     5: customer
                     */
-                    if (user.getRole() == 3 || user.getRole() == 4 || user.getRole() == 2 || user.getRole() == 1) {
+                    if (user.getRole() == 1) {
                         chain.doFilter(request, response);
                     } else {
                         request.getRequestDispatcher("/admin/404.jsp").forward(request, response);

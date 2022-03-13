@@ -27,30 +27,10 @@
                                         <span>${sessionScope.account.fullname} <i class="caret"></i></span>
                                     </a>
                                     <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
-
-                                        <!--                                        <li>
-                                                                                    <a href="#">
-                                                                                        <i class="fa fa-clock-o fa-fw pull-right"></i>
-                                                                                        <span class="badge badge-success pull-right">10</span> Updates</a>
-                                                                                    <a href="#">
-                                                                                        <i class="fa fa-envelope-o fa-fw pull-right"></i>
-                                                                                        <span class="badge badge-danger pull-right">5</span> Messages</a>
-                                                                                    <a href="#"><i class="fa fa-magnet fa-fw pull-right"></i>
-                                                                                        <span class="badge badge-info pull-right">3</span> Subscriptions</a>
-                                                                                    <a href="#"><i class="fa fa-question fa-fw pull-right"></i> <span class=
-                                                                                                                                                      "badge pull-right">11</span> FAQ</a>
-                                                                                </li>-->
-
-                                        <li class="divider"></li>
-
                                         <li>
                                             <a href="#myModal-2" data-toggle="modal" >
                                                 <i class="fa fa-user fa-fw pull-right"></i>
                                                 My Profile
-                                            </a>
-                                            <a href="#myModal-3" data-toggle="modal" >
-                                                <i class="fa fa-user fa-fw pull-right"></i>
-                                                Change Password
                                             </a>
                                             <a href="<%=request.getContextPath()%>/order/getCustomerOrders">
                                                 <i class="fa fa-ticket fa-fw pull-right"></i>
@@ -85,7 +65,11 @@
                                                     Posts
                                                 </a>
                                             </c:if>
-                                            <a href="${pageContext.request.contextPath}/Login.jsp">
+                                            <a href="#myModal-3" data-toggle="modal" >
+                                                <i class="fa fa-user fa-fw pull-right"></i>
+                                                Change Password
+                                            </a>
+                                            <a href="<%=request.getContextPath()%>/logout">
                                                 <i class="fa fa-power-off fa-fw pull-right"></i> Logout</a>
                                         </li>
                                     </ul>
@@ -218,7 +202,7 @@
                 </div>
             </div>
         </div>
-                        
+
         <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal-3" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -254,7 +238,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-offset-2 col-lg-10">
-                                    <button type="button" class="btn btn-default get" id="saveC">Save changes</button>
+                                    <button type="button" class="btn btn-default get" id="saveCC">Save changes</button>
                                 </div>
                             </div>
                             <input type="hidden" name="email" value="${account.email}" id="email">
@@ -272,47 +256,3 @@
 <script src="${pageContext.request.contextPath}/admin/js/UserDetail.js" type="text/javascript"></script>
 <!-- User Profile -->
 <script src="${pageContext.request.contextPath}/admin/js/userProfile1.js" type="text/javascript"></script>
-<!--<script>
-    $(document).ready(function () {
-    $('#editProfile').validate({
-       rules:{
-           newFullname : {required : true,maxlength : 50},
-           newMobile :{required : true,length : 50},
-           newAddress: {required : true,length : 200}
-           
-       },
-       submitHandler: function (form){
-           console.log('HEREEEEEEE');
-       } 
-    });
-     });
-                
-
-//        $('#saveC').click(function () {
-////            var fullname = $('#newFullname').val();
-////            var title = $('#optionsRadios5').val();
-////            var phone = $('#newMobile').val();
-////            var address = $('#newAddress').val();
-////            var uId = $('#currentUserId').val();
-//        var imageV = $('#file').val();
-////            var formData = $("#editProfile").serialize(); //Lấy tất cả data trong form
-//        var formData = document.getElementById('editProfile');
-////        var url = "http://localhost:8080/OnlineShop1/user/updateProfile";
-//        console.log(imageV);
-//        $.ajax({
-//            type: 'POST',
-//            enctype: 'multipart/form-data',
-//            data: new FormData(formData),
-//            url: 'user/updateProfile',
-//            processData: false,
-//            contentType: false,
-//            success: function (result) {
-//                $('#successEditMessage').html(result);
-//            },
-//            error: function (result) {
-//                $("#successEditMessage").html(result);
-//            }
-//
-//        });
-//    });
-</script>-->

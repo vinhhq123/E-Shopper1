@@ -40,7 +40,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="logo pull-left">
-                                <a href="index.jsp"><img src="assets/images/home/logo.png" alt="" /></a>
+                                <a href="<%=request.getContextPath()%>/home"><img src="assets/images/home/logo.png" alt="" /></a>
                             </div>
                         </div>
                         <div class="col-sm-8">
