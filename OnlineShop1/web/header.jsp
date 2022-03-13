@@ -69,7 +69,7 @@
                                                 <i class="fa fa-user fa-fw pull-right"></i>
                                                 Change Password
                                             </a>
-                                            <a href="${pageContext.request.contextPath}/Login.jsp">
+                                            <a href="<%=request.getContextPath()%>/logout">
                                                 <i class="fa fa-power-off fa-fw pull-right"></i> Logout</a>
                                         </li>
                                     </ul>
