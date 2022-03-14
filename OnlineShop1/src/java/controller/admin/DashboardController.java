@@ -80,8 +80,12 @@ public class DashboardController extends HttpServlet {
             DashboardDAO dashboardDAO = new DashboardDAO();
             ArrayList<Order> top3Customer = dashboardDAO.getTop3HightestUser();
             int totalUser = dashboardDAO.totalUser();
+            int totalRevenue7days = dashboardDAO.totalRevenue7days();
+            int totalProduct = dashboardDAO.totalProduct();
             request.setAttribute("top3Customer", top3Customer);
             request.setAttribute("totalUser", totalUser);
+            request.setAttribute("totalRevenue7days", totalRevenue7days);
+            request.setAttribute("totalProduct", totalProduct);
             request.getRequestDispatcher("/Dashboard/dashboard.jsp").forward(request, response);
         } catch (Exception ex) {
             Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);

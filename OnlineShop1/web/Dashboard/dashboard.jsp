@@ -110,20 +110,20 @@ td, th {
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="well">
-                                        <h4>Revenues 7 days</h4>
-                                        <p>100 Million</p> 
+                                        <h4 style="text-align: center">Revenues 7 days</h4>
+                                        <p style="text-align: center">${totalRevenue7days}đ</p> 
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="well">
-                                        <h4>Sessions</h4>
-                                        <p>10 Million</p> 
+                                        <h4 style="text-align: center">Total Product</h4>
+                                        <p style="text-align: center">${totalProduct}</p> 
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="well">
-                                        <h4>Bounce</h4>
-                                        <p>30%</p> 
+                                        <h4 style="text-align: center">Bounce</h4>
+                                        <p style="text-align: center">30<img src="${pageContext.request.contextPath}/admin/img/star-icon.png" alt=""/></p> 
                                     </div>
                                 </div>
                             </div>

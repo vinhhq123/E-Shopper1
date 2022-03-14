@@ -71,21 +71,43 @@ public class DashboardDAO extends DBContext{
         return top3order;
     }
     
-    public int totalRevenue7days(Date dateFrom, Date dateTo){
+    public int totalRevenue7days(){
         String query = "SELECT SUM(totalCost) as 'totalRevenue' FROM onlineshop1.orders\n" +
                         "WHERE orderDate between ? and ?";
         int totalRevenue;
+        long toDay_raw =System.currentTimeMillis();//Today_raw
+            long millisOf7days = 86400000 * 7;//7 days
+            long _7daysAgo_raw = toDay_raw - millisOf7days; //7 days ago_raw
+            java.sql.Date toDay =new java.sql.Date(toDay_raw);
+            java.sql.Date _7daysAgo =new java.sql.Date(_7daysAgo_raw);
         try {
             connection = getConnection();
             ps = connection.prepareStatement(query);
-            ps.setDate(0, dateFrom);
-            ps.setDate(1, dateFrom);
+            ps.setDate(1, _7daysAgo);
+            ps.setDate(2, toDay);
             result = ps.executeQuery();
             
             while (result.next()) {
                 totalRevenue = result.getInt("totalRevenue");
-                System.out.println(totalRevenue);
                 return totalRevenue;
+            }
+        } catch (Exception e) {
+
+        }
+        return 0;
+    }
+    
+    public int totalProduct(){
+        String query = "SELECT COUNT(productId) as 'totalProduct' FROM onlineshop1.product";
+        int totalProduct;
+        try {
+            connection = getConnection();
+            ps = connection.prepareStatement(query);
+            result = ps.executeQuery();
+            
+            while (result.next()) {
+                totalProduct = result.getInt("totalProduct");
+                return totalProduct;
             }
         } catch (Exception e) {
 
