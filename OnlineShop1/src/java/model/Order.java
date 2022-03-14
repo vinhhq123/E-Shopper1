@@ -21,7 +21,7 @@ public class Order {
     private Date orderDate;
     private String salesNote;
     private Date updatedDate;
-    private User user;
+    private User user; //Get the customers with the highest total cost
     public Order() {
     }
 
