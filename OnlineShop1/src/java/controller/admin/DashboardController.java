@@ -7,17 +7,22 @@ package controller.admin;
 
 import dal.DashboardDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Order;
 
 /**
  *
  * @author CHANHSIRO
  */
-public class Dashboard extends HttpServlet {
+@WebServlet(name = "DashboardController", urlPatterns = {"/dashboard/view"})
+public class DashboardController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,11 +35,6 @@ public class Dashboard extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        DashboardDAO dbD = new DashboardDAO();
-        int totalUser = dbD.totalUser();
-        request.setAttribute("totalUser", totalUser);
-        request.getRequestDispatcher("/Dashboard/dashboard.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -49,7 +49,15 @@ public class Dashboard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String action = request.getServletPath();
+        System.out.println(action);
+
+        switch (action) {
+            case "/dashboard/view":
+                postViewDashboard(request, response);
+                break;
+        }
+
     }
 
     /**
@@ -63,7 +71,21 @@ public class Dashboard extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        doGet(request, response);
+    }
+    
+    protected void postViewDashboard(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            DashboardDAO dashboardDAO = new DashboardDAO();
+            ArrayList<Order> top3Customer = dashboardDAO.getTop3HightestUser();
+            
+            request.setAttribute("top3Customer", top3Customer);
+            request.getRequestDispatcher("/Dashboard/dashboard.jsp").forward(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     /**

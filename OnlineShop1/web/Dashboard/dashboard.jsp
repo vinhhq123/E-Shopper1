@@ -86,31 +86,17 @@ td, th {
                                 <h4>Dashboard</h4>
                                 <table class="table table-striped" id="SettingListTable">
                                         <tr>
-                                            <th >ID</th>
                                             <th >Customer Name</th>
                                             <th >Email</th>
                                             <th >Mobile</th>
                                             <th >Total Cost</th>
                                         </tr>
-                                        <c:forEach items="${Orders}" var="order">
+                                <c:forEach items="${top3Customer}" var="t">
                                             <tr>
-                                                <td>1</td>
-                                                
-                                                <c:forEach items="${Customers}" var="cus">
-                                                    
-                                                        <c:if test="${cus.getUid() == order.getCustomerId()}">
-                                                            <td>${cus.getFullname()}</td>
-                                                            <td>${cus.getEmail()}</td>
-                                                            <td>${cus.getPhone()}</td>
-                                                        </c:if>
-                                                    
-                                                </c:forEach>
-                                                <td><span class="subtotal">
-                                                        <fmt:setLocale value = "vi_VN"/>
-                                                        <fmt:formatNumber value="${order.getTotalCost()}" type="currency" />
-                                                    </span></td>  
-                                                    
-                                                
+                                                <td>${t.user.fullname}</td>
+                                                <td>${t.user.email}</td>
+                                                <td>${t.user.phone}</td>
+                                                <td>${t.totalCost}</td>
                                             </tr>
                                         </c:forEach>
                                     </table>

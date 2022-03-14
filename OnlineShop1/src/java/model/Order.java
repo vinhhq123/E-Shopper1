@@ -21,7 +21,7 @@ public class Order {
     private Date orderDate;
     private String salesNote;
     private Date updatedDate;
-
+    private User user;
     public Order() {
     }
 
@@ -97,6 +97,14 @@ public class Order {
 
     public void setUpdatedDate(Date updatedDate) {
         this.updatedDate = updatedDate;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
     
     
