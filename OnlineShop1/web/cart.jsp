@@ -80,8 +80,8 @@
                     </table> 
                 </div>
                 <div class="container shopper-informations" style="margin-bottom: 30px;">
-                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/cart-contact.jsp">Check Out</a>
-                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/goods/goodsList">Choose more Product</a>
+                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/goods/addToCartContact">Check Out</a>
+                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/goods/goodsList">Choose More Product</a>
                 </div>
             </div>
         </section> <!--/#cart_items-->
