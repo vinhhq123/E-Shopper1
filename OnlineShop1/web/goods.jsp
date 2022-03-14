@@ -92,7 +92,7 @@
                                         <div class="single-products">
                                             <div class="productinfo text-center">
                                                 <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" width="100" height="250"/>
-                                                <h2>${o.title}</h2>
+                                                <h4 style="color: #FE980F;font-family: 'Roboto', sans-serif;font-weight: 700;">${o.title}</h4>
                                                 <p>
                                                     <fmt:setLocale value = "vi_VN"/>
                                                 <strike>

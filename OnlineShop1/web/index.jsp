@@ -8,6 +8,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
         <meta name="description" content="">
         <meta name="author" content="">
         <title>Home | E-Shopper</title>
@@ -137,7 +138,7 @@
                                                     <div class="single-products">
                                                         <div class="productinfo text-center">
                                                             <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" width="100" height="200"/>
-                                                            <h2>${o.title}</h2>
+                                                            <h4 style="color: #FE980F;font-family: 'Roboto', sans-serif;font-weight: 700;">${o.title}</h4>
                                                             <p>
                                                                 <fmt:setLocale value = "vi_VN"/>
                                                             <strike>
@@ -162,7 +163,7 @@
                                                     <div class="single-products">
                                                         <div class="productinfo text-center">
                                                             <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="200"/>
-                                                            <h2>${o.title}</h2>
+                                                            <h4 style="color: #FE980F;font-family: 'Roboto', sans-serif;font-weight: 700;">${o.title}</h4>
                                                             <p>
                                                                 <fmt:setLocale value = "vi_VN"/>
                                                             <strike>

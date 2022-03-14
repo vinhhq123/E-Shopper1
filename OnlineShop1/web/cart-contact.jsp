@@ -104,7 +104,7 @@
                                     <input type="text" name="fullname" placeholder="Full Name *" value="${sessionScope.account.fullname}">
                                     <input type="text" name="addresss" placeholder="Address 1 *" value="${sessionScope.account.address}">
                                     <input type="text" name="phone" placeholder="Phone Number *" value="${sessionScope.account.phone}">
-                                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/cart.jsp">Modify Order</a>
+                                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/goods/addToCart">Modify Order</a>
                                     <a class="btn btn-primary" href="<%=request.getContextPath()%>/cart-completion.jsp">Buy Now</a>
                                 </form>
                             </div>
