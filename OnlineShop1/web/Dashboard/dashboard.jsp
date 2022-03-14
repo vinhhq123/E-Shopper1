@@ -83,7 +83,7 @@ td, th {
 
                         <div class="col-sm-9">
                             <div class="well">
-                                <h4>Dashboard</h4>
+                                <h3>TOP 3 HIGHEST ORDER</h3>
                                 <table class="table table-striped" id="SettingListTable">
                                         <tr>
                                             <th >Customer Name</th>
@@ -104,13 +104,13 @@ td, th {
                             <div class="row">
                                 <div class="col-sm-3">
                                     <div class="well">
-                                        <h4>Total Users</h4>
-                                        <p>${totalUser}</p>
+                                        <h4 style="text-align: center">Total Users</h4>
+                                        <p style="text-align: center"> ${totalUser}</p>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="well">
-                                        <h4>Total Revenues</h4>
+                                        <h4>Revenues 7 days</h4>
                                         <p>100 Million</p> 
                                     </div>
                                 </div>

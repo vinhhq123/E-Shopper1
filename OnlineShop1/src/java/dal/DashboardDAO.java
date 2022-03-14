@@ -7,6 +7,7 @@ package dal;
 
 import dbcontext.DBContext;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -68,5 +69,27 @@ public class DashboardDAO extends DBContext{
 
         }
         return top3order;
+    }
+    
+    public int totalRevenue7days(Date dateFrom, Date dateTo){
+        String query = "SELECT SUM(totalCost) as 'totalRevenue' FROM onlineshop1.orders\n" +
+                        "WHERE orderDate between ? and ?";
+        int totalRevenue;
+        try {
+            connection = getConnection();
+            ps = connection.prepareStatement(query);
+            ps.setDate(0, dateFrom);
+            ps.setDate(1, dateFrom);
+            result = ps.executeQuery();
+            
+            while (result.next()) {
+                totalRevenue = result.getInt("totalRevenue");
+                System.out.println(totalRevenue);
+                return totalRevenue;
+            }
+        } catch (Exception e) {
+
+        }
+        return 0;
     }
 }
