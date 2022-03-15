@@ -2,15 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/controller/admin/DashboardController.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/controller/manager/OrderController.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/Dashboard/dashboard.jsp</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/web/admin/FeedbackList.jsp</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/dal/FeedbackDAO.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/dal/SliderDAO.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/dal/DashboardDAO.java</file>
-            <file>file:/C:/Users/CHANHSIRO/OneDrive/Documents/SWP391/SWP391_writeCode/g6/OnlineShop1/src/java/controller/manager/FeedbacksController.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

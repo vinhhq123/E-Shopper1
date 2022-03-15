@@ -28,17 +28,36 @@
 
             }
             table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
 
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
+            td, th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
 
+            table, tr, td {
+                text-align: center;
+            }
+            
+            table, th, td{
+    border:1px solid #868585;
+}
+table{
+    border-collapse:collapse;
+}
+table tr:nth-child(odd){
+    background-color:#eee;
+}
+table tr:nth-child(even){
+    background-color:white;
+}
+table tr:nth-child(1){
+    background-color:skyblue;
+}
 
         </style>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -64,6 +83,7 @@ td, th {
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
+
     </head>
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
@@ -83,143 +103,154 @@ td, th {
 
                         <div class="col-sm-9">
                             <div class="well">
-                                <h3>TOP 3 HIGHEST ORDER</h3>
-                                <table class="table table-striped" id="SettingListTable">
+                                <h3>TOP 3 BEST CUSTOMERS</h3>
+                                <table>
+                                    <tr>
+                                        <th >Customer Name</th>
+                                        <th >Email</th>
+                                        <th >Mobile</th>
+                                        <th >Total Cost</th>
+                                    </tr>
+                                <c:forEach items="${top3Customer}" var="t">
+                                    <tr>
+                                        <td>${t.user.fullname}</td>
+                                        <td>${t.user.email}</td>
+                                        <td>${t.user.phone}</td>
+                                        <td>${t.totalCost}</td>
+                                    </tr>
+                                </c:forEach>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="well">
+                                    <h4 style="text-align: center">Total Customers</h4>
+                                    <p style="text-align: center"> ${totalUser}</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="well">
+                                    <h4 style="text-align: center">Revenues 7 days</h4>
+                                    <p style="text-align: center">${totalRevenue7days}đ</p> 
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="well">
+                                    <h4 style="text-align: center">Total Product</h4>
+                                    <p style="text-align: center">${totalProduct}</p> 
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="well">
+                                    <h4 style="text-align: center">Rated Star</h4>
+                                    <p style="text-align: center">${ratedStar}<img style="max-width: 15% !important; margin-bottom: 5px;" src="${pageContext.request.contextPath}/admin/img/star-icon.png" alt=""/></p> 
+                                </div>
+                            </div>
+                        </div>
+                        <div style="border: 1px solid #dddddd; margin-bottom: 15px;">
+                            <div class="row" style="margin-bottom: 15px;  margin-top: 15px">
+                                <form action="${pageContext.request.contextPath}/dashboard/view" style="text-align: center;">
+                                    <label>DATE: </label>
+                                    <input type="date" value="${toDay}" name="daily">
+                                    <input type="date" value="${toDay2}" name="daily2">
+                                    <input style="margin-left:20px; background-color: green; color: greenyellow" value="Search" type="submit">
+                                </form>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="well">
+                                        <h4>Daily Revenue</h4>
+                                        <p>${dailyInformation[0]}</p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="well">
+                                        <h4>Daily Customers</h4>
+                                        <p>${dailyInformation[1]}</p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="well">
+                                        <h4>Total Canceled</h4>
+                                        <p>${dailyCaneled}</p> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <div class="well">
+                                    <h3>TOP 3 BEST SELLERS</h3>
+                                    <table>
                                         <tr>
                                             <th >Customer Name</th>
                                             <th >Email</th>
                                             <th >Mobile</th>
-                                            <th >Total Cost</th>
+                                            <th >Total Amount</th>
                                         </tr>
-                                <c:forEach items="${top3Customer}" var="t">
+                                        <c:forEach items="${top3BestSeller}" var="t">
                                             <tr>
                                                 <td>${t.user.fullname}</td>
                                                 <td>${t.user.email}</td>
                                                 <td>${t.user.phone}</td>
-                                                <td>${t.totalCost}</td>
+                                                <td>${t.customerId}</td>
                                             </tr>
                                         </c:forEach>
-                                    </table>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <div class="well">
-                                        <h4 style="text-align: center">Total Users</h4>
-                                        <p style="text-align: center"> ${totalUser}</p>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="well">
-                                        <h4 style="text-align: center">Revenues 7 days</h4>
-                                        <p style="text-align: center">${totalRevenue7days}đ</p> 
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="well">
-                                        <h4 style="text-align: center">Total Product</h4>
-                                        <p style="text-align: center">${totalProduct}</p> 
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="well">
-                                        <h4 style="text-align: center">Bounce</h4>
-                                        <p style="text-align: center">30<img src="${pageContext.request.contextPath}/admin/img/star-icon.png" alt=""/></p> 
-                                    </div>
+                                    </table> 
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="well">
-                                        <p>Text</p> 
-                                        <p>Text</p> 
-                                        <p>Text</p> 
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="well">
-                                        <p>Text</p> 
-                                        <p>Text</p> 
-                                        <p>Text</p> 
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="well">
-                                        <p>Text</p> 
-                                        <p>Text</p> 
-                                        <p>Text</p> 
-                                    </div>
+                            <div class="col-sm-5">
+                                <div class="well" style="padding-bottom: 60px">
+                                    <h4>TOP 3 BEST SELLING PRODUCT</h4>
+                                    <table style="margin-top: 25px">
+                                        <tr>
+                                            <th >Product Name</th>
+                                            <th >Total Quantity</th>
+                                        </tr>
+                                        <c:forEach items="${bestSellingPro}" var="b">
+                                            <tr>
+                                                <td>${b.title}</td>
+                                                <td>${b.quantity}</td>
+                                            </tr>
+                                        </c:forEach>
+                                    </table> 
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <div class="well">
-                                        <p>Text</p> 
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="well">
-                                        <p>Text</p> 
-                                    </div>
-                                </div>
-                            </div>
-<div>
-<form action="/action_page.php" style="float:right;">
-  <label for="birthday">batdau:</label>
-  <input type="date" id="birthday" name="birthday">
-  <label for="birthday">ketthuc:</label>
-  <input type="date" id="birthday" name="birthday">
-  <input style="margin-left:20px" type="submit">
-</form>
-<h2 style="float:left;width:60px;margin-top: 0;">Form</h2>
-</div>
-<table>
-  <tr>
-    <th>Company</th>
-    <th>Contact</th>
-    <th>Country</th>
-  </tr>
-  <tr>
-    <td>Alfreds Futterkiste</td>
-    <td>Maria Anders</td>
-    <td>Germany</td>
-  </tr>
-  <tr>
-    <td>Centro comercial Moctezuma</td>
-    <td>Francisco Chang</td>
-    <td>Mexico</td>
-  </tr>
-  <tr>
-    <td>Ernst Handel</td>
-    <td>Roland Mendel</td>
-    <td>Austria</td>
-  </tr>
-  <tr>
-    <td>Island Trading</td>
-    <td>Helen Bennett</td>
-    <td>UK</td>
-  </tr>
-  <tr>
-    <td>Laughing Bacchus Winecellars</td>
-    <td>Yoshi Tannamuri</td>
-    <td>Canada</td>
-  </tr>
-  <tr>
-    <td>Magazzini Alimentari Riuniti</td>
-    <td>Giovanni Rovelli</td>
-    <td>Italy</td>
-  </tr>
-</table>
                         </div>
+
+
+                        <div>
+                            <h4 style="text-align: center">LAST ORDERS</h4>
+                        </div>
+                        <table>
+                            <tr>
+                                <th>Order Date</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Total Cost</th>
+                            </tr>
+                            <c:forEach items="${lastOrders}" var="l">
+                            <tr>
+                                <td>${l.orderDate}</td>
+                                <td>${l.user.fullname}</td>
+                                <td>${l.user.email}</td>
+                                <td>${l.user.phone}</td>
+                                <td>${l.totalCost}</td>                    
+                            </tr>
+                            </c:forEach>
+                        </table>
                     </div>
                 </div>
             </div>
-            <div class="footer-main">
-                Copyright &copy Online Shop , 2022   
-            </div>
+        </div>
+        <div class="footer-main">
+            Copyright &copy Online Shop , 2022   
+        </div>
 
-            <!-- jQuery 2.0.2 -->
-            <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-            <script src="${pageContext.request.contextPath}/admin/js/jquery.min.js" type="text/javascript"></script>
+        <!-- jQuery 2.0.2 -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        <script src="${pageContext.request.contextPath}/admin/js/jquery.min.js" type="text/javascript"></script>
 
         <!-- Bootstrap -->
         <script src="${pageContext.request.contextPath}/admin/js/bootstrap.min.js" type="text/javascript"></script>
@@ -229,5 +260,6 @@ td, th {
         <script src="${pageContext.request.contextPath}/admin/js/UserDetail.js" type="text/javascript"></script>
         <!-- Add New User -->
         <script src="${pageContext.request.contextPath}/admin/js/AddNewUser.js" type="text/javascript"></script>
+
     </body>
 </html>
