@@ -249,7 +249,7 @@ public class GoodsDAO {
 
     public List<Product> getFeaturedGood() {
         List<Product> listProduct = new ArrayList<>();
-        String query = "select productId, thumbnail, title, list_price, sale_price, views from product order by views desc limit 5";
+        String query = "select productId, thumbnail, title, list_price, sale_price from product where featuredProduct=1 limit 5";
         try {
             connection = new DBContext().getConnection();
             ps = connection.prepareStatement(query);
@@ -281,7 +281,6 @@ public class GoodsDAO {
                 p.setTitle(result.getString("title"));
                 p.setLprice(result.getDouble("list_price"));
                 p.setSprice(result.getDouble("sale_price"));
-                p.setViews(result.getInt("views"));
 
                 listProduct.add(p);
             }
@@ -332,18 +331,6 @@ public class GoodsDAO {
 
         }
         return listProduct;
-    }
-
-    public void updateViews(int id) {
-        String query = "update product set views = views + 1 where productId = ?";
-        try {
-            connection = new DBContext().getConnection();
-            ps = connection.prepareStatement(query);
-            ps.setInt(1, id);
-            ps.executeUpdate();
-        } catch (Exception e) {
-
-        }
     }
 
     public double avgStar(int id) {

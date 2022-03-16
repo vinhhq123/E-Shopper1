@@ -218,7 +218,6 @@ public class GoodsController extends HttpServlet {
         FeedbackDAO fdao = new FeedbackDAO();
         Product good = dao.getGoodsById(id);
         double star = dao.avgStar(id);
-        dao.updateViews(id);
         List<Setting> listGoodsCate = sdao.getGoodsCategory();
         List<Feedback> listFeedback = fdao.getFeedbackOfEachGood(id);
         List<Product> listFeatured = dao.getFeaturedGood();
@@ -343,4 +342,37 @@ public class GoodsController extends HttpServlet {
             Logger.getLogger(GoodsController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+//    protected void minusProduct(HttpServletRequest request, HttpServletResponse response)
+//            throws ServletException, IOException {
+//        response.setContentType("text/html;charset=UTF-8");
+//        HttpSession session = request.getSession(true);
+//        Cart cart = null;
+//        Object o = session.getAttribute("cart");
+//        //co roi
+//        if (o != null) {
+//            cart = (Cart) o;
+//        } else {
+//            cart = new Cart();
+//        }
+//        String tid = request.getParameter("pid");
+//        int num, id;
+//        try {
+//            num = 1;
+//            id = Integer.parseInt(tid);
+//
+//            GoodsDAO pdb = new GoodsDAO();
+//            Product p = pdb.getGoodsById(id);
+//            //gia ban
+//            double price = p.getSprice();
+//            Items t = new Items(p, num, price);
+//            cart.reduceItem(t);
+//        } catch (NumberFormatException e) {
+//            num = 1;
+//        }
+//        List<Items> list = cart.getItems();
+//        session.setAttribute("cart", cart);
+//        session.setAttribute("size", list.size());
+//        request.getRequestDispatcher("/cart.jsp").forward(request, response);
+//    }
 }
