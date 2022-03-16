@@ -862,7 +862,7 @@ public class UserDAO extends DBContext {
         User user = null;
 
         try {
-            String sql = "select * from User where role = " + role;
+            String sql = "select * from User where role = " + role +" and (accountStatus =23 or accountStatus =24)";
             connection = getConnection();
             preparedStatement = connection.prepareStatement(sql);
             results = preparedStatement.executeQuery();

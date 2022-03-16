@@ -63,30 +63,45 @@
                                             <div class="row">
                                                 <div class="col-sm-8">
                                                     <form class="form-inline" role="form" action="<%=request.getContextPath()%>/setting/search" method="get">
-                                                    <div class="form-group">
+                                                    <div class="form-group" style="margin-right:12px;">
                                                         <label class="sr-only" for="exampleInputEmail2">Email address</label>
                                                         <input type="text" name="table_search" class="form-control" id="exampleInputEmail2" placeholder="Search by value" value="${requestScope.searchValue}" onblur="this.value = removeSpaces(this.value);">
                                                     </div>
-                                                    <div class="form-group">
-                                                        <select class="select" aria-label="Default select example" name="status">
-                                                            <option selected value="">All Statuses</option>
-                                                            <option value="1">Active</option>
-                                                            <option value="0">Inactive</option>
+                                                    <div class="form-group" style="margin-right:12px;">
+                                                        <select class="select" aria-label="Default select example" name="status" style="height: 30px">
+                                                            <c:if test="${empty statusValue}">
+                                                                <option selected value="">All Statuses</option>
+                                                                <option value="1">Active</option>
+                                                                <option value="0">Inactive</option>
+                                                            </c:if>
+                                                            <c:if test="${not empty statusValue}">
+                                                                <option value="">All Statuses</option>
+                                                                <option value="1" <c:if test="${statusValue == 1}">selected</c:if>>Active</option>
+                                                                <option value="0" <c:if test="${statusValue == 0}">selected</c:if>>Inactive</option>
+                                                            </c:if>
                                                         </select>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <select class="select" aria-label="Default select example" name="type">
-                                                            <option selected value="">All types</option>
-                                                            <c:forEach items="${requestScope.types}" var="ty">
-                                                                <option value="${ty}">${ty}</option>
-                                                            </c:forEach>
+                                                    <div class="form-group" style="margin-right:12px;">
+                                                        <select class="select" aria-label="Default select example" name="type" style="height: 30px">
+                                                            <c:if test="${empty typeValue}">
+                                                                <option selected value="">All types</option>
+                                                                <c:forEach items="${requestScope.types}" var="ty">
+                                                                    <option value="${ty}">${ty}</option>
+                                                                </c:forEach>
+                                                            </c:if>
+                                                            <c:if test="${not empty typeValue}">
+                                                                <option value="">All types</option>
+                                                                <c:forEach items="${requestScope.types}" var="ty">
+                                                                    <option value="${ty}" <c:if test="${ty eq typeValue}">selected</c:if>>${ty}</option>
+                                                                </c:forEach>
+                                                            </c:if>
                                                         </select>
                                                     </div>
                                                     <button type="submit" class="btn btn-success">Search</button>
                                                 </form>
                                             </div>
                                             <div class="col-sm-4">
-                                                 <button type="button" class="btn btn-success" style="float: right" onclick="window.location = '<%=request.getContextPath()%>/admin/SettingAdd.jsp'">Add new</button>
+                                                <button type="button" class="btn btn-success" style="float: right" onclick="window.location = '<%=request.getContextPath()%>/admin/SettingAdd.jsp'">Add new</button>
                                             </div>
 
                                         </div>
@@ -119,12 +134,15 @@
                                                     <c:if test="${! con.isSettingStatus()}">
                                                 <span class="label label-danger">Inactive</span></td>
                                             </c:if>
-                                            <td><a href="<%=request.getContextPath()%>/setting/getSettingID?settingId=${con.getSettingId()}">Edit</a>            
+                                            <td>
+                                                <button type="button" class="btn-xs btn-primary" onclick="window.location = '<%=request.getContextPath()%>/setting/getSettingID?settingId=${con.getSettingId()}'">Edit</button>
                                                 <c:if test="${con.isSettingStatus()}">
-                                                    <a href="<%=request.getContextPath()%>/setting/activate?sid=${con.getSettingId()}&status=${con.isSettingStatus()}" onclick="return confirm('Do you want to deacivate this seting?')">Deactivate</a>
+                                                    <button type="button" class="btn-xs btn-danger" onclick="if (confirm('Do you want to deacivate this seting?'))
+                                                                window.location = '<%=request.getContextPath()%>/setting/activate?sid=${con.getSettingId()}&status=${con.isSettingStatus()}'">Deactivate</button>
                                                 </c:if>
                                                 <c:if test="${! con.isSettingStatus()}">
-                                                    <a href="<%=request.getContextPath()%>/setting/activate?sid=${con.getSettingId()}&status=${con.isSettingStatus()}" onclick="return confirm('Do you want to acivate this setting?')">Activate</a>
+                                                    <button type="button" class="btn-xs btn-success" onclick="if (confirm('Do you want to acivate this setting?'))
+                                                                window.location = '<%=request.getContextPath()%>/setting/activate?sid=${con.getSettingId()}&status=${con.isSettingStatus()}'">Activate</button>
                                                 </c:if>
                                             </td>
                                             </tr>
