@@ -126,73 +126,11 @@
                         </c:if>                
                         <br>
                         <div class="table-foot">
-                            <!--                            <ul class="pagination pagination-sm no-margin pull-right">
-                            <c:if test="${currentPage != 1}">
-                                <li><a
-                                        href="<%=request.getContextPath()%>/user/list?currentPage=${currentPage-1}">Previous</a>
-                                </li>
-                            </c:if>
-
-                            <c:forEach begin="1" end="${numOfPage}" var="i">
-                                <c:choose>
-                                    <c:when test="${currentPage eq i}">
-                                        <li class="active"><a>
-                                        ${i} <span class="sr-only">(current)</span></a>
-                                </li>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <li><a
-                                                href="<%=request.getContextPath()%>/user/list?currentPage=${i}">${i}</a>
-                                        </li>
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:forEach>
-
-                            <c:if test="${currentPage lt numOfPage}">
-                                <li><a
-                                        href="<%=request.getContextPath()%>/user/list?currentPage=${currentPage+1}">Next</a>
-                                </li>
-                            </c:if>
-                        </ul>-->
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <div class="row">
-
-                        <div class="search_box pull-right">
-                            <form action="<%=request.getContextPath()%>/blog/search" method="post">
-                                <input value="${searchValue}" name="search" type="text" placeholder="Search Post Title"/>
-                            </form>
-                        </div>
-                    </div><hr>
-                    <div class="blog-post-area">
-                        <div class="brands_products"><!--brands_products-->
-                            <h2>Post Category</h2>
-                            <div class="brands-name">
-                                <ul class="nav nav-pills nav-stacked" style="text-align: center">
-                                    <c:forEach items="${PostCategories}" var="pct">
-                                        <li><a href="<%=request.getContextPath()%>/blog/cate?id=${pct.settingId}"><b>${pct.settingValue}</b></a></li>
-                                                </c:forEach>
-        <!--                                    <li><a href="<%=request.getContextPath()%>/blog/cate?id=${o.settingId}">Marketing</a></li>
-                                            <li><a href="<%=request.getContextPath()%>/blog/cate?id=${o.settingId}">Promoted</a></li>-->
-                                </ul>
-                            </div>
-                            <hr>    
-                            <h2>Featured Products</h2>
-                            <div class="brands-name">
-                                <ul style="text-align: center;padding-right: 10%;">
-                                    <c:forEach items="${FeaturedProducts}" var="fps">
-                                        <li><a href="<%=request.getContextPath()%>/goods/detail?pid=${fps.getPid()}" target="_blank">
-                                                <img src="data:image/jpg;base64,${fps.getThumbnail()}" alt="Product Image" style="width:210px;height: 220px;" class="features_items_img">
-                                            </a>
-                                            <p>${fps.getTitle()}</p>
-                                        </li>
-                                    </c:forEach>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    <jsp:include page="siderpost-product.jsp"/>
                 </div>
             </div>
         </section>

@@ -68,13 +68,14 @@
                                                 </div>
                                                 <div class="form-group" style="margin-right:12px;">
                                                     <label for="from" class="sr-only"><b>From </b></label>
-                                                    <input type="text" class="form-control" id="from" name="from" 
-                                                           placeholder="From" onfocus="(this.type = 'date')" value="${requestScope.valueFrom}" >
+                                                    <input type="date" class="form-control" id="from" name="from" 
+                                                           placeholder="From"  value="${requestScope.valueFrom}" >
+                                                    <!--  onfocus="(this.type = 'date')" -->
                                                 </div>
                                                 <div class="form-group" style="margin-right:12px;">
                                                     <label for="to" class="sr-only"><b>To </b></label>
-                                                    <input type="text" class="form-control" id="to" name="to"
-                                                           placeholder="To" onfocus="(this.type = 'date')" value="${requestScope.valueTo}">
+                                                    <input type="date" class="form-control" id="to" name="to"
+                                                           placeholder="To" value="${requestScope.valueTo}">
                                                 </div>
                                                 <div class="form-group" style="margin-right:8px;">
                                                     <select class="select" aria-label="Default select example" name="salename" style="height: 30px">

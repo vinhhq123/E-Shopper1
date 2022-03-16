@@ -26,7 +26,7 @@ po<%--
             </div>
             <ul class="sidebar-menu">
                 <li>
-                    <a href="index.html">
+                    <a href="${pageContext.request.contextPath}/dashboard/view">
                         <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                     </a>
                 </li>

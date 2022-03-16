@@ -232,6 +232,7 @@ public class UserController extends HttpServlet {
         int userId = Integer.parseInt(uid);
         String userGender = "1";
         String userRole = "";
+        String actionUser = "1";
 
         UserDAO userDAO = new UserDAO();
         User currentUser = new User();
@@ -268,6 +269,7 @@ public class UserController extends HttpServlet {
             request.setAttribute("userGender", userGender);
             request.setAttribute("currentUserRole", userRole);
             request.setAttribute("currentUserStatus", accountStatus);
+            request.setAttribute("actionUser", actionUser);
             request.getRequestDispatcher("/admin/UserDetail.jsp").forward(request, response);
         } catch (Exception ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
@@ -292,7 +294,7 @@ public class UserController extends HttpServlet {
 
         phone = request.getParameter("phone");
         name = request.getParameter("name").trim();
-        title = request.getParameter("title").trim();
+        title = request.getParameter("title");
         address = request.getParameter("address").trim();
         role = request.getParameter("role");
         uid = Integer.parseInt(request.getParameter("uid"));
@@ -388,6 +390,7 @@ public class UserController extends HttpServlet {
         String status = "";
         String successMessage = "";
         String base64Image = "";
+        String actionUser = "0";
         boolean genderbit = true;
         int accountStaus = 0;
         int convertedRole = 0;
@@ -395,7 +398,7 @@ public class UserController extends HttpServlet {
         email = request.getParameter("email").trim();
         phone = request.getParameter("phone");
         name = request.getParameter("fullname").trim();
-        title = request.getParameter("title").trim();
+        title = request.getParameter("title");
         address = request.getParameter("address").trim();
         role = request.getParameter("role");
         gender = request.getParameter("gender");
@@ -473,6 +476,7 @@ public class UserController extends HttpServlet {
             request.setAttribute("genderValue", gender);
             request.setAttribute("statusValue", status);
             request.setAttribute("roles", roles);
+            request.setAttribute("actionUser", actionUser);
             if (checkUserExisted != null) {
                 // Get image to display in string
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -491,11 +495,11 @@ public class UserController extends HttpServlet {
                 error = "This email has already been registered !!!";
                 request.setAttribute("imageValue", base64Image);
                 request.setAttribute("error", error);
-                request.getRequestDispatcher("/admin/AddNewUser.jsp").forward(request, response);
+                request.getRequestDispatcher("/admin/UserDetail.jsp").forward(request, response);
             } else if (filePart.getSize() == 0) {
                 error = "Please choose an image !!!";
                 request.setAttribute("errorImage", error);
-                request.getRequestDispatcher("/admin/AddNewUser.jsp").forward(request, response);
+                request.getRequestDispatcher("/admin/UserDetail.jsp").forward(request, response);
             } else {
                 // Insert into Account table with user entered email and default password is 123
 
@@ -509,7 +513,7 @@ public class UserController extends HttpServlet {
                         String avatar = userDAO.getLastInsertedUser().getAvatar();
                         session.setAttribute("messageAddSuccess", successMessage);
                         request.setAttribute("imageValue", avatar);
-                        request.getRequestDispatcher("/admin/AddNewUser.jsp").forward(request, response);
+                        request.getRequestDispatcher("/admin/UserDetail.jsp").forward(request, response);
 
                     }
                     // CHUA CHECK SEND EMAIL FAIL
@@ -528,11 +532,13 @@ public class UserController extends HttpServlet {
     protected void toAdd(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        String actionUser = "0";
         List<String> roles = new ArrayList<>();
         UserDAO userDAO = new UserDAO();
         roles = userDAO.getSystemRole();
         request.setAttribute("roles", roles);
-        request.getRequestDispatcher("/admin/AddNewUser.jsp").forward(request, response);
+        request.setAttribute("actionUser", actionUser);
+        request.getRequestDispatcher("/admin/UserDetail.jsp").forward(request, response);
 
     }
 
@@ -603,17 +609,17 @@ public class UserController extends HttpServlet {
 //            out.print("Invalid !!!");
 //        }
     }
-    
+
     protected void changePass(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            UserDAO usr = new UserDAO();
-            String successMessage = "";
-            String email = request.getParameter("email");
-            String curPass = request.getParameter("curPass");
-            String newPass = request.getParameter("newPass");
-            String reNewPass = request.getParameter("reNewPass");
-            Validate validate = new Validate();
-            PasswordEncrypt encryptedPass = new PasswordEncrypt();
+        UserDAO usr = new UserDAO();
+        String successMessage = "";
+        String email = request.getParameter("email");
+        String curPass = request.getParameter("curPass");
+        String newPass = request.getParameter("newPass");
+        String reNewPass = request.getParameter("reNewPass");
+        Validate validate = new Validate();
+        PasswordEncrypt encryptedPass = new PasswordEncrypt();
         try {
             response.setContentType("text/html");
             PrintWriter out = response.getWriter();
@@ -621,25 +627,21 @@ public class UserController extends HttpServlet {
             request.getSession().setAttribute("curPassValue", curPass);
             request.getSession().setAttribute("newPassValue", newPass);
             request.getSession().setAttribute("reNewPassValue", reNewPass);
-            if(usr.getAccount(email, encryptedPass.generateEncryptedPassword(curPass))==null){
+            if (usr.getAccount(email, encryptedPass.generateEncryptedPassword(curPass)) == null) {
                 String fail1 = "This is not your current password!";
                 request.getSession().setAttribute("fail1", fail1);
-            }
-           else if(validate.checkPassword(newPass)== false)
-            {
+            } else if (validate.checkPassword(newPass) == false) {
                 String fail2 = "Password must be at least 6 characters including at least one lowercase letter, one uppercase letter, one number and one special character!";
                 request.getSession().setAttribute("fail2", fail2);
-            }
-            else if(!newPass.equals(reNewPass)){
+            } else if (!newPass.equals(reNewPass)) {
                 String fail3 = "Password and RePassword are not matched!";
                 request.getSession().setAttribute("fail3", fail3);
-            }
-            else{
-            int changePass = usr.ChangePass(encryptedPass.generateEncryptedPassword(newPass), email);
-                if(changePass > 0){
+            } else {
+                int changePass = usr.ChangePass(encryptedPass.generateEncryptedPassword(newPass), email);
+                if (changePass > 0) {
                     out.print("You have successfully changed your password!");
+                }
             }
-        }
         } catch (SQLException ex) {
             Logger.getLogger(ChangePassController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {

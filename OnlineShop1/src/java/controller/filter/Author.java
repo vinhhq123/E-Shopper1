@@ -112,7 +112,7 @@ public class Author implements Filter {
         String url = httpRequest.getRequestURI() + "?" + httpRequest.getQueryString();
         HttpSession session = httpRequest.getSession();
         User user = (User) session.getAttribute("account");
-        if (url.contains("post") || url.contains("setting") || url.contains("slider")
+        if (url.contains("post") || url.contains("dashboard") || url.contains("setting") || url.contains("slider")
                 || url.contains("product") || url.contains("customer") || url.contains("feedback") || url.contains("order")
                 || url.contains("setting") || url.contains("user")) {
             if (user == null) {
@@ -123,7 +123,7 @@ public class Author implements Filter {
                     chain.doFilter(request, response);
                 } else if (url.contains("getproduct")) {
                     chain.doFilter(request, response);
-                }else if (url.contains("feedback/add")) {
+                } else if (url.contains("feedback/add")) {
                     chain.doFilter(request, response);
                 }
                 else if (url.contains("getOrderInfo")) {
@@ -143,12 +143,18 @@ public class Author implements Filter {
                     4: marketing
                     5: customer
                     */
-                    if (user.getRole() == 1) {
+                    if (user.getRole() == 1 || user.getRole() == 3 || user.getRole() == 2 || user.getRole() == 4) {
                         chain.doFilter(request, response);
                     } else {
                         request.getRequestDispatcher("/admin/404.jsp").forward(request, response);
                     }
                 } else if (url.contains("setting")) {
+                    if (user.getRole() == 1) {
+                        chain.doFilter(request, response);
+                    } else {
+                        request.getRequestDispatcher("/admin/404.jsp").forward(request, response);
+                    }
+                } else if (url.contains("dashboard")) {
                     if (user.getRole() == 1) {
                         chain.doFilter(request, response);
                     } else {

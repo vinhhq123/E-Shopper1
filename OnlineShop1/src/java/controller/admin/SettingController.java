@@ -29,8 +29,8 @@ import model.User;
  *
  * @author VINH
  */
-@WebServlet(name = "SettingController", urlPatterns = {"/setting/list","/setting/search"
-,"/setting/activate","/setting/edit","/setting/add","/setting/getSettingID"})
+@WebServlet(name = "SettingController", urlPatterns = {"/setting/list", "/setting/search",
+     "/setting/activate", "/setting/edit", "/setting/add", "/setting/getSettingID"})
 public class SettingController extends HttpServlet {
 
     /**
@@ -92,7 +92,7 @@ public class SettingController extends HttpServlet {
             case "/setting/getSettingID":
                 getSettingID(request, response);
                 break;
-                
+
         }
     }
 
@@ -213,9 +213,12 @@ public class SettingController extends HttpServlet {
             // Search Setting by selected filter and return an arrayList result
             settingSearch = settingDAO.searchSeting(searchField, type, status);
 
+            System.out.println(searchField+" +++ "+type+" +++ "+status);
             request.setAttribute("SettingList", settingSearch);
             request.setAttribute("types", settingTypes);
             request.setAttribute("searchValue", searchField);
+            request.setAttribute("typeValue", type);
+            request.setAttribute("statusValue", status);
             request.getRequestDispatcher("/admin/SettingList.jsp").forward(request, response);
 
         } catch (Exception ex) {
@@ -258,73 +261,82 @@ public class SettingController extends HttpServlet {
             Logger.getLogger(SettingController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-      protected void settingUpdate(HttpServletRequest request, HttpServletResponse response)
+
+    protected void settingUpdate(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          int urole=0;
+        int urole = 0;
         String role;
 //        int id=0;
 //        id = Integer.parseInt(request.getParameter("id"));
-       // respond.getWriter().print(id);
+        // respond.getWriter().print(id);
         try {
             Setting s = new Setting();
             s.setSettingId(Integer.parseInt(request.getParameter("settingId")));
-           // s.setSettingType(Integer.parseInt(request.getParameter("settingType")));
-            role=request.getParameter("settingType");
-            switch(role){
-                case "User Role":urole=1;
-                break;
-                case "Account Status":urole=2;
-                break;
-                case "Post Category":urole=3;
-                break;
-                case "Post Status":urole=4;
-                break;
-                case "Product Category":urole=5;
-                break;
-                case "Product Status":urole=6;
-                break;
-                case "Feedback Status":urole=7;
-                break;
-                case "Order Status":urole=8;
-                break;
+            // s.setSettingType(Integer.parseInt(request.getParameter("settingType")));
+            role = request.getParameter("settingType");
+            switch (role) {
+                case "User Role":
+                    urole = 1;
+                    break;
+                case "Account Status":
+                    urole = 2;
+                    break;
+                case "Post Category":
+                    urole = 3;
+                    break;
+                case "Post Status":
+                    urole = 4;
+                    break;
+                case "Product Category":
+                    urole = 5;
+                    break;
+                case "Product Status":
+                    urole = 6;
+                    break;
+                case "Feedback Status":
+                    urole = 7;
+                    break;
+                case "Order Status":
+                    urole = 8;
+                    break;
             }
-            
+
             s.setSettingType(urole);
             s.setSettingValue(request.getParameter("settingValue"));
             s.setSettingOrder(Integer.parseInt(request.getParameter("settingOrder")));
             s.setSettingStatus(request.getParameter("settingStatus").equals("0"));
-         
-            SettingDAO db= new SettingDAO();
+
+            SettingDAO db = new SettingDAO();
             db.editsetting(s);
             response.sendRedirect("list");
         } catch (Exception ex) {
             Logger.getLogger(SettingController.class.getName()).log(Level.SEVERE, null, ex);
         }
-      }
-      protected void getSettingID(HttpServletRequest request, HttpServletResponse response)
+    }
+
+    protected void getSettingID(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-           try {           
+        try {
             int id = Integer.parseInt(request.getParameter("settingId"));
             //int id = 1;
-            int value=0;
+            int value = 0;
             SettingDAO db = new SettingDAO();
-            Setting setting =db.getAllSettingTypeName(id);
-          
+            Setting setting = db.getAllSettingTypeName(id);
+
             List<String> settingType = new ArrayList<>();
-            
+
             ResourceBundle rb = ResourceBundle.getBundle("resources.setting");
             Enumeration<String> keys = rb.getKeys();
             while (keys.hasMoreElements()) {
-            String key = keys.nextElement();
-            String val = rb.getString(key);
-            settingType.add(val);
-          }
-           
-            
-            List<String> getValuebyTye =  new ArrayList<>();
-            value = db.getValuebySetting(id);      
-            getValuebyTye= db.getValuebyType(value);
-            
+                String key = keys.nextElement();
+                String val = rb.getString(key);
+                settingType.add(val);
+            }
+
+            List<String> getValuebyTye = new ArrayList<>();
+            value = db.getValuebySetting(id);
+            getValuebyTye = db.getValuebyType(value);
+
             request.setAttribute("valuebytye", getValuebyTye);
             request.setAttribute("setting", setting);
             request.setAttribute("typename", settingType);
@@ -332,19 +344,20 @@ public class SettingController extends HttpServlet {
         } catch (Exception ex) {
             Logger.getLogger(SettingController.class.getName()).log(Level.SEVERE, null, ex);
         }
-      }
-      protected void AddNewSetting(HttpServletRequest request, HttpServletResponse response)
+    }
+
+    protected void AddNewSetting(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-           try {
-            
-            Setting s=new Setting();
-            
+        try {
+
+            Setting s = new Setting();
+
             s.setSettingType(Integer.parseInt(request.getParameter("type")));
             s.setSettingValue(request.getParameter("value"));
             s.setSettingOrder(Integer.parseInt(request.getParameter("order")));
- //        s.setSettingStatus(request.getParameter("value"));
+            //        s.setSettingStatus(request.getParameter("value"));
             s.setSettingStatus(request.getParameter("status").equals("0"));
-            SettingDAO db =new SettingDAO();
+            SettingDAO db = new SettingDAO();
             db.insertSetting(s);
             response.sendRedirect("list");
 
@@ -352,7 +365,6 @@ public class SettingController extends HttpServlet {
         } catch (SQLException ex) {
             Logger.getLogger(SettingController.class.getName()).log(Level.SEVERE, null, ex);
         }
-      }
-      
+    }
 
 }
