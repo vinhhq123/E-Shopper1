@@ -77,7 +77,7 @@
                                                
                                                 
                                                 <div class="form-group">
-                                                    <label for="fullname" class="col-lg-2 col-sm-5 control-label">Fullname</label>
+                                                    <label for="fullname" class="col-lg-2 col-sm-5 control-label">Fullname<span style="color:#ff0000"> (*)</span></label>
                                                     <div class="col-lg-10">
                                                         <input type="text" class="form-control" id="fullname" placeholder="Fullname" value="${currentUser.fullname}" name="name" required>
                                                     </div>
@@ -90,7 +90,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Gender</label>
+                                                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Gender<span style="color:#ff0000"> (*)</span></label>
                                                     <div class="col-lg-10">
                                                         <div class="radio-inline">
                                                             <label>
@@ -107,19 +107,19 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="phone" class="col-lg-2 col-sm-2 control-label">Phone</label>
+                                                    <label for="phone" class="col-lg-2 col-sm-2 control-label">Phone<span style="color:#ff0000"> (*)</span></label>
                                                     <div class="col-lg-10">
                                                         <input type="text" class="form-control" id="phone" placeholder="Phone" value="${currentUser.phone}" name="phone" pattern="[0-9]{10}" title="Phone must be 10 digits and contains numbers only" required>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="address" class="col-lg-2 col-sm-2 control-label">Address</label>
+                                                    <label for="address" class="col-lg-2 col-sm-2 control-label">Address<span style="color:#ff0000"> (*)</span></label>
                                                     <div class="col-lg-10">
                                                         <input type="text" class="form-control" id="address" placeholder="Address" value="${currentUser.address}" name="address" required>
                                                     </div>
                                                 </div>
                                                     <div class="form-group">
-                                                    <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Email</label>
+                                                    <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Email<span style="color:#ff0000"> (*)</span></label>
                                                     <div class="col-lg-10">
                                                         <input type="email" class="form-control" id="inputEmail1" placeholder="Email" readonly value="${currentUser.email}" name="email"> 
                                                         <!--<p class="help-block">Example block-level help text here.</p>-->
@@ -127,7 +127,7 @@
                                                 </div>
                                          
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Status</label>
+                                                    <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Status<span style="color:#ff0000"> (*)</span></label>
                                                     <div class="col-lg-10">
                                                         <div class="radio-inline">
                                                             <label>
@@ -144,7 +144,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="avatar" class="col-lg-2 col-sm-2 control-label">Avatar</label>
+                                                    <label for="avatar" class="col-lg-2 col-sm-2 control-label">Avatar<span style="color:#ff0000"> (*)</span></label>
                                                     <div class="col-lg-offset-5 col-lg-15">
                                                         <div class="profile-pic">
                                                             <label class="-label" for="file">
