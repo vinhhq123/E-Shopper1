@@ -141,7 +141,7 @@ public class FeedbackDAO extends DBContext {
         return product;
     }
 
-    public List<Feedback> searchFeedback(String key, String ratestart, int status, int feedbackId) throws Exception {
+    public List<Feedback> searchFeedback(String key, String ratestart, int status, int feedbackId,String productid) throws Exception {
         List<Feedback> feeds = new ArrayList<>();
         String sql = "SELECT a.feedbackId,a.customerId,a.ratedStar,a.productId,a.feedbackStatus,s.fullname\n"
                 + "from feedback a join User s on s.uid=a.customerId where ";
@@ -155,6 +155,9 @@ public class FeedbackDAO extends DBContext {
         }
         if (status != 0) {
             sql += " and a.feedbackStatus = " + status;
+        }
+        if (productid != "") {
+            sql += " and a.productId = " + productid;
         }
 
         System.out.println(sql);
