@@ -98,14 +98,14 @@
                                                     <div class="form-group">
                                                         <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Email<span style="color:#ff0000"> (*)</span></label>
                                                         <div class="col-lg-10">
-                                                            <input type="email" class="form-control" id="inputEmail1" placeholder="Email" readonly value="${currentUser.email}" name="email"> 
+                                                            <input type="email" class="form-control" id="inputEmail1" placeholder="Email" readonly value="${currentUser.email}" name="email" maxlength="100"> 
                                                             <!--<p class="help-block">Example block-level help text here.</p>-->
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="fullname" class="col-lg-2 col-sm-2 control-label">Fullname<span style="color:#ff0000"> (*)</span></label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="fullname" placeholder="Fullname" value="${currentUser.fullname}" name="name" required>
+                                                            <input type="text" class="form-control" id="fullname" placeholder="Fullname" value="${currentUser.fullname}" name="name" required maxlength="100">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -142,13 +142,13 @@
                                                     <div class="form-group">
                                                         <label for="phone" class="col-lg-2 col-sm-2 control-label">Phone<span style="color:#ff0000"> (*)</span></label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="phone" placeholder="Phone" value="${currentUser.phone}" name="phone" pattern="[0-9]{10}" title="Phone must be 10 digits and contains numbers only" required>
+                                                            <input type="text" class="form-control" id="phone" placeholder="Phone" value="${currentUser.phone}" name="phone" pattern="[0-9]{10}" title="Phone must be 10 digits and contains numbers only" required maxlength="10">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="address" class="col-lg-2 col-sm-2 control-label">Address<span style="color:#ff0000"> (*)</span></label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="address" placeholder="Address" value="${currentUser.address}" name="address" required>
+                                                            <input type="text" class="form-control" id="address" placeholder="Address" value="${currentUser.address}" name="address" required maxlength="100">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -221,7 +221,7 @@
                                                     <div class="form-group">
                                                         <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Email<span style="color:#ff0000"> (*)</span></label>
                                                         <div class="col-lg-10">
-                                                            <input type="email" class="form-control" id="inputEmail1" placeholder="Email" name="email" value="${emailValue}" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" title="Email must be in the right format">
+                                                            <input type="email" class="form-control" id="inputEmail1" placeholder="Email" name="email" value="${emailValue}" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" title="Email must be in the right format" maxlength="100">
                                                             <c:if test="${not empty error}">
                                                                 <p class="help-block" style="color: red" id="errorEmailMessage">${error}</p>
                                                             </c:if>
@@ -230,7 +230,7 @@
                                                     <div class="form-group">
                                                         <label for="fullname" class="col-lg-2 col-sm-2 control-label">Fullname<span style="color:#ff0000"> (*)</span></label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="fullname" placeholder="Fullname" name="fullname" value="${nameValue}" onblur="this.value = removeSpaces(this.value);" required  >
+                                                            <input type="text" class="form-control" id="fullname" placeholder="Fullname" name="fullname" value="${nameValue}" onblur="this.value = removeSpaces(this.value);" required  maxlength="50">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -282,13 +282,13 @@
                                                     <div class="form-group">
                                                         <label for="phone" class="col-lg-2 col-sm-2 control-label">Phone<span style="color:#ff0000"> (*)</span></label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="phone" placeholder="Phone" name="phone" required value="${phoneValue}" pattern="[0-9]{10}" title="Phone must be 10 digits and contains numbers only">
+                                                            <input type="text" class="form-control" id="phone" placeholder="Phone" name="phone" required value="${phoneValue}" pattern="[0-9]{10}" title="Phone must be 10 digits and contains numbers only" maxlength="10">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="address" class="col-lg-2 col-sm-2 control-label">Address<span style="color:#ff0000"> (*)</span></label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="address" placeholder="Address" name="address" value="${addressValue}" onblur="this.value = removeSpaces(this.value);" required>
+                                                            <input type="text" class="form-control" id="address" placeholder="Address" name="address" value="${addressValue}" onblur="this.value = removeSpaces(this.value);" required maxlength="100">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
