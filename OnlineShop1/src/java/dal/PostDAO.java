@@ -275,8 +275,8 @@ public class PostDAO extends DBContext {
 
     public List<PostList> getFeaturedBlogs() {
         List<PostList> listBlog = new ArrayList<>();
-        String query = "select p.postId, p.thumbnail, p.postTitle, p.views, s.settingId, s.settingValue from post p \n" +
-"                inner join setting s on p.postCategory = s.settingId order by p.views desc limit 3";
+        String query = "select p.postId, p.thumbnail, p.postTitle, s.settingId, s.settingValue from post p\n"
+                + "inner join setting s on p.postCategory = s.settingId where p.featuredPost=1 limit 3;";
         try {
             connection = new DBContext().getConnection();
             ps = connection.prepareStatement(query);
@@ -308,7 +308,6 @@ public class PostDAO extends DBContext {
                 } else {
                     p.setThumbnail("");
                 }
-                p.setViews(result.getInt("views"));
                 listBlog.add(p);
             }
         } catch (Exception e) {
@@ -316,19 +315,7 @@ public class PostDAO extends DBContext {
         }
         return listBlog;
     }
-    
-    public void updateViews(int id) {
-        String query = "update product set views = views + 1 where productId = ?";
-        try {
-            connection = new DBContext().getConnection();
-            ps = connection.prepareStatement(query);
-            ps.setInt(1, id);
-            ps.executeUpdate();
-        } catch (Exception e) {
 
-        }
-    }
-    
     public void insertPost(String postContent, InputStream thumbnail, String postTitle, int postAuthor) {
 
         String sql = "INSERT INTO `post` (`thumbnail`, `postTitle`, `postContent`, `postAuthor`) \n"

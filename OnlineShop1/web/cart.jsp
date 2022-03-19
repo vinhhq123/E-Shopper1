@@ -61,7 +61,9 @@
                                     </td>
                                     <td class="cart_quantity">
                                         <div class="cart_quantity_button">
+                                            <a class="cart_quantity_down" href="<%=request.getContextPath()%>/goods/minusProduct?pid=${i.product.pid}"> - </a>
                                             <input class="cart_quantity_input" readonly type="text" name="quantity" value="${i.quantity}" autocomplete="off" size="2">
+                                            <a class="cart_quantity_up" href="<%=request.getContextPath()%>/goods/addToCart?pid=${i.product.pid}"> + </a>
                                         </div>
                                     </td>
                                     <td class="cart_total">
@@ -80,8 +82,8 @@
                     </table> 
                 </div>
                 <div class="container shopper-informations" style="margin-bottom: 30px;">
-                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/goods/addToCartContact">Check Out</a>
-                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/goods/goodsList">Choose More Product</a>
+                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/cart-contact.jsp">Check Out</a>
+                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/goods/goodsList">Choose more Product</a>
                 </div>
             </div>
         </section> <!--/#cart_items-->
@@ -97,5 +99,3 @@
         <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
     </body>
 </html>
-
-

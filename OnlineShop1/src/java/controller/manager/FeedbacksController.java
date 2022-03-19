@@ -184,9 +184,11 @@ public class FeedbacksController extends HttpServlet {
         String ratestar = request.getParameter("role");
         int feedStatus = 0;
         int feedId = 0;
+        int prostus=0;
+        //String productstatus = "";
         //int ratestar = 0;
         String status = "";
-    
+      String productstatus = request.getParameter("proid");
          String searchField = request.getParameter("table_search").trim();
          try {
             feedId = Integer.parseInt(searchField);
@@ -199,14 +201,51 @@ public class FeedbacksController extends HttpServlet {
             status = request.getParameter("status");
             switch (status) {
                 case "Published":
-                    feedStatus = 18;
-                    break;
-                case "Hidden":
-                    feedStatus = 19;
-                    break;
-              
+                 feedStatus = 18;
+                   break;
+               case "Hidden":
+                  feedStatus = 19;
+                  break;
             }
         }
+//        if (request.getParameter("product") != null) {
+//            productstatus = request.getParameter("product");
+//            switch (productstatus) {
+////                case "Published":
+////                    feedStatus = 18;
+////                    break;
+////                case "Hidden":
+////                    feedStatus = 19;
+////                    break;
+//               case "Nike AF1":
+//                    prostus = 1;
+//                    break;
+//                case "Nike SB Dunk Travis":
+//                    prostus = 2;
+//                    break;
+//                case "Nike SB Low Ben Jerrys":
+//                    prostus = 3;
+//                    break;
+//                     case "Nike SB Low Chicago":
+//                    prostus = 4;
+//                    break;
+//                     case "Nike Heritage":
+//                    prostus = 5;
+//                    break;
+//                     case "Nike Sportwear Futura 360":
+//                    prostus = 6;
+//                    break;
+//                     case "Nike Backpack L21":
+//                    prostus = 7;
+//                    break;
+//                     case "Nike Paris Saint Germain":
+//                    prostus = 8;
+//                    break;
+//                    case "Nike AS M NSW TEE JDI ILLUSTRATION":
+//                    prostus = 9;
+//                    break;
+//            }
+//        }
          List<Setting> settingList = new ArrayList<>();
          List<Product> product = new ArrayList<>();
         UserDAO userDAO = new UserDAO();
@@ -223,7 +262,7 @@ public class FeedbacksController extends HttpServlet {
             product = feedbackDAO.getAllProduct();
             customers = userDAO.getAllUserByRole(5);           
             feedsStatus = settingDAO.getSettingFeedbackValue();
-            feedback = feedbackDAO.searchFeedback(searchField, ratestar, feedStatus, feedId);
+            feedback = feedbackDAO.searchFeedback(searchField, ratestar, feedStatus, feedId,productstatus);
             request.setAttribute("valueRole", ratestar);
             request.setAttribute("StatusList", statusList);
             request.setAttribute("Product", product);
@@ -232,6 +271,7 @@ public class FeedbacksController extends HttpServlet {
             request.setAttribute("FeedStatuses", feedsStatus);
             request.setAttribute("valueStatus", status);
             request.setAttribute("valueSearch", searchField);
+             request.setAttribute("valueProduct", productstatus);
             request.setAttribute("SettingList", settingList);
             request.getRequestDispatcher("/admin/FeedbackList.jsp").forward(request, response);
         } catch (Exception ex) {

@@ -53,7 +53,7 @@
                                 <th style="text-align:center">Unit Price</th>
                                 <th style="text-align: center">Quantity</th>
                                 
-                                <th style="text-align:center">Cancel</th>
+                               
                                 <th style="text-align:center">Feedback</th>
                             </tr>
                             <tr>
@@ -80,12 +80,7 @@
                                 <td style="text-align:center">${ods.getQuantity()}</td>  
                                 
 <!--                                                        <input path="cartLines[${varStatus.index}].quantity" value="2"/>-->
-                                    <td><input type="hidden" value="${ods.getProductId()}" name="productToUpdate">
-                                        <input type="hidden" value="${ods.getOrderDetailId()}" name="orderDetailToUpdate">
-                                        <button type="button" class="btn-xs btn-danger" onclick="if (confirm('Do you want to delete this product from this order?'))
-                                                                    window.location = '<%=request.getContextPath()%>/order/removeproductinfo?odid=${ods.getOrderDetailId()}&orderId=${CurrentOrder.getOrderId()}'">Cancel</button>
-                                       
-                                    </td>
+                                  
                                      <td><input type="hidden" value="${ods.getProductId()}" name="productToUpdate">
                                         <input type="hidden" value="${ods.getOrderDetailId()}" name="orderDetailToUpdate">
                                      
@@ -108,10 +103,15 @@
                                                         <fmt:formatNumber value="${CurrentOrder.getTotalCost()}" type="currency"/>
                                                     </span></li>
                                             </ul> 
-                                                        <div class="col-lg-offset col-lg-8">
-                                                            <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/order/getCustomerOrders'">Back Order List</button>
-                                                        </div>
-                        <br>
+                                                        <div class="col-lg-offset-10 col-lg-3">
+                                                         
+                                                        <c:if test="${CurrentOrder.getOrderStatus() == 25}">
+                                            <button type="button" class="btn btn-danger" onclick="if (confirm('Do you want to cancel this order?'))
+                                                        window.location = '<%=request.getContextPath()%>/order/cancelCustomerOrder?orderId=${CurrentOrder.getOrderId()}'">Cancel Order</button>
+                                        </c:if>
+                                                        </div> <div class="col-lg-offset col-lg-8">
+                                                           <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/order/getCustomerOrders'">Back Order List</button>
+                        <br>            </div>
                         <c:if test="${requestScope.CustomerOrders.isEmpty()}">
                             <p style="text-align: center">No matching Orders found </p>
                         </c:if>                

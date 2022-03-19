@@ -64,7 +64,7 @@
                                             <img src="data:image/jpg;base64,${o.getThumbnail()}" width="100" height="100"/>
                                         </div>
                                         <div class="col-sm-7">
-                                            <font color="#fe980f">${o.title}<p>Views: ${o.views}</p></font>
+                                            <font color="#fe980f">${o.title}<p></p></font>
                                             <p>
                                                 <fmt:setLocale value = "vi_VN"/>
                                             <strike>
