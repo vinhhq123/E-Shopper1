@@ -95,6 +95,7 @@ public class BlogController extends HttpServlet {
         PostDAO dao = new PostDAO();
         List<PostList> listpage = dao.getBlogSortByDate();
         List<Setting> listPostCate = dao.getBlogCategory();
+        List<PostList> listHotPost = dao.getFeaturedBlogs();
         int page, numperpage = 3;
         int size = listpage.size();
         int num = (size % 3 == 0 ? (size / 3) : ((size / 3)) + 1);
@@ -113,6 +114,7 @@ public class BlogController extends HttpServlet {
         request.setAttribute("listPostCate", listPostCate);
         request.setAttribute("page", page);
         request.setAttribute("num", num);
+        request.setAttribute("listHotBlogs", listHotPost);
         request.getRequestDispatcher("/blog.jsp").forward(request, response);
     }
 
@@ -123,10 +125,11 @@ public class BlogController extends HttpServlet {
         PostDAO dao = new PostDAO();
         PostList blog = dao.getBlogById(id);
         List<Setting> listPostCate = dao.getBlogCategory();
+        List<PostList> listHotPost = dao.getFeaturedBlogs();
         request.setAttribute("listPostCate", listPostCate);
         request.setAttribute("blog", blog);
+        request.setAttribute("listHotBlogs", listHotPost);
         request.getRequestDispatcher("/blog-details.jsp").forward(request, response);
-
     }
 
     protected void getBlogByCateId(HttpServletRequest request, HttpServletResponse response)
@@ -136,6 +139,7 @@ public class BlogController extends HttpServlet {
         PostDAO dao = new PostDAO();
         List<PostList> listpage = dao.getBlogByPostCategory(category);
         List<Setting> listPostCate = dao.getBlogCategory();
+        List<PostList> listHotPost = dao.getFeaturedBlogs();
         int page, numperpage = 3;
         int size = listpage.size();
         int num = (size % 3 == 0 ? (size / 3) : ((size / 3)) + 1);
@@ -151,6 +155,7 @@ public class BlogController extends HttpServlet {
         List<PostList> list = dao.getBlogByPage(listpage, start, end);
         request.setAttribute("listPostCate", listPostCate);
         request.setAttribute("listBlog", list);
+        request.setAttribute("listHotBlogs", listHotPost);
         request.getRequestDispatcher("/blog.jsp").forward(request, response);
     }
 
@@ -162,9 +167,11 @@ public class BlogController extends HttpServlet {
         PostDAO dao = new PostDAO();
         List<PostList> list = dao.searchBlogByTitle(searchBlog);
         List<Setting> listPostCate = dao.getBlogCategory();
+        List<PostList> listHotPost = dao.getFeaturedBlogs();
         request.setAttribute("listPostCate", listPostCate);
         request.setAttribute("listBlog", list);
         request.setAttribute("searchValue", searchBlog);
+        request.setAttribute("listHotBlogs", listHotPost);
         request.getRequestDispatcher("/blog.jsp").forward(request, response);
 
     }

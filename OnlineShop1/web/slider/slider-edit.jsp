@@ -47,7 +47,7 @@
                             <div class="col-xs-12">
                                 <div class="panel">
                                     <header class="panel-heading">
-                                        <b>Add New Customer</b>
+                                        <b>Slider Detail</b>
 
                                     </header>
                                     <!-- <div class="box-header"> -->
@@ -78,10 +78,10 @@
                                                     <div class="col-lg-offset-5 col-lg-15">
                                                         <div class="profile-pic">
                                                             <label class="-label" for="file">
-                                                                <c:if test="${ not empty imageValue}">
-<img src="data:image/jpg;base64,${imageValue}" id="output" width="200" />
+                                                                <c:if test="${ not empty slider.s_image}">
+                                                                <img src="data:image/jpg;base64,${slider.s_image}" id="output" width="200" />
                                                                 </c:if>
-                                                                <c:if test="${empty imageValue}">
+                                                                <c:if test="${empty slider.s_image}">
                                                                    
                                                                     <img src="${pageContext.request.contextPath}/admin/img/no-avatar.png" id="output" width="200" />
                                                                 </c:if>

@@ -428,6 +428,54 @@ public class PostDAO extends DBContext {
             Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public PostList getPostById(int id) {
+        
+        String query = "select  p.thumbnail, p.postTitle, p.postContent, u.fullname, p.postId from post as p\n"
+                    + "Inner Join user as u ON u.uid = p.postAuthor "
+                + "where p.postId = ?";
+        try {
+            
+            connection = new DBContext().getConnection();
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            result = ps.executeQuery();
+
+            while (result.next()) {
+                PostList post = new PostList();
+                post.setPostId(result.getInt("postId"));
+                post.setPostContent(result.getString("postContent"));
+                post.setPostTitle(result.getString("postTitle"));
+                User user = new User();
+                user.setFullname(result.getString("fullname"));
+                post.setUser(user);
+                Blob blob = result.getBlob("thumbnail");
+                if (blob != null) {
+                    InputStream inputStream = blob.getBinaryStream();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                    inputStream.close();
+                    outputStream.close();
+                    post.setThumbnail(base64Image);
+                } else {
+                    post.setThumbnail("");
+                }
+                return post;
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
 
 //    public static void main(String[] args) {
 //

@@ -102,9 +102,6 @@ public class PostController extends HttpServlet {
         InputStream inputStream = null;
         Part filePart = request.getPart("image");
         if (filePart != null) {
-            System.out.println(filePart.getName());
-            System.out.println(filePart.getSize());
-            System.out.println(filePart.getContentType());
             // Obtains input stream of the upload file
             inputStream = filePart.getInputStream();
             PostDAO postDao = new PostDAO();
@@ -139,11 +136,11 @@ public class PostController extends HttpServlet {
     protected void postUpdate(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            
             PostDAO pd = new PostDAO();
             String postIdRaw = request.getParameter("postId");
+            System.out.println("laaaaaaaa" + postIdRaw);
             int postId = Integer.parseInt(postIdRaw);
-            PostList postUpdate = pd.getBlogById(postId);
+            PostList postUpdate = pd.getPostById(postId);
             request.setAttribute("postUpdate", postUpdate);
             request.getRequestDispatcher("/post/PostUpdate.jsp").forward(request, response);
             
@@ -168,7 +165,7 @@ public class PostController extends HttpServlet {
             inputStream = filePart.getInputStream();
             PostDAO postDao = new PostDAO();
         postDao.updatePost(postId, postTitle, postContent, inputStream);
-        request.getRequestDispatcher("/post/list").forward(request, response);
+        response.sendRedirect("/OnlineShop1/post/list");
         }
         } catch (Exception ex) {
             Logger.getLogger(PostController.class.getName()).log(Level.SEVERE, null, ex);
