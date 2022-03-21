@@ -47,7 +47,7 @@
                             <div class="col-xs-12">
                                 <div class="panel">
                                     <header class="panel-heading">
-                                        <b>Add New Customer</b>
+                                        <b>Slider Detail</b>
 
                                     </header>
                                     <!-- <div class="box-header"> -->

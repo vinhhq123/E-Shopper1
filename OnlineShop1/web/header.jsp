@@ -59,25 +59,25 @@
                                                 </a>
                                             </c:if>
                                             <!-- CURRENT USER IS MARKETING-->
-                                            <c:if test="${account.getRole() == 4 || account.getRole() == 1}">
+                                            <c:if test="${account.getRole() == 4}">
                                                 <a href="<%=request.getContextPath()%>/post/list">
                                                     <i class="fa fa-paperclip fa-fw pull-right"></i>
                                                     Posts list
                                                 </a>
                                             </c:if>
-                                            <c:if test="${account.getRole() == 4 || account.getRole() == 1}">
+                                            <c:if test="${account.getRole() == 4}">
                                                 <a href="<%=request.getContextPath()%>/post/PostDetail.jsp">
                                                     <i class="fa fa-paperclip fa-fw pull-right"></i>
                                                     Post Detail
                                                 </a>
                                             </c:if>
-                                            <c:if test="${account.getRole() == 4 || account.getRole() == 1}">
+                                            <c:if test="${account.getRole() == 4}">
                                                 <a href="<%=request.getContextPath()%>/slider/list">
                                                     <i class="fa fa-paperclip fa-fw pull-right"></i>
                                                     Slider List
                                                 </a>
                                             </c:if>
-                                            <c:if test="${account.getRole() == 4 || account.getRole() == 1}">
+                                            <c:if test="${account.getRole() == 4}">
                                                 <a href="<%=request.getContextPath()%>/slider/slider-detail.jsp ">
                                                     <i class="fa fa-paperclip fa-fw pull-right"></i> 
                                                     Slider Detail
