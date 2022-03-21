@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -219,7 +220,26 @@
 					  <tr>
 						<td>Select Image:</td>
 						<td>
-                                                    <input type="file" name="image" />
+                                                    <div class="form-group">
+                                                    <label for="avatar" class="col-lg-2 col-sm-2 control-label">Image</label>
+                                                    <div class="col-lg-offset-5 col-lg-15">
+                                                        <div class="profile-pic">
+                                                    <label class="-label" for="file">
+                                                                <c:if test="${ not empty postUpdate.thumbnail}">
+                                                                <img src="data:image/jpg;base64,${postUpdate.thumbnail}" id="output" width="200" />
+                                                                </c:if>
+                                                                <c:if test="${empty postUpdate.thumbnail}">
+                                                                   
+                                                                    <img src="${pageContext.request.contextPath}/admin/img/no-avatar.png" id="output" width="200" />
+                                                                </c:if>
+                                                            </label>
+                                                    <input type="file" onchange="loadFile(event)" value="${postUpdate.thumbnail}" name="image" />
+                                                    <c:if test="${not empty errorImage}">
+                                                                <p class="help-block" style="color: red" id="errorEmailMessage">${errorImage}</p>
+                                                            </c:if>
+                                                        </div>
+                                                    </div>
+                                                </div>
 						</td>
 					  </tr>
 					  <tr>
@@ -440,5 +460,7 @@
     <script src="${pageContext.request.contextPath}/eShopper/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/eShopper/js/jquery.prettyPhoto.js"></script>
     <script src="${pageContext.request.contextPath}/eShopper/js/main.js"></script>
+    <script src="${pageContext.request.contextPath}/admin/js/AddNewUser.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/admin/js/UserDetail.js" type="text/javascript"></script>
   </body>
 </html>
