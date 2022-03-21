@@ -66,6 +66,7 @@
                                 <div class="row">
                                     <div class="col-lg-1"></div>
                                     <div class="col-lg-7">
+                                        <!-- IF THE CURRENT ACTION IS EDIT USER -->
                                         <c:if test="${actionUser eq 1}">
                                             <div class="panel-body table-responsive">
                                                 <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/user/update?uid=<c:out value="${currentUser.uid}"/>" method="POST" name="editUser"  enctype="multipart/form-data">
@@ -98,14 +99,14 @@
                                                     <div class="form-group">
                                                         <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Email<span style="color:#ff0000"> (*)</span></label>
                                                         <div class="col-lg-10">
-                                                            <input type="email" class="form-control" id="inputEmail1" placeholder="Email" readonly value="${currentUser.email}" name="email"> 
+                                                            <input type="email" class="form-control" id="inputEmail1" placeholder="Email" readonly value="${currentUser.email}" name="email" maxlength="100"> 
                                                             <!--<p class="help-block">Example block-level help text here.</p>-->
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="fullname" class="col-lg-2 col-sm-2 control-label">Fullname<span style="color:#ff0000"> (*)</span></label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="fullname" placeholder="Fullname" value="${currentUser.fullname}" name="name" required>
+                                                            <input type="text" class="form-control" id="fullname" placeholder="Fullname" value="${currentUser.fullname}" name="name" required maxlength="100">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -142,13 +143,13 @@
                                                     <div class="form-group">
                                                         <label for="phone" class="col-lg-2 col-sm-2 control-label">Phone<span style="color:#ff0000"> (*)</span></label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="phone" placeholder="Phone" value="${currentUser.phone}" name="phone" pattern="[0-9]{10}" title="Phone must be 10 digits and contains numbers only" required>
+                                                            <input type="text" class="form-control" id="phone" placeholder="Phone" value="${currentUser.phone}" name="phone" pattern="[0-9]{10}" title="Phone must be 10 digits and contains numbers only" required maxlength="10">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="address" class="col-lg-2 col-sm-2 control-label">Address<span style="color:#ff0000"> (*)</span></label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="address" placeholder="Address" value="${currentUser.address}" name="address" required>
+                                                            <input type="text" class="form-control" id="address" placeholder="Address" value="${currentUser.address}" name="address" required maxlength="100">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -190,6 +191,7 @@
                                                 </form>
                                             </div><!-- /.box-body -->
                                         </c:if>
+                                        <!-- IF THE CURRENT ACTION IS ADD NEW USER -->
                                         <c:if test="${actionUser eq 0}">
                                             <div class="panel-body table-responsive">
                                                 <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/user/add" method="POST" name="addNewUser"  enctype="multipart/form-data">
@@ -221,7 +223,7 @@
                                                     <div class="form-group">
                                                         <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Email<span style="color:#ff0000"> (*)</span></label>
                                                         <div class="col-lg-10">
-                                                            <input type="email" class="form-control" id="inputEmail1" placeholder="Email" name="email" value="${emailValue}" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" title="Email must be in the right format">
+                                                            <input type="email" class="form-control" id="inputEmail1" placeholder="Email" name="email" value="${emailValue}" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" title="Email must be in the right format" maxlength="100">
                                                             <c:if test="${not empty error}">
                                                                 <p class="help-block" style="color: red" id="errorEmailMessage">${error}</p>
                                                             </c:if>
@@ -230,20 +232,32 @@
                                                     <div class="form-group">
                                                         <label for="fullname" class="col-lg-2 col-sm-2 control-label">Fullname<span style="color:#ff0000"> (*)</span></label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="fullname" placeholder="Fullname" name="fullname" value="${nameValue}" onblur="this.value = removeSpaces(this.value);" required  >
+                                                            <input type="text" class="form-control" id="fullname" placeholder="Fullname" name="fullname" value="${nameValue}" onblur="this.value = removeSpaces(this.value);" required  maxlength="50">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="title" class="col-lg-2 col-sm-2 control-label">Title<span style="color:#ff0000"> (*)</span></label>
                                                         <div class="col-lg-10">
-                                                            <c:forEach items="${titles}" var="til">
-                                                                <div class="radio-inline">
-                                                                    <label>
-                                                                        <input type="radio" name="title" id="title" value="<c:out value="${til}" />" required="">
-                                                                        <c:out value="${til}" />
-                                                                    </label>
-                                                                </div>
-                                                            </c:forEach>
+                                                            <c:if test="${empty titleValue}">
+                                                                <c:forEach items="${titles}" var="til">
+                                                                    <div class="radio-inline">
+                                                                        <label>
+                                                                            <input type="radio" name="title" id="title" value="<c:out value="${til}" />" required="">
+                                                                            <c:out value="${til}" />
+                                                                        </label>
+                                                                    </div>
+                                                                </c:forEach>
+                                                            </c:if>
+                                                            <c:if test="${not empty titleValue}">
+                                                                <c:forEach items="${titles}" var="til">
+                                                                    <div class="radio-inline">
+                                                                        <label>
+                                                                            <input type="radio" name="title" id="title" value="<c:out value="${til}" />" required="" <c:if test="${titleValue eq til}">checked=""</c:if>>
+                                                                            <c:out value="${til}" />
+                                                                        </label>
+                                                                    </div>
+                                                                </c:forEach>
+                                                            </c:if>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -282,13 +296,13 @@
                                                     <div class="form-group">
                                                         <label for="phone" class="col-lg-2 col-sm-2 control-label">Phone<span style="color:#ff0000"> (*)</span></label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="phone" placeholder="Phone" name="phone" required value="${phoneValue}" pattern="[0-9]{10}" title="Phone must be 10 digits and contains numbers only">
+                                                            <input type="text" class="form-control" id="phone" placeholder="Phone" name="phone" required value="${phoneValue}" pattern="[0-9]{10}" title="Phone must be 10 digits and contains numbers only" maxlength="10">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="address" class="col-lg-2 col-sm-2 control-label">Address<span style="color:#ff0000"> (*)</span></label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="address" placeholder="Address" name="address" value="${addressValue}" onblur="this.value = removeSpaces(this.value);" required>
+                                                            <input type="text" class="form-control" id="address" placeholder="Address" name="address" value="${addressValue}" onblur="this.value = removeSpaces(this.value);" required maxlength="100">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">

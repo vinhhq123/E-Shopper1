@@ -85,6 +85,7 @@
                                                         </c:if>
                                                     </select>
                                                 </div>
+                                               
                                                 <div class="form-group" style="margin-right:8px;">
                                                     <select class="select" aria-label="Default select example" name="status" style="height: 30px">
                                                         <c:if test="${empty valueStatus}">
@@ -98,6 +99,34 @@
                                                             <c:forEach items="${FeedStatuses}" var="os">
                                                                 <option value="<c:out value="${os}" />" <c:if test="${os eq valueStatus}">selected</c:if>> ${os}</option>
                                                             </c:forEach>
+                                                        </c:if>
+                                                    </select>
+                                                </div>
+                                                 <div class="form-group" style="margin-right:12px;">
+                                                <select class="select" aria-label="Default select example" name="proid" style="height: 30px">
+                                                        <c:if test="${empty valueProduct}">
+                                                            <option selected value="">All Product</option>
+                                                            <option value="1">Nike AF1</option>
+                                                            <option value="2">Nike SB Dunk Travis</option>
+                                                            <option value="3">Nike SB Low Ben Jerrys</option>
+                                                            <option value="4">Nike SB Low Chicago</option>
+                                                            <option value="5">Nike Heritage</option>
+                                                            <option value="6">Nike Sportwear Futura 360</option>
+                                                            <option value="7">Nike Backpack L21</option>
+                                                            <option value="8">Nike Paris Saint Germain</option>
+                                                            <option value="9">Nike AS M NSW TEE JDI ILLUSTRATION</option>
+                                                        </c:if>
+                                                        <c:if test="${not empty valueProduct}">
+                                                            <option value="">Product</option>
+                                                            <option value="1" <%=request.getAttribute("valueProduct").equals("1") ? "selected" : ""%>>Nike AF1</option>
+                                                            <option value="2" <%=request.getAttribute("valueProduct").equals("2") ? "selected" : ""%>>Nike SB Dunk Travis</option>
+                                                            <option value="3" <%=request.getAttribute("valueProduct").equals("3") ? "selected" : ""%>>Nike SB Low Ben Jerrys</option>
+                                                            <option value="4" <%=request.getAttribute("valueProduct").equals("4") ? "selected" : ""%>>Nike SB Low Chicago</option>
+                                                            <option value="5" <%=request.getAttribute("valueProduct").equals("5") ? "selected" : ""%>>Nike Heritage</option>
+                                                             <option value="6" <%=request.getAttribute("valueProduct").equals("6") ? "selected" : ""%>>Nike Sportwear Futura 360</option>
+                                                              <option value="7" <%=request.getAttribute("valueProduct").equals("7") ? "selected" : ""%>>Nike Backpack L21</option>
+                                                               <option value="8" <%=request.getAttribute("valueProduct").equals("8") ? "selected" : ""%>>Nike Paris Saint Germain</option>
+                                                                <option value="9" <%=request.getAttribute("valueProduct").equals("9") ? "selected" : ""%>>Nike AS M NSW TEE JDI ILLUSTRATION</option>
                                                         </c:if>
                                                     </select>
                                                 </div>
