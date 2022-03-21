@@ -30,6 +30,35 @@
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
+        
+    <script>
+        function send() {
+            var title = document.getElementById("inputTitle1").value;
+            var backlink = document.getElementById("inputBackLink1").value;
+            var image = document.getElementById("img").value;
+            var textArea = document.getElementById("area").value;
+            if(title == ""){
+                alert("please write the title");
+                document.getElementById("inputTitle1").style.borderColor = "red";
+                return false;
+            }
+            if(backlink == ""){
+                alert("please fill the backlink");
+                document.getElementById("inputBackLink1").style.borderColor = "red";
+                return false;
+            }
+            if(image == ""){
+                alert("please choose the image");
+                document.getElementById("img").style.borderColor = "red";
+                return false;
+            }
+            if(textArea == ""){
+                alert("please write the content");
+                document.getElementById("area").style.borderColor = "red";
+                return false;
+            }
+        }
+    </script>
     </head>
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
@@ -58,7 +87,7 @@
                                         <div class="col-lg-1"></div>
                                         <div class="col-lg-7">
                                             <div class="panel-body table-responsive">
-                                                <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/slider/edit" method="POST" name="/customer/add"  enctype="multipart/form-data">
+                                                <form onsubmit="return send()" class="form-horizontal" role="form" action="<%=request.getContextPath()%>/slider/edit" method="POST" name="/customer/add"  enctype="multipart/form-data">
                                                 
                                                 <input type="hidden" value="${slider.s_id}" name="s_id" >
                                                 <div class="form-group">
@@ -86,7 +115,7 @@
                                                                     <img src="${pageContext.request.contextPath}/admin/img/no-avatar.png" id="output" width="200" />
                                                                 </c:if>
                                                             </label>
-                                                            <input id="file" type="file" onchange="loadFile(event)" name="s_image"/>
+                                                            <input id="img" type="file" onchange="loadFile(event)" name="s_image"/>
                                                             <c:if test="${not empty errorImage}">
                                                                 <p class="help-block" style="color: red" id="errorEmailMessage">${errorImage}</p>
                                                                 <c:remove var="errorImage"/>
@@ -97,12 +126,10 @@
                                                 <div class="form-group">
                                                     <label for="notes" class="col-lg-2 col-sm-2 control-label">Notes</label>
                                                     <div class="col-lg-10">
-                                                            <textarea name="s_notes" id="" cols="60" rows="4">${slider.s_notes}</textarea>
+                                                            <textarea name="s_notes" id="area" cols="60" rows="4">${slider.s_notes}</textarea>
                                                     </div>
                                                 </div>
                                             
-                                              
-                                                   
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-6 col-lg-15">
                                                         <button type="submit" class="btn btn-success">Save</button>

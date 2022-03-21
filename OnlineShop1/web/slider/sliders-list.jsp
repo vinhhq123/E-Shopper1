@@ -126,7 +126,7 @@ form.example::after {
   display: table;
 }
 #slideR {
-  border: 2px solid red;
+  border: 2px solid #095E90;
   padding: 10px;
   border-radius: 25px;
   margin-bottom: 20px;
