@@ -80,10 +80,31 @@ public class Cart {
     }
 
     //delete item
+    public void reduceItem(Items t) {
+        //if product already exist -> get items and increased quantity
+        if (getItemsById(t.getProduct().getPid()) != null) {
+            Items m = getItemsById(t.getProduct().getPid());
+            if(m.getQuantity() > 1){
+               m.setQuantity(m.getQuantity() - t.getQuantity());
+            }
+            else {
+            //if product is new -> add to cart
+            items.remove(t);
+         }
+      }
+    }    
+    //delete item
     public void removeItem(int id) {
         //if product already exist -> delete
         if (getItemsById(id) != null) {
             items.remove(getItemsById(id));
+        }
+    }
+    
+    public void removeAllItem() {
+        //if product already exist -> delete
+        for (Items i : items) {
+            items.remove(i);
         }
     }
 //total money

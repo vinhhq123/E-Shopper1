@@ -3,30 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.manager;
+package controller.user;
 
-import dal.ProductDAO;
-import dal.SettingDAO;
-import dal.UserDAO;
+import dal.OrderDAO;
+import dal.OrderDetailDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Product;
-import model.Setting;
-import model.User;
+import javax.servlet.http.HttpSession;
+import model.Cart;
+import resources.SendEmail;
 
 /**
  *
  * @author Edwars
  */
-public class ProductListController extends HttpServlet {
+public class CartController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,10 +42,10 @@ public class ProductListController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ProductListController</title>");            
+            out.println("<title>Servlet CartController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ProductListController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CartController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -66,51 +63,7 @@ public class ProductListController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int currentPage = 1;
-        // Set total records per page is 5
-        int recordsPerPage = 5;
-
-        // Get the current page from request if there any
-        if (request.getParameter("currentPage") != null) {
-            currentPage = Integer.parseInt(request.getParameter("currentPage"));
-        }
-        
-        SettingDAO settingDAO = new SettingDAO();
-        UserDAO userDAO = new UserDAO();
-        ProductDAO proDAO = new ProductDAO();
-        List<Setting> settingList = new ArrayList<>();
-        List<Setting> statusList = new ArrayList<>();
-        List<Setting> categoryList = new ArrayList<>();
-        List<User> userList = new ArrayList<>();
-        List<Product> proList = new ArrayList<>();
-        
-        try {
-            statusList = settingDAO.getAllProStatus();
-            categoryList = settingDAO.getAllProCategory();
-            userList = userDAO.getSaler();
-            settingList = settingDAO.getAllSetting();
-            proList = proDAO.getProByPage(currentPage, recordsPerPage);
-            
-            int rows = proDAO.getNumberOfRows();
-            // Count total number of page
-            int numOfPage = rows / recordsPerPage;
-            if (rows % recordsPerPage > 0) {
-                numOfPage++;
-            }
-            request.setAttribute("SettingList", settingList);
-            request.setAttribute("StatusList", statusList);
-            request.setAttribute("CategoryList", categoryList);
-            request.setAttribute("UserList", userList);
-            request.setAttribute("ProList", proList);
-            request.setAttribute("numOfPage", numOfPage);
-            request.setAttribute("recordsPerPage", recordsPerPage);
-            request.setAttribute("currentPage", currentPage);
-            request.getRequestDispatcher("/admin/ProductList.jsp").forward(request, response);
-            
-        } catch (Exception ex) {
-            Logger.getLogger(ProductListController.class.getName()).log(Level.SEVERE, null, ex);
-            request.getRequestDispatcher("/admin/Error.jsp").forward(request, response);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -124,7 +77,31 @@ public class ProductListController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         try {
+            HttpSession session = request.getSession(true);
+            Cart cart = null;
+            Object o = session.getAttribute("cart");
+            if (o != null) {
+                cart = (Cart) o;
+            } else {
+                cart = new Cart();
+            }
+            OrderDAO ord = new OrderDAO();
+            OrderDetailDAO ordd = new OrderDetailDAO();
+            int oid = ord.getLastOrder().getOrderId() + 1;
+            float totaCost = cart.getTotalMoney();
+            int uid = Integer.parseInt(request.getParameter("id"));
+            String username = request.getParameter("fullname");
+            String email = request.getParameter("email");
+            int checkAddOrder = ord.addOrder(oid, totaCost, uid);
+            if (checkAddOrder > 0) {
+                SendEmail sm = new SendEmail();
+                sm.ContactMail(username, email);
+                request.getRequestDispatcher("/cart-completion.jsp").forward(request, response);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(GoodsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
