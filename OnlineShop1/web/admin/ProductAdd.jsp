@@ -94,7 +94,7 @@
                                                 <div class="form-group">
                                                     <label for="title1" class="col-lg-2 col-sm-2 control-label">Title</label>
                                                     <div class="col-lg-10">
-                                                        <input type="textl" class="form-control" id="title"  name="title" value="${titlelValue}"  required>
+                                                        <input type="textl" class="form-control" id="title"  name="title" value="${titleValue}"  required>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
