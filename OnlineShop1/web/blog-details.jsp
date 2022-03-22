@@ -84,16 +84,15 @@
                                 <c:forEach items="${listHotBlogs}" var="o">
                                     <div class="col-sm-4">
                                         <a href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">
-                                            <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="95" width="110">
+                                            <img style="object-fit: contain" src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="95" width="110">
                                         </a>
                                     </div>
                                     <div class="col-sm-8">
                                         <div class="blog-post-area single-blog-post">
                                             <font color="#fe980f"><h5>${o.postTitle}</h5></font>
                                             <div class="post-meta"> 
-                                                <p><i class='fas fa-tags'></i> ${o.category.settingValue}</p>
+                                                <font size="2px"><p><i class='fas fa-tags'></i> ${o.category.settingValue}</p></font>
                                             </div>
-                                            <!--<a class="btn btn-primary" href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">Read More</a>-->
                                         </div>
                                     </div>
                                 </c:forEach>
