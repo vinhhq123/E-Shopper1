@@ -51,7 +51,7 @@
             var title = document.getElementById("tt").value;
             var image = document.getElementById("img").value;
             var textArea = document.getElementById("area").value;
-            
+            var breif = document.getElementById("brief").value;
             if(title == ""){
                 alert("please write the title");
                 document.getElementById("tt").style.borderColor = "red";
@@ -62,11 +62,16 @@
                 document.getElementById("img").style.borderColor = "red";
                 return false;
             }
-            if(textArea == ""){
+            if(breif == ""){ 
+                alert("please write the brief information");
+                document.getElementById("brief").style.borderColor = "red";
+                return false;
+            }
+            if(textArea == ""){ 
                 alert("please write the content");
                 document.getElementById("area").style.borderColor = "red";
                 return false;
-            }
+            } 
         }
     </script>
   </head>
@@ -268,6 +273,42 @@
 						</td>
 					  </tr>
 					  <tr>
+						  <td><br></td>
+					  </tr>
+                                          
+                                          <tr>
+						  <td><br></td>
+					  </tr>
+                                          
+                                          <tr>
+                                              <td>Category:</td>
+                                              <td>
+                                                    <select class="select" aria-label="Default select example" name="category">
+                                                        
+                                                            <c:forEach items="${listPostCate}" var="l">
+                                                            <option value="${l.settingId}">${l.settingValue}</option>
+                                                            </c:forEach>
+                                                    </select>
+                                              </td>
+					  </tr>
+                                          <tr>
+						  <td><br></td>
+					  </tr>
+                                          
+                                          
+                                          <tr>
+						<td>Brief information:</td>
+                                                <td>
+						  <textarea style="border-radius: 4px;"
+							name="brief"
+							cols="60"
+							rows="3"
+                                                        id="brief"
+							placeholder="brief information of the product"
+						  >${requestScope.postUpdate.breifInformation}</textarea>
+						</td>
+					  </tr>
+                                          <tr>
 						  <td><br></td>
 					  </tr>
 					  <tr>
