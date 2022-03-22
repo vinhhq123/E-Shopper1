@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -44,6 +45,30 @@
       rel="apple-touch-icon-precomposed"
       href="${pageContext.request.contextPath}/images/ico/apple-touch-icon-57-precomposed.png"
     />
+    
+    <script>
+        function send() {
+            var title = document.getElementById("tt").value;
+            var image = document.getElementById("img").value;
+            var textArea = document.getElementById("area").value;
+            
+            if(title == ""){
+                alert("please write the title");
+                document.getElementById("tt").style.borderColor = "red";
+                return false;
+            }
+            if(image == ""){
+                alert("please choose the image");
+                document.getElementById("img").style.borderColor = "red";
+                return false;
+            }
+            if(textArea == ""){
+                alert("please write the content");
+                document.getElementById("area").style.borderColor = "red";
+                return false;
+            }
+        }
+    </script>
   </head>
     <body>
     <jsp:include page="../header.jsp"/>
@@ -188,7 +213,7 @@
             <div class="blog-post-area">
               <h2 class="title text-center">POST SINGLE</h2>
               <div class="single-blog-post">
-                <form style="border: 0.5px solid #FE980F; border-radius:4px" action="<%=request.getContextPath()%>/post/edit" method="POST" enctype="multipart/form-data">
+                <form onsubmit="return send()" style="border: 0.5px solid #FE980F; border-radius:4px" action="<%=request.getContextPath()%>/post/edit" method="POST" enctype="multipart/form-data">
                   <table style="
     				margin-left: auto;
 					margin-right: auto;
@@ -199,6 +224,7 @@
 						<td>
 						  <input
 							type="text"
+                                                        id="tt"
 							name="title"
                                                         value="${requestScope.postUpdate.postTitle}"
 							placeholder="Title of the product"
@@ -206,7 +232,7 @@
 						</td>
                                                 <td>
 						  <input
-							type="text"
+                                                      type="hidden"
 							name="postId"
                                                         value="${requestScope.postUpdate.postId}"
 							placeholder="id"
@@ -219,7 +245,26 @@
 					  <tr>
 						<td>Select Image:</td>
 						<td>
-                                                    <input type="file" name="image" />
+                                                    <div class="form-group">
+                                                    <label for="avatar" class="col-lg-2 col-sm-2 control-label">Image</label>
+                                                    <div class="col-lg-offset-5 col-lg-15">
+                                                        <div class="profile-pic">
+                                                    <label class="-label" for="file">
+                                                                <c:if test="${ not empty postUpdate.thumbnail}">
+                                                                <img src="data:image/jpg;base64,${postUpdate.thumbnail}" id="output" width="200" />
+                                                                </c:if>
+                                                                <c:if test="${empty postUpdate.thumbnail}">
+                                                                   
+                                                                    <img src="${pageContext.request.contextPath}/admin/img/no-avatar.png" id="output" width="200" />
+                                                                </c:if>
+                                                            </label>
+                                                            <input type="file" id="img" onchange="loadFile(event)" value="${postUpdate.thumbnail}" name="image" />
+                                                    <c:if test="${not empty errorImage}">
+                                                                <p class="help-block" style="color: red" id="errorEmailMessage">${errorImage}</p>
+                                                            </c:if>
+                                                        </div>
+                                                    </div>
+                                                </div>
 						</td>
 					  </tr>
 					  <tr>
@@ -232,6 +277,7 @@
 							name="content"
 							cols="60"
 							rows="5"
+                                                        id="area"
 							placeholder="Content of the product"
 						  >${requestScope.postUpdate.postContent}</textarea>
 						</td>
@@ -440,5 +486,7 @@
     <script src="${pageContext.request.contextPath}/eShopper/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/eShopper/js/jquery.prettyPhoto.js"></script>
     <script src="${pageContext.request.contextPath}/eShopper/js/main.js"></script>
+    <script src="${pageContext.request.contextPath}/admin/js/AddNewUser.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/admin/js/UserDetail.js" type="text/javascript"></script>
   </body>
 </html>

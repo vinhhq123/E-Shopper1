@@ -66,6 +66,7 @@
                                 <div class="row">
                                     <div class="col-lg-1"></div>
                                     <div class="col-lg-7">
+                                        <!-- IF THE CURRENT ACTION IS EDIT USER -->
                                         <c:if test="${actionUser eq 1}">
                                             <div class="panel-body table-responsive">
                                                 <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/user/update?uid=<c:out value="${currentUser.uid}"/>" method="POST" name="editUser"  enctype="multipart/form-data">
@@ -190,6 +191,7 @@
                                                 </form>
                                             </div><!-- /.box-body -->
                                         </c:if>
+                                        <!-- IF THE CURRENT ACTION IS ADD NEW USER -->
                                         <c:if test="${actionUser eq 0}">
                                             <div class="panel-body table-responsive">
                                                 <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/user/add" method="POST" name="addNewUser"  enctype="multipart/form-data">
@@ -236,14 +238,26 @@
                                                     <div class="form-group">
                                                         <label for="title" class="col-lg-2 col-sm-2 control-label">Title<span style="color:#ff0000"> (*)</span></label>
                                                         <div class="col-lg-10">
-                                                            <c:forEach items="${titles}" var="til">
-                                                                <div class="radio-inline">
-                                                                    <label>
-                                                                        <input type="radio" name="title" id="title" value="<c:out value="${til}" />" required="">
-                                                                        <c:out value="${til}" />
-                                                                    </label>
-                                                                </div>
-                                                            </c:forEach>
+                                                            <c:if test="${empty titleValue}">
+                                                                <c:forEach items="${titles}" var="til">
+                                                                    <div class="radio-inline">
+                                                                        <label>
+                                                                            <input type="radio" name="title" id="title" value="<c:out value="${til}" />" required="">
+                                                                            <c:out value="${til}" />
+                                                                        </label>
+                                                                    </div>
+                                                                </c:forEach>
+                                                            </c:if>
+                                                            <c:if test="${not empty titleValue}">
+                                                                <c:forEach items="${titles}" var="til">
+                                                                    <div class="radio-inline">
+                                                                        <label>
+                                                                            <input type="radio" name="title" id="title" value="<c:out value="${til}" />" required="" <c:if test="${titleValue eq til}">checked=""</c:if>>
+                                                                            <c:out value="${til}" />
+                                                                        </label>
+                                                                    </div>
+                                                                </c:forEach>
+                                                            </c:if>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">

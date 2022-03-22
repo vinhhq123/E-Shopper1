@@ -125,6 +125,12 @@ form.example::after {
   clear: both;
   display: table;
 }
+#slideR {
+  border: 2px solid #095E90;
+  padding: 10px;
+  border-radius: 25px;
+  margin-bottom: 20px;
+}
     </style>
     </head>
     <body class="skin-black">
@@ -143,7 +149,7 @@ form.example::after {
                             <div class="col-xs-12">
                                 <div class="panel">
                                     <header class="panel-heading">
-                                        <b>Add New Customer</b>
+                                        <b>Slider Manage</b>
 
                                     </header>
                                     <!-- <div class="box-header"> -->
@@ -166,7 +172,7 @@ form.example::after {
                                         <div class="col-lg-7">
                                             <div class="panel-body table-responsive">
                         <c:forEach items="${sliders}" var="s">
-                        <div class="single-blog-post">
+                            <div class="single-blog-post" id="slideR">
                         <div class="header-slider">
                           <a style="float: right" href="<%=request.getContextPath()%>/slider/getslider?s_id=${s.s_id}"
                             ><button style="width: 70px">Edit</button></a

@@ -27,8 +27,8 @@ public class DBContext {
             String dbName = "onlineshop1";
             String url = "jdbc:mysql://" + serverName + ":" + portNumber + "/" + dbName + "?" + condition;
             String username = "root";
-            String password = "Edwars1235@";
-
+            String password = "12345678";
+            
             Connection connection = DriverManager.getConnection(url, username, password);
             return connection;
         } catch (ClassNotFoundException | SQLException ex) {
