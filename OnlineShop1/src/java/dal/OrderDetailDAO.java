@@ -31,7 +31,7 @@ public class OrderDetailDAO extends DBContext {
         OrderDetail orderDetail = null;
 
         try {
-            String sql = "select * from orderdetails where orderId = " + orderId;
+            String sql = "select * from orderdetails where orderId = " + orderId +" order by productId asc";
             connection = getConnection();
             preparedStatement = connection.prepareStatement(sql);
             results = preparedStatement.executeQuery();

@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -38,33 +39,36 @@
                             <h2 class="title text-center">Blog</h2>
 
                             <c:forEach items="${listBlog}" var="o">
-                                <div class="single-blog-post">
-                                    <h3>${o.postTitle}</h3>
-                                    <div class="post-meta"> 
-                                        <ul>
-                                            <li><i class="fa fa-user"></i> ${o.postAuthor.fullname}</li>
-                                            <li><i class='fas fa-tags'></i> ${o.category.settingValue}</li>
-                                            <li><i class="fa fa-calendar"></i> ${o.updateDate}</li>
-                                        </ul>
-                                    </div>
+                                <div class="col-sm-5">
                                     <a href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">
-                                        <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="">
+                                        <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="225" width="280">
                                     </a>
-                                    <p>${o.breifInformation}</p>
-                                    <a  class="btn btn-primary" href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">Read More</a>
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="single-blog-post">
+                                        <h3>${o.postTitle}</h3>
+                                        <div class="post-meta"> 
+                                            <ul>
+                                                <li><i class="fa fa-user"></i> ${o.postAuthor.fullname}</li>
+                                                <li><i class='fas fa-tags'></i> ${o.category.settingValue}</li>
+                                                <li><i class="fa fa-calendar"></i><fmt:formatDate pattern="dd/MM/yyyy" value="${o.updateDate}"/></li>
+                                            </ul>
+                                        </div>
+                                        <p>${o.breifInformation}</p>
+                                        <a class="btn btn-primary" href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">Read More</a>
+                                    </div>
                                 </div>
                             </c:forEach>
-
-                            <div class="pagination-area">
-                                <c:set var="page" value="${requestScope.page}"/>
-                                <ul class="pagination">
-                                    <c:forEach begin="${1}" end="${requestScope.num}" var="i">
-                                        <li><a class="${i==page?"active":""}" href="<%=request.getContextPath()%>/blog/bloglist?page=${i}">${i}</a></li>
-                                        <!--                                        <li><a href="" class="active">1</a></li>-->
-                                    </c:forEach>
-                                    <li><a class="${i==page?"active":""}" href="<%=request.getContextPath()%>/blog/bloglist?page=${page+1}"><i class="fa fa-angle-double-right"></i></a></li>
-                                </ul>
-                            </div>
+                        </div>
+                        <div class="pagination-area">
+                            <c:set var="page" value="${requestScope.page}"/>
+                            <ul class="pagination" style="margin-top: 75px">
+                                <c:forEach begin="${1}" end="${requestScope.num}" var="i">
+                                    <li><a class="${i==page?"active":""}" href="<%=request.getContextPath()%>/blog/bloglist?page=${i}">${i}</a></li>
+                                    <!--                                        <li><a href="" class="active">1</a></li>-->
+                                </c:forEach>
+                                <li><a class="${i==page?"active":""}" href="<%=request.getContextPath()%>/blog/bloglist?page=${page+1}"><i class="fa fa-angle-double-right"></i></a></li>
+                            </ul>
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -77,7 +81,6 @@
                             </div>
                         </div><hr>
                         <div class="blog-post-area">
-
                             <div class="brands_products"><!--brands_products-->
                                 <h2>Blog Category</h2>
                                 <div class="brands-name">
@@ -88,6 +91,25 @@
                                     </ul>
                                 </div>
                             </div>
+                            <div class="product-details"><!--product-details-->
+                                <h2 class="title text-center">hot posts</h2>
+                                <c:forEach items="${listHotBlogs}" var="o">
+                                    <div class="col-sm-4">
+                                            <a href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">
+                                                <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="95" width="110">
+                                            </a>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="blog-post-area single-blog-post">
+                                            <font color="#fe980f"><h5>${o.postTitle}</h5></font>
+                                            <div class="post-meta"> 
+                                                <p><i class='fas fa-tags'></i> ${o.category.settingValue}</p>
+                                            </div>
+                                            <!--<a class="btn btn-primary" href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">Read More</a>-->
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -95,8 +117,6 @@
         </section>
 
         <jsp:include page="footer.jsp"/>
-
-
 
         <script src="${pageContext.request.contextPath}/assets/js/jquery.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/price-range.js"></script>

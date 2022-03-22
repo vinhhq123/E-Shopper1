@@ -44,6 +44,7 @@
                                         <li><i class="fa fa-calendar"></i>${blog.updateDate}</li>
                                     </ul>
                                 </div>
+                                <p>${blog.breifInformation}</p>
                                 <a href="">
                                     <img src="data:image/jpg;base64,${blog.getThumbnail()}" alt="">
                                 </a>
@@ -52,8 +53,6 @@
                                 </p>
                                 <div class="pager-area">
                                     <ul class="pager pull-right">
-                                        <!--                                        <li><a href="#">Pre</a></li>
-                                                                                <li><a href="#">Next</a></li>-->
                                     </ul>
                                 </div>
                             </div>
@@ -79,6 +78,25 @@
 
                                     </ul>
                                 </div>
+                            </div>
+                            <div class="product-details"><!--product-details-->
+                                <h2 class="title text-center">hot posts</h2>
+                                <c:forEach items="${listHotBlogs}" var="o">
+                                    <div class="col-sm-4">
+                                        <a href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">
+                                            <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="95" width="110">
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="blog-post-area single-blog-post">
+                                            <font color="#fe980f"><h5>${o.postTitle}</h5></font>
+                                            <div class="post-meta"> 
+                                                <p><i class='fas fa-tags'></i> ${o.category.settingValue}</p>
+                                            </div>
+                                            <!--<a class="btn btn-primary" href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">Read More</a>-->
+                                        </div>
+                                    </div>
+                                </c:forEach>
                             </div>
                         </div><!--/blog-post-area-->
                     </div>	
