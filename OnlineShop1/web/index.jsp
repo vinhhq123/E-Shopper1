@@ -192,11 +192,12 @@
 
                         </div><!--features_items-->
 
-                        <div class="product-details"><!--product-details-->
-                            <h2 class="title text-center">hot posts</h2>
-                            <c:forEach items="${listHotBlogs}" var="o">
+
+                        <h2 class="title text-center">hot posts</h2>
+                        <c:forEach items="${listHotBlogs}" var="o">
+                            <div class="product-details"><!--product-details-->
                                 <div class="row">
-                                    <div style="margin-bottom: 10px" class="col-sm-5">
+                                    <div style="" class="col-sm-5">
                                         <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="150" width="300">
                                     </div>
                                     <div class="col-sm-7">
@@ -209,8 +210,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </c:forEach>
-                        </div>
+                            </div>
+                        </c:forEach>
                     </div><!--/recommended_items-->
 
                 </div>

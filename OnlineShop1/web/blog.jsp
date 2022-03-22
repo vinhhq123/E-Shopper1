@@ -42,7 +42,7 @@
                             <div class="blog-post-area row">
                                 <div class="col-sm-5">
                                     <a href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">
-                                        <img style="object-fit: fill" src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="225" width="280">
+                                        <img style="margin-bottom: 50px" src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="225" width="280">
                                     </a>
                                 </div>
                                 <div class="col-sm-7">
@@ -93,12 +93,12 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="product-details"><!--product-details-->
-                                <h2 class="title text-center">featured posts</h2>
-                                <c:forEach items="${listHotBlogs}" var="o">
+                            <h2 class="title text-center">featured posts</h2>
+                            <c:forEach items="${listHotBlogs}" var="o">
+                                <div class="product-details"><!--product-details-->
                                     <div class="col-sm-4">
                                         <a href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">
-                                            <img style="object-fit: contain" src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="95" width="110">
+                                            <img style="object-fit: fill" src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="95" width="110">
                                         </a>
                                     </div>
                                     <div class="col-sm-8">
@@ -109,8 +109,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </c:forEach>
-                            </div>
+                                </div>
+                            </c:forEach>
                         </div>
                     </div>
                 </div>
