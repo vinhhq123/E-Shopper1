@@ -25,42 +25,44 @@ po<%--
                 </div>
             </div>
             <ul class="sidebar-menu">
-                <li>
-                    <a href="${pageContext.request.contextPath}/dashboard/view">
-                        <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="<%=request.getContextPath()%>/user/list">
-                        <i class="fa fa-users"></i> <span>User List</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="general.html">
-                        <i class="fa fa-book"></i> <span>Product List</span>
-                    </a>
-                </li>
+                <c:if test="${account.role == 1}">
 
-                <li>
-                    <a href="<%=request.getContextPath()%>/customer/list">
-                        <i class="fa fa-user"></i> <span>Customer List</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/dashboard/view">
+                            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/user/list">
+                            <i class="fa fa-users"></i> <span>User List</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="general.html">
+                            <i class="fa fa-book"></i> <span>Product List</span>
+                        </a>
+                    </li>
 
-                <li>
-                    <a href="<%=request.getContextPath()%>/feedback/list">
-                        <i class="fa fa-check"></i> <span>Feedback List</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/customer/list">
+                            <i class="fa fa-user"></i> <span>Customer List</span>
+                        </a>
+                    </li>
 
+                    <li>
+                        <a href="<%=request.getContextPath()%>/feedback/list">
+                            <i class="fa fa-check"></i> <span>Feedback List</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/setting/list">
+                            <i class="fa fa-wrench"></i> <span>Setting List</span>
+                        </a>
+                    </li>
+                </c:if>
                 <li>
                     <a href="<%=request.getContextPath()%>/order/list">
                         <i class="fa fa-square"></i> <span>Order List</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="<%=request.getContextPath()%>/setting/list">
-                        <i class="fa fa-wrench"></i> <span>Setting List</span>
                     </a>
                 </li>
                 <li>
