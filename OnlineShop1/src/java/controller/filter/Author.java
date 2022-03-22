@@ -135,19 +135,6 @@ public class Author implements Filter {
                     chain.doFilter(request, response);
                 }else if (url.contains("CustomerOrder")) { 
                     chain.doFilter(request, response);
-                } else if (url.contains("setting/list")) {
-                    /*
-                    1: admin
-                    2: manager
-                    3: sale
-                    4: marketing
-                    5: customer
-                    */
-                    if (user.getRole() == 1 || user.getRole() == 3 || user.getRole() == 2 || user.getRole() == 4) {
-                        chain.doFilter(request, response);
-                    } else {
-                        request.getRequestDispatcher("/admin/404.jsp").forward(request, response);
-                    }
                 } else if (url.contains("setting")) {
                     if (user.getRole() == 1) {
                         chain.doFilter(request, response);
@@ -155,7 +142,7 @@ public class Author implements Filter {
                         request.getRequestDispatcher("/admin/404.jsp").forward(request, response);
                     }
                 } else if (url.contains("dashboard")) {
-                    if (user.getRole() == 1) {
+                    if (user.getRole() == 1 || user.getRole() == 2) {
                         chain.doFilter(request, response);
                     } else {
                         request.getRequestDispatcher("/admin/404.jsp").forward(request, response);
