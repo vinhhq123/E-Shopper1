@@ -26,18 +26,10 @@
             </div>
             <ul class="sidebar-menu">
                 <li>
-                    <a href="index.html">
-                        <i class="fa fa-dashboard"></i> <span>User Information</span>
-                    </a>
-                </li>
-               
-                <li>
                     <a href="<%=request.getContextPath()%>/changepass">
                         <i class="fa fa-book"></i> <span>Change Password</span>
                     </a>
-                </li>
-               
-
+                </li> 
             </ul>
         </section>
         <!-- /.sidebar -->

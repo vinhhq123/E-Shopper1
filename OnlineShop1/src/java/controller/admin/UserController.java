@@ -43,9 +43,7 @@ import resources.Validate;
 @WebServlet(name = "UserController", urlPatterns = {"/user/list", "/user/search",
     "/user/getUser", "/user/update", "/user/add", "/user/toadd",
     "/user/updateProfile", "/blog/user/updateProfile", "/goods/user/updateProfile",
-    "/order/user/updateProfile",
-    "/user/changePass", "/blog/user/changePass", "/goods/user/changePass",
-    "/order/user/changePass"})
+    "/order/user/updateProfile"})
 public class UserController extends HttpServlet {
 
     /**
@@ -106,18 +104,6 @@ public class UserController extends HttpServlet {
                 break;
             case "/order/user/updateProfile":
                 updateProfile(request, response);
-                break;
-            case "/user/changePass":
-                changePass(request, response);
-                break;
-            case "/blog/user/changePass":
-                changePass(request, response);
-                break;
-            case "/goods/user/changePass":
-                changePass(request, response);
-                break;
-            case "/order/user/changePass":
-                changePass(request, response);
                 break;
         }
 
@@ -514,9 +500,7 @@ public class UserController extends HttpServlet {
                         session.setAttribute("messageAddSuccess", successMessage);
                         request.setAttribute("imageValue", avatar);
                         request.getRequestDispatcher("/admin/UserDetail.jsp").forward(request, response);
-
                     }
-                    // CHUA CHECK SEND EMAIL FAIL
                 }
             }
         } catch (SQLException ex) {
@@ -528,7 +512,7 @@ public class UserController extends HttpServlet {
         }
 
     }
-
+    
     protected void toAdd(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -648,4 +632,5 @@ public class UserController extends HttpServlet {
             Logger.getLogger(ChangePassController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
 }

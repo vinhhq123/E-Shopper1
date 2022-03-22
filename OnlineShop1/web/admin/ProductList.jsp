@@ -59,7 +59,46 @@
                                     <div class="panel-body table-responsive">
                                         <div class="row">
                                         <div class="col-sm-8">
-                                                
+                                            <form class="form-inline" role="form" action="<%=request.getContextPath()%>/product/search">
+                                              <div class="form-group">
+                                                    <label class="sr-only" for="exampleInputEmail2">Email address</label>
+                                                    <input type="text" name="title" class="form-control" id="exampleInputEmail2" placeholder="title" value="${requestScope.searchValue}" onblur="this.value = removeSpaces(this.value);">
+                                              </div>
+                                              <div class="form-group" style="margin-right:8px;">
+                                                    <select class="select" aria-label="Default select example" name="status" style="height: 30px">
+                                                        <c:if test="${empty valueSalesId}">
+                                                            <option value="0" >All Status</option>
+                                                            <c:forEach items="${statusList}" var="s">
+                                                                <option value="<c:out value="${s.getSettingId()}"/>" > ${s.getSettingValue()}</option>
+                                                            </c:forEach>
+                                                        </c:if>
+                                                        <c:if test="${not empty valueSalesId}">
+                                                            <option value="0" >All Status</option>
+                                                            <c:forEach items="${statusList}" var="s">
+                                                                <option value="<c:out value="${s.getSettingId()}"/>" <c:if test="${s.getSettingId() == productStatus}">selected</c:if>> ${s.getSettingValue()}</option>
+                                                            </c:forEach>
+                                                        </c:if>
+                                                    </select>
+                                                </div>
+                                              <div class="form-group" style="margin-right:8px;">
+                                                    <select class="select" aria-label="Default select example" name="category" style="height: 30px">
+                                                        <c:if test="${empty valueSalesId}">
+                                                            <option value="0" >All Category</option>
+                                                            <c:forEach items="${categoryList}" var="c">
+                                                                <option value="<c:out value="${c.getSettingId()}"/>" > ${c.SettingValue()}</option>
+                                                            </c:forEach>
+                                                        </c:if>
+                                                        <c:if test="${not empty valueSalesId}">
+                                                            <option value="0" >All Category</option>
+                                                            <c:forEach items="${categoryList}" var="c">
+                                                                <option value="<c:out value="${c.getSettingId()}"/>" <c:if test="${c.getSettingId() == valueSalesId}">selected</c:if>> ${c.getSettingValue()}</option>
+                                                            </c:forEach>
+                                                        </c:if>
+                                                    </select>
+                                                </div>
+                                              <button type="submit" class="btn btn-success">Search</button>
+                                            </form>    
+                                                 
                                         </div>
                                         <div class="col-sm-4">
                                             <button type="button" class="btn btn-success" style="float: right" onclick="window.location = '<%=request.getContextPath()%>/admin/ProductAdd.jsp'">Add New Product</button>
@@ -109,7 +148,7 @@
                                                 </c:forEach>
                                                 <td>${pro.getQuantity()}</td> 
                                                 <td>${pro.getUpdatedDate()}</td> 
-                                                <td><button type="button" class="btn-xs btn-primary" onclick="window.location = '<%=request.getContextPath()%>/proEdit?pid=${pro.getPid()}'">Edit</button></td>
+                                                <td><button type="button" class="btn-xs btn-primary" onclick="window.location = '<%=request.getContextPath()%>/product/getproduct?pid=${pro.getPid()}'">Edit</button></td>
                                             </tr>
                                         </c:forEach>
                                     </table>
@@ -123,7 +162,7 @@
                                         <ul class="pagination pagination-sm no-margin pull-right">
                                             <c:if test="${currentPage != 1}">
                                                 <li><a
-                                                        href="<%=request.getContextPath()%>/proList?currentPage=${currentPage-1}">Previous</a>
+                                                        href="<%=request.getContextPath()%>/product/list?currentPage=${currentPage-1}">Previous</a>
                                                 </li>
                                             </c:if>
 
@@ -136,7 +175,7 @@
                                                     </c:when>
                                                     <c:otherwise>
                                                         <li><a
-                                                                href="<%=request.getContextPath()%>/proList?currentPage=${i}">${i}</a>
+                                                                href="<%=request.getContextPath()%>/product/list?currentPage=${i}">${i}</a>
                                                         </li>
                                                     </c:otherwise>
                                                 </c:choose>
@@ -144,7 +183,7 @@
 
                                             <c:if test="${currentPage lt numOfPage}">
                                                 <li><a
-                                                        href="<%=request.getContextPath()%>/proList?currentPage=${currentPage+1}">Next</a>
+                                                        href="<%=request.getContextPath()%>/product/list?currentPage=${currentPage+1}">Next</a>
                                                 </li>
                                             </c:if>
                                         </ul>

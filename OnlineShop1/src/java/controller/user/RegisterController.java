@@ -15,7 +15,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import resources.PasswordEncrypt;
+import resources.SendEmail;
 import resources.Validate;
 
 /**
@@ -93,6 +95,8 @@ public class RegisterController extends HttpServlet {
             request.setAttribute("password", password);
             request.setAttribute("repassword", rePassword);
             Validate validate = new Validate();
+            SendEmail sm = new SendEmail();
+            HttpSession session = request.getSession();
         try {
             if(usDB.checkAccountExist(email) != null)
             {
@@ -118,12 +122,19 @@ public class RegisterController extends HttpServlet {
                 request.getRequestDispatcher("./user/Register.jsp").forward(request, response);
             }
             else{
-                PasswordEncrypt encryptedPass = new PasswordEncrypt();
-                usDB.register(email, name, encryptedPass.generateEncryptedPassword(password),title,gen,phone,address);
-                request.getRequestDispatcher("./user/Login.jsp").forward(request, response);
+                if(sm.registerMail(name,email)){
+                    PasswordEncrypt encryptedPass = new PasswordEncrypt();
+                    usDB.register(email, name, encryptedPass.generateEncryptedPassword(password),title,gen,phone,address);
+                    request.getRequestDispatcher("./user/Login.jsp").forward(request, response);
+                }
+                else{
+                    String message = "We can not verification your Email!Please input an existing email!";
+                    session.setAttribute("messageFail", message);
+                    request.getRequestDispatcher("./user/Register.jsp").forward(request, response);
+                }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

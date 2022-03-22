@@ -33,7 +33,7 @@ import resources.SendEmail;
  * @author hungn
  */
 @WebServlet(name = "GoodsController", urlPatterns = {"/goods/goodsList", "/goods/goodsCate", "/goods/search", "/goods/detail",
-    "/goods/addToCart", "/goods/removeProductCart", "/goods/addToCartContact", "/goods/checkOut"})
+    "/goods/addToCart","/goods/minusProduct", "/goods/removeProductCart", "/goods/addToCartContact"})
 public class GoodsController extends HttpServlet {
 
     /**
@@ -77,14 +77,14 @@ public class GoodsController extends HttpServlet {
             case "/goods/addToCart":
                 addProductToCart(request, response);
                 break;
+            case "/goods/minusProduct":
+                minusProduct(request, response);
+                break;
             case "/goods/removeProductCart":
                 removeProCart(request, response);
                 break;
             case "/goods/addToCartContact":
                 addProductToCartContact(request, response);
-                break;
-            case "/goods/checkOut":
-                checkOut(request, response);
                 break;
         }
     }
@@ -313,66 +313,37 @@ public class GoodsController extends HttpServlet {
         session.setAttribute("size", list.size());
         request.getRequestDispatcher("/cart.jsp").forward(request, response);
     }
-
-    protected void checkOut(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            HttpSession session = request.getSession(true);
-            Cart cart = null;
-            Object o = session.getAttribute("cart");
-            if (o != null) {
-                cart = (Cart) o;
-            } else {
-                cart = new Cart();
-            }
-            OrderDAO ord = new OrderDAO();
-            OrderDetailDAO ordd = new OrderDetailDAO();
-            int oid = ord.getLastOrder().getOrderId() + 1;
-            float totaCost = cart.getTotalMoney();
-            int uid = Integer.parseInt(request.getParameter("id"));
-            String username = request.getParameter("fullname");
-            String email = request.getParameter("email");
-            int checkAddOrder = ord.addOrder(oid, totaCost, uid);
-            if (checkAddOrder > 0) {
-                SendEmail sm = new SendEmail();
-                sm.ContactMail(username, email);
-                request.getRequestDispatcher("/cart-completion.jsp").forward(request, response);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(GoodsController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
     
-//    protected void minusProduct(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//        response.setContentType("text/html;charset=UTF-8");
-//        HttpSession session = request.getSession(true);
-//        Cart cart = null;
-//        Object o = session.getAttribute("cart");
-//        //co roi
-//        if (o != null) {
-//            cart = (Cart) o;
-//        } else {
-//            cart = new Cart();
-//        }
-//        String tid = request.getParameter("pid");
-//        int num, id;
-//        try {
-//            num = 1;
-//            id = Integer.parseInt(tid);
-//
-//            GoodsDAO pdb = new GoodsDAO();
-//            Product p = pdb.getGoodsById(id);
-//            //gia ban
-//            double price = p.getSprice();
-//            Items t = new Items(p, num, price);
-//            cart.reduceItem(t);
-//        } catch (NumberFormatException e) {
-//            num = 1;
-//        }
-//        List<Items> list = cart.getItems();
-//        session.setAttribute("cart", cart);
-//        session.setAttribute("size", list.size());
-//        request.getRequestDispatcher("/cart.jsp").forward(request, response);
-//    }
+protected void minusProduct(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession(true);
+        Cart cart = null;
+        Object o = session.getAttribute("cart");
+        //co roi
+        if (o != null) {
+            cart = (Cart) o;
+        } else {
+            cart = new Cart();
+        }
+        String tid = request.getParameter("pid");
+        int num, id;
+        try {
+            num = 1;
+            id = Integer.parseInt(tid);
+
+            GoodsDAO pdb = new GoodsDAO();
+            Product p = pdb.getGoodsById(id);
+            //gia ban
+            double price = p.getSprice();
+            Items t = new Items(p, num, price);
+            cart.reduceItem(t);
+        } catch (NumberFormatException e) {
+            num = 1;
+        }
+        List<Items> list = cart.getItems();
+        session.setAttribute("cart", cart);
+        session.setAttribute("size", list.size());
+        request.getRequestDispatcher("/cart.jsp").forward(request, response);
+    }
 }

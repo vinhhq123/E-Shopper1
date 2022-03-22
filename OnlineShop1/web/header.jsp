@@ -32,6 +32,10 @@
                                                 <i class="fa fa-user fa-fw pull-right"></i>
                                                 My Profile
                                             </a>
+                                            <a href="<%=request.getContextPath()%>/changepass">
+                                                <i class="fa fa-user fa-fw pull-right"></i>
+                                                Change Password
+                                            </a>
                                             <a href="<%=request.getContextPath()%>/order/getCustomerOrders">
                                                 <i class="fa fa-ticket fa-fw pull-right"></i>
                                                 My Order
@@ -51,6 +55,12 @@
                                                     Customers
                                                 </a>
                                             </c:if>
+                                            <c:if test="${account.getRole() == 2}">
+                                                <a href="<%=request.getContextPath()%>/product/list">
+                                                    <i class="fa fa-users fa-fw pull-right"></i>
+                                                    Product
+                                                </a>
+                                            </c:if>
                                             <!-- CURRENT USER IS SALES -->
                                             <c:if test="${account.getRole() == 3}">
                                                 <a href="<%=request.getContextPath()%>/order/list">
@@ -62,13 +72,28 @@
                                             <c:if test="${account.getRole() == 4}">
                                                 <a href="<%=request.getContextPath()%>/post/list">
                                                     <i class="fa fa-paperclip fa-fw pull-right"></i>
-                                                    Posts
+                                                    Posts list
                                                 </a>
                                             </c:if>
-                                            <a href="#myModal-3" data-toggle="modal" >
-                                                <i class="fa fa-user fa-fw pull-right"></i>
-                                                Change Password
-                                            </a>
+                                            <c:if test="${account.getRole() == 4}">
+                                                <a href="<%=request.getContextPath()%>/post/PostDetail.jsp">
+                                                    <i class="fa fa-paperclip fa-fw pull-right"></i>
+                                                    Post Detail
+                                                </a>
+                                            </c:if>
+                                            <c:if test="${account.getRole() == 4}">
+                                                <a href="<%=request.getContextPath()%>/slider/list">
+                                                    <i class="fa fa-paperclip fa-fw pull-right"></i>
+                                                    Slider List
+                                                </a>
+                                            </c:if>
+                                            <c:if test="${account.getRole() == 4}">
+                                                <a href="<%=request.getContextPath()%>/slider/slider-detail.jsp ">
+                                                    <i class="fa fa-paperclip fa-fw pull-right"></i> 
+                                                    Slider Detail
+                                                </a>
+                                            </c:if>
+
                                             <a href="<%=request.getContextPath()%>/logout">
                                                 <i class="fa fa-power-off fa-fw pull-right"></i> Logout</a>
                                         </li>
@@ -105,11 +130,6 @@
                                     <ul role="menu" class="sub-menu">
                                         <li class=""><a href="<%=request.getContextPath()%>/blog/bloglist">Blog<i class=""></i></a>
                                         </li>
-                                        <li class=""><a href="<%=request.getContextPath()%>/post/list">Post List<i class=""></i></a>
-                                        </li>
-                                        <li class=""><a href="<%=request.getContextPath()%>/post/PostDetail.jsp">Post Detail<i class=""></i></a>
-                                        </li>
-
                                     </ul>
                                 </li> 
                             </ul>
@@ -195,53 +215,6 @@
                                 </div>
                             </div>
                             <input type="hidden" name="currentUserId" value="${account.uid}" id="currentUserId">
-                        </form>
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal-3" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                        <h4 class="modal-title">Change Password</h4>
-                    </div>
-                    <div class="modal-body">
-
-                        <form class="form-horizontal" role="form" method="POST"  name="changePass" id="changePass"  enctype="multipart/form-data" >
-    <!--                        action="<%=request.getContextPath()%>/user/changePass" method="POST"-->
-                            <h4 class="help-block" style="color: green;padding-left: 40px;" id="successEditMessage"></h4>
-                            <div class="form-group">
-                                <label for="curPass" class="col-lg-2 col-sm-2 control-label">Current Password<span style="color:#ff0000">(*)</span></label>
-                                <div class="col-lg-10">
-                                    <input type="text" class="form-control" id="curPass" name="curPass" value="${curPassValue}">
-                                    <p class="help-block" style="color: red" id="errorFullName">${requestScope.fail1}</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="newPass" class="col-lg-2 col-sm-2 control-label">New Password<span style="color:#ff0000">(*)</span></label>
-                                <div class="col-lg-10">
-                                    <input type="text" class="form-control" id="newPass" name="newPass" value="${newPassValue}">
-                                    <p class="help-block" style="color: red" id="errorFullName">${requestScope.fail2}</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="reNewPass" class="col-lg-2 col-sm-2 control-label">Re-Enter Password<span style="color:#ff0000">(*)</span></label>
-                                <div class="col-lg-10">
-                                    <input type="text" class="form-control" id="reNewPass" name="reNewPass" value="${reNewPassValue}">
-                                    <p class="help-block" style="color: red" id="errorFullName">${requestScope.fail3}</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-lg-offset-2 col-lg-10">
-                                    <button type="button" class="btn btn-default get" id="saveCC">Save changes</button>
-                                </div>
-                            </div>
-                            <input type="hidden" name="email" value="${account.email}" id="email">
                         </form>
 
                     </div>

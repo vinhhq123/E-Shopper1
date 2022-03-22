@@ -36,7 +36,7 @@ po<%--
                     </a>
                 </li>
                 <li>
-                    <a href="general.html">
+                    <a href="<%=request.getContextPath()%>/product/list">
                         <i class="fa fa-book"></i> <span>Product List</span>
                     </a>
                 </li>
@@ -58,31 +58,6 @@ po<%--
                         <i class="fa fa-square"></i> <span>Order List</span>
                     </a>
                 </li>
-
-                <li>
-                    <a href="<%=request.getContextPath()%>/post/list">
-                        <i class="fa fa-paperclip"></i> <span>Post List</span>
-                    </a>
-                </li>
-                
-                <li>
-                    <a href="<%=request.getContextPath()%>/post/PostDetail.jsp">
-                        <i class="fa fa-paperclip"></i> <span>Post Detail</span>
-                    </a>
-                </li>
-                
-                <li>
-                    <a href="<%=request.getContextPath()%>/slider/list">
-                        <i class="fa fa-paperclip"></i> <span>Sliders List</span>
-                    </a>
-                </li>
-                
-                <li>
-                    <a href="<%=request.getContextPath()%>/slider/slider-detail.jsp">
-                        <i class="fa fa-paperclip"></i> <span>Slider Detail</span>
-                    </a>
-                </li>
-
                 <li>
                     <a href="<%=request.getContextPath()%>/setting/list">
                         <i class="fa fa-wrench"></i> <span>Setting List</span>

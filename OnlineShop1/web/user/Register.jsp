@@ -110,6 +110,11 @@
                 <div class="signup-form">
                     <form method="POST" action="register" class="register-form" id="register-form">
                         <h2>Registration form</h2>
+                        <c:if test="${not empty messageFail}">
+                                                        <b><h4 class="help-block" style="color: red" id="successEditMessage">${messageFail}</h4></b>
+                                                            <c:remove var="messageFail"/>
+                                                        <br>
+                        </c:if>
                         <div class="form-group">
                             <label for="email">Email Address:</label>
                             <input type="email" name="email" id="email" value="${email}" required/>
