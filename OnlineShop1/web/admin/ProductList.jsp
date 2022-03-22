@@ -123,7 +123,7 @@
                                         <ul class="pagination pagination-sm no-margin pull-right">
                                             <c:if test="${currentPage != 1}">
                                                 <li><a
-                                                        href="<%=request.getContextPath()%>/proList?currentPage=${currentPage-1}">Previous</a>
+                                                        href="<%=request.getContextPath()%>/product/list?currentPage=${currentPage-1}">Previous</a>
                                                 </li>
                                             </c:if>
 
@@ -136,7 +136,7 @@
                                                     </c:when>
                                                     <c:otherwise>
                                                         <li><a
-                                                                href="<%=request.getContextPath()%>/proList?currentPage=${i}">${i}</a>
+                                                                href="<%=request.getContextPath()%>/product/list?currentPage=${i}">${i}</a>
                                                         </li>
                                                     </c:otherwise>
                                                 </c:choose>
@@ -144,7 +144,7 @@
 
                                             <c:if test="${currentPage lt numOfPage}">
                                                 <li><a
-                                                        href="<%=request.getContextPath()%>/proList?currentPage=${currentPage+1}">Next</a>
+                                                        href="<%=request.getContextPath()%>/product/list?currentPage=${currentPage+1}">Next</a>
                                                 </li>
                                             </c:if>
                                         </ul>
