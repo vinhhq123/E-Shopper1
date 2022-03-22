@@ -91,7 +91,7 @@ public class ResetPassController extends HttpServlet {
             int changePass = usr.ChangePass(encryptedPass.generateEncryptedPassword(newPass), email);
                 if(changePass > 0){
                     successMessage = "You have successfully reset your password!";
-                    session.setAttribute("successMessage", successMessage);
+                    session.setAttribute("successMessage1", successMessage);
                     request.getRequestDispatcher("./user/ResetPassword.jsp").forward(request, response);    
             }
         }

@@ -102,24 +102,21 @@ public class ProductDAO extends DBContext {
         return products;
     }
 
-    public List<Product> searchPro(String key, String cat, String status, String sale) throws Exception {
-
+    public List<Product> searchPro(String title, int status, int cat) throws Exception {
         List<Product> products = new ArrayList<>();
-        String sql = "SELECT productId,title,list_price,sale_price,featured,categoryId,u.uid as salesID, s.settingStatus as productStatus,quantity,updatedDate \n"
-                + "FROM product as p join setting as s on p.productStatus = s.settingstatus join user as u on p.salesId = u.uid  "
-                + "where (title like '%" + key + "%' "
-                + "or feature like '%" + key + "%' ";
+        String sql = "SELECT productId,title,list_price,sale_price,featured, categoryId, salesID,productStatus,quantity,updatedDate \n"
+                + "FROM product where ";
+        if (title != "") {
+            sql += " title like '%" + title + "%' ";
+        }
+        if (status !=0) {
+            sql += " and productStatus = " + status;
+        }
+        if (cat != 0) {
+            sql += " and categoryId = " + cat;
+        }
+        System.out.println(sql);
         Product product = null;
-        if (cat != "") {
-            sql += " and p.categoryId = " + cat;
-        }
-        if (status != "") {
-            sql += " and s.settingStatus = " + status;
-        }
-        if (sale != "") {
-            sql += " and u.uid = " + sale;
-        }
-
         try {
             connection = getConnection();
             preparedStatement = connection.prepareStatement(sql);
@@ -218,9 +215,9 @@ public class ProductDAO extends DBContext {
         return product;
     }
 
-    public int updateProduct(String title, Double lprice, Double sprice, String feature, InputStream thumbnail, int category, int saleid, int status, int quantity, String breif, Date update, int pid) throws SQLException {
+    public int updateProduct(String title, Double lprice, Double sprice, String feature, InputStream thumbnail, int category, int saleid, int status, int quantity, String breif, int pid) throws SQLException {
         String sql = "UPDATE product\n"
-                + "SET title = ?,list_price = ?,sale_price = ?,featured = ?,categoryId =?, salesId = ?, productStatus = ?,quantity =?,breif_information=?,updatedDate= ?";
+                + "SET title = ?,list_price = ?,sale_price = ?,featured = ?,categoryId =?, salesId = ?, productStatus = ?,quantity =?,breif_information=?,updatedDate= CURRENT_DATE()";
         int row = 0;
         if (thumbnail != null) {
             sql += " ,thumbnail = ? WHERE productId = ?;";
@@ -239,13 +236,12 @@ public class ProductDAO extends DBContext {
             preparedStatement.setInt(7, status);
             preparedStatement.setInt(8, quantity);
             preparedStatement.setString(9, breif);
-            preparedStatement.setDate(10, update);
 
             if (thumbnail != null) {
-                preparedStatement.setBlob(11, thumbnail);
-                preparedStatement.setInt(12, pid);
-            } else {
+                preparedStatement.setBlob(10, thumbnail);
                 preparedStatement.setInt(11, pid);
+            } else {
+                preparedStatement.setInt(10, pid);
             }
             row = preparedStatement.executeUpdate();
         } catch (Exception ex) {
@@ -263,11 +259,11 @@ public class ProductDAO extends DBContext {
         return row;
     }
 
-    public int addProduct(String title, Double lprice, Double sprice, String feature, InputStream thumbnail, int category, int saleid, int status, int quantity, String breif, Date update) throws SQLException {
+    public int addProduct(String title, Double lprice, Double sprice, String feature, InputStream thumbnail, int category, int saleid, int status, int quantity, String breif) throws SQLException {
         String sql = "INSERT INTO product\n"
-                + "(thumbnail,title,list_price,sale_price,featured,productStatus,categoryId,breif_information,quantity,updatedDate,salesId)\n"
+                + "(thumbnail,title,list_price,sale_price,featured,productStatus,categoryId,breif_information,quantity,updatedDate,salesId,featuredProduct)\n"
                 + "VALUES\n"
-                + "(?,?,?,?,?,?,?,?,?,?,?);";
+                + "(?,?,?,?,?,?,?,?,?,CURRENT_DATE(),?,0);";
         int row = 0;
         try {
             connection = getConnection();
@@ -283,8 +279,7 @@ public class ProductDAO extends DBContext {
             preparedStatement.setInt(7, category);
             preparedStatement.setString(8, breif);
             preparedStatement.setInt(9, quantity);
-            preparedStatement.setDate(10, update);
-            preparedStatement.setInt(11, saleid);
+            preparedStatement.setInt(10, saleid);
             row = preparedStatement.executeUpdate();
         } catch (Exception ex) {
             System.out.println("Exception ==== " + ex);
