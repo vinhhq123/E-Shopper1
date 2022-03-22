@@ -34,19 +34,20 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-8">
-                        <div class="blog-post-area">
 
-                            <h2 class="title text-center">Blog</h2>
 
-                            <c:forEach items="${listBlog}" var="o">
+                        <h2 class="title text-center">Blog</h2>
+
+                        <c:forEach items="${listBlog}" var="o">
+                            <div class="blog-post-area row">
                                 <div class="col-sm-5">
                                     <a href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">
-                                        <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="225" width="280">
+                                        <img style="margin-bottom: 50px" src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="225" width="280">
                                     </a>
                                 </div>
                                 <div class="col-sm-7">
                                     <div class="single-blog-post">
-                                        <h3>${o.postTitle}</h3>
+                                        <h3 style="text-transform: none">${o.postTitle}</h3>
                                         <div class="post-meta"> 
                                             <ul>
                                                 <li><i class="fa fa-user"></i> ${o.postAuthor.fullname}</li>
@@ -58,11 +59,12 @@
                                         <a class="btn btn-primary" href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">Read More</a>
                                     </div>
                                 </div>
-                            </c:forEach>
-                        </div>
+                            </div>
+                        </c:forEach>
+
                         <div class="pagination-area">
                             <c:set var="page" value="${requestScope.page}"/>
-                            <ul class="pagination" style="margin-top: 75px">
+                            <ul class="pagination" style="">
                                 <c:forEach begin="${1}" end="${requestScope.num}" var="i">
                                     <li><a class="${i==page?"active":""}" href="<%=request.getContextPath()%>/blog/bloglist?page=${i}">${i}</a></li>
                                     <!--                                        <li><a href="" class="active">1</a></li>-->
@@ -91,25 +93,24 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="product-details"><!--product-details-->
-                                <h2 class="title text-center">hot posts</h2>
-                                <c:forEach items="${listHotBlogs}" var="o">
+                            <h2 class="title text-center">featured posts</h2>
+                            <c:forEach items="${listHotBlogs}" var="o">
+                                <div class="product-details"><!--product-details-->
                                     <div class="col-sm-4">
-                                            <a href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">
-                                                <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="95" width="110">
-                                            </a>
+                                        <a href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">
+                                            <img style="object-fit: fill" src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="95" width="110">
+                                        </a>
                                     </div>
                                     <div class="col-sm-8">
                                         <div class="blog-post-area single-blog-post">
                                             <font color="#fe980f"><h5>${o.postTitle}</h5></font>
                                             <div class="post-meta"> 
-                                                <p><i class='fas fa-tags'></i> ${o.category.settingValue}</p>
+                                                <font size="2px"><p><i class='fas fa-tags'></i> ${o.category.settingValue}</p></font>
                                             </div>
-                                            <!--<a class="btn btn-primary" href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">Read More</a>-->
                                         </div>
                                     </div>
-                                </c:forEach>
-                            </div>
+                                </div>
+                            </c:forEach>
                         </div>
                     </div>
                 </div>

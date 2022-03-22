@@ -126,12 +126,7 @@
                                 <li><a href="<%=request.getContextPath()%>/home" class="active">Home</a></li>
                                 <li><a href="<%=request.getContextPath()%>/goods/goodsList">Shop<i></i></a>
                                 </li> 
-                                <li class="dropdown"><a href="#" >Blog<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li class=""><a href="<%=request.getContextPath()%>/blog/bloglist">Blog<i class=""></i></a>
-                                        </li>
-                                    </ul>
-                                </li> 
+                                <li><a href="<%=request.getContextPath()%>/blog/bloglist">Blog<i class=""></i></a>
                             </ul>
                         </div>
                     </div>
