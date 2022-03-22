@@ -62,16 +62,8 @@
 
 
 
-                <li>
-                    <a href="basic_form.html">
-                        <i class="fa fa-paperclip"></i> <span>Post List</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="<%=request.getContextPath()%>/changepass">
-                        <i class="fa fa-book"></i> <span>Change Password</span>
-                    </a>
-                </li>
+               
+                
 
 
             </ul>
