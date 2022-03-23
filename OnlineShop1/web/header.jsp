@@ -76,7 +76,7 @@
                                                 </a>
                                             </c:if>
                                             <c:if test="${account.getRole() == 4}">
-                                                <a href="<%=request.getContextPath()%>/post/PostDetail.jsp">
+                                                <a href="<%=request.getContextPath()%>/post/detail">
                                                     <i class="fa fa-paperclip fa-fw pull-right"></i>
                                                     Post Detail
                                                 </a>

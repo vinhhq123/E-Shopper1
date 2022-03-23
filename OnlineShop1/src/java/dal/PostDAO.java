@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -316,10 +317,10 @@ public class PostDAO extends DBContext {
         return listBlog;
     }
 
-    public void insertPost(String postContent, InputStream thumbnail, String postTitle, int postAuthor) {
+    public void insertPost(String postContent, InputStream thumbnail, String postTitle, int postAuthor, String breif, int postCategory, Date date, Date updatedDate) {
 
-        String sql = "INSERT INTO `post` (`thumbnail`, `postTitle`, `postContent`, `postAuthor`) \n"
-                + "        VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO onlineshop1.post (`thumbnail`, `postTitle`, `postContent`, `postAuthor`, `breifInformation`, `postCategory`, `postdDate`, `updatedDate`) \n" +
+"                       VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             connection = getConnection();
             ps = connection.prepareStatement(sql);
@@ -327,6 +328,10 @@ public class PostDAO extends DBContext {
             ps.setString(2, postTitle);
             ps.setString(3, postContent);
             ps.setInt(4, postAuthor);
+            ps.setString(5, breif);
+            ps.setInt(6, postCategory);
+            ps.setDate(7, date);
+            ps.setDate(8, updatedDate);
             ps.executeUpdate();
         } catch (Exception ex) {
             System.out.println("Exception ==== " + ex);
@@ -346,7 +351,7 @@ public class PostDAO extends DBContext {
     public ArrayList<PostList> getPostList() throws Exception {
         ArrayList<PostList> postlist = new ArrayList<>();
         try {
-            String sql = "select  p.thumbnail, p.postTitle, p.postContent, u.fullname, p.postId from post as p\n"
+            String sql = "select  p.thumbnail, p.postTitle, p.postContent, u.fullname, p.postId, p.postCategory, p.postdDate from post as p\n"
                     + "Inner Join user as u ON u.uid = p.postAuthor";
             System.out.println(sql);
             String noImage = "";
@@ -359,6 +364,8 @@ public class PostDAO extends DBContext {
                 post.setPostId(result.getInt("postId"));
                 post.setPostContent(result.getString("postContent"));
                 post.setPostTitle(result.getString("postTitle"));
+                post.setCategoryId(result.getInt("postCategory"));
+                post.setDate(result.getDate("postdDate"));
                 User user = new User();
                 user.setFullname(result.getString("fullname"));
                 post.setUser(user);
@@ -411,18 +418,24 @@ public class PostDAO extends DBContext {
         }
     }
 
-    public void updatePost(int postId, String postTitle, String postContent, InputStream thumbnail) {
+    public void updatePost(int postId, String postTitle, String postContent, InputStream thumbnail, String breif, int category, Date updateDate) {
         try {
-            String sql = "UPDATE `onlineshop1`.`post` SET `thumbnail` = ?,"
-                    + " `postTitle` = ?,"
-                    + " `postContent` = ?"
-                    + " WHERE (`postId` = ?);";
+            String sql = "UPDATE `onlineshop1`.`post` SET `thumbnail` = ?,\n" +
+                "                    `postTitle` = ?,\n" +
+                "                    `postContent` = ?,\n" +
+                "                    `breifInformation` = ?,\n" +
+                "                    `postCategory` = ?,\n" +
+                "                    `updatedDate` = ?\n" +
+                "                    WHERE (`postId` = ?);";
             connection = getConnection();
             ps = connection.prepareStatement(sql);
             ps.setBlob(1, thumbnail);
             ps.setString(2, postTitle);
             ps.setString(3, postContent);
-            ps.setInt(4, postId);
+            ps.setString(4, breif);
+            ps.setInt(5, category);
+            ps.setDate(6, updateDate);
+            ps.setInt(7, postId);
             ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -431,7 +444,7 @@ public class PostDAO extends DBContext {
     
     public PostList getPostById(int id) {
         
-        String query = "select  p.thumbnail, p.postTitle, p.postContent, u.fullname, p.postId from post as p\n"
+        String query = "select  p.thumbnail, p.postTitle, p.postContent, u.fullname, p.postId, p.breifInformation, p.postCategory, p.postdDate from post as p\n"
                     + "Inner Join user as u ON u.uid = p.postAuthor "
                 + "where p.postId = ?";
         try {
@@ -449,6 +462,10 @@ public class PostDAO extends DBContext {
                 User user = new User();
                 user.setFullname(result.getString("fullname"));
                 post.setUser(user);
+                post.setBreifInformation(result.getString("breifInformation"));
+                post.setCategoryId(result.getInt("postCategory"));
+                post.setDate(result.getDate("postdDate"));
+                
                 Blob blob = result.getBlob("thumbnail");
                 if (blob != null) {
                     InputStream inputStream = blob.getBinaryStream();
