@@ -20,8 +20,10 @@ public class PostList {
     private String postContent;
     User postAuthor;
     Setting category;
+    private int categoryId;
     private String featured;
     private int satatusPL;
+    private Date date;
     private Date updateDate;
     private User user;
     private int views;
@@ -44,6 +46,22 @@ public class PostList {
 
     public PostList(Setting category) {
         this.category = category;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     public User getUser() {
