@@ -54,12 +54,12 @@
 
                                 <c:forEach items="${sliders}" var="s" begin="0" end="0">
                                     <div class="item active">
-                                            <a href="${s.back_link}">
-                                                <img style="position: relative;width: 1000px;height: 450px; top: 10px" src="data:image/jpg;base64,${s.s_image}" alt="" />
-                                            </a>
-    <!--                                        <h2 style="position: absolute; top: 150px; left: 150px">${s.s_title}</h2>
-                                            <p style="position: absolute; top: 200px; left: 150px">${s.s_notes}</p>-->
-    <!--                                        <a href="${s.back_link}" style="position: absolute;top: 250px; left: 150px"><button type="button" class="btn btn-default get">Get it now</button></a>-->
+                                        <a href="${s.back_link}">
+                                            <img style="position: relative;width: 1000px;height: 450px; top: 10px" src="data:image/jpg;base64,${s.s_image}" alt="" />
+                                        </a>
+<!--                                        <h2 style="position: absolute; top: 150px; left: 150px">${s.s_title}</h2>
+                                        <p style="position: absolute; top: 200px; left: 150px">${s.s_notes}</p>-->
+<!--                                        <a href="${s.back_link}" style="position: absolute;top: 250px; left: 150px"><button type="button" class="btn btn-default get">Get it now</button></a>-->
                                     </div>
                                 </c:forEach>
 
@@ -113,7 +113,7 @@
                             <div class="panel-group"><!--category-productsr-->
                                 <c:forEach items="${listFeatured}" var="o">
                                     <div class="single-products row">
-                                        <div class="col-sm-5">
+                                        <div style="margin-bottom: 3px" class="col-sm-5">
                                             <img src="data:image/jpg;base64,${o.getThumbnail()}" width="100" height="100"/>
                                         </div>
                                         <div class="col-sm-7">
@@ -192,25 +192,26 @@
 
                         </div><!--features_items-->
 
-                        <div class="product-details"><!--product-details-->
-                            <h2 class="title text-center">hot posts</h2>
-                            <c:forEach items="${listHotBlogs}" var="o">
-                                <div class="col-sm-5">
-                                    <div class="">
+
+                        <h2 class="title text-center">hot posts</h2>
+                        <c:forEach items="${listHotBlogs}" var="o">
+                            <div class="product-details"><!--product-details-->
+                                <div class="row">
+                                    <div style="" class="col-sm-5">
                                         <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="150" width="300">
                                     </div>
-                                </div>
-                                <div class="col-sm-7">
-                                    <div class="blog-post-area single-blog-post">
-                                        <h3>${o.postTitle}</h3>
-                                        <div class="post-meta"> 
-                                            <p><i class='fas fa-tags'></i>Blog Category: ${o.category.settingValue}</p>
+                                    <div class="col-sm-7">
+                                        <div class="blog-post-area single-blog-post">
+                                            <font color="#fe980f"><h4>${o.postTitle}</h4></font>
+                                            <div class="post-meta"> 
+                                                <p><i class='fas fa-tags'></i> ${o.category.settingValue}</p>
+                                            </div>
+                                            <a class="btn btn-primary" href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">Read More</a>
                                         </div>
-                                        <a class="btn btn-primary" href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">Read More</a>
                                     </div>
                                 </div>
-                            </c:forEach>
-                        </div>
+                            </div>
+                        </c:forEach>
                     </div><!--/recommended_items-->
 
                 </div>

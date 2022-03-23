@@ -70,10 +70,8 @@ public class SendEmail {
     }
     
       
-    public static void send(String to, String sub,
-            String msg, final String user, final String pass) {
+    public static void send(String to, String sub,String msg, final String user, final String pass) {
         Properties props = new Properties();
-
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
@@ -120,7 +118,56 @@ public class SendEmail {
                 + "\n"
                 + "</html>";
         SendEmail.send(email, subject, message, "ed23112001@gmail.com", "Ed2311wars@");
-    }    
+    }   
+     
+     public boolean registerMail(String username,String to) {
+        Properties props = new Properties();
+        boolean check = false;
+        final String user = "ed23112001@gmail.com";
+        final String password = "Ed2311wars@";
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.allow8bitmime", "true");
+        props.put("mail.smtps.allow8bitmime", "true");
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(user,password);
+            }
+        });
+        String sub = "[OnlineShop]Register confirmation!";
+        String msg = "<!DOCTYPE html>\n"
+                + "<html lang=\"en\">\n "
+                + "\n"
+                + "<head>\n "
+                + "</head>\n"
+                + "\n"
+                + "<body>\n"
+                + "    <h3 style=\"color: blue;\">Xin chào " + username + " !</h3>\n"
+                + "    <div>Cám ơn bạn đã đăng ký vào kênh bán hàng trực tuyến của chúng tôi!</div>\n"
+                + "    <div>Thư này được tạo ra tự động.</div>\n"
+                + "    <div>Nếu bạn cần trợ giúp hoặc có câu hỏi, hãy gửi email đến chúng tôi bất cứ lúc nào.</div>\n"
+                + "    <h3 style=\"color: blue;\">Trân trọng!</h3>\n"
+                + "\n"
+                + "</body>\n"
+                + "\n"
+                + "</html>";
+        try {
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("ed23112001@gmail.com"));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            message.setSubject(sub);
+            message.setContent(msg, "text/html; charset=UTF-8");
+            Transport.send(message);
+            check = true;
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        return check;
+    }
      
     public static void ContactMail(String username,  String email) {
         String subject = "[OnlineShop]order confirmation & payment guides!";

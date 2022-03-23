@@ -65,7 +65,7 @@
                                         <div class="col-lg-1"></div>
                                         <div class="col-lg-7">
                                             <div class="panel-body table-responsive">
-                                                <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/proAdd" method="POST" name="proAdd"  enctype="multipart/form-data">
+                                                <form class="form-horizontal" role="form" action="<%=request.getContextPath()%>/product/add" method="POST" name="addProduct"  enctype="multipart/form-data">
                                                 <c:if test="${not empty messageAddSuccess}">
                                                     <b><h4 class="help-block" style="color: green" id="successEditMessage">${messageAddSuccess}</h4></b>
                                                         <c:remove var="messageAddSuccess"/>
@@ -94,7 +94,7 @@
                                                 <div class="form-group">
                                                     <label for="title1" class="col-lg-2 col-sm-2 control-label">Title</label>
                                                     <div class="col-lg-10">
-                                                        <input type="textl" class="form-control" id="title"  name="title" value="${titlelValue}"  required>
+                                                        <input type="textl" class="form-control" id="title"  name="title" value="${titleValue}"  required>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -154,10 +154,12 @@
                                                             <c:if test="${empty salerValue}">
                                                                 <option value="4" selected>Kylian Mbappe</option>
                                                                 <option value="5">Kendall Jenner</option>
+                                                                <option value="12">Jurgen Klopp</option>
                                                             </c:if>
                                                             <c:if test="${not empty salerValue}">
-                                                                  <option value="4" <%=request.getAttribute("salerValue").equals("13") ? "selected" : ""%>>Kylian Mbappe</option>
-                                                                  <option value="5" <%=request.getAttribute("salerValue").equals("14") ? "selected" : ""%>>Kendall Jenner</option>
+                                                                  <option value="4" <%=request.getAttribute("salerValue").equals("4") ? "selected" : ""%>>Kylian Mbappe</option>
+                                                                  <option value="5" <%=request.getAttribute("salerValue").equals("5") ? "selected" : ""%>>Kendall Jenner</option>
+                                                                  <option value="12" <%=request.getAttribute("salerValue").equals("12") ? "selected" : ""%>>Jurgen Klopp</option>
                                                             </c:if>
                                                         </select>
 
@@ -180,15 +182,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="update" class="col-lg-2 col-sm-2 control-label">Update Date</label>
-                                                    <div class="col-lg-10">
-                                                        <input type="date" class="form-control" id="update"  name="update" value="${updateValue}" required>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
                                                     <div class="col-lg-offset-2 col-lg-10">
                                                         <button type="submit" class="btn btn-success">Add Product</button>
-                                                        <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/proList'">View Product List</button>
+                                                        <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/product/list'">View Product List</button>
                                                     </div>
                                                 </div>
                                             </form>

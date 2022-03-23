@@ -9,7 +9,7 @@
         <servlet-name>RegisterController</servlet-name>
         <servlet-name>DashboardController</servlet-name>
         <servlet-name>SliderController</servlet-name>
-        <servlet-name>BlogController</servlet-name>
+<!--        <servlet-name>BlogController</servlet-name>-->
         <servlet-name>AddProductController</servlet-name>
         <servlet-name>CustomerController</servlet-name>
         <servlet-name>EditProductController</servlet-name>
@@ -71,14 +71,6 @@
         <servlet-class>controller.manager.AddProductController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ProductListController</servlet-name>
-        <servlet-class>controller.manager.ProductListController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SearchProductController</servlet-name>
-        <servlet-class>controller.manager.SearchProductController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>EditProductController</servlet-name>
         <servlet-class>controller.manager.EditProductController</servlet-class>
     </servlet>
@@ -97,6 +89,10 @@
     <servlet>
         <servlet-name>SendMailController</servlet-name>
         <servlet-class>controller.user.SendMailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CartController</servlet-name>
+        <servlet-class>controller.user.CartController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SettingListController</servlet-name>
@@ -143,28 +139,12 @@
         <url-pattern>/proAdd</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ProductListController</servlet-name>
-        <url-pattern>/proList</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SearchProductController</servlet-name>
-        <url-pattern>/proSearch</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>EditProductController</servlet-name>
         <url-pattern>/proEdit</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ProductListController</servlet-name>
-        <url-pattern>/proList</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SearchProductController</servlet-name>
-        <url-pattern>/proSearch</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EditProductController</servlet-name>
@@ -185,6 +165,10 @@
     <servlet-mapping>
         <servlet-name>SendMailController</servlet-name>
         <url-pattern>/sendmail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartController</servlet-name>
+        <url-pattern>/cartContact</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -126,7 +126,7 @@ form.example::after {
   display: table;
 }
 #slideR {
-  border: 2px solid red;
+  border: 2px solid #095E90;
   padding: 10px;
   border-radius: 25px;
   margin-bottom: 20px;
@@ -169,8 +169,8 @@ form.example::after {
                       <button type="submit">Search</i></button>
                     </form>
                   </div>
-                                        <div class="col-lg-7">
-                                            <div class="panel-body table-responsive">
+                        <div class="col-lg-9">
+                        <div class="panel-body table-responsive">
                         <c:forEach items="${sliders}" var="s">
                             <div class="single-blog-post" id="slideR">
                         <div class="header-slider">
@@ -198,7 +198,7 @@ form.example::after {
                         </div>
                         <br /><br />
                         <div class="post-meta" style="">
-                          <p>${s.s_id}</p>
+                            <p style="margin-left: 50px">#${s.s_id}</p>
                           <a href="">
                             <img
                               style="width: 140px; height: 140px"

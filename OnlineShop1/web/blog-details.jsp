@@ -79,25 +79,27 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="product-details"><!--product-details-->
-                                <h2 class="title text-center">hot posts</h2>
-                                <c:forEach items="${listHotBlogs}" var="o">
-                                    <div class="col-sm-4">
-                                        <a href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">
-                                            <img src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="95" width="110">
-                                        </a>
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <div class="blog-post-area single-blog-post">
-                                            <font color="#fe980f"><h5>${o.postTitle}</h5></font>
-                                            <div class="post-meta"> 
-                                                <p><i class='fas fa-tags'></i> ${o.category.settingValue}</p>
+
+                            <h2 class="title text-center">featured post</h2>
+                            <c:forEach items="${listHotBlogs}" var="o">
+                                <div class="product-details"><!--product-details-->
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <a href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">
+                                                <img style="object-fit: fill" src="data:image/jpg;base64,${o.getThumbnail()}" alt="" height="100" width="110">
+                                            </a>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div class="blog-post-area single-blog-post">
+                                                <font color="#fe980f"><h5>${o.postTitle}</h5></font>
+                                                <div class="post-meta"> 
+                                                    <font size="2px"><p><i class='fas fa-tags'></i> ${o.category.settingValue}</p></font>
+                                                </div>
                                             </div>
-                                            <!--<a class="btn btn-primary" href="<%=request.getContextPath()%>/blog/detail?postId=${o.postId}">Read More</a>-->
                                         </div>
                                     </div>
-                                </c:forEach>
-                            </div>
+                                </div>
+                            </c:forEach>
                         </div><!--/blog-post-area-->
                     </div>	
                 </div>
