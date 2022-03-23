@@ -60,9 +60,9 @@
                                         <div class="row">
                                         <div class="col-sm-8">
                                             <form class="form-inline" role="form" action="<%=request.getContextPath()%>/product/search">
-                                              <div class="form-group">
+                                              <div class="form-group" style="margin-right:8px;">
                                                     <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                                                    <input type="text" name="title" class="form-control" id="exampleInputEmail2" placeholder="title" value="${requestScope.searchValue}" onblur="this.value = removeSpaces(this.value);">
+                                                    <input type="text" name="title" class="form-control" id="exampleInputEmail2" placeholder="Title" value="${requestScope.searchValue}" onblur="this.value = removeSpaces(this.value);">
                                               </div>
                                               <div class="form-group" style="margin-right:8px;">
                                                     <select class="select" aria-label="Default select example" name="status" style="height: 30px">

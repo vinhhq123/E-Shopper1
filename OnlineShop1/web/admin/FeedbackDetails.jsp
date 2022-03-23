@@ -112,7 +112,7 @@
                                                     
                                                 </div>    
                                                 <div class="form-group">
-                                                    <label for="fullname" class="col-lg-2 col-sm-5 control-label">Title</label>
+                                                    
                                                     <div class="col-lg-6">
                                                         <input type="hidden" class="form-control" id="fullname" placeholder="" readonly value="${Feedback.getTitle()}" name="name" required>
                                                     </div>

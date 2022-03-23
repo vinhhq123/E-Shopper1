@@ -192,15 +192,16 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="col-lg-offset-6 col-lg-15">
-                                                        <button type="submit" class="btn btn-success">Save</button>
-                                           
+                                                    <div class="col-lg-offset-1 col-lg-8">
+                                                       
+                                                         <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/customer/list'"> Back Customer List</button>
+                                                          <button type="submit" class="btn btn-success">Save</button>
                                                     </div>
                                                 </div>
                                             </form>
                                                 
                                         </div><!-- /.box-body -->
-                                        <button type="button" class="btn btn-primary" onclick="window.location = '<%=request.getContextPath()%>/customer/list'"> Back Customer List</button>
+                                       
                                     </div>
                                     <div class="col-lg-4"></div>
                                   
