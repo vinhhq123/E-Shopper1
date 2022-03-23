@@ -272,11 +272,12 @@ public class ProductController extends HttpServlet {
                 if (checkAddPro > 0) {
 //                            boolean checkEmail = accountDAO.sendEmailActivation(email, name);
 //                            if (checkEmail) {
-                    successMessage = "New product is added successfully!";
-                    String avatar = proDAO.getLastInsertedProduct().getThumbnail();
-                    session.setAttribute("messageAddSuccess", successMessage);
-                    request.setAttribute("imageValue", avatar);
-                    request.getRequestDispatcher("/admin/ProductAdd.jsp").forward(request, response);
+//                    successMessage = "New product is added successfully!";
+//                    String avatar = proDAO.getLastInsertedProduct().getThumbnail();
+//                    session.setAttribute("messageAddSuccess", successMessage);
+//                    request.setAttribute("imageValue", avatar);
+//                    request.getRequestDispatcher("/admin/ProductAdd.jsp").forward(request, response);
+ response.sendRedirect("list");
                 }
             }
         } catch (SQLException ex) {

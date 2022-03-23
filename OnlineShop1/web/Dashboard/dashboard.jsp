@@ -90,18 +90,18 @@ table tr:nth-child(1){
         <jsp:include page="../admin/HeaderAdmin.jsp"></jsp:include>
             <div class="wrapper row-offcanvas row-offcanvas-left">
                 <!-- Left side column. contains the logo and sidebar -->
-            <jsp:include page="../admin/SideBarAdmin.jsp"></jsp:include>
+            <jsp:include page="../admin/SideBarManager.jsp"></jsp:include>
 
                 <!-- Right side column. Contains the navbar and content of the page -->
                 <!-- /.right-side -->
                 <!-- ./wrapper -->
 
                 <div class="container-fluid">
-                    <div class="row content">
+                    <div class="container">
 
                         <br>
 
-                        <div class="col-sm-9">
+                        <div class="col-sm-14">
                             <div class="well">
                                 <h3>TOP 3 BEST CUSTOMERS</h3>
                                 <table>
@@ -244,6 +244,8 @@ table tr:nth-child(1){
                 </div>
             </div>
         </div>
+                                      <br>
+                                        <br>
         <div class="footer-main">
             Copyright &copy Online Shop , 2022   
         </div>
