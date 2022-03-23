@@ -44,7 +44,7 @@
                         <div class="blog-post-area">
                             <h2 class="title text-center">Latest From our Blog</h2>
                             <c:forEach items="${postlist}" var="p">
-                            <div class="single-blog-post">
+                                <div class="single-blog-post" style="border-bottom: 2px solid orange; margin-bottom: 50px">
                                 <h3>${p.getPostTitle()}</h3>
                                 <a style="float: right; " href="<%=request.getContextPath()%>/post/update?postId=${p.getPostId()}"><button style="width:70px">Edit</button></a>
                                 <a style="float: right; margin: 0 10px;" href="<%=request.getContextPath()%>/post/delete?postId=${p.getPostId()}"><button style="width:70px">Delete</button></a>
@@ -53,22 +53,14 @@
                                 <div class="post-meta">
                                     <ul>
                                         <li><i class="fa fa-user"></i>${p.user.fullname}</li>
-                                        <li><i class="fa fa-clock-o"></i> 1:33 pm</li>
-                                        <li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
+                                        <li><i class="fa fa-calendar"></i>${p.date}</li>
                                     </ul>
-                                    <span>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-half-o"></i>
-                                    </span>
                                 </div>
                                 <a href="">
                                     <img src="data:image/jpg;base64,${p.getThumbnail()}" alt="">
                                 </a>
                                 <p>${p.postContent}</p>
-                                <a  class="btn btn-primary" href="">Read More</a>
+                                
                             </div>
                                 </c:forEach>
                                 <%-- xóa từ đây--%>

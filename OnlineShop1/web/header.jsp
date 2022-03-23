@@ -76,7 +76,7 @@
                                                 </a>
                                             </c:if>
                                             <c:if test="${account.getRole() == 4}">
-                                                <a href="<%=request.getContextPath()%>/post/PostDetail.jsp">
+                                                <a href="<%=request.getContextPath()%>/post/detail">
                                                     <i class="fa fa-paperclip fa-fw pull-right"></i>
                                                     Post Detail
                                                 </a>
@@ -102,6 +102,7 @@
                             </c:if>
                             <c:if test="${sessionScope.account == null}">
                                 <li><a href="${pageContext.request.contextPath}/Login.jsp"><i class="fa fa-lock"></i> Login</a></li>
+                                <li><a href="${pageContext.request.contextPath}/register"><i class="fa fa-users"></i> Register</a></li>
                                 </c:if>
                         </ul>
                     </div>

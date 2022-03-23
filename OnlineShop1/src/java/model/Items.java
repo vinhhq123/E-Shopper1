@@ -10,19 +10,67 @@ package model;
  * @author hungn
  */
 public class Items {
+    private int cid;
     private Product product;
     private int quantity;
     private double price;
-
+    private double totalPrice;
+    private int uid;
+    private int sta;
     public Items() {
     }
 
+    public Items(int cid, Product product, int quantity, double totalPrice, int uid, int sta) {
+        this.cid = cid;
+        this.product = product;
+        this.quantity = quantity;
+        this.totalPrice = totalPrice;
+        this.uid = uid;
+        this.sta = sta;
+    }
+    
+    
+    
     public Items(Product product, int quantity, double price) {
         this.product = product;
         this.quantity = quantity;
         this.price = price;
     }
 
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    
+    
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
+
+    public int getSta() {
+        return sta;
+    }
+
+    public void setSta(int sta) {
+        this.sta = sta;
+    }
+
+    public int getCid() {
+        return cid;
+    }
+
+    public void setCid(int cid) {
+        this.cid = cid;
+    }
+    
     public Product getProduct() {
         return product;
     }
