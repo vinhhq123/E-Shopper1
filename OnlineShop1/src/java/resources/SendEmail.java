@@ -119,7 +119,7 @@ public class SendEmail {
                 + "</body>\n"
                 + "\n"
                 + "</html>";
-        SendEmail.send(email, subject, message, "ed23112001@gmail.com", "Ed2311wars@");
+        SendEmail.send(email, subject, message, " "");
     }    
      
     public static void ContactMail(String username,  String email) {
@@ -142,6 +142,6 @@ public class SendEmail {
                 + "</body>\n"
                 + "\n"
                 + "</html>";
-        SendEmail.send(email, subject, message, "ed23112001@gmail.com", "Ed2311wars@");
+        SendEmail.send(email, subject, message, "", "");
     }    
 }
