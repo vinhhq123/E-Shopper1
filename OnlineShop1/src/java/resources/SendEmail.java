@@ -23,8 +23,8 @@ public class SendEmail {
     public boolean sendEmailActivation(String reciever, String fullname) {
 
         boolean check = false;
-        final String username = "jb20225@gmail.com";
-        final String password = "jb20225@gmail";
+        final String username = "";
+        final String password = "";
 
         // Setup mail server
         Properties props = new Properties();
