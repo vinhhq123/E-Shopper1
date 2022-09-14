@@ -123,8 +123,8 @@ public class SendEmail {
      public boolean registerMail(String username,String to) {
         Properties props = new Properties();
         boolean check = false;
-        final String user = "ed23112001@gmail.com";
-        final String password = "Ed2311wars@";
+        final String user = "";
+        final String password = "";
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
@@ -189,6 +189,6 @@ public class SendEmail {
                 + "</body>\n"
                 + "\n"
                 + "</html>";
-        SendEmail.send(email, subject, message, "ed23112001@gmail.com", "Ed2311wars@");
+        SendEmail.send(email, subject, message, " "");
     }    
 }
